@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "everyonepick"
+include ':app'
+include ':camera'
+include ':friend'
+include ':gallery'
+include ':setting'
+include ':common'
+include ':common-ui'
+include ':foundation'
