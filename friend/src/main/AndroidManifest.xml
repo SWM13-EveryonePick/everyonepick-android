@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name="org.soma.everyonepick.friend.org.tbtc.everyonepick.friend.FriendActivity"
+            android:name="org.soma.everyonepick.friend.FriendActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

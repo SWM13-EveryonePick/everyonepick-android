@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.soma.everyonepick.friend.org.tbtc.everyonepick.friend.FriendActivity">
+    tools:context="org.soma.everyonepick.friend.FriendActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
