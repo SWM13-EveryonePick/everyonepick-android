@@ -7,6 +7,8 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.login.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

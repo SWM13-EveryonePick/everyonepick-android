@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_app"
+    android:id="@+id/nav_main"
     app:startDestination="@id/galleryFragment">
 
     <fragment
@@ -11,10 +11,11 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="org.soma.everyonepick.gallery.GalleryFragment"
-        android:label="GalleryFragment" />
+        android:label="GalleryFragment"/>
     <fragment
         android:id="@+id/settingFragment"
         android:name="org.soma.everyonepick.setting.SettingFragment"
         android:label="SettingFragment" />
+
 
 </navigation>

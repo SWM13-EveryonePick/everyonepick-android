@@ -12,12 +12,7 @@
         android:theme="@style/Theme.Everyonepick">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <data android:scheme="app" android:host="open.main" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
