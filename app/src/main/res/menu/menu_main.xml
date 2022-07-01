@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/cameraFragment"
+        android:title="camera"
+        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:enabled="true"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/galleryFragment"
+        android:title="gallery"
+        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:enabled="true"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/settingFragment"
+        android:title="setting"
+        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:enabled="true"
+        app:showAsAction="always"/>
+</menu>
