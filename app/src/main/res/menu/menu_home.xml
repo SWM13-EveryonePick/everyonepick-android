@@ -8,8 +8,8 @@
         android:enabled="true"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/galleryFragment"
-        android:title="gallery"
+        android:id="@+id/groupAlbumFragment"
+        android:title="group album"
         android:icon="@drawable/ic_baseline_camera_alt_24"
         android:enabled="true"
         app:showAsAction="always"/>

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.gallery
+package org.soma.everyonepick.groupalbum
 
 import org.junit.Test
 
