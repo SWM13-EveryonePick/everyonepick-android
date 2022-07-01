@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_login"
-    app:startDestination="@id/activity_login">
+    app:startDestination="@id/loginFragment">
 
-    <activity
-        android:id="@+id/activity_login"
-        android:name="org.soma.everyonepick.login.LoginActivity">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="org.soma.everyonepick.login.LoginFragment"
+        android:label="LoginFragment"/>
 
-    </activity>
 </navigation>
