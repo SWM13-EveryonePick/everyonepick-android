@@ -1,4 +1,4 @@
-package org.soma.everyonepick.friend
+package org.soma.everyonepick.login
 
 import org.junit.Test
 

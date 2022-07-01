@@ -1,12 +1,11 @@
-package org.soma.everyonepick.friend
+package org.soma.everyonepick.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.soma.everyonepick.friend.R
 
-class FriendActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friend)
+        setContentView(R.layout.activity_main)
     }
 }

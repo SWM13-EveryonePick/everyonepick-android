@@ -15,9 +15,9 @@ dependencyResolutionManagement {
 rootProject.name = "everyonepick"
 include ':app'
 include ':camera'
-include ':friend'
 include ':gallery'
 include ':setting'
 include ':common'
 include ':common-ui'
 include ':foundation'
+include ':login'
