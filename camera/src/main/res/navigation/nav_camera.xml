@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_camera"
+    app:startDestination="@id/fragment_camera">
+
+    <activity
+        android:id="@+id/fragment_camera"
+        android:name="org.soma.everyonepick.camera.CameraFragment"
+        ></activity>
+</navigation>
