@@ -10,13 +10,13 @@
     <item
         android:id="@+id/groupAlbumFragment"
         android:title="group album"
-        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:icon="@drawable/ic_outline_photo_24"
         android:enabled="true"
         app:showAsAction="always"/>
     <item
         android:id="@+id/settingFragment"
         android:title="setting"
-        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:icon="@drawable/ic_baseline_settings_24"
         android:enabled="true"
         app:showAsAction="always"/>
 </menu>
