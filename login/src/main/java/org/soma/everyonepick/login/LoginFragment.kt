@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
     fun onClickLogin() {
         val intent = Intent(
             requireContext(),
-            Class.forName("org.soma.everyonepick.app.MainActivity")
+            Class.forName("org.soma.everyonepick.app.HomeActivity")
         )
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

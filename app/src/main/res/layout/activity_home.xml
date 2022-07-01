@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".HomeActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host"
@@ -17,7 +17,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bottomnavigationview"
-            app:navGraph="@navigation/nav_main"
+            app:navGraph="@navigation/nav_home"
             />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/menu_main"
+            app:menu="@menu/menu_home"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
