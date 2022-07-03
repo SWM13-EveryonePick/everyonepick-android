@@ -1,9 +1,11 @@
 package org.soma.everyonepick.app
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -59,7 +61,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private fun setFullScreenMode(flag: Boolean) {
+        supportActionBar?.setShowHideAnimationEnabled(false)
+
         if(flag) {
             hideStatusBar()
             supportActionBar?.hide()
@@ -73,23 +78,17 @@ class HomeActivity : AppCompatActivity() {
 
     private fun hideStatusBar() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-            window.setDecorFitsSystemWindows(false)
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         }else{
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         }
     }
 
     private fun showStatusBar() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-            window.setDecorFitsSystemWindows(true)
             window.insetsController?.show(WindowInsets.Type.statusBars())
         }else{
-            window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.decorView.systemUiVisibility = View.VISIBLE
         }
     }
 }
