@@ -29,11 +29,9 @@ class HomeActivity : AppCompatActivity() {
         val navController = navHostFragment.findNavController()
         binding.bottomnavigationview.run{
             setupWithNavController(navController)
-
             setOnItemSelectedListener { item ->
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.nav_host, getFragmentByItemId(item.itemId))
-                    .commit()
+                val fragment = getFragmentByItemId(item.itemId)
+                replaceFragment(fragment)
 
                 // Camera Fragment에서 풀스크린을 사용합니다.
                 setFullScreenMode(item.itemId == R.id.cameraFragment)
@@ -43,9 +41,19 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host, fragment)
+            .commit()
+    }
+
     private fun getFragmentByItemId(itemId: Int): Fragment {
         return when(itemId) {
-            R.id.cameraFragment -> CameraFragment()
+            R.id.cameraFragment -> CameraFragment({
+                binding.bottomnavigationview.selectedItemId = R.id.groupAlbumFragment
+            },{
+                binding.bottomnavigationview.selectedItemId = R.id.settingFragment
+            })
             R.id.groupAlbumFragment -> GroupAlbumFragment()
             else -> SettingFragment()
         }

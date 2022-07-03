@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/cameraFragment"
-        android:title="camera"
+        android:title="@string/camera_menu_item"
         android:icon="@drawable/ic_baseline_camera_alt_24"
         android:enabled="true"
         app:showAsAction="always"/>
     <item
         android:id="@+id/groupAlbumFragment"
-        android:title="group album"
+        android:title="@string/group_album_menu_item"
         android:icon="@drawable/ic_outline_photo_24"
         android:enabled="true"
         app:showAsAction="always"/>
     <item
         android:id="@+id/settingFragment"
-        android:title="setting"
+        android:title="@string/setting_menu_item"
         android:icon="@drawable/ic_baseline_settings_24"
         android:enabled="true"
         app:showAsAction="always"/>

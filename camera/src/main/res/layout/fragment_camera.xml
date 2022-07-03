@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CameraFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="fragment"
+            type="org.soma.everyonepick.camera.CameraFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Camera" />
+        tools:context=".CameraFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/text_cameramenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/camera_menu_item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/text_groupalbummenu"/>
+        <TextView
+            android:id="@+id/text_groupalbummenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/group_album_menu_item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_cameramenu"
+            app:layout_constraintEnd_toStartOf="@id/text_settingmenu"
+            android:onClick="@{() -> fragment.moveToGroupAlbum.invoke()}"/>
+        <TextView
+            android:id="@+id/text_settingmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_menu_item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_groupalbummenu"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> fragment.moveToSetting.invoke()}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
