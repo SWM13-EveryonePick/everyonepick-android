@@ -14,32 +14,48 @@
         android:layout_height="match_parent"
         tools:context=".CameraFragment">
 
-        <TextView
-            android:id="@+id/text_cameramenu"
-            android:layout_width="wrap_content"
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/constraintlayout_bottom"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_bottom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/camera_menu_item"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/text_groupalbummenu"/>
-        <TextView
-            android:id="@+id/text_groupalbummenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/group_album_menu_item"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/text_cameramenu"
-            app:layout_constraintEnd_toStartOf="@id/text_settingmenu"
-            android:onClick="@{() -> fragment.moveToGroupAlbum.invoke()}"/>
-        <TextView
-            android:id="@+id/text_settingmenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_menu_item"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/text_groupalbummenu"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> fragment.moveToSetting.invoke()}"/>
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/text_cameramenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/camera_menu_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/text_groupalbummenu"/>
+            <TextView
+                android:id="@+id/text_groupalbummenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/group_album_menu_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_cameramenu"
+                app:layout_constraintEnd_toStartOf="@id/text_settingmenu"
+                android:onClick="@{() -> fragment.moveToGroupAlbum.invoke()}"/>
+            <TextView
+                android:id="@+id/text_settingmenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_menu_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_groupalbummenu"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{() -> fragment.moveToSetting.invoke()}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
