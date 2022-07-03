@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
+import org.soma.everyonepick.camera.CameraFragment
+import org.soma.everyonepick.groupalbum.GroupAlbumFragment
+import org.soma.everyonepick.setting.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -25,11 +29,25 @@ class HomeActivity : AppCompatActivity() {
         val navController = navHostFragment.findNavController()
         binding.bottomnavigationview.run{
             setupWithNavController(navController)
+
             setOnItemSelectedListener { item ->
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host, getFragmentByItemId(item.itemId))
+                    .commit()
+
                 // Camera Fragment에서 풀스크린을 사용합니다.
                 setFullScreenMode(item.itemId == R.id.cameraFragment)
+
                 return@setOnItemSelectedListener true
             }
+        }
+    }
+
+    private fun getFragmentByItemId(itemId: Int): Fragment {
+        return when(itemId) {
+            R.id.cameraFragment -> CameraFragment()
+            R.id.groupAlbumFragment -> GroupAlbumFragment()
+            else -> SettingFragment()
         }
     }
 
