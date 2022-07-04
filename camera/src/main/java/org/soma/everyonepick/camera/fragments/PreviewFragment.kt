@@ -12,16 +12,33 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
 import org.soma.everyonepick.camera.R
+import org.soma.everyonepick.camera.databinding.CameraUiContainerBinding
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
 
 class PreviewFragment : Fragment() {
     private var _binding: FragmentPreviewBinding? = null
     private val binding get() = _binding!!
 
+    private var cameraUiContainerBinding: CameraUiContainerBinding? = null
+
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentPreviewBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateCameraUi()
+        setUpCamera()
+    }
+
+    private fun setUpCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
@@ -39,14 +56,18 @@ class PreviewFragment : Fragment() {
         cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentPreviewBinding.inflate(inflater, container, false)
+    private fun updateCameraUi() {
+        cameraUiContainerBinding?.root?.let{
+            binding.constraintlayoutRoot.removeView(it)
+        }
 
-        return binding.root
+        cameraUiContainerBinding = CameraUiContainerBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            binding.constraintlayoutRoot,
+            true
+        )
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
