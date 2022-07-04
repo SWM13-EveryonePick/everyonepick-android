@@ -26,6 +26,9 @@ class CameraFragment(
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.fragment = this
+
         return binding.root
     }
 
