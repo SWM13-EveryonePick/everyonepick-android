@@ -48,6 +48,66 @@ class FROnnxMobileNet(private val context: Context, listener: OnnxListener): Ima
 
     private fun readModel() = context.resources.openRawResource(R.raw.mobileface).readBytes()
 
+    override fun analyze(image: ImageProxy) {
+        if(listeners.isEmpty()) {
+            image.close()
+            return
+        }
+
+        val bitmap = image.toBitmap()
+        val resizeBitmap = Bitmap.createScaledBitmap(bitmap, 128, 128, false)
+        val imgData = preprocess2(resizeBitmap)
+
+        val inputName = ortSession?.inputNames?.iterator()?.next()
+
+        val shape = longArrayOf(1, 3, 128, 128)
+        val ortEnv = OrtEnvironment.getEnvironment()
+        ortEnv.use {
+            // Create input tensor
+            val inputTensor = OnnxTensor.createTensor(ortEnv, imgData, shape)
+            val startTime = SystemClock.uptimeMillis()
+            inputTensor.use {
+                // Run the inference and get the output tensor
+                val output = ortSession?.run(Collections.singletonMap(inputName, inputTensor))
+                output.use {
+                    val output0 = (output?.get(0)?.value) as Array<Array<Array<FloatArray>>>
+                    val output1 = output0[0].flatten()
+                    val output2 = FloatArray(output1.size)
+                    output1.forEachIndexed { index, floats ->
+                        floats.forEach {
+                            output2[index] = it
+                        }
+                    }
+
+                    listeners.forEach { it(output2) }
+
+                    output.close()
+                }
+            }
+        }
+
+        image.close()
+    }
+
+    private fun ImageProxy.toBitmap(): Bitmap {
+        val yBuffer = planes[0].buffer // Y
+        val vuBuffer = planes[2].buffer // VU
+
+        val ySize = yBuffer.remaining()
+        val vuSize = vuBuffer.remaining()
+
+        val nv21 = ByteArray(ySize + vuSize)
+
+        yBuffer.get(nv21, 0, ySize)
+        vuBuffer.get(nv21, ySize, vuSize)
+
+        val yuvImage = YuvImage(nv21, ImageFormat.NV21, this.width, this.height, null)
+        val out = ByteArrayOutputStream()
+        yuvImage.compressToJpeg(Rect(0, 0, yuvImage.width, yuvImage.height), 50, out)
+        val imageBytes = out.toByteArray()
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+    }
+
     private fun preprocess2(bitmap: Bitmap): FloatBuffer {
         val imgData = FloatBuffer.allocate(
             DIM_BATCH_SIZE
@@ -73,76 +133,12 @@ class FROnnxMobileNet(private val context: Context, listener: OnnxListener): Ima
         return imgData
     }
 
-    fun ImageProxy.toBitmap(): Bitmap {
-        val yBuffer = planes[0].buffer // Y
-        val vuBuffer = planes[2].buffer // VU
-
-        val ySize = yBuffer.remaining()
-        val vuSize = vuBuffer.remaining()
-
-        val nv21 = ByteArray(ySize + vuSize)
-
-        yBuffer.get(nv21, 0, ySize)
-        vuBuffer.get(nv21, ySize, vuSize)
-
-        val yuvImage = YuvImage(nv21, ImageFormat.NV21, this.width, this.height, null)
-        val out = ByteArrayOutputStream()
-        yuvImage.compressToJpeg(Rect(0, 0, yuvImage.width, yuvImage.height), 50, out)
-        val imageBytes = out.toByteArray()
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-    }
-
-    override fun analyze(image: ImageProxy) {
-        if(listeners.isEmpty()) {
-            image.close()
-            return
-        }
-
-        val bitmap = image.toBitmap()
-        val resizeBitmap = Bitmap.createScaledBitmap(bitmap, 128, 128, false)
-        val imgData = preprocess2(resizeBitmap) //128x128 => 49152
-
-        val inputName = ortSession?.inputNames?.iterator()?.next()
-
-        val shape = longArrayOf(1, 3, 128, 128)
-        // val shape = longArrayOf(3, 224, 224)
-        val ortEnv = OrtEnvironment.getEnvironment()
-        ortEnv.use {
-            // Create input tensor
-            val inputTensor = OnnxTensor.createTensor(ortEnv, imgData, shape)
-            val startTime = SystemClock.uptimeMillis()
-            inputTensor.use {
-                // Run the inference and get the output tensor
-                val output = ortSession?.run(Collections.singletonMap(inputName, inputTensor))
-                // val output = ortSession?.run(Collections.singletonMap("input", input_tensor))
-                output.use {
-                    // reshape(-1)
-                    val output0 = (output?.get(0)?.value) as Array<Array<Array<FloatArray>>>
-                    val output1 = output0[0].flatten()
-                    output1[0].forEach { }
-                    val output2 = FloatArray(output1.size)
-                    output1.forEachIndexed { index, floats ->
-                        floats.forEach {
-                            output2[index] = it
-                        }
-                    }
-
-                    listeners.forEach { it(output2) }
-
-                    output.close()
-                }
-            }
-        }
-
-        image.close()
-    }
-
     companion object {
-        const val IMAGE_MEAN: Float = .0f
-        const val IMAGE_STD: Float = 255f
-        const val DIM_BATCH_SIZE = 1
-        const val DIM_PIXEL_SIZE = 3
-        const val IMAGE_SIZE_X = 128
-        const val IMAGE_SIZE_Y = 128
+        private const val IMAGE_MEAN: Float = .0f
+        private const val IMAGE_STD: Float = 255f
+        private const val DIM_BATCH_SIZE = 1
+        private const val DIM_PIXEL_SIZE = 3
+        private const val IMAGE_SIZE_X = 128
+        private const val IMAGE_SIZE_Y = 128
     }
 }
