@@ -60,7 +60,29 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun onLoginFailure() {
+        Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+    }
+
     private fun onLoginSuccess() {
+        UserApiClient.instance.me { user, error ->
+            if(error != null){
+                Toast.makeText(requireContext(), "사용자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }else if(user != null) {
+                // TODO: 가입 여부 체크한 뒤, user에 담긴 정보를 토대로 회원가입 진행 + startHomeActivity() 호출
+                Log.d(TAG, "사용자 정보 요청 성공" +
+                        "\n회원번호: ${user.id}" +
+                        "\n이메일: ${user.kakaoAccount?.email}" +
+                        "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
+                        "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+
+                // TODO: Remove it after register implemented
+                startHomeActivity()
+            }
+        }
+    }
+
+    private fun startHomeActivity() {
         val intent = Intent(
             requireContext(),
             Class.forName("org.soma.everyonepick.app.HomeActivity")
@@ -69,12 +91,13 @@ class LoginFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun onLoginFailure() {
-        Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private const val TAG = "LoginFragment"
     }
 }
