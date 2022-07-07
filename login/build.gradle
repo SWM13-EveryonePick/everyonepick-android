@@ -36,6 +36,9 @@ android {
     dataBinding {
         enabled = true
     }
+    defaultConfig {
+        manifestPlaceholders["NATIVE_APP_KEY"] = "9584594442ebeda4020b94477a6a5ebf"
+    }
 }
 
 dependencies {
@@ -51,7 +54,8 @@ dependencies {
 
     // Kakao API: https://developers.kakao.com/docs/latest/ko/getting-started/sdk-android#select-module
     implementation "com.kakao.sdk:v2-all:2.11.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
-    implementation "com.kakao.sdk:v2-user:2.11.0" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.11.0"
+    implementation project(path: ':foundation') // 카카오 로그인
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

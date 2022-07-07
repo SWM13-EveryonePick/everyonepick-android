@@ -8,10 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.ClientError
+import com.kakao.sdk.common.model.ClientErrorCause
+import com.kakao.sdk.user.UserApiClient
 import org.soma.everyonepick.login.databinding.FragmentLoginBinding
 import java.lang.Exception
 
@@ -32,12 +37,40 @@ class LoginFragment : Fragment() {
     }
 
     fun onClickLogin() {
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            if(error != null) onLoginSuccess()
+            else if(token != null) onLoginSuccess()
+        }
+
+        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+        if(UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+            UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
+                if(error != null) {
+                    onLoginFailure()
+
+                    // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도한다.
+                    // 단, 사용자가 의도적으로 로그인을 취소한 경우는 제외한다.
+                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) return@loginWithKakaoTalk
+                    UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
+                }
+                else if(token != null) onLoginSuccess()
+            }
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
+        }
+    }
+
+    private fun onLoginSuccess() {
         val intent = Intent(
             requireContext(),
             Class.forName("org.soma.everyonepick.app.HomeActivity")
         )
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    private fun onLoginFailure() {
+        Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

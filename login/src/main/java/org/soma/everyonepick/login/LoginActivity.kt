@@ -12,6 +12,9 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
+import org.soma.everyonepick.foundation.NATIVE_APP_KEY
 import org.soma.everyonepick.login.databinding.ActivityLoginBinding
 import java.security.MessageDigest
 import java.util.*
@@ -22,24 +25,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-        // 새로운 환경에서 개발을 할 때마다 아래 함수를 실행하여 해시를 얻고,
-        // 이를 kakao developers에 등록해야 합니다.
-        // getAppKeyHash()
+        KakaoSdk.init(this, NATIVE_APP_KEY)
     }
 
-    private fun getAppKeyHash() {
-        try {
-            val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-            for(i in info.signatures) {
-                val md: MessageDigest = MessageDigest.getInstance("SHA")
-                md.update(i.toByteArray())
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val encoder = Base64.getEncoder()
-                    Log.e("Debug key", encoder.encodeToString(md.digest()))
-                }
-            }
-        } catch(e: Exception) {
-            Log.e("Not found", e.toString())
-        }
+    // 새로운 환경에서 개발을 할 때마다 아래 함수를 실행하여 해시를 얻고,
+    // 이를 kakao developers에 등록해야 합니다.
+    private fun printAppKeyHash() {
+        var keyHash = Utility.getKeyHash(this)
+        Log.d("KeyHash", keyHash)
     }
 }
