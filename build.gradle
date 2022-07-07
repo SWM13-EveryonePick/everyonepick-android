@@ -2,6 +2,7 @@
 buildscript {
     repositories {
         google()
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
     }
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2"

@@ -13,6 +13,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        manifestPlaceholders["NATIVE_APP_KEY"] = "9584594442ebeda4020b94477a6a5ebf"
     }
 
     buildTypes {
@@ -46,6 +48,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Kakao API: https://developers.kakao.com/docs/latest/ko/getting-started/sdk-android#select-module
+    implementation "com.kakao.sdk:v2-all:2.11.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
+    implementation "com.kakao.sdk:v2-user:2.11.0" // 카카오 로그인
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
