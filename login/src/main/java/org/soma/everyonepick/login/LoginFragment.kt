@@ -72,11 +72,10 @@ class LoginFragment : Fragment() {
                 // TODO: 가입 여부 체크한 뒤, user에 담긴 정보를 토대로 회원가입 진행 + startHomeActivity() 호출
                 Log.d(TAG, "사용자 정보 요청 성공" +
                         "\n회원번호: ${user.id}" +
-                        "\n이메일: ${user.kakaoAccount?.email}" +
                         "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                         "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
 
-                // TODO: Remove it after register implemented
+                // TODO: 회원가입 구현한 뒤, 가입 성공 시 HomeActivity로 이동
                 startHomeActivity()
             }
         }

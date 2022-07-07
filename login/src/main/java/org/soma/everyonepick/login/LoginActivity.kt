@@ -1,23 +1,13 @@
 package org.soma.everyonepick.login
 
-import android.content.pm.PackageManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
-import org.soma.everyonepick.foundation.NATIVE_APP_KEY
+import org.soma.everyonepick.foundation.utility.NATIVE_APP_KEY
 import org.soma.everyonepick.login.databinding.ActivityLoginBinding
-import java.security.MessageDigest
-import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
