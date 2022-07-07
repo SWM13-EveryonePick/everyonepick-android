@@ -14,9 +14,10 @@
         android:layout_height="match_parent"
         tools:context=".LoginFragment">
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/kakao_login_medium_wide"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
