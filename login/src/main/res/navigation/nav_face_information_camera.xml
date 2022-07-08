@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_camera"
+    app:startDestination="@id/fragmentPermission">
+
+    <fragment
+        android:id="@+id/fragmentPermission"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.PermissionFragment"
+        android:label="PermissionFragment">
+
+        <action
+            android:id="@+id/action_permission_to_preview"
+            app:destination="@id/fragmentPreview"
+            app:popUpTo="@id/fragmentPermission"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentPreview"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.PreviewFragment"
+        android:label="PreviewFragment">
+
+        <action
+            android:id="@+id/action_preview_to_permission"
+            app:destination="@+id/fragmentPermission"
+            app:popUpTo="@id/fragmentPreview"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+</navigation>

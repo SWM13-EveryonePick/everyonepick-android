@@ -14,11 +14,20 @@
         android:layout_height="match_parent"
         tools:context=".ui.FaceInformationCameraFragment">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_face_information_camera"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="TODO: 버튼 지우고 자동으로 넘어가기"
+            android:text="TODO: 버튼 지우고 자동으로 넘어가기 + 권한 거절되었을 때만 보이는 권한 요청 버튼"
             android:onClick="@{() -> fragment.onClickNextButton()}"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
