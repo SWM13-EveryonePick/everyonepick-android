@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="org.soma.everyonepick.login.LoginFragment"
+        android:name="org.soma.everyonepick.login.ui.LoginFragment"
         android:label="LoginFragment">
     </fragment>
 

@@ -1,20 +1,20 @@
-package org.soma.everyonepick.app
+package org.soma.everyonepick.app.ui
 
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.camera.ui.CameraFragment
-import org.soma.everyonepick.groupalbum.GroupAlbumFragment
-import org.soma.everyonepick.setting.SettingFragment
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumFragment
+import org.soma.everyonepick.setting.ui.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login
+package org.soma.everyonepick.login.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import org.soma.everyonepick.foundation.utility.NATIVE_APP_KEY
+import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

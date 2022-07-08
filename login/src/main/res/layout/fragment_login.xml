@@ -6,13 +6,13 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.login.LoginFragment" />
+            type="org.soma.everyonepick.login.ui.LoginFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginFragment">
+        tools:context=".ui.LoginFragment">
 
         <ImageButton
             android:layout_width="wrap_content"

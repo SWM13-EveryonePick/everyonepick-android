@@ -6,15 +6,15 @@
 
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="org.soma.everyonepick.camera.CameraFragment"
+        android:name="org.soma.everyonepick.camera.ui.CameraFragment"
         android:label="CameraFragment" />
     <fragment
         android:id="@+id/groupAlbumFragment"
-        android:name="org.soma.everyonepick.groupalbum.GroupAlbumFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumFragment"
         android:label="GroupAlbumFragment"/>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="org.soma.everyonepick.setting.SettingFragment"
+        android:name="org.soma.everyonepick.setting.ui.SettingFragment"
         android:label="SettingFragment" />
 
 

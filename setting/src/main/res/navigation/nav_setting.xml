@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/fragmentSetting"
-        android:name="org.soma.everyonepick.setting.SettingFragment"/>
+        android:name="org.soma.everyonepick.setting.ui.SettingFragment"/>
 
 </navigation>
