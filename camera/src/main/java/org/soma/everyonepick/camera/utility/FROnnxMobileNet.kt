@@ -11,7 +11,7 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import org.soma.everyonepick.camera.CameraFragment
+import org.soma.everyonepick.camera.ui.CameraFragment
 import org.soma.everyonepick.camera.R
 import java.io.ByteArrayOutputStream
 import java.nio.FloatBuffer

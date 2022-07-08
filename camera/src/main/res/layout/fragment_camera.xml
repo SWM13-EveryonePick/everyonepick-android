@@ -6,7 +6,7 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.camera.CameraFragment" />
+            type="org.soma.everyonepick.camera.ui.CameraFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
