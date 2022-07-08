@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import org.soma.everyonepick.camera.databinding.CameraUiContainerBinding
 import org.soma.everyonepick.camera.databinding.FragmentCameraPreviewBinding
-import org.soma.everyonepick.camera.utility.FROnnxMobileNet
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
@@ -30,7 +29,6 @@ class CameraPreviewFragment : Fragment() {
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
     private var imageCapture: ImageCapture? = null
-    private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
 
     private lateinit var cameraExecutor: ExecutorService
@@ -101,22 +99,12 @@ class CameraPreviewFragment : Fragment() {
             .setJpegQuality(50)
             .build()
 
-        // ImageAnalyzer
-        imageAnalyzer = ImageAnalysis.Builder()
-            .setTargetAspectRatio(screenAspectRatio)
-            .build()
-            .also {
-                it.setAnalyzer(cameraExecutor, FROnnxMobileNet(requireContext()) { floatArray ->
-                    Log.d(TAG, floatArray.contentToString())
-                })
-            }
-
         cameraProvider.unbindAll()
 
         try {
             preview?.setSurfaceProvider(binding.previewview.surfaceProvider)
             camera = cameraProvider.bindToLifecycle(
-                this as LifecycleOwner, cameraSelector, preview, imageCapture, imageAnalyzer
+                this as LifecycleOwner, cameraSelector, preview, imageCapture
             )
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)

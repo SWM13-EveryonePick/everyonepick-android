@@ -77,7 +77,6 @@ class PreviewFragment : Fragment() {
         val screenAspectRatio = calculateAspectRatio()
         val cameraProvider = processCameraProvider
             ?: throw IllegalStateException("Camera initialization failed.")
-        // TODO: 화면 전환
         val cameraSelector = CameraSelector.Builder()
             .requireLensFacing(CameraSelector.LENS_FACING_BACK)
             .build()
