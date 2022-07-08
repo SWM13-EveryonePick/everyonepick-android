@@ -8,6 +8,33 @@
         android:id="@+id/loginFragment"
         android:name="org.soma.everyonepick.login.ui.LoginFragment"
         android:label="LoginFragment">
+        <action
+            android:id="@+id/action_login_to_faceinformationdescription"
+            app:destination="@id/faceInformationDescriptionFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/faceInformationDescriptionFragment"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationDescriptionFragment"
+        android:label="FaceInformationDescriptionFragment">
+        <action
+            android:id="@+id/action_login_to_faceinformationcamera"
+            app:destination="@id/faceInformationCameraFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/faceInformationCameraFragment"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment"
+        android:label="FaceInformationCameraFragment">
+        <action
+            android:id="@+id/action_login_to_faceinformationcomplete"
+            app:destination="@id/faceInformationCompleteFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/faceInformationCompleteFragment"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCompleteFragment"
+        android:label="FaceInformationCompleteFragment">
     </fragment>
 
 </navigation>

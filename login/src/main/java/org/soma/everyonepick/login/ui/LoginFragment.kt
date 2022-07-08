@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -63,15 +64,22 @@ class LoginFragment : Fragment() {
             if(error != null){
                 Toast.makeText(requireContext(), "사용자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
             }else if(user != null) {
-                // TODO: 가입 여부 체크한 뒤, user에 담긴 정보를 토대로 회원가입 진행 + startHomeActivity() 호출
                 Log.d(
                     TAG, "사용자 정보 요청 성공" +
                         "\n회원번호: ${user.id}" +
                         "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                         "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
 
-                // TODO: 회원가입 구현한 뒤, 가입 성공 시 HomeActivity로 이동
-                startHomeActivity()
+                // TODO: 가입 여부 체크
+                // 첫 로그인일 경우
+                if(true){
+                    // TODO: 회원가입 진행
+                    findNavController().navigate(
+                         LoginFragmentDirections.actionLoginToFaceinformationdescription()
+                    )
+                }else{
+                    startHomeActivity()
+                }
             }
         }
     }
