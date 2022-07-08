@@ -12,7 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
-import org.soma.everyonepick.camera.CameraFragment
+import org.soma.everyonepick.camera.ui.CameraFragment
 import org.soma.everyonepick.groupalbum.GroupAlbumFragment
 import org.soma.everyonepick.setting.SettingFragment
 
