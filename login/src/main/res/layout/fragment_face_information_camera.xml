@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="TODO: 버튼 지우고 자동으로 넘어가기 + 권한 거절되었을 때만 보이는 권한 요청 버튼"
+            android:text="TODO: 버튼 지우고 자동으로 넘어가기"
             android:onClick="@{() -> fragment.onClickNextButton()}"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
