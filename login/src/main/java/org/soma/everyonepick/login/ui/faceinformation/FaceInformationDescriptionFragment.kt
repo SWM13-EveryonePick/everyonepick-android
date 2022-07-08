@@ -25,6 +25,12 @@ class FaceInformationDescriptionFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+
     fun onClickNextButton() {
         findNavController().navigate(
             FaceInformationDescriptionFragmentDirections.actionLoginToFaceinformationcamera()
