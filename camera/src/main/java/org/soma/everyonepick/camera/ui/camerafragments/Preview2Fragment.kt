@@ -11,8 +11,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import org.soma.everyonepick.camera.databinding.CameraUiContainerBinding
-import org.soma.everyonepick.camera.databinding.FragmentCameraPreviewBinding
+import org.soma.everyonepick.camera.databinding.CameraUiContainer2Binding
+import org.soma.everyonepick.camera.databinding.FragmentPreview2Binding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
@@ -20,11 +20,11 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-class CameraPreviewFragment : Fragment() {
-    private var _binding: FragmentCameraPreviewBinding? = null
+class Preview2Fragment : Fragment() {
+    private var _binding: FragmentPreview2Binding? = null
     private val binding get() = _binding!!
 
-    private var cameraUiContainerBinding: CameraUiContainerBinding? = null
+    private var cameraUiContainerBinding: CameraUiContainer2Binding? = null
 
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
@@ -37,7 +37,7 @@ class CameraPreviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCameraPreviewBinding.inflate(inflater, container, false)
+        _binding = FragmentPreview2Binding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -57,7 +57,7 @@ class CameraPreviewFragment : Fragment() {
             binding.constraintlayoutRoot.removeView(it)
         }
 
-        cameraUiContainerBinding = CameraUiContainerBinding.inflate(
+        cameraUiContainerBinding = CameraUiContainer2Binding.inflate(
             LayoutInflater.from(requireContext()),
             binding.constraintlayoutRoot,
             true
