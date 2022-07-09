@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.soma.everyonepick.login.R
-import org.soma.everyonepick.login.databinding.FragmentLanding2Binding
+import org.soma.everyonepick.login.databinding.FragmentLanding1Binding
 
-class LandingFragment2 : Fragment() {
-    private var _binding: FragmentLanding2Binding? = null
+class Landing1Fragment : Fragment() {
+    private var _binding: FragmentLanding1Binding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLanding2Binding.inflate(inflater, container, false)
+        _binding = FragmentLanding1Binding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
 

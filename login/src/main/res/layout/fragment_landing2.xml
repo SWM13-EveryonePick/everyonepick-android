@@ -6,13 +6,13 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.login.ui.LandingFragment2" />
+            type="org.soma.everyonepick.login.ui.Landing2Fragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.LandingFragment2">
+        tools:context=".ui.Landing2Fragment">
 
         <Button
             android:layout_width="wrap_content"
