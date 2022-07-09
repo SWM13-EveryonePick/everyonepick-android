@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.FragmentLanding3Binding
 
@@ -26,5 +27,12 @@ class Landing3Fragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+
+    fun onClickNextButton() {
+        findNavController().navigate(
+            Landing3FragmentDirections.actionLanding3ToLogin()
+        )
     }
 }

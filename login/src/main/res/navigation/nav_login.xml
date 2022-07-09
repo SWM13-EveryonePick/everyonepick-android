@@ -2,7 +2,34 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_login"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/landing1Fragment">
+
+    <fragment
+        android:id="@+id/landing1Fragment"
+        android:name="org.soma.everyonepick.login.ui.Landing1Fragment"
+        android:label="Landing1Fragment">
+        <action
+            android:id="@+id/action_landing1_to_landing2"
+            app:destination="@id/landing2Fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/landing2Fragment"
+        android:name="org.soma.everyonepick.login.ui.Landing2Fragment"
+        android:label="Landing2Fragment">
+        <action
+            android:id="@+id/action_landing2_to_landing3"
+            app:destination="@id/landing3Fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/landing3Fragment"
+        android:name="org.soma.everyonepick.login.ui.Landing3Fragment"
+        android:label="Landing3Fragment">
+        <action
+            android:id="@+id/action_landing3_to_login"
+            app:destination="@id/loginFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
