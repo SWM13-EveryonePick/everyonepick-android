@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/landing1Fragment"
-        android:name="org.soma.everyonepick.login.ui.Landing1Fragment"
+        android:name="org.soma.everyonepick.login.ui.landing.Landing1Fragment"
         android:label="Landing1Fragment">
         <action
             android:id="@+id/action_landing1_to_landing2"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/landing2Fragment"
-        android:name="org.soma.everyonepick.login.ui.Landing2Fragment"
+        android:name="org.soma.everyonepick.login.ui.landing.Landing2Fragment"
         android:label="Landing2Fragment">
         <action
             android:id="@+id/action_landing2_to_landing3"
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/landing3Fragment"
-        android:name="org.soma.everyonepick.login.ui.Landing3Fragment"
+        android:name="org.soma.everyonepick.login.ui.landing.Landing3Fragment"
         android:label="Landing3Fragment">
         <action
             android:id="@+id/action_landing3_to_login"

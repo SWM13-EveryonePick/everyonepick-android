@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.ui
+package org.soma.everyonepick.login.ui.landing
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.FragmentLanding1Binding
 
 class Landing1Fragment : Fragment() {
