@@ -63,6 +63,11 @@ class PermissionFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 
     fun onClickStartSettingForPermissionButton() {
         val intent = Intent(
