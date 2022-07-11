@@ -74,21 +74,20 @@ class PreviewFragment : Fragment() {
     }
 
     private fun bindCameraUseCases() {
-        val screenAspectRatio = calculateAspectRatio()
-        val cameraProvider = processCameraProvider
-            ?: throw IllegalStateException("Camera initialization failed.")
+        val screenAspectRatio = calculateAspectRatio()?: return
+        val cameraProvider = processCameraProvider?: return
         val cameraSelector = CameraSelector.Builder()
             .requireLensFacing(CameraSelector.LENS_FACING_BACK)
             .build()
 
         // Preview
         preview = Preview.Builder()
-            .setTargetAspectRatio(screenAspectRatio)
+            .setTargetAspectRatio(screenAspectRatio!!)
             .build()
 
         // ImageAnalyzer
         imageAnalyzer = ImageAnalysis.Builder()
-            .setTargetAspectRatio(screenAspectRatio)
+            .setTargetAspectRatio(screenAspectRatio!!)
             .build()
             .also {
                 it.setAnalyzer(cameraExecutor, FROnnxMobileNet(requireContext()) { floatArray ->
@@ -108,9 +107,11 @@ class PreviewFragment : Fragment() {
         }
     }
 
-    private fun calculateAspectRatio(): Int {
+    private fun calculateAspectRatio(): Int? {
+        val parentActivity = activity?: return null
+
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val metrics = requireActivity().windowManager.currentWindowMetrics.bounds
+            val metrics = parentActivity.windowManager.currentWindowMetrics.bounds
             aspectRatio(metrics.width(), metrics.height())
         } else {
             val metrics = resources.displayMetrics
