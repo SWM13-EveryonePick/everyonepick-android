@@ -13,7 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.camera.ui.CameraFragment
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumFragment
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment
 import org.soma.everyonepick.setting.ui.SettingFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -56,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
             },{
                 binding.bottomnavigationview.selectedItemId = R.id.settingFragment
             })
-            R.id.groupAlbumFragment -> GroupAlbumFragment()
+            R.id.groupAlbumFragment -> GroupAlbumViewPagerFragment()
             else -> SettingFragment()
         }
     }

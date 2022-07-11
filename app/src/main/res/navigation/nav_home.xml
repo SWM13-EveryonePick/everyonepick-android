@@ -10,7 +10,7 @@
         android:label="CameraFragment" />
     <fragment
         android:id="@+id/groupAlbumFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment"
         android:label="GroupAlbumFragment"/>
     <fragment
         android:id="@+id/settingFragment"
