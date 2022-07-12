@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui
+package org.soma.everyonepick.groupalbum.ui.groupalbum
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,12 +12,12 @@ import org.soma.everyonepick.groupalbum.R
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**w
+/**
  * A simple [Fragment] subclass.
- * Use the [FriendFragment.newInstance] factory method to
+ * Use the [GroupAlbumFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FriendFragment : Fragment() {
+class GroupAlbumFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class FriendFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friend, container, false)
+        return inflater.inflate(R.layout.fragment_group_album, container, false)
     }
 
     companion object {
@@ -45,12 +45,12 @@ class FriendFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment FriendFragment.
+         * @return A new instance of fragment GroupAlbumFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            FriendFragment().apply {
+            GroupAlbumFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
