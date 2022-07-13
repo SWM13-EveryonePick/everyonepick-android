@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.kakao.sdk.talk.model.Friend
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemFriendBinding
@@ -31,6 +32,9 @@ class FriendAdapter: ListAdapter<Friend, RecyclerView.ViewHolder>(FriendDiffCall
         private val binding: ItemFriendBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: Friend) {
+            Glide.with(binding.root)
+                .load(friend.profileThumbnailImage)
+                .into(binding.imageProfile)
             binding.textNickname.text = friend.profileNickname
         }
     }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_frienditem">100dp</dimen>
+    <dimen name="size_friendprofile">80dp</dimen>
+    <dimen name="margin_frienditem">10dp</dimen>
+</resources>
