@@ -25,12 +25,15 @@ class FriendFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFriendBinding.inflate(inflater, container, false)
+        initializeRecyclerView()
 
+        return binding.root
+    }
+
+    private fun initializeRecyclerView() {
         val adapter = FriendAdapter()
         binding.recyclerviewFriend.adapter = adapter
         subscribeUi(adapter)
-
-        return binding.root
     }
 
     private fun subscribeUi(adapter: FriendAdapter) {
@@ -42,9 +45,5 @@ class FriendFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    companion object {
-        private const val TAG = "FriendFragment"
     }
 }

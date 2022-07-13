@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.camera.ui.CameraFragment
-import org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment
 import org.soma.everyonepick.setting.ui.SettingFragment
 
 @AndroidEntryPoint
