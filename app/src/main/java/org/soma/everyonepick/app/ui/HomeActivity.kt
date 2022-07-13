@@ -10,12 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.camera.ui.CameraFragment
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumFragment
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment
 import org.soma.everyonepick.setting.ui.SettingFragment
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
 
@@ -56,7 +58,7 @@ class HomeActivity : AppCompatActivity() {
             },{
                 binding.bottomnavigationview.selectedItemId = R.id.settingFragment
             })
-            R.id.groupAlbumFragment -> GroupAlbumFragment()
+            R.id.groupAlbumFragment -> GroupAlbumViewPagerFragment()
             else -> SettingFragment()
         }
     }

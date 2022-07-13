@@ -54,8 +54,8 @@ dependencies {
 
     // Kakao API: https://developers.kakao.com/docs/latest/ko/getting-started/sdk-android#select-module
     implementation "com.kakao.sdk:v2-all:2.11.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
-    implementation "com.kakao.sdk:v2-user:2.11.0"
-    implementation project(path: ':foundation') // 카카오 로그인
+
+    implementation project(path: ':foundation')
 
     // CameraX
     def camerax_version = "1.2.0-alpha02"

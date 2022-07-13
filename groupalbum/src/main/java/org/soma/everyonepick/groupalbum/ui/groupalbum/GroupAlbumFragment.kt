@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui
+package org.soma.everyonepick.groupalbum.ui.groupalbum
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +12,6 @@ class GroupAlbumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_groupalbum, container, false)
+        return inflater.inflate(R.layout.fragment_group_album, container, false)
     }
-
 }

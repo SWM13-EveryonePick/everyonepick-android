@@ -5,5 +5,5 @@
     app:startDestination="@id/fragmentGroupAlbum">
     <fragment
         android:id="@+id/fragmentGroupAlbum"
-        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumFragment"/>
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment"/>
 </navigation>
