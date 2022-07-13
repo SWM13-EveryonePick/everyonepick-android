@@ -23,14 +23,15 @@ class FriendAdapter: ListAdapter<Friend, RecyclerView.ViewHolder>(FriendDiffCall
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val friend = getItem(position)
+        (holder as FriendViewHolder).bind(friend)
     }
 
     class FriendViewHolder(
         private val binding: ItemFriendBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: Friend) {
-
+            binding.textNickname.text = friend.profileNickname
         }
     }
 }
