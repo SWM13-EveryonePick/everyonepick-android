@@ -14,7 +14,6 @@ import org.soma.everyonepick.groupalbum.adapter.FriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentFriendBinding
 import org.soma.everyonepick.groupalbum.viewmodel.FriendViewModel
 
-@AndroidEntryPoint
 class FriendFragment : Fragment() {
     private var _binding: FragmentFriendBinding? = null
     private val binding get() = _binding!!
