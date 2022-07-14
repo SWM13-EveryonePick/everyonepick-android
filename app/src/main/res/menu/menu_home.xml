@@ -8,7 +8,7 @@
         android:enabled="true"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/groupAlbumFragment"
+        android:id="@+id/groupAlbumViewPagerFragment"
         android:title="@string/group_album_menu_item"
         android:icon="@drawable/ic_outline_photo_24"
         android:enabled="true"

@@ -2,16 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_home"
-    app:startDestination="@id/groupAlbumFragment">
+    app:startDestination="@id/groupAlbumViewPagerFragment">
 
     <fragment
         android:id="@+id/cameraFragment"
         android:name="org.soma.everyonepick.camera.ui.CameraFragment"
         android:label="CameraFragment" />
     <fragment
-        android:id="@+id/groupAlbumFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment"
-        android:label="GroupAlbumFragment"/>
+        android:id="@+id/groupAlbumViewPagerFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment"
+        android:label="GroupAlbumViewPagerFragment"/>
     <fragment
         android:id="@+id/settingFragment"
         android:name="org.soma.everyonepick.setting.ui.SettingFragment"

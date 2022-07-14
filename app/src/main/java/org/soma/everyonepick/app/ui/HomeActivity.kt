@@ -54,11 +54,11 @@ class HomeActivity : AppCompatActivity() {
     private fun getFragmentByItemId(itemId: Int): Fragment {
         return when(itemId) {
             R.id.cameraFragment -> CameraFragment({
-                binding.bottomnavigationview.selectedItemId = R.id.groupAlbumFragment
+                binding.bottomnavigationview.selectedItemId = R.id.groupAlbumViewPagerFragment
             },{
                 binding.bottomnavigationview.selectedItemId = R.id.settingFragment
             })
-            R.id.groupAlbumFragment -> GroupAlbumViewPagerFragment()
+            R.id.groupAlbumViewPagerFragment -> GroupAlbumViewPagerFragment()
             else -> SettingFragment()
         }
     }
