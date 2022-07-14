@@ -6,6 +6,9 @@
     <data>
         <import type="android.view.View"/>
         <variable
+            name="fragment"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumFragment" />
+        <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel"/>
     </data>
@@ -24,6 +27,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             app:spanCount="3"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_baseline_add_24"
+            android:onClick="@{() -> fragment.onClickCreateGroupAlbumButton()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

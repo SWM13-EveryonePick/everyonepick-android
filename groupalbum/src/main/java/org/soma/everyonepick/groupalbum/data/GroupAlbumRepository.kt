@@ -1,9 +1,9 @@
 package org.soma.everyonepick.groupalbum.data
 
 class GroupAlbumRepository {
-    fun getGroupAlbumList(): List<GroupAlbum> {
+    fun getGroupAlbumList(): MutableList<GroupAlbum> {
         // TODO: Retrofit2
-        val groupAlbumList = listOf(
+        val groupAlbumList = mutableListOf(
             GroupAlbum(0, "title0"),
             GroupAlbum(1, "title1"),
             GroupAlbum(2, "title2"),
