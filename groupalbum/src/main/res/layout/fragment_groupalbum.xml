@@ -10,9 +10,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_groupalbum"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="3"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
