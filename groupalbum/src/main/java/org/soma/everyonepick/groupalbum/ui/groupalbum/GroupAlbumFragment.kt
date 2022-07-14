@@ -12,6 +12,6 @@ class GroupAlbumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_group_album, container, false)
+        return inflater.inflate(R.layout.fragment_groupalbum, container, false)
     }
 }
