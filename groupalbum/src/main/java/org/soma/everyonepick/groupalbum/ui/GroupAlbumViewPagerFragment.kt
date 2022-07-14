@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
 
 private val TAB_ITEMS = listOf("앨범", "친구 목록")
 
+@AndroidEntryPoint
 class GroupAlbumViewPagerFragment : Fragment() {
     private var _binding: FragmentGroupalbumviewpagerBinding? = null
     private val binding get() = _binding!!
