@@ -3,24 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
+        <import type="android.view.View" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.GroupAlbumViewPagerFragment">
 
-        <org.soma.everyonepick.common_ui.CustomActionBar
-            android:id="@+id/customactionbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_actionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="단체공유앨범"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <org.soma.everyonepick.common_ui.CustomActionBar
+                android:id="@+id/customactionbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="단체공유앨범"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="선택"
+                android:visibility="@{viewModel.currentItem == 0? View.VISIBLE: View.GONE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="취소"
+                android:visibility="@{viewModel.currentItem == 1? View.VISIBLE: View.GONE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            app:layout_constraintTop_toBottomOf="@id/constraintlayout_actionbar"
             app:layout_constraintBottom_toTopOf="@id/viewpager2"/>
 
         <androidx.viewpager2.widget.ViewPager2
