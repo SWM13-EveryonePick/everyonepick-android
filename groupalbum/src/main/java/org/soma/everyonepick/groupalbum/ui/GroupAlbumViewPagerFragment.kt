@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
+import org.soma.everyonepick.groupalbum.utility.GroupAlbumMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
 private val TAB_ITEMS = listOf("앨범", "친구 목록")
@@ -30,6 +31,7 @@ class GroupAlbumViewPagerFragment : Fragment() {
     ): View? {
         _binding = FragmentGroupalbumviewpagerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+        binding.fragment = this
         binding.viewModel = viewModel
 
         return binding.root
@@ -55,5 +57,14 @@ class GroupAlbumViewPagerFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+
+    fun onClickSelectButton() {
+        if(viewModel.groupAlbumMode.value == GroupAlbumMode.NORMAL_MODE.ordinal) {
+            viewModel.groupAlbumMode.value = GroupAlbumMode.SELECTION_MODE.ordinal
+        }else{
+            viewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
+        }
     }
 }
