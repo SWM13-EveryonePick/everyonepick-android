@@ -49,12 +49,12 @@ class GroupAlbumFragment : Fragment() {
             // toMutableList(): 참조 주소를 새롭게 함으로써 갱신이 되도록 한다.
             adapter.submitList(groupAlbumItemList.toMutableList())
         }
+
         parentViewModel.groupAlbumMode.observe(viewLifecycleOwner) { groupAlbumMode ->
             when(groupAlbumMode) {
-                GroupAlbumMode.NORMAL_MODE.ordinal -> adapter.setCheckboxGone()
-                else -> adapter.setCheckboxVisible()
+                GroupAlbumMode.NORMAL_MODE.ordinal -> viewModel.setCheckboxGone()
+                else -> viewModel.setCheckboxVisible()
             }
-            adapter.notifyDataSetChanged()
         }
     }
 

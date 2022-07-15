@@ -31,23 +31,6 @@ class GroupAlbumAdapter: ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(Gr
         (holder as GroupAlbumViewHolder).bind(groupAlbumItem)
     }
 
-
-    fun setCheckboxVisible() {
-        for(i in 0 until itemCount) {
-            getItem(i).run {
-                isCheckboxVisible = true
-                isSelected = false // 이전 선택 상태를 초기화합니다.
-            }
-        }
-    }
-
-    fun setCheckboxGone() {
-        for(i in 0 until itemCount) {
-            getItem(i).isCheckboxVisible = false
-        }
-    }
-
-
     class GroupAlbumViewHolder(
         private val binding: ItemGroupalbumBinding
     ): RecyclerView.ViewHolder(binding.root) {
@@ -61,7 +44,7 @@ class GroupAlbumAdapter: ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(Gr
 
 private class GroupAlbumDiffCallback: DiffUtil.ItemCallback<GroupAlbumItem>() {
     override fun areItemsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
-        return oldItem.groupAlbum.id == newItem.groupAlbum.id && oldItem.isSelected == newItem.isSelected && oldItem.isCheckboxVisible == newItem.isCheckboxVisible
+        return oldItem.groupAlbum.id == newItem.groupAlbum.id
     }
 
     override fun areContentsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
