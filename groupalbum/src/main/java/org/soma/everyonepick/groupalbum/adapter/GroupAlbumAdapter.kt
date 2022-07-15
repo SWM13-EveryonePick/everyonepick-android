@@ -12,18 +12,33 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
-class GroupAlbumAdapter: ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
+class GroupAlbumAdapter(
+    val parentViewModel: GroupAlbumViewModel
+): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return GroupAlbumViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_groupalbum,
-                parent,
-                false
-            )
+        val binding = DataBindingUtil.inflate<ItemGroupalbumBinding?>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_groupalbum,
+            parent,
+            false
         )
+        val holder = GroupAlbumViewHolder(binding)
+
+        subscribeUi(binding, holder)
+
+        return holder
+    }
+
+    private fun subscribeUi(binding: ItemGroupalbumBinding, holder: GroupAlbumViewHolder) {
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
+            if(parentViewModel.groupAlbumItemList.value == null) return@setOnCheckedChangeListener
+
+            val position = holder.absoluteAdapterPosition
+            parentViewModel.groupAlbumItemList.value!![position].isChecked = isChecked
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -37,7 +52,7 @@ class GroupAlbumAdapter: ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(Gr
         fun bind(groupAlbumItem: GroupAlbumItem) {
             binding.textTitle.text = groupAlbumItem.groupAlbum.title
             binding.checkbox.visibility = if(groupAlbumItem.isCheckboxVisible) View.VISIBLE else View.GONE
-            binding.checkbox.isChecked = groupAlbumItem.isSelected
+            binding.checkbox.isChecked = groupAlbumItem.isChecked
         }
     }
 }

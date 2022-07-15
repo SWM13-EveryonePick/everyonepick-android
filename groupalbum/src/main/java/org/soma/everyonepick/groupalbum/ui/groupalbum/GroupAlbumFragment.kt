@@ -36,7 +36,7 @@ class GroupAlbumFragment : Fragment() {
         binding.viewModel = viewModel
         binding.parentViewModel = parentViewModel
 
-        val adapter = GroupAlbumAdapter()
+        val adapter = GroupAlbumAdapter(viewModel)
         binding.recyclerviewGroupalbum.adapter = adapter
 
         subscribeUi(adapter)
@@ -70,6 +70,11 @@ class GroupAlbumFragment : Fragment() {
     fun onClickCreateGroupAlbumButton() {
         val index = viewModel.groupAlbumItemList.value?.size?.toLong()
         viewModel.addGroupAlbum(GroupAlbumItem(GroupAlbum(index ?: -1, "title$index"), false, false))
+    }
+
+    fun onClickDeleteButton() {
+        viewModel.deleteCheckedItems()
+        parentViewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
     }
 
     fun onClickCancelButton() {

@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -53,5 +54,16 @@ class GroupAlbumViewModel @Inject constructor(
             groupAlbumItemList.value!![i] = newItem
         }
         groupAlbumItemList.value = groupAlbumItemList.value
+    }
+
+    fun deleteCheckedItems() {
+        if(groupAlbumItemList.value == null) return
+
+        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        for(i in 0 until groupAlbumItemList.value!!.size) {
+            if(!groupAlbumItemList.value!![i].isChecked)
+                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
+        }
+        groupAlbumItemList.value = newGroupAlbumItemList
     }
 }
