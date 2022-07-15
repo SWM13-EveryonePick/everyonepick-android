@@ -30,7 +30,7 @@ class FriendAdapter: ListAdapter<Friend, RecyclerView.ViewHolder>(FriendDiffCall
 
     class FriendViewHolder(
         private val binding: ItemFriendBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ): RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: Friend) {
             Glide.with(binding.root)
                 .load(friend.profileThumbnailImage)

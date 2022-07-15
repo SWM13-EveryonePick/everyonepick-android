@@ -25,6 +25,9 @@ class FriendFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFriendBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
         initializeRecyclerView()
 
         return binding.root

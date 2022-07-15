@@ -1,17 +1,81 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbum
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
+import org.soma.everyonepick.groupalbum.data.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumBinding
+import org.soma.everyonepick.groupalbum.utility.GroupAlbumMode
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
+@AndroidEntryPoint
 class GroupAlbumFragment : Fragment() {
+    private var _binding: FragmentGroupalbumBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: GroupAlbumViewModel by viewModels()
+    private val parentViewModel: GroupAlbumViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_group_album, container, false)
+        _binding = FragmentGroupalbumBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.fragment = this
+        binding.viewModel = viewModel
+        binding.parentViewModel = parentViewModel
+
+        val adapter = GroupAlbumAdapter(viewModel)
+        binding.recyclerviewGroupalbum.adapter = adapter
+
+        subscribeUi(adapter)
+
+        return binding.root
+    }
+
+    private fun subscribeUi(adapter: GroupAlbumAdapter) {
+        viewModel.groupAlbumItemList.observe(viewLifecycleOwner) { groupAlbumItemList ->
+            // toMutableList(): 참조 주소를 새롭게 함으로써 갱신이 되도록 한다.
+            adapter.submitList(groupAlbumItemList.toMutableList())
+        }
+
+        parentViewModel.groupAlbumMode.observe(viewLifecycleOwner) { groupAlbumMode ->
+            when(groupAlbumMode) {
+                GroupAlbumMode.NORMAL_MODE.ordinal -> viewModel.setCheckboxGone()
+                else -> viewModel.setCheckboxVisible()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+
+    // TODO: Remove it after creating group album logic implemented
+    fun onClickCreateGroupAlbumButton() {
+        val index = viewModel.groupAlbumItemList.value?.size?.toLong()
+        viewModel.addGroupAlbum(GroupAlbumItem(GroupAlbum(index ?: -1, "title$index"), false, false))
+    }
+
+    fun onClickDeleteButton() {
+        viewModel.deleteCheckedItems()
+        parentViewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
+    }
+
+    fun onClickCancelButton() {
+        parentViewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
     }
 }
