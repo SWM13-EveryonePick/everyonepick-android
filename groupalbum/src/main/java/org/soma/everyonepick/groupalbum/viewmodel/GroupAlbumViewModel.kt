@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.groupalbum.data.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
 import javax.inject.Inject
 
@@ -12,20 +13,20 @@ import javax.inject.Inject
 class GroupAlbumViewModel @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository
 ): ViewModel() {
-    val groupAlbumList: MutableLiveData<MutableList<GroupAlbum>> = MutableLiveData()
+    val groupAlbumItemList: MutableLiveData<MutableList<GroupAlbumItem>> = MutableLiveData()
     init {
         updateGroupAlbumList()
     }
 
     fun updateGroupAlbumList() {
-        val newGroupAlbumList = groupAlbumRepository.getGroupAlbumList()
-        groupAlbumList.postValue(newGroupAlbumList)
+        val newGroupAlbumItemList = groupAlbumRepository.getGroupAlbumItemList()
+        groupAlbumItemList.postValue(newGroupAlbumItemList)
     }
 
-    fun addGroupAlbum(groupAlbum: GroupAlbum) {
-        groupAlbumList.value?.let{
-            it.add(groupAlbum)
-            groupAlbumList.postValue(it)
+    fun addGroupAlbum(groupAlbumItem: GroupAlbumItem) {
+        groupAlbumItemList.value?.let{
+            it.add(groupAlbumItem)
+            groupAlbumItemList.postValue(it)
         }
     }
 }

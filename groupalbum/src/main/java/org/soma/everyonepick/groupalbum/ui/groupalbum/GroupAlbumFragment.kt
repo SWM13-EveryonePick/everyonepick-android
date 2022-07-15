@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
@@ -35,21 +36,25 @@ class GroupAlbumFragment : Fragment() {
         binding.viewModel = viewModel
         binding.parentViewModel = parentViewModel
 
-        initializeRecyclerView()
+        val adapter = GroupAlbumAdapter()
+        binding.recyclerviewGroupalbum.adapter = adapter
+
+        subscribeUi(adapter)
 
         return binding.root
     }
 
-    private fun initializeRecyclerView() {
-        val adapter = GroupAlbumAdapter()
-        binding.recyclerviewGroupalbum.adapter = adapter
-        subscribeUi(adapter)
-    }
-
     private fun subscribeUi(adapter: GroupAlbumAdapter) {
-        viewModel.groupAlbumList.observe(viewLifecycleOwner) { groupAlbumList ->
+        viewModel.groupAlbumItemList.observe(viewLifecycleOwner) { groupAlbumItemList ->
             // toMutableList(): 참조 주소를 새롭게 함으로써 갱신이 되도록 한다.
-            adapter.submitList(groupAlbumList.toMutableList())
+            adapter.submitList(groupAlbumItemList.toMutableList())
+        }
+        parentViewModel.groupAlbumMode.observe(viewLifecycleOwner) { groupAlbumMode ->
+            when(groupAlbumMode) {
+                GroupAlbumMode.NORMAL_MODE.ordinal -> adapter.setCheckboxGone()
+                else -> adapter.setCheckboxVisible()
+            }
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -63,8 +68,8 @@ class GroupAlbumFragment : Fragment() {
     // 다른 페이지로 이동해서 결과값을 얻는 식으로 흐름이 짜여질 것이기 때문입니다.
     // 현재는 더미 데이터 하나를 추가하는 정도입니다.
     fun onClickCreateGroupAlbumButton() {
-        val index = viewModel.groupAlbumList.value?.size?.toLong()
-        viewModel.addGroupAlbum(GroupAlbum(index ?: -1, "title$index"))
+        val index = viewModel.groupAlbumItemList.value?.size?.toLong()
+        viewModel.addGroupAlbum(GroupAlbumItem(GroupAlbum(index ?: -1, "title$index"), false, false))
     }
 
     fun onClickCancelButton() {
