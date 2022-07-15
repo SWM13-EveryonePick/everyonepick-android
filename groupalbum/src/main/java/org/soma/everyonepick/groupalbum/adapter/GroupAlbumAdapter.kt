@@ -33,6 +33,17 @@ class GroupAlbumAdapter(
     }
 
     private fun subscribeUi(binding: ItemGroupalbumBinding, holder: GroupAlbumViewHolder) {
+        binding.root.setOnClickListener {
+            // TODO: Remove it after delete group album logic implemented
+            if(parentViewModel.groupAlbumItemList.value == null) return@setOnClickListener
+
+            val position = holder.absoluteAdapterPosition
+            // 일반 모드일 때
+            if(binding.checkbox.visibility == View.GONE) {
+                parentViewModel.updateTitle(position, "UPDATED")
+            }
+        }
+
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             if(parentViewModel.groupAlbumItemList.value == null) return@setOnCheckedChangeListener
 

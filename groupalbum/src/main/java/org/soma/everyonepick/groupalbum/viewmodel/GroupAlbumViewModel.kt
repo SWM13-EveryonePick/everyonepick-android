@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.soma.everyonepick.groupalbum.data.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
 import javax.inject.Inject
@@ -25,6 +26,20 @@ class GroupAlbumViewModel @Inject constructor(
 
     fun addGroupAlbum(groupAlbumItem: GroupAlbumItem) {
         groupAlbumItemList.value?.add(groupAlbumItem)
+        groupAlbumItemList.value = groupAlbumItemList.value
+    }
+
+    fun updateTitle(position: Int, title: String) {
+        if(groupAlbumItemList.value == null) return
+
+        val newItem = GroupAlbumItem(
+            groupAlbumItemList.value!![position].groupAlbum.copy(),
+            groupAlbumItemList.value!![position].isChecked,
+            groupAlbumItemList.value!![position].isCheckboxVisible
+        )
+        newItem.groupAlbum.title = title
+
+        groupAlbumItemList.value!![position] = newItem
         groupAlbumItemList.value = groupAlbumItemList.value
     }
 

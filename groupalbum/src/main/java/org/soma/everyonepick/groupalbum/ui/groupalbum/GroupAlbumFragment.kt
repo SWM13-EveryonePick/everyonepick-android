@@ -64,9 +64,7 @@ class GroupAlbumFragment : Fragment() {
     }
 
 
-    // view model 대신 이곳에서 버튼 이벤트를 구현한 것은, 추후에는
-    // 다른 페이지로 이동해서 결과값을 얻는 식으로 흐름이 짜여질 것이기 때문입니다.
-    // 현재는 더미 데이터 하나를 추가하는 정도입니다.
+    // TODO: Remove it after creating group album logic implemented
     fun onClickCreateGroupAlbumButton() {
         val index = viewModel.groupAlbumItemList.value?.size?.toLong()
         viewModel.addGroupAlbum(GroupAlbumItem(GroupAlbum(index ?: -1, "title$index"), false, false))

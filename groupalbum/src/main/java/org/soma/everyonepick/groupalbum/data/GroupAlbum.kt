@@ -2,5 +2,5 @@ package org.soma.everyonepick.groupalbum.data
 
 data class GroupAlbum(
     val id: Long,
-    val title: String
+    var title: String
 )
