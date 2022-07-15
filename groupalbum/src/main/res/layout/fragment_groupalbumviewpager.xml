@@ -8,11 +8,19 @@
         android:layout_height="match_parent"
         tools:context=".ui.GroupAlbumViewPagerFragment">
 
+        <org.soma.everyonepick.common_ui.CustomActionBar
+            android:id="@+id/customactionbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="단체공유앨범"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar"
             app:layout_constraintBottom_toTopOf="@id/viewpager2"/>
 
         <androidx.viewpager2.widget.ViewPager2

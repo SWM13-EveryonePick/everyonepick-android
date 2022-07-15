@@ -24,6 +24,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        supportActionBar?.hide()
 
         initializeNavigation()
     }
@@ -69,11 +70,9 @@ class HomeActivity : AppCompatActivity() {
 
         if(flag) {
             hideStatusBar()
-            supportActionBar?.hide()
             binding.bottomnavigationview.visibility = View.GONE
         }else{
             showStatusBar()
-            supportActionBar?.show()
             binding.bottomnavigationview.visibility = View.VISIBLE
         }
     }
