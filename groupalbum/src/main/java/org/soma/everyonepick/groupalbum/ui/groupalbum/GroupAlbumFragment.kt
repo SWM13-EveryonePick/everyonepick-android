@@ -13,7 +13,9 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumBinding
+import org.soma.everyonepick.groupalbum.utility.GroupAlbumMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
 @AndroidEntryPoint
 class GroupAlbumFragment : Fragment() {
@@ -21,6 +23,7 @@ class GroupAlbumFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: GroupAlbumViewModel by viewModels()
+    private val parentViewModel: GroupAlbumViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +33,7 @@ class GroupAlbumFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.fragment = this
         binding.viewModel = viewModel
+        binding.parentViewModel = parentViewModel
 
         initializeRecyclerView()
 
@@ -61,5 +65,9 @@ class GroupAlbumFragment : Fragment() {
     fun onClickCreateGroupAlbumButton() {
         val index = viewModel.groupAlbumList.value?.size?.toLong()
         viewModel.addGroupAlbum(GroupAlbum(index ?: -1, "title$index"))
+    }
+
+    fun onClickCancelButton() {
+        parentViewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
     }
 }

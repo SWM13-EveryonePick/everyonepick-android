@@ -5,12 +5,16 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumMode"/>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumFragment" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumFragment"/>
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel"/>
+        <variable
+            name="parentViewModel"
+            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,9 +49,34 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:src="@drawable/ic_baseline_add_24"
+            android:visibility="@{parentViewModel.groupAlbumMode == GroupAlbumMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
             android:onClick="@{() -> fragment.onClickCreateGroupAlbumButton()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            android:visibility="@{parentViewModel.groupAlbumMode == GroupAlbumMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_delete_outline_24"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_baseline_close_24"
+                android:onClick="@{() -> fragment.onClickCancelButton()}"/>
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
