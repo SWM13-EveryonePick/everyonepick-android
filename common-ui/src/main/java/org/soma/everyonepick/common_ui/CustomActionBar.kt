@@ -9,24 +9,23 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import org.soma.everyonepick.common_ui.databinding.ViewCustomactionbarBinding
 
 class CustomActionBar: ConstraintLayout {
-    // TODO: 커스텀 뷰 완성 + 적용해보기 + 커스텀 액션 바 위에 버튼 달기 + 선택/취소 및 버튼 클릭 이벤트 구현
     constructor(context: Context): super(context){
-        initialzeView(context)
+        initializeView(context)
     }
 
     constructor(context: Context, attrs: AttributeSet?): super(context, attrs) {
-        initialzeView(context)
+        initializeView(context)
         getAttrs(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int): super(context, attrs) {
-        initialzeView(context)
+        initializeView(context)
         getAttrs(attrs)
     }
 
-    private lateinit var binding: ViewCustomactionbarBinding
+    lateinit var binding: ViewCustomactionbarBinding
 
-    private fun initialzeView(context: Context?) {
+    private fun initializeView(context: Context?) {
         binding = ViewCustomactionbarBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
