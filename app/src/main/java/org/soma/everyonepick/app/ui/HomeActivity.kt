@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
@@ -33,32 +37,17 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initializeNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-        val navController = navHostFragment.findNavController()
-        binding.bottomnavigationview.run{
+        val navController = navHostFragment.navController
+        binding.bottomnavigationview.run {
             setupWithNavController(navController)
             setOnItemSelectedListener { item ->
-                val fragment = getFragmentByItemId(item.itemId)
-                replaceFragment(fragment)
+                navController.navigate(item.itemId)
 
                 // Camera Fragment에서 풀스크린을 사용합니다.
-                setFullScreenMode(item.itemId == R.id.cameraParentFragment)
+                setFullScreenMode(item.itemId == R.id.nav_camera)
 
                 return@setOnItemSelectedListener true
             }
-        }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host, fragment)
-            .commit()
-    }
-
-    private fun getFragmentByItemId(itemId: Int): Fragment {
-        return when(itemId) {
-            R.id.cameraParentFragment -> CameraParentFragment()
-            R.id.groupAlbumParentFragment -> GroupAlbumParentFragment()
-            else -> SettingParentFragment()
         }
     }
 
