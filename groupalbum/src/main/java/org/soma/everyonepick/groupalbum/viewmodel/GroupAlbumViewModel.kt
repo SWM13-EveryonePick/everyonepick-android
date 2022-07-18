@@ -10,6 +10,11 @@ import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
 import javax.inject.Inject
 
+/**
+ * groupAlbumItemList의 값을 수정하더라도 MutableLiveData의 특성으로 인해
+ * 주소값이 변하여야 observer가 작동하므로, 데이터를 변경할 때 이를 감안하여야 합니다.
+ */
+
 @HiltViewModel
 class GroupAlbumViewModel @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository
