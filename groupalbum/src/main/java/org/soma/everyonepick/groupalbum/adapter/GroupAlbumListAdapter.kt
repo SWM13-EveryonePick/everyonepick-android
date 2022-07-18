@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.GroupAlbumListItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumlistBinding
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 class GroupAlbumListAdapter(
@@ -36,7 +38,11 @@ class GroupAlbumListAdapter(
             val position = holder.absoluteAdapterPosition
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {
-
+                val direction =
+                    GroupAlbumViewPagerFragmentDirections.actionGroupalbumviewpagerToGroupalbum(
+                        getItem(position).groupAlbum.id
+                    )
+                binding.root.findNavController().navigate(direction)
             }
         }
 

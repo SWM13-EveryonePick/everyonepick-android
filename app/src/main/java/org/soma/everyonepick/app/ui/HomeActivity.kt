@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.camera.ui.CameraFragment
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentFragment
 import org.soma.everyonepick.setting.ui.SettingFragment
 
 @AndroidEntryPoint
@@ -55,11 +55,11 @@ class HomeActivity : AppCompatActivity() {
     private fun getFragmentByItemId(itemId: Int): Fragment {
         return when(itemId) {
             R.id.cameraFragment -> CameraFragment({
-                binding.bottomnavigationview.selectedItemId = R.id.groupAlbumViewPagerFragment
+                binding.bottomnavigationview.selectedItemId = R.id.groupAlbumParentFragment
             },{
                 binding.bottomnavigationview.selectedItemId = R.id.settingFragment
             })
-            R.id.groupAlbumViewPagerFragment -> GroupAlbumViewPagerFragment()
+            R.id.groupAlbumParentFragment -> GroupAlbumParentFragment()
             else -> SettingFragment()
         }
     }
