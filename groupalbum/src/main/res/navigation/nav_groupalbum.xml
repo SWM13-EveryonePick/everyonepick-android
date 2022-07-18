@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_groupalbum"
-    app:startDestination="@id/fragmentGroupAlbum">
+    app:startDestination="@id/fragmentGroupAlbumList">
     <fragment
-        android:id="@+id/fragmentGroupAlbum"
+        android:id="@+id/fragmentGroupAlbumList"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment"/>
 </navigation>

@@ -1,36 +1,33 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbum
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
-import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumlistBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
 @AndroidEntryPoint
-class GroupAlbumFragment : Fragment() {
-    private var _binding: FragmentGroupalbumBinding? = null
+class GroupAlbumListFragment : Fragment() {
+    private var _binding: FragmentGroupalbumlistBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: GroupAlbumViewModel by viewModels()
+    private val viewModel: GroupAlbumListViewModel by viewModels()
     private val parentViewModel: GroupAlbumViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGroupalbumBinding.inflate(inflater, container, false)
+        _binding = FragmentGroupalbumlistBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
         binding.viewModel = viewModel

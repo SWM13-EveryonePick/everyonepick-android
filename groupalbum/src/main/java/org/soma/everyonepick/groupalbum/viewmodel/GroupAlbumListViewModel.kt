@@ -16,7 +16,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class GroupAlbumViewModel @Inject constructor(
+class GroupAlbumListViewModel @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository
 ): ViewModel() {
     val groupAlbumItemList = MutableLiveData<MutableList<GroupAlbumItem>>()
