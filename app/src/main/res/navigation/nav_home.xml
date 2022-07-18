@@ -5,9 +5,9 @@
     app:startDestination="@id/groupAlbumParentFragment">
 
     <fragment
-        android:id="@+id/cameraFragment"
-        android:name="org.soma.everyonepick.camera.ui.CameraFragment"
-        android:label="CameraFragment" />
+        android:id="@+id/cameraParentFragment"
+        android:name="org.soma.everyonepick.camera.ui.CameraParentFragment"
+        android:label="CameraParentFragment" />
     <fragment
         android:id="@+id/groupAlbumParentFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentFragment"

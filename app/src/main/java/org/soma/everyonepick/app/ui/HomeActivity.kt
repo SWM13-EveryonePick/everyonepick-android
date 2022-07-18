@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.camera.ui.CameraFragment
+import org.soma.everyonepick.camera.ui.CameraParentFragment
 import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentFragment
 import org.soma.everyonepick.setting.ui.SettingFragment
 
@@ -39,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
                 replaceFragment(fragment)
 
                 // Camera Fragment에서 풀스크린을 사용합니다.
-                setFullScreenMode(item.itemId == R.id.cameraFragment)
+                setFullScreenMode(item.itemId == R.id.cameraParentFragment)
 
                 return@setOnItemSelectedListener true
             }
@@ -54,11 +55,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun getFragmentByItemId(itemId: Int): Fragment {
         return when(itemId) {
-            R.id.cameraFragment -> CameraFragment({
-                binding.bottomnavigationview.selectedItemId = R.id.groupAlbumParentFragment
-            },{
-                binding.bottomnavigationview.selectedItemId = R.id.settingFragment
-            })
+            R.id.cameraParentFragment -> CameraParentFragment()
             R.id.groupAlbumParentFragment -> GroupAlbumParentFragment()
             else -> SettingFragment()
         }
@@ -68,13 +65,8 @@ class HomeActivity : AppCompatActivity() {
     private fun setFullScreenMode(flag: Boolean) {
         supportActionBar?.setShowHideAnimationEnabled(false)
 
-        if(flag) {
-            hideStatusBar()
-            binding.bottomnavigationview.visibility = View.GONE
-        }else{
-            showStatusBar()
-            binding.bottomnavigationview.visibility = View.VISIBLE
-        }
+        if(flag) hideStatusBar()
+        else showStatusBar()
     }
 
     private fun hideStatusBar() {
