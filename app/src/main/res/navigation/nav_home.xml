@@ -13,8 +13,8 @@
         android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentFragment"
         android:label="GroupAlbumParentFragment"/>
     <fragment
-        android:id="@+id/settingFragment"
-        android:name="org.soma.everyonepick.setting.ui.SettingFragment"
-        android:label="SettingFragment" />
+        android:id="@+id/settingParentFragment"
+        android:name="org.soma.everyonepick.setting.ui.SettingParentFragment"
+        android:label="SettingParentFragment" />
 
 </navigation>

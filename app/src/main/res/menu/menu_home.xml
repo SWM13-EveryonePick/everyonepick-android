@@ -14,7 +14,7 @@
         android:enabled="true"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/settingFragment"
+        android:id="@+id/settingParentFragment"
         android:title="@string/setting_menu_item"
         android:icon="@drawable/ic_baseline_settings_24"
         android:enabled="true"

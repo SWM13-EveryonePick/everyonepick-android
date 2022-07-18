@@ -17,6 +17,7 @@ import org.soma.everyonepick.camera.ui.CameraFragment
 import org.soma.everyonepick.camera.ui.CameraParentFragment
 import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentFragment
 import org.soma.everyonepick.setting.ui.SettingFragment
+import org.soma.everyonepick.setting.ui.SettingParentFragment
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -57,7 +58,7 @@ class HomeActivity : AppCompatActivity() {
         return when(itemId) {
             R.id.cameraParentFragment -> CameraParentFragment()
             R.id.groupAlbumParentFragment -> GroupAlbumParentFragment()
-            else -> SettingFragment()
+            else -> SettingParentFragment()
         }
     }
 
