@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.GroupAlbumListItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
-class GroupAlbumAdapter(
+class GroupAlbumListAdapter(
     val parentViewModel: GroupAlbumListViewModel
-): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
+): ListAdapter<GroupAlbumListItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemGroupalbumBinding?>(
             LayoutInflater.from(parent.context),
@@ -32,7 +32,7 @@ class GroupAlbumAdapter(
     private fun subscribeUi(binding: ItemGroupalbumBinding, holder: GroupAlbumViewHolder) {
         binding.root.setOnClickListener {
             // TODO: Remove it after delete group album logic implemented
-            if(parentViewModel.groupAlbumItemList.value == null) return@setOnClickListener
+            if(parentViewModel.groupAlbumListItemList.value == null) return@setOnClickListener
 
             val position = holder.absoluteAdapterPosition
             // 일반 모드일 때
@@ -42,35 +42,35 @@ class GroupAlbumAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            if(parentViewModel.groupAlbumItemList.value == null) return@setOnCheckedChangeListener
+            if(parentViewModel.groupAlbumListItemList.value == null) return@setOnCheckedChangeListener
 
             val position = holder.absoluteAdapterPosition
-            parentViewModel.groupAlbumItemList.value!![position].isChecked = isChecked
+            parentViewModel.groupAlbumListItemList.value!![position].isChecked = isChecked
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val groupAlbumItem = getItem(position)
-        (holder as GroupAlbumViewHolder).bind(groupAlbumItem)
+        val groupAlbumListItem = getItem(position)
+        (holder as GroupAlbumViewHolder).bind(groupAlbumListItem)
     }
 
     class GroupAlbumViewHolder(
         private val binding: ItemGroupalbumBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(groupAlbumItem: GroupAlbumItem) {
-            binding.textTitle.text = groupAlbumItem.groupAlbum.title
-            binding.checkbox.visibility = if(groupAlbumItem.isCheckboxVisible) View.VISIBLE else View.GONE
-            binding.checkbox.isChecked = groupAlbumItem.isChecked
+        fun bind(groupAlbumListItem: GroupAlbumListItem) {
+            binding.textTitle.text = groupAlbumListItem.groupAlbum.title
+            binding.checkbox.visibility = if(groupAlbumListItem.isCheckboxVisible) View.VISIBLE else View.GONE
+            binding.checkbox.isChecked = groupAlbumListItem.isChecked
         }
     }
 }
 
-private class GroupAlbumDiffCallback: DiffUtil.ItemCallback<GroupAlbumItem>() {
-    override fun areItemsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
+private class GroupAlbumDiffCallback: DiffUtil.ItemCallback<GroupAlbumListItem>() {
+    override fun areItemsTheSame(oldItem: GroupAlbumListItem, newItem: GroupAlbumListItem): Boolean {
         return oldItem.groupAlbum.id == newItem.groupAlbum.id
     }
 
-    override fun areContentsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
+    override fun areContentsTheSame(oldItem: GroupAlbumListItem, newItem: GroupAlbumListItem): Boolean {
         return oldItem == newItem
     }
 }

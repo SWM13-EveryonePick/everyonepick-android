@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumMode"/>
+        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode"/>
         <variable
             name="fragment"
             type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumListFragment"/>
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:src="@drawable/ic_baseline_add_24"
-            android:visibility="@{parentViewModel.groupAlbumMode == GroupAlbumMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
             android:onClick="@{() -> fragment.onClickCreateGroupAlbumButton()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -60,7 +60,7 @@
             android:padding="16dp"
             android:orientation="vertical"
             android:clipToPadding="false"
-            android:visibility="@{parentViewModel.groupAlbumMode == GroupAlbumMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -82,7 +82,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.groupAlbumItemList.size() == 0? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.groupAlbumListItemList.size() == 0? View.VISIBLE: View.GONE}"
             >
             <TextView
                 android:layout_width="wrap_content"

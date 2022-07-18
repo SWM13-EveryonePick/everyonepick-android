@@ -1,7 +1,7 @@
 package org.soma.everyonepick.groupalbum.data
 
 class GroupAlbumRepository {
-    fun getGroupAlbumItemList(): MutableList<GroupAlbumItem> {
+    fun getGroupAlbumListItems(): MutableList<GroupAlbumListItem> {
         // TODO: Retrofit2 -> groupAlbumList
         val groupAlbumList = mutableListOf(
             GroupAlbum(0, "title0"),
@@ -9,14 +9,14 @@ class GroupAlbumRepository {
             GroupAlbum(2, "title2"),
             GroupAlbum(3, "title3")
         )
-        return convertGroupAlbumListToGroupAlbumItemList(groupAlbumList)
+        return convertGroupAlbumListToGroupAlbumListItems(groupAlbumList)
     }
 
-    private fun convertGroupAlbumListToGroupAlbumItemList(groupAlbumList: MutableList<GroupAlbum>): MutableList<GroupAlbumItem> {
-        val groupAlbumItemList = mutableListOf<GroupAlbumItem>()
+    private fun convertGroupAlbumListToGroupAlbumListItems(groupAlbumList: MutableList<GroupAlbum>): MutableList<GroupAlbumListItem> {
+        val groupAlbumListItems = mutableListOf<GroupAlbumListItem>()
         for(i in 0 until groupAlbumList.size) {
-            groupAlbumItemList.add(GroupAlbumItem(groupAlbumList[i], false, false))
+            groupAlbumListItems.add(GroupAlbumListItem(groupAlbumList[i], false, false))
         }
-        return groupAlbumItemList
+        return groupAlbumListItems
     }
 }

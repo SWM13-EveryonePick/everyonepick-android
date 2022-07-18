@@ -3,7 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_groupalbum"
     app:startDestination="@id/fragmentGroupAlbumList">
+
     <fragment
         android:id="@+id/fragmentGroupAlbumList"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment"/>
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumListFragment">
+        <action
+            android:id="@+id/action_groupalbumlist_to_groupalbum"
+            app:destination="@id/fragmentGroupAlbum"/>
+    </fragment>
+
+    <!-- TODO: 앨범 -> 앨범리스트 ... 앨범 아이디 전달 to refresh information -->
+    <fragment
+        android:id="@+id/fragmentGroupAlbum"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumFragment">
+        <argument
+            android:name="groupAlbumId"
+            app:argType="long" />
+    </fragment>
 </navigation>

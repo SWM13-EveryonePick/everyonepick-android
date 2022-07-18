@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
+import org.soma.everyonepick.groupalbum.adapter.GroupAlbumListAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbum
-import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.GroupAlbumListItem
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumlistBinding
-import org.soma.everyonepick.groupalbum.utility.GroupAlbumMode
+import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
@@ -33,7 +33,7 @@ class GroupAlbumListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.parentViewModel = parentViewModel
 
-        val adapter = GroupAlbumAdapter(viewModel)
+        val adapter = GroupAlbumListAdapter(viewModel)
         binding.recyclerviewGroupalbum.adapter = adapter
 
         subscribeUi(adapter)
@@ -41,15 +41,15 @@ class GroupAlbumListFragment : Fragment() {
         return binding.root
     }
 
-    private fun subscribeUi(adapter: GroupAlbumAdapter) {
-        viewModel.groupAlbumItemList.observe(viewLifecycleOwner) { groupAlbumItemList ->
+    private fun subscribeUi(adapter: GroupAlbumListAdapter) {
+        viewModel.groupAlbumListItemList.observe(viewLifecycleOwner) { groupAlbumListItems ->
             // toMutableList(): 참조 주소를 새롭게 함으로써 갱신이 되도록 한다.
-            adapter.submitList(groupAlbumItemList.toMutableList())
+            adapter.submitList(groupAlbumListItems.toMutableList())
         }
 
-        parentViewModel.groupAlbumMode.observe(viewLifecycleOwner) { groupAlbumMode ->
-            when(groupAlbumMode) {
-                GroupAlbumMode.NORMAL_MODE.ordinal -> viewModel.setCheckboxGone()
+        parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
+            when(groupAlbumListMode) {
+                GroupAlbumListMode.NORMAL_MODE.ordinal -> viewModel.setCheckboxGone()
                 else -> viewModel.setCheckboxVisible()
             }
         }
@@ -63,16 +63,16 @@ class GroupAlbumListFragment : Fragment() {
 
     // TODO: Remove it after creating group album logic implemented
     fun onClickCreateGroupAlbumButton() {
-        val index = viewModel.groupAlbumItemList.value?.size?.toLong()
-        viewModel.addGroupAlbum(GroupAlbumItem(GroupAlbum(index ?: -1, "title$index"), false, false))
+        val index = viewModel.groupAlbumListItemList.value?.size?.toLong()
+        viewModel.addGroupAlbum(GroupAlbumListItem(GroupAlbum(index ?: -1, "title$index"), false, false))
     }
 
     fun onClickDeleteButton() {
         viewModel.deleteCheckedItems()
-        parentViewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
+        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
     }
 
     fun onClickCancelButton() {
-        parentViewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
+        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
     }
 }

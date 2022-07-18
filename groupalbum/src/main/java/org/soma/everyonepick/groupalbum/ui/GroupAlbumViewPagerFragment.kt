@@ -1,19 +1,17 @@
 package org.soma.everyonepick.groupalbum.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
-import org.soma.everyonepick.groupalbum.utility.GroupAlbumMode
+import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
 private val TAB_ITEMS = listOf("앨범", "친구 목록")
@@ -61,10 +59,10 @@ class GroupAlbumViewPagerFragment : Fragment() {
 
 
     fun onClickSelectButton() {
-        if(viewModel.groupAlbumMode.value == GroupAlbumMode.NORMAL_MODE.ordinal) {
-            viewModel.groupAlbumMode.value = GroupAlbumMode.SELECTION_MODE.ordinal
+        if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
+            viewModel.groupAlbumListMode.value = GroupAlbumListMode.SELECTION_MODE.ordinal
         }else{
-            viewModel.groupAlbumMode.value = GroupAlbumMode.NORMAL_MODE.ordinal
+            viewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
         }
     }
 }

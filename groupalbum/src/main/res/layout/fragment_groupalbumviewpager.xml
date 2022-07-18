@@ -11,7 +11,7 @@
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
         <import type="android.view.View" />
-        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumMode" />
+        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.groupAlbumMode == GroupAlbumMode.NORMAL_MODE.ordinal()? @string/select: @string/cancel}"
+                android:text="@{viewModel.groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal()? @string/select: @string/cancel}"
                 android:layout_marginRight="8dp"
                 android:visibility="@{viewModel.currentItem == 0? View.VISIBLE: View.GONE}"
                 app:layout_constraintTop_toTopOf="parent"
