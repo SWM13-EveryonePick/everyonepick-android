@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.GroupAlbumListItem
-import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
+import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumlistBinding
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 class GroupAlbumListAdapter(
     val parentViewModel: GroupAlbumListViewModel
 ): ListAdapter<GroupAlbumListItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = DataBindingUtil.inflate<ItemGroupalbumBinding?>(
+        val binding = DataBindingUtil.inflate<ItemGroupalbumlistBinding?>(
             LayoutInflater.from(parent.context),
-            R.layout.item_groupalbum,
+            R.layout.item_groupalbumlist,
             parent,
             false
         )
@@ -29,15 +29,14 @@ class GroupAlbumListAdapter(
         return holder
     }
 
-    private fun subscribeUi(binding: ItemGroupalbumBinding, holder: GroupAlbumViewHolder) {
+    private fun subscribeUi(binding: ItemGroupalbumlistBinding, holder: GroupAlbumViewHolder) {
         binding.root.setOnClickListener {
-            // TODO: Remove it after delete group album logic implemented
             if(parentViewModel.groupAlbumListItemList.value == null) return@setOnClickListener
 
             val position = holder.absoluteAdapterPosition
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {
-                parentViewModel.updateTitle(position, "UPDATED")
+
             }
         }
 
@@ -55,7 +54,7 @@ class GroupAlbumListAdapter(
     }
 
     class GroupAlbumViewHolder(
-        private val binding: ItemGroupalbumBinding
+        private val binding: ItemGroupalbumlistBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(groupAlbumListItem: GroupAlbumListItem) {
             binding.textTitle.text = groupAlbumListItem.groupAlbum.title
