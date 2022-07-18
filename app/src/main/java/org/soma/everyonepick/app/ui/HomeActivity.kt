@@ -4,24 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
-import org.soma.everyonepick.camera.ui.CameraFragment
-import org.soma.everyonepick.camera.ui.CameraParentFragment
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentFragment
-import org.soma.everyonepick.setting.ui.SettingFragment
-import org.soma.everyonepick.setting.ui.SettingParentFragment
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
