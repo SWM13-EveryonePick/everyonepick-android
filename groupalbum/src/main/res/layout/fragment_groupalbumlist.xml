@@ -14,7 +14,7 @@
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
         <variable
             name="parentViewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel"/>
+            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

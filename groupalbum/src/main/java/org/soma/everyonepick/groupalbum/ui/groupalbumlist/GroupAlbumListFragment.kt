@@ -13,7 +13,7 @@ import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumlistBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel
 
 @AndroidEntryPoint
 class GroupAlbumListFragment : Fragment() {
@@ -21,7 +21,7 @@ class GroupAlbumListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: GroupAlbumListViewModel by viewModels()
-    private val parentViewModel: GroupAlbumViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val parentViewModel: GroupAlbumParentViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

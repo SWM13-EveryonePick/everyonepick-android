@@ -9,25 +9,25 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
-import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
+import org.soma.everyonepick.groupalbum.adapter.GroupAlbumParentViewPagerAdapter
+import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumparentviewpagerBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel
 
 private val TAB_ITEMS = listOf("앨범", "친구 목록")
 
 @AndroidEntryPoint
-class GroupAlbumViewPagerFragment : Fragment() {
-    private var _binding: FragmentGroupalbumviewpagerBinding? = null
+class GroupAlbumParentViewPagerFragment : Fragment() {
+    private var _binding: FragmentGroupalbumparentviewpagerBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: GroupAlbumViewPagerViewModel by viewModels()
+    private val viewModel: GroupAlbumParentViewPagerViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGroupalbumviewpagerBinding.inflate(inflater, container, false)
+        _binding = FragmentGroupalbumparentviewpagerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
         binding.viewModel = viewModel
@@ -39,7 +39,7 @@ class GroupAlbumViewPagerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewpager2.let {
-            it.adapter = GroupAlbumViewPagerAdapter(this)
+            it.adapter = GroupAlbumParentViewPagerAdapter(this)
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)

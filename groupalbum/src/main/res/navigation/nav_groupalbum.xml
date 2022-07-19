@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_groupalbum"
-    app:startDestination="@id/fragment_groupalbumviewpager">
+    app:startDestination="@id/fragment_groupalbumparentviewpager">
 
     <fragment
-        android:id="@+id/fragment_groupalbumviewpager"
-        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment">
+        android:id="@+id/fragment_groupalbumparentviewpager"
+        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragment">
         <action
-            android:id="@+id/action_groupalbumviewpager_to_groupalbum"
+            android:id="@+id/action_groupalbumparentviewpager_to_groupalbum"
             app:destination="@id/fragment_groupalbum"/>
     </fragment>
 

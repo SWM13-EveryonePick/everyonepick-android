@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 class GroupAlbumAdapter(
@@ -39,7 +39,7 @@ class GroupAlbumAdapter(
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {
                 val direction =
-                    GroupAlbumViewPagerFragmentDirections.actionGroupalbumviewpagerToGroupalbum(
+                    GroupAlbumParentViewPagerFragmentDirections.actionGroupalbumparentviewpagerToGroupalbum(
                         getItem(position).groupAlbumDao.id
                     )
                 binding.root.findNavController().navigate(direction)
