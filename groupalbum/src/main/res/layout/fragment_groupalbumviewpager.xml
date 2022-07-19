@@ -26,7 +26,7 @@
             <org.soma.everyonepick.common_ui.CustomActionBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@{viewModel.title}"
+                app:title="@{viewModel.groupAlbum.title}"
                 app:hasBackButton="true"
                 app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
                 app:layout_constraintTop_toTopOf="parent"/>

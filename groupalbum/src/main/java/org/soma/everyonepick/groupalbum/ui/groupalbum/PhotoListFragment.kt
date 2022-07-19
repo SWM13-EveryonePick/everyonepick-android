@@ -14,13 +14,12 @@ import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
 @AndroidEntryPoint
-class PhotoListFragment(
-    private val groupAlbumId: Long
-) : Fragment() {
+class PhotoListFragment: Fragment() {
     private var _binding: FragmentPhotolistBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: PhotoListViewModel by viewModels()
+    private val parentViewModel: GroupAlbumViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +29,7 @@ class PhotoListFragment(
 
         val adapter = PhotoAdapter()
         binding.recyclerviewPhoto.adapter = adapter
-        viewModel.updatePhotoItemList(groupAlbumId)
+        viewModel.updatePhotoItemList(parentViewModel.groupAlbum.value!!.id)
 
         subscribeUi(adapter)
 

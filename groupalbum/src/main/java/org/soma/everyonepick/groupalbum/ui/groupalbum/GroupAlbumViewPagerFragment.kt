@@ -41,14 +41,9 @@ class GroupAlbumViewPagerFragment: Fragment() {
         binding.fragment = this
         binding.viewModel = viewModel
 
-        setViewModelWithGroupAlbumDao()
+        viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbumDao(args.groupAlbumId)
 
         return binding.root
-    }
-
-    private fun setViewModelWithGroupAlbumDao() {
-        val groupAlbumDao = groupAlbumRepository.getGroupAlbumDao(args.groupAlbumId)
-        viewModel.title.value = groupAlbumDao.title
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
