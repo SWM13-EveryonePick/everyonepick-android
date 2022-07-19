@@ -2,19 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_groupalbum"
-    app:startDestination="@id/fragmentGroupAlbumViewPager">
+    app:startDestination="@id/fragment_groupalbumviewpager">
 
     <fragment
-        android:id="@+id/fragmentGroupAlbumViewPager"
+        android:id="@+id/fragment_groupalbumviewpager"
         android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment">
         <action
             android:id="@+id/action_groupalbumviewpager_to_groupalbum"
-            app:destination="@id/fragmentGroupAlbum"/>
+            app:destination="@id/fragment_groupalbum"/>
     </fragment>
 
     <!-- TODO: 앨범 -> 앨범리스트 ... 앨범 아이디 전달 to refresh information -->
     <fragment
-        android:id="@+id/fragmentGroupAlbum"
+        android:id="@+id/fragment_groupalbum"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumFragment">
         <argument
             android:name="groupAlbumId"

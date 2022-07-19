@@ -3,10 +3,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_camera"
-    app:startDestination="@id/fragmentCamera">
+    app:startDestination="@id/fragment_camera">
 
     <fragment
-        android:id="@+id/fragmentCamera"
+        android:id="@+id/fragment_camera"
         android:name="org.soma.everyonepick.camera.ui.CameraFragment"
         android:label="CameraFragment"/>
 
