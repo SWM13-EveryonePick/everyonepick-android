@@ -3,12 +3,12 @@ package org.soma.everyonepick.groupalbum.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.soma.everyonepick.groupalbum.data.GroupAlbumListItem
+import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
 import javax.inject.Inject
 
 /**
- * groupAlbumListItems의 값을 수정하더라도 MutableLiveData의 특성으로 인해
+ * groupAlbumItemList의 값을 수정하더라도 MutableLiveData의 특성으로 인해
  * 주소값이 변하여야 observer가 작동하므로, 데이터를 변경할 때 이를 감안하여야 합니다.
  */
 
@@ -16,71 +16,71 @@ import javax.inject.Inject
 class GroupAlbumListViewModel @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository
 ): ViewModel() {
-    val groupAlbumListItemList = MutableLiveData<MutableList<GroupAlbumListItem>>()
+    val groupAlbumItemList = MutableLiveData<MutableList<GroupAlbumItem>>()
     init {
         updateGroupAlbumList()
     }
 
     fun updateGroupAlbumList() {
-        val newGroupAlbumListItems = groupAlbumRepository.getGroupAlbumListItems()
-        groupAlbumListItemList.value = newGroupAlbumListItems
+        val newGroupAlbumItemList = groupAlbumRepository.getGroupAlbumItemList()
+        groupAlbumItemList.value = newGroupAlbumItemList
     }
 
-    fun addGroupAlbum(groupAlbumListItem: GroupAlbumListItem) {
-        groupAlbumListItemList.value?.add(groupAlbumListItem)
-        groupAlbumListItemList.value = groupAlbumListItemList.value
+    fun addGroupAlbum(groupAlbumItem: GroupAlbumItem) {
+        groupAlbumItemList.value?.add(groupAlbumItem)
+        groupAlbumItemList.value = groupAlbumItemList.value
     }
 
     fun updateTitle(position: Int, title: String) {
-        if(groupAlbumListItemList.value == null) return
+        if(groupAlbumItemList.value == null) return
 
-        val newItem = GroupAlbumListItem(
-            groupAlbumListItemList.value!![position].groupAlbum.copy(),
-            groupAlbumListItemList.value!![position].isChecked,
-            groupAlbumListItemList.value!![position].isCheckboxVisible
+        val newItem = GroupAlbumItem(
+            groupAlbumItemList.value!![position].groupAlbumDao.copy(),
+            groupAlbumItemList.value!![position].isChecked,
+            groupAlbumItemList.value!![position].isCheckboxVisible
         )
-        newItem.groupAlbum.title = title
+        newItem.groupAlbumDao.title = title
 
-        groupAlbumListItemList.value!![position] = newItem
-        groupAlbumListItemList.value = groupAlbumListItemList.value
+        groupAlbumItemList.value!![position] = newItem
+        groupAlbumItemList.value = groupAlbumItemList.value
     }
 
     fun setCheckboxGone() {
-        if(groupAlbumListItemList.value == null) return
+        if(groupAlbumItemList.value == null) return
 
-        for(i in 0 until groupAlbumListItemList.value!!.size) {
-            val newItem = GroupAlbumListItem(
-                groupAlbumListItemList.value!![i].groupAlbum.copy(),
+        for(i in 0 until groupAlbumItemList.value!!.size) {
+            val newItem = GroupAlbumItem(
+                groupAlbumItemList.value!![i].groupAlbumDao.copy(),
                 false,
                 false
             )
-            groupAlbumListItemList.value!![i] = newItem
+            groupAlbumItemList.value!![i] = newItem
         }
-        groupAlbumListItemList.value = groupAlbumListItemList.value
+        groupAlbumItemList.value = groupAlbumItemList.value
     }
 
     fun setCheckboxVisible() {
-        if(groupAlbumListItemList.value == null) return
+        if(groupAlbumItemList.value == null) return
 
-        for(i in 0 until groupAlbumListItemList.value!!.size) {
-            val newItem = GroupAlbumListItem(
-                groupAlbumListItemList.value!![i].groupAlbum.copy(),
+        for(i in 0 until groupAlbumItemList.value!!.size) {
+            val newItem = GroupAlbumItem(
+                groupAlbumItemList.value!![i].groupAlbumDao.copy(),
                 false,
                 true
             )
-            groupAlbumListItemList.value!![i] = newItem
+            groupAlbumItemList.value!![i] = newItem
         }
-        groupAlbumListItemList.value = groupAlbumListItemList.value
+        groupAlbumItemList.value = groupAlbumItemList.value
     }
 
     fun deleteCheckedItems() {
-        if(groupAlbumListItemList.value == null) return
+        if(groupAlbumItemList.value == null) return
 
-        val newGroupAlbumListItemList = mutableListOf<GroupAlbumListItem>()
-        for(i in 0 until groupAlbumListItemList.value!!.size) {
-            if(!groupAlbumListItemList.value!![i].isChecked)
-                newGroupAlbumListItemList.add(groupAlbumListItemList.value!![i])
+        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        for(i in 0 until groupAlbumItemList.value!!.size) {
+            if(!groupAlbumItemList.value!![i].isChecked)
+                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
         }
-        groupAlbumListItemList.value = newGroupAlbumListItemList
+        groupAlbumItemList.value = newGroupAlbumItemList
     }
 }

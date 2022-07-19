@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
-import org.soma.everyonepick.groupalbum.data.GroupAlbum
-import org.soma.everyonepick.groupalbum.data.GroupAlbumListItem
+import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
+import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumlistBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
@@ -42,9 +42,9 @@ class GroupAlbumListFragment : Fragment() {
     }
 
     private fun subscribeUi(adapter: GroupAlbumAdapter) {
-        viewModel.groupAlbumListItemList.observe(viewLifecycleOwner) { groupAlbumListItems ->
+        viewModel.groupAlbumItemList.observe(viewLifecycleOwner) { groupAlbumItemList ->
             // toMutableList(): 참조 주소를 새롭게 함으로써 갱신이 되도록 한다.
-            adapter.submitList(groupAlbumListItems.toMutableList())
+            adapter.submitList(groupAlbumItemList.toMutableList())
         }
 
         parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
@@ -63,8 +63,8 @@ class GroupAlbumListFragment : Fragment() {
 
     // TODO: Remove it after creating group album logic implemented
     fun onClickCreateGroupAlbumButton() {
-        val index = viewModel.groupAlbumListItemList.value?.size?.toLong()
-        viewModel.addGroupAlbum(GroupAlbumListItem(GroupAlbum(index ?: -1, "title$index"), false, false))
+        val index = viewModel.groupAlbumItemList.value?.size?.toLong()
+        viewModel.addGroupAlbum(GroupAlbumItem(GroupAlbumDao(index ?: -1, "title$index"), false, false))
     }
 
     fun onClickDeleteButton() {

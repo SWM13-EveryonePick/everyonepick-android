@@ -1,22 +1,22 @@
 package org.soma.everyonepick.groupalbum.data
 
 class GroupAlbumRepository {
-    fun getGroupAlbumListItems(): MutableList<GroupAlbumListItem> {
+    fun getGroupAlbumItemList(): MutableList<GroupAlbumItem> {
         // TODO: Retrofit2 -> groupAlbumList
-        val groupAlbumList = mutableListOf(
-            GroupAlbum(0, "title0"),
-            GroupAlbum(1, "title1"),
-            GroupAlbum(2, "title2"),
-            GroupAlbum(3, "title3")
+        val groupAlbumDaoList = mutableListOf(
+            GroupAlbumDao(0, "title0"),
+            GroupAlbumDao(1, "title1"),
+            GroupAlbumDao(2, "title2"),
+            GroupAlbumDao(3, "title3")
         )
-        return convertGroupAlbumListToGroupAlbumListItems(groupAlbumList)
+        return convertGroupAlbumDaoListToGroupAlbumItemList(groupAlbumDaoList)
     }
 
-    private fun convertGroupAlbumListToGroupAlbumListItems(groupAlbumList: MutableList<GroupAlbum>): MutableList<GroupAlbumListItem> {
-        val groupAlbumListItems = mutableListOf<GroupAlbumListItem>()
-        for(i in 0 until groupAlbumList.size) {
-            groupAlbumListItems.add(GroupAlbumListItem(groupAlbumList[i], false, false))
+    private fun convertGroupAlbumDaoListToGroupAlbumItemList(groupAlbumDaoList: MutableList<GroupAlbumDao>): MutableList<GroupAlbumItem> {
+        val groupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        for(i in 0 until groupAlbumDaoList.size) {
+            groupAlbumItemList.add(GroupAlbumItem(groupAlbumDaoList[i], false, false))
         }
-        return groupAlbumListItems
+        return groupAlbumItemList
     }
 }
