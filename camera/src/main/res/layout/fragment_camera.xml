@@ -17,48 +17,11 @@
             android:id="@+id/fragment_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:keepScreenOn="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/constraintlayout_bottom"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_camera"
+            app:navGraph="@navigation/nav_preview"
             />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintlayout_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <TextView
-                android:id="@+id/text_cameramenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/camera_menu_item"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/text_groupalbummenu"/>
-            <TextView
-                android:id="@+id/text_groupalbummenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/group_album_menu_item"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_cameramenu"
-                app:layout_constraintEnd_toStartOf="@id/text_settingmenu"
-                android:onClick="@{() -> fragment.moveToGroupAlbum.invoke()}"/>
-            <TextView
-                android:id="@+id/text_settingmenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_menu_item"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text_groupalbummenu"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{() -> fragment.moveToSetting.invoke()}"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

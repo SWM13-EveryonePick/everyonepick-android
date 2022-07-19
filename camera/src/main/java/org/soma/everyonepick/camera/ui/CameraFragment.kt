@@ -14,10 +14,7 @@ import androidx.navigation.Navigation
 import com.google.common.util.concurrent.ListenableFuture
 import org.soma.everyonepick.camera.databinding.FragmentCameraBinding
 
-class CameraFragment(
-    val moveToGroupAlbum: () -> Unit,
-    val moveToSetting: () -> Unit
-) : Fragment() {
+class CameraFragment : Fragment() {
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
 

@@ -6,12 +6,12 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment" />
+            type="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragment" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
+            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel" />
         <import type="android.view.View" />
-        <import type="org.soma.everyonepick.groupalbum.utility.PhotoListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,19 +26,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <org.soma.everyonepick.common_ui.CustomActionBar
+                android:id="@+id/customactionbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@{viewModel.groupAlbum.title}"
-                app:hasBackButton="true"
-                app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:title="단체공유앨범"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? @string/select: @string/cancel}"
+                android:text="@{viewModel.groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal()? @string/select: @string/cancel}"
                 android:layout_marginRight="8dp"
-                android:visibility="@{viewModel.currentItem == 1? View.GONE: View.VISIBLE}"
+                android:visibility="@{viewModel.currentItem == 0? View.VISIBLE: View.GONE}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/constraintlayout_actionbar"
-            />
+            app:layout_constraintBottom_toTopOf="@id/viewpager2"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager2"
@@ -60,8 +60,7 @@
             android:layout_height="0dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tablayout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

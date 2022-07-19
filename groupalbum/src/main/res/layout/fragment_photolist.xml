@@ -5,13 +5,13 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumMode"/>
+        <import type="org.soma.everyonepick.groupalbum.utility.PhotoListMode"/>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumFragment"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbum.PhotoListFragment"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel"/>
+            type="org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel"/>
         <variable
             name="parentViewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel"/>
@@ -20,7 +20,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbum.GroupAlbumFragment">
+        tools:context=".ui.groupalbum.PhotoListFragment">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -31,14 +31,14 @@
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_groupalbum"
+                    android:id="@+id/recyclerview_photo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_height="match_parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                    app:spanCount="3"/>
+                    app:spanCount="3"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -47,20 +47,20 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/margin_fab"
             android:src="@drawable/ic_baseline_add_24"
-            android:visibility="@{parentViewModel.groupAlbumMode == GroupAlbumMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
-            android:onClick="@{() -> fragment.onClickCreateGroupAlbumButton()}"
+            android:visibility="@{parentViewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            android:onClick="@{() -> fragment.onClickUploadPhotoButton()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/margin_fab"
             android:orientation="vertical"
             android:clipToPadding="false"
-            android:visibility="@{parentViewModel.groupAlbumMode == GroupAlbumMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            android:visibility="@{parentViewModel.photoListMode == PhotoListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -73,7 +73,14 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margintop_fab"
+                android:src="@drawable/ic_baseline_people_alt_24"
+                android:onClick="@{() -> fragment.onClickProcessButton()}"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margintop_fab"
                 android:src="@drawable/ic_baseline_close_24"
                 android:onClick="@{() -> fragment.onClickCancelButton()}"/>
 
@@ -82,16 +89,27 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.groupAlbumItemList.size() == 0? View.VISIBLE: View.GONE}"
-            >
+            android:visibility="@{viewModel.photoItemList.size() == 0? View.VISIBLE: View.GONE}">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="NO GROUP ALBUMS"/>
+                android:text="NO PHOTOS"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

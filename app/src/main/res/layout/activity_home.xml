@@ -17,10 +17,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/bottomnavigationview"
+            app:defaultNavHost="true"
             app:navGraph="@navigation/nav_home"
             />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+
+        <org.soma.everyonepick.common_ui.NavBottomNavigationView
             android:id="@+id/bottomnavigationview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

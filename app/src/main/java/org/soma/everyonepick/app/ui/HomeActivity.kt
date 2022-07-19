@@ -6,16 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationBarMenu
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
-import org.soma.everyonepick.camera.ui.CameraFragment
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragment
-import org.soma.everyonepick.setting.ui.SettingFragment
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -31,36 +29,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initializeNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-        val navController = navHostFragment.findNavController()
-        binding.bottomnavigationview.run{
+        val navController = navHostFragment.navController
+        binding.bottomnavigationview.run {
             setupWithNavController(navController)
-            setOnItemSelectedListener { item ->
-                val fragment = getFragmentByItemId(item.itemId)
-                replaceFragment(fragment)
-
+            addOnItemSelectedListener(navController) { item ->
                 // Camera Fragment에서 풀스크린을 사용합니다.
-                setFullScreenMode(item.itemId == R.id.cameraFragment)
-
-                return@setOnItemSelectedListener true
+                setFullScreenMode(item.itemId == R.id.nav_camera)
             }
-        }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host, fragment)
-            .commit()
-    }
-
-    private fun getFragmentByItemId(itemId: Int): Fragment {
-        return when(itemId) {
-            R.id.cameraFragment -> CameraFragment({
-                binding.bottomnavigationview.selectedItemId = R.id.groupAlbumViewPagerFragment
-            },{
-                binding.bottomnavigationview.selectedItemId = R.id.settingFragment
-            })
-            R.id.groupAlbumViewPagerFragment -> GroupAlbumViewPagerFragment()
-            else -> SettingFragment()
         }
     }
 
@@ -68,13 +43,8 @@ class HomeActivity : AppCompatActivity() {
     private fun setFullScreenMode(flag: Boolean) {
         supportActionBar?.setShowHideAnimationEnabled(false)
 
-        if(flag) {
-            hideStatusBar()
-            binding.bottomnavigationview.visibility = View.GONE
-        }else{
-            showStatusBar()
-            binding.bottomnavigationview.visibility = View.VISIBLE
-        }
+        if(flag) hideStatusBar()
+        else showStatusBar()
     }
 
     private fun hideStatusBar() {

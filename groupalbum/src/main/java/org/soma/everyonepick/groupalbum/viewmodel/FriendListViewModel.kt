@@ -10,13 +10,16 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FriendViewModel: ViewModel() {
+class FriendListViewModel: ViewModel() {
     val friends: MutableLiveData<Friends<Friend>> = MutableLiveData()
+    val isApiLoading = MutableLiveData(true)
     init {
-        updateFriends()
+        fetchFriends()
     }
 
-    fun updateFriends() {
+    fun fetchFriends() {
+        isApiLoading.value = true
+
         TalkApiClient.instance.friends { newFriends, error ->
             if(error != null) {
                 Log.e("TAG", "카카오톡 친구 목록 가져오기 실패", error)
@@ -24,6 +27,8 @@ class FriendViewModel: ViewModel() {
                 Log.i("TAG", "카카오톡 친구 목록 가져오기 성공")
                 friends.postValue(newFriends)
             }
+
+            isApiLoading.value = false
         }
     }
 }

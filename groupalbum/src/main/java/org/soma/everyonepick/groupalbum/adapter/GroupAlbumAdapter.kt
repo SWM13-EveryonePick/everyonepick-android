@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 class GroupAlbumAdapter(
-    val parentViewModel: GroupAlbumViewModel
+    private val parentViewModel: GroupAlbumListViewModel
 ): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemGroupalbumBinding?>(
@@ -25,8 +24,8 @@ class GroupAlbumAdapter(
             parent,
             false
         )
-        val holder = GroupAlbumViewHolder(binding)
 
+        val holder = GroupAlbumViewHolder(binding)
         subscribeUi(binding, holder)
 
         return holder
@@ -34,13 +33,16 @@ class GroupAlbumAdapter(
 
     private fun subscribeUi(binding: ItemGroupalbumBinding, holder: GroupAlbumViewHolder) {
         binding.root.setOnClickListener {
-            // TODO: Remove it after delete group album logic implemented
             if(parentViewModel.groupAlbumItemList.value == null) return@setOnClickListener
 
             val position = holder.absoluteAdapterPosition
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {
-                parentViewModel.updateTitle(position, "UPDATED")
+                val direction =
+                    GroupAlbumParentViewPagerFragmentDirections.actionGroupalbumparentviewpagerToGroupalbumviewpager(
+                        getItem(position).groupAlbumDao.id
+                    )
+                binding.root.findNavController().navigate(direction)
             }
         }
 
@@ -61,7 +63,7 @@ class GroupAlbumAdapter(
         private val binding: ItemGroupalbumBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(groupAlbumItem: GroupAlbumItem) {
-            binding.textTitle.text = groupAlbumItem.groupAlbum.title
+            binding.textTitle.text = groupAlbumItem.groupAlbumDao.title
             binding.checkbox.visibility = if(groupAlbumItem.isCheckboxVisible) View.VISIBLE else View.GONE
             binding.checkbox.isChecked = groupAlbumItem.isChecked
         }
@@ -70,7 +72,7 @@ class GroupAlbumAdapter(
 
 private class GroupAlbumDiffCallback: DiffUtil.ItemCallback<GroupAlbumItem>() {
     override fun areItemsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
-        return oldItem.groupAlbum.id == newItem.groupAlbum.id
+        return oldItem.groupAlbumDao.id == newItem.groupAlbumDao.id
     }
 
     override fun areContentsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
