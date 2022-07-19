@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumBinding
 
 class GroupAlbumFragment : Fragment() {

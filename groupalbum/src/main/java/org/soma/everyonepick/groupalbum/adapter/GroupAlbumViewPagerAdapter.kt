@@ -2,8 +2,8 @@ package org.soma.everyonepick.groupalbum.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import org.soma.everyonepick.groupalbum.ui.friend.FriendListFragment
-import org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumListFragment
+import org.soma.everyonepick.groupalbum.ui.friendlist.FriendListFragment
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment
 
 class GroupAlbumViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 2
