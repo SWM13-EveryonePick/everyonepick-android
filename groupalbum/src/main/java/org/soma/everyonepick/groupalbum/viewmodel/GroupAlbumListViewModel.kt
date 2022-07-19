@@ -17,6 +17,8 @@ class GroupAlbumListViewModel @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository
 ): ViewModel() {
     val groupAlbumItemList = MutableLiveData<MutableList<GroupAlbumItem>>()
+    val isApiLoading = MutableLiveData(true)
+
     init {
         fetchGroupAlbumItemList()
     }
@@ -24,6 +26,8 @@ class GroupAlbumListViewModel @Inject constructor(
     fun fetchGroupAlbumItemList() {
         val newGroupAlbumItemList = groupAlbumRepository.getGroupAlbumItemList()
         groupAlbumItemList.value = newGroupAlbumItemList
+
+        isApiLoading.value = false
     }
 
     fun addGroupAlbumItem(groupAlbumItem: GroupAlbumItem) {
