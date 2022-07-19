@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
@@ -16,6 +17,7 @@ import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
+import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import javax.inject.Inject
 
@@ -51,6 +53,12 @@ class GroupAlbumViewPagerFragment: Fragment() {
 
         binding.viewpager2.let {
             it.adapter = GroupAlbumViewPagerAdapter(this, args.groupAlbumId)
+            it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    viewModel.currentItem.value = binding.viewpager2.currentItem
+                }
+            })
         }
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
             tab.text = TAB_ITEMS[position]
@@ -65,5 +73,11 @@ class GroupAlbumViewPagerFragment: Fragment() {
 
     fun onClickBackButton() {
         findNavController().navigateUp()
+    }
+
+    fun onClickSelectButton() {
+        viewModel.photoListMode.value =
+            if(viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal
+            else PhotoListMode.NORMAL_MODE.ordinal
     }
 }

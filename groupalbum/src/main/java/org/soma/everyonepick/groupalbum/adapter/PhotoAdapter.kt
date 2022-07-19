@@ -1,6 +1,7 @@
 package org.soma.everyonepick.groupalbum.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -42,6 +43,8 @@ class PhotoAdapter: ListAdapter<PhotoItem, RecyclerView.ViewHolder>(PhotoDiffCal
             Glide.with(binding.root)
                 .load(photoItem.photoDao.photoUrl)
                 .into(binding.imagePhoto)
+            binding.checkbox.visibility = if(photoItem.isCheckboxVisible) View.VISIBLE else View.GONE
+            binding.checkbox.isChecked = photoItem.isChecked
         }
     }
 }

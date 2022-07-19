@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotolistBinding
+import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
@@ -39,6 +40,10 @@ class PhotoListFragment: Fragment() {
     private fun subscribeUi(adapter: PhotoAdapter) {
         viewModel.photoItemList.observe(viewLifecycleOwner) { photoItemList ->
             adapter.submitList(photoItemList.toMutableList())
+        }
+
+        parentViewModel.photoListMode.observe(viewLifecycleOwner) { photoListMode ->
+            viewModel.setIsCheckboxVisible(photoListMode == PhotoListMode.SELECTION_MODE.ordinal)
         }
     }
 

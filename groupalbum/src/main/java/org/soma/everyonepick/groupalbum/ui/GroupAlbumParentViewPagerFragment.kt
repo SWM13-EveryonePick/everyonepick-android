@@ -59,10 +59,8 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
 
 
     fun onClickSelectButton() {
-        if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
-            viewModel.groupAlbumListMode.value = GroupAlbumListMode.SELECTION_MODE.ordinal
-        }else{
-            viewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
-        }
+        viewModel.groupAlbumListMode.value =
+            if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) GroupAlbumListMode.SELECTION_MODE.ordinal
+            else GroupAlbumListMode.NORMAL_MODE.ordinal
     }
 }
