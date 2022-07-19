@@ -8,6 +8,7 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationBarMenu
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,14 +32,9 @@ class HomeActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.bottomnavigationview.run {
             setupWithNavController(navController)
-            setOnItemSelectedListener { item ->
+            addOnItemSelectedListener(navController) { item ->
                 // Camera Fragment에서 풀스크린을 사용합니다.
                 setFullScreenMode(item.itemId == R.id.nav_camera)
-
-                return@setOnItemSelectedListener NavigationUI.onNavDestinationSelected(
-                    item,
-                    navController
-                )
             }
         }
     }

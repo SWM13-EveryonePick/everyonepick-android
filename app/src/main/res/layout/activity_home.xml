@@ -21,7 +21,8 @@
             app:navGraph="@navigation/nav_home"
             />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+
+        <org.soma.everyonepick.common_ui.NavBottomNavigationView
             android:id="@+id/bottomnavigationview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
