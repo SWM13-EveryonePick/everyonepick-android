@@ -12,11 +12,14 @@ import javax.inject.Inject
 
 class FriendListViewModel: ViewModel() {
     val friends: MutableLiveData<Friends<Friend>> = MutableLiveData()
+    val isApiLoading = MutableLiveData(true)
     init {
-        updateFriends()
+        fetchFriends()
     }
 
-    fun updateFriends() {
+    fun fetchFriends() {
+        isApiLoading.value = true
+
         TalkApiClient.instance.friends { newFriends, error ->
             if(error != null) {
                 Log.e("TAG", "카카오톡 친구 목록 가져오기 실패", error)
@@ -24,6 +27,8 @@ class FriendListViewModel: ViewModel() {
                 Log.i("TAG", "카카오톡 친구 목록 가져오기 성공")
                 friends.postValue(newFriends)
             }
+
+            isApiLoading.value = false
         }
     }
 }
