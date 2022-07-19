@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationBarMenu
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
@@ -30,12 +32,13 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomnavigationview.run {
             setupWithNavController(navController)
             setOnItemSelectedListener { item ->
-                navController.navigate(item.itemId)
-
                 // Camera Fragment에서 풀스크린을 사용합니다.
                 setFullScreenMode(item.itemId == R.id.nav_camera)
 
-                return@setOnItemSelectedListener true
+                return@setOnItemSelectedListener NavigationUI.onNavDestinationSelected(
+                    item,
+                    navController
+                )
             }
         }
     }
