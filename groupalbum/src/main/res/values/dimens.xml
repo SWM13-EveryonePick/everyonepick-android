@@ -7,4 +7,7 @@
 
     <dimen name="size_photo">120dp</dimen>
     <dimen name="margin_photo">10dp</dimen>
+
+    <dimen name="margin_fab">16dp</dimen>
+    <dimen name="margintop_fab">8dp</dimen>
 </resources>

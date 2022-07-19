@@ -11,8 +11,11 @@ import com.bumptech.glide.Glide
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
+import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
-class PhotoAdapter: ListAdapter<PhotoItem, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
+class PhotoAdapter(
+    private val parentViewModel: PhotoListViewModel
+): ListAdapter<PhotoItem, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemPhotoBinding>(
             LayoutInflater.from(parent.context),
@@ -28,7 +31,22 @@ class PhotoAdapter: ListAdapter<PhotoItem, RecyclerView.ViewHolder>(PhotoDiffCal
     }
 
     private fun subscribeUi(binding: ItemPhotoBinding, holder: PhotoViewHolder) {
-        // TODO: 사진 뷰어로 이동
+        binding.root.setOnClickListener {
+            if(parentViewModel.photoItemList.value == null) return@setOnClickListener
+
+            val position = holder.absoluteAdapterPosition
+            // 일반 모드일 때
+            if(binding.checkbox.visibility == View.GONE) {
+                // TODO: 사진 뷰어로 이동
+            }
+        }
+
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
+            if(parentViewModel.photoItemList.value == null) return@setOnCheckedChangeListener
+
+            val position = holder.absoluteAdapterPosition
+            parentViewModel.photoItemList.value!![position].isChecked = isChecked
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

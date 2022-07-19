@@ -47,7 +47,7 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/margin_fab"
             android:src="@drawable/ic_baseline_add_24"
             android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
             android:onClick="@{() -> fragment.onClickCreateGroupAlbumButton()}"
@@ -57,7 +57,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/margin_fab"
             android:orientation="vertical"
             android:clipToPadding="false"
             android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
@@ -73,7 +73,7 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margintop_fab"
                 android:src="@drawable/ic_baseline_close_24"
                 android:onClick="@{() -> fragment.onClickCancelButton()}"/>
 

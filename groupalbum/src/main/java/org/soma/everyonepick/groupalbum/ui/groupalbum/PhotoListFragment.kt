@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
+import org.soma.everyonepick.groupalbum.data.PhotoDao
+import org.soma.everyonepick.groupalbum.data.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotolistBinding
 import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
@@ -27,8 +29,12 @@ class PhotoListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPhotolistBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.fragment = this
+        binding.parentViewModel = parentViewModel
+        binding.viewModel = viewModel
 
-        val adapter = PhotoAdapter()
+        val adapter = PhotoAdapter(viewModel)
         binding.recyclerviewPhoto.adapter = adapter
         viewModel.updatePhotoItemList(parentViewModel.groupAlbum.value!!.id)
 
@@ -50,5 +56,29 @@ class PhotoListFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+
+    fun onClickUploadPhotoButton() {
+        // TODO: 사진 업로드로 대체
+        val id = viewModel.photoItemList.value!!.size.toLong()
+        viewModel.addPhotoItem(PhotoItem(
+            PhotoDao(id, "https://picsum.photos/200"),
+            false,
+            false
+        ))
+    }
+
+    fun onClickDeleteButton() {
+        viewModel.deleteCheckedItems()
+        parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+    }
+
+    fun onClickProcessButton() {
+        // TODO: 합성 플로우
+    }
+
+    fun onClickCancelButton() {
+        parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
     }
 }

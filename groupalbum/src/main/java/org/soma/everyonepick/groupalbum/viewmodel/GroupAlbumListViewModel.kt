@@ -45,6 +45,17 @@ class GroupAlbumListViewModel @Inject constructor(
         groupAlbumItemList.value = groupAlbumItemList.value
     }
 
+    fun deleteCheckedItems() {
+        if(groupAlbumItemList.value == null) return
+
+        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        for(i in 0 until groupAlbumItemList.value!!.size) {
+            if(!groupAlbumItemList.value!![i].isChecked)
+                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
+        }
+        groupAlbumItemList.value = newGroupAlbumItemList
+    }
+
     fun setCheckboxGone() {
         if(groupAlbumItemList.value == null) return
 
@@ -71,16 +82,5 @@ class GroupAlbumListViewModel @Inject constructor(
             groupAlbumItemList.value!![i] = newItem
         }
         groupAlbumItemList.value = groupAlbumItemList.value
-    }
-
-    fun deleteCheckedItems() {
-        if(groupAlbumItemList.value == null) return
-
-        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
-        for(i in 0 until groupAlbumItemList.value!!.size) {
-            if(!groupAlbumItemList.value!![i].isChecked)
-                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
-        }
-        groupAlbumItemList.value = newGroupAlbumItemList
     }
 }
