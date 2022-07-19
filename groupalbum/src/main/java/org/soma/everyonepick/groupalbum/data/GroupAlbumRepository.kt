@@ -19,4 +19,11 @@ class GroupAlbumRepository {
         }
         return groupAlbumItemList
     }
+
+    fun getGroupAlbumDao(id: Long): GroupAlbumDao {
+        // TODO: Retrofit2... req: id -> res: GroupAlbumDao
+        return GroupAlbumDao(
+            id, "title$id"
+        )
+    }
 }

@@ -7,6 +7,9 @@
         <variable
             name="fragment"
             type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment" />
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +26,7 @@
             <org.soma.everyonepick.common_ui.CustomActionBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:title="@{viewModel.title}"
                 app:hasBackButton="true"
                 app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
                 app:layout_constraintTop_toTopOf="parent"/>
