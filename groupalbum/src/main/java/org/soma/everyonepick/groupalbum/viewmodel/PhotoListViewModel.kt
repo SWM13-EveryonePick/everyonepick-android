@@ -14,7 +14,7 @@ class PhotoListViewModel @Inject constructor(
 ): ViewModel() {
     val photoItemList = MutableLiveData<MutableList<PhotoItem>>()
 
-    fun updatePhotoItemList(groupAlbumId: Long) {
+    fun fetchPhotoItemList(groupAlbumId: Long) {
         val newPhotoItemList = photoRepository.getPhotoItemList(groupAlbumId)
         photoItemList.value = newPhotoItemList
     }

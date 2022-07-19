@@ -36,7 +36,7 @@ class PhotoListFragment: Fragment() {
 
         val adapter = PhotoAdapter(viewModel)
         binding.recyclerviewPhoto.adapter = adapter
-        viewModel.updatePhotoItemList(parentViewModel.groupAlbum.value!!.id)
+        viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
 
         subscribeUi(adapter)
 
