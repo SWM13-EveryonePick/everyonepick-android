@@ -7,13 +7,13 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.FriendViewModel"/>
+            type="org.soma.everyonepick.groupalbum.viewmodel.FriendListViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.friend.FriendFragment">
+        tools:context=".ui.friend.FriendListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_friend"

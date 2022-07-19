@@ -10,7 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FriendViewModel: ViewModel() {
+class FriendListViewModel: ViewModel() {
     val friends: MutableLiveData<Friends<Friend>> = MutableLiveData()
     init {
         updateFriends()
