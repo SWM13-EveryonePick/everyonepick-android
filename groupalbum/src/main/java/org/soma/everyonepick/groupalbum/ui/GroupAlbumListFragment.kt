@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbumlist
+package org.soma.everyonepick.groupalbum.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

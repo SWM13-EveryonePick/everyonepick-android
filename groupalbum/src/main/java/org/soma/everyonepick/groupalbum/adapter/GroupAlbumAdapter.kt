@@ -39,7 +39,7 @@ class GroupAlbumAdapter(
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {
                 val direction =
-                    GroupAlbumParentViewPagerFragmentDirections.actionGroupalbumparentviewpagerToGroupalbum(
+                    GroupAlbumParentViewPagerFragmentDirections.actionGroupalbumparentviewpagerToGroupalbumviewpager(
                         getItem(position).groupAlbumDao.id
                     )
                 binding.root.findNavController().navigate(direction)
