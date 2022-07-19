@@ -18,15 +18,15 @@ class GroupAlbumListViewModel @Inject constructor(
 ): ViewModel() {
     val groupAlbumItemList = MutableLiveData<MutableList<GroupAlbumItem>>()
     init {
-        updateGroupAlbumList()
+        updateGroupAlbumItemList()
     }
 
-    fun updateGroupAlbumList() {
+    fun updateGroupAlbumItemList() {
         val newGroupAlbumItemList = groupAlbumRepository.getGroupAlbumItemList()
         groupAlbumItemList.value = newGroupAlbumItemList
     }
 
-    fun addGroupAlbum(groupAlbumItem: GroupAlbumItem) {
+    fun addGroupAlbumItem(groupAlbumItem: GroupAlbumItem) {
         groupAlbumItemList.value?.add(groupAlbumItem)
         groupAlbumItemList.value = groupAlbumItemList.value
     }

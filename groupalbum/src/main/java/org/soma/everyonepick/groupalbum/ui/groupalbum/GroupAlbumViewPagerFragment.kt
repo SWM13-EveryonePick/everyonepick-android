@@ -55,11 +55,16 @@ class GroupAlbumViewPagerFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewpager2.let {
-            it.adapter = GroupAlbumViewPagerAdapter(this)
+            it.adapter = GroupAlbumViewPagerAdapter(this, args.groupAlbumId)
         }
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
             tab.text = TAB_ITEMS[position]
         }.attach()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 

@@ -24,8 +24,8 @@ class GroupAlbumAdapter(
             parent,
             false
         )
-        val holder = GroupAlbumViewHolder(binding)
 
+        val holder = GroupAlbumViewHolder(binding)
         subscribeUi(binding, holder)
 
         return holder

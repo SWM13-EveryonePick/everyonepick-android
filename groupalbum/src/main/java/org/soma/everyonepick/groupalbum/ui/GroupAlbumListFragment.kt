@@ -43,7 +43,6 @@ class GroupAlbumListFragment : Fragment() {
 
     private fun subscribeUi(adapter: GroupAlbumAdapter) {
         viewModel.groupAlbumItemList.observe(viewLifecycleOwner) { groupAlbumItemList ->
-            // toMutableList(): 참조 주소를 새롭게 함으로써 갱신이 되도록 한다.
             adapter.submitList(groupAlbumItemList.toMutableList())
         }
 
@@ -64,7 +63,7 @@ class GroupAlbumListFragment : Fragment() {
     // TODO: Remove it after creating group album logic implemented
     fun onClickCreateGroupAlbumButton() {
         val index = viewModel.groupAlbumItemList.value?.size?.toLong()
-        viewModel.addGroupAlbum(GroupAlbumItem(GroupAlbumDao(index ?: -1, "title$index"), false, false))
+        viewModel.addGroupAlbumItem(GroupAlbumItem(GroupAlbumDao(index ?: -1, "title$index"), false, false))
     }
 
     fun onClickDeleteButton() {
