@@ -14,7 +14,7 @@ import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumlistBinding
 import org.soma.everyonepick.groupalbum.ui.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
-class GroupAlbumListAdapter(
+class GroupAlbumAdapter(
     val parentViewModel: GroupAlbumListViewModel
 ): ListAdapter<GroupAlbumListItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

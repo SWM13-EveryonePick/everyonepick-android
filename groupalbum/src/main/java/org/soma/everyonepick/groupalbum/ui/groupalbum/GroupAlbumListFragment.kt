@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.adapter.GroupAlbumListAdapter
+import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.GroupAlbumListItem
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumlistBinding
@@ -33,7 +33,7 @@ class GroupAlbumListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.parentViewModel = parentViewModel
 
-        val adapter = GroupAlbumListAdapter(viewModel)
+        val adapter = GroupAlbumAdapter(viewModel)
         binding.recyclerviewGroupalbum.adapter = adapter
 
         subscribeUi(adapter)
@@ -41,7 +41,7 @@ class GroupAlbumListFragment : Fragment() {
         return binding.root
     }
 
-    private fun subscribeUi(adapter: GroupAlbumListAdapter) {
+    private fun subscribeUi(adapter: GroupAlbumAdapter) {
         viewModel.groupAlbumListItemList.observe(viewLifecycleOwner) { groupAlbumListItems ->
             // toMutableList(): 참조 주소를 새롭게 함으로써 갱신이 되도록 한다.
             adapter.submitList(groupAlbumListItems.toMutableList())
