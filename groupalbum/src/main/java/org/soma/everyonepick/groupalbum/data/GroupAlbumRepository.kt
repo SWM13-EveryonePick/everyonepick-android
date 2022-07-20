@@ -12,7 +12,7 @@ class GroupAlbumRepository {
         return convertGroupAlbumDaoListToGroupAlbumItemList(groupAlbumDaoList)
     }
 
-    private fun convertGroupAlbumDaoListToGroupAlbumItemList(groupAlbumDaoList: MutableList<GroupAlbumDao>): MutableList<GroupAlbumItem> {
+    fun convertGroupAlbumDaoListToGroupAlbumItemList(groupAlbumDaoList: MutableList<GroupAlbumDao>): MutableList<GroupAlbumItem> {
         val groupAlbumItemList = mutableListOf<GroupAlbumItem>()
         for(i in 0 until groupAlbumDaoList.size) {
             groupAlbumItemList.add(GroupAlbumItem(groupAlbumDaoList[i], false, false))
