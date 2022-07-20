@@ -9,6 +9,6 @@ class GroupAlbumTest {
         val groupAlbumItemList = GroupAlbumRepository().convertGroupAlbumDaoListToGroupAlbumItemList(
             mutableListOf(groupAlbumDao)
         )
-        assertEquals(groupAlbumItemList, mutableListOf(GroupAlbumItem(groupAlbumDao, true, false)))
+        assertEquals(groupAlbumItemList, mutableListOf(GroupAlbumItem(groupAlbumDao, false, false)))
     }
 }
