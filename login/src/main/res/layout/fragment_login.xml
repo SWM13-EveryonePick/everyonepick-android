@@ -4,9 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="fragment"
             type="org.soma.everyonepick.login.ui.LoginFragment" />
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.login.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +19,7 @@
         tools:context=".ui.LoginFragment">
 
         <ImageButton
+            android:id="@+id/imagebutton_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/kakao_login_medium_wide"
@@ -23,6 +28,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:onClick="@{() -> fragment.onClickLogin()}"/>
+
+        <ProgressBar
+            android:layout_width="@dimen/size_loginprogressbar"
+            android:layout_height="@dimen/size_loginprogressbar"
+            android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+            app:layout_constraintTop_toTopOf="@id/imagebutton_login"
+            app:layout_constraintBottom_toBottomOf="@id/imagebutton_login"
+            app:layout_constraintStart_toStartOf="@id/imagebutton_login"
+            app:layout_constraintEnd_toEndOf="@id/imagebutton_login"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

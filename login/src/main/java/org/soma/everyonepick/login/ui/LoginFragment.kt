@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -17,10 +18,13 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 import org.soma.everyonepick.login.databinding.FragmentLoginBinding
+import org.soma.everyonepick.login.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,14 +33,18 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.fragment = this
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         return binding.root
     }
 
     fun onClickLogin() {
+        if(viewModel.isApiLoading.value == true) return
+
+        viewModel.isApiLoading.value = true
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            if(error != null) onLoginSuccess()
+            if(error != null) onLoginFailure()
             else if(token != null) onLoginSuccess()
         }
 
@@ -48,7 +56,10 @@ class LoginFragment : Fragment() {
 
                     // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도한다.
                     // 단, 사용자가 의도적으로 로그인을 취소한 경우는 제외한다.
-                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) return@loginWithKakaoTalk
+                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+                        viewModel.isApiLoading.value = false
+                        return@loginWithKakaoTalk
+                    }
                     UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
                 }
                 else if(token != null) onLoginSuccess()
@@ -59,11 +70,14 @@ class LoginFragment : Fragment() {
     }
 
     private fun onLoginFailure() {
+        viewModel.isApiLoading.value = false
         Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
     }
 
     private fun onLoginSuccess() {
         UserApiClient.instance.me { user, error ->
+            viewModel.isApiLoading.value = false
+
             if(error != null){
                 Toast.makeText(requireContext(), "사용자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
             }else if(user != null) {
