@@ -24,6 +24,8 @@ class GroupAlbumListViewModel @Inject constructor(
     }
 
     fun fetchGroupAlbumItemList() {
+        isApiLoading.value = true
+
         val newGroupAlbumItemList = groupAlbumRepository.getGroupAlbumItemList()
         groupAlbumItemList.value = newGroupAlbumItemList
 

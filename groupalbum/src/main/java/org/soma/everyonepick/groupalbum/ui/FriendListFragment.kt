@@ -26,6 +26,7 @@ class FriendListFragment : Fragment() {
 
         val adapter = FriendAdapter()
         binding.recyclerviewFriend.adapter = adapter
+
         subscribeUi(adapter)
 
         return binding.root
