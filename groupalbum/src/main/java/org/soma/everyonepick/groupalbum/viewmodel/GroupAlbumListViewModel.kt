@@ -35,20 +35,6 @@ class GroupAlbumListViewModel @Inject constructor(
         groupAlbumItemList.value = groupAlbumItemList.value
     }
 
-    fun updateTitle(position: Int, title: String) {
-        if(groupAlbumItemList.value == null) return
-
-        val newItem = GroupAlbumItem(
-            groupAlbumItemList.value!![position].groupAlbumDao.copy(),
-            groupAlbumItemList.value!![position].isChecked,
-            groupAlbumItemList.value!![position].isCheckboxVisible
-        )
-        newItem.groupAlbumDao.title = title
-
-        groupAlbumItemList.value!![position] = newItem
-        groupAlbumItemList.value = groupAlbumItemList.value
-    }
-
     fun deleteCheckedItems() {
         if(groupAlbumItemList.value == null) return
 
@@ -60,31 +46,17 @@ class GroupAlbumListViewModel @Inject constructor(
         groupAlbumItemList.value = newGroupAlbumItemList
     }
 
-    fun setCheckboxGone() {
+    fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         if(groupAlbumItemList.value == null) return
 
         for(i in 0 until groupAlbumItemList.value!!.size) {
-            val newItem = GroupAlbumItem(
-                groupAlbumItemList.value!![i].groupAlbumDao.copy(),
-                false,
-                false
-            )
+            val newItem = copyGroupAlbumItem(groupAlbumItemList.value!![i])
+            newItem.isCheckboxVisible = isCheckboxVisible
             groupAlbumItemList.value!![i] = newItem
         }
         groupAlbumItemList.value = groupAlbumItemList.value
     }
 
-    fun setCheckboxVisible() {
-        if(groupAlbumItemList.value == null) return
-
-        for(i in 0 until groupAlbumItemList.value!!.size) {
-            val newItem = GroupAlbumItem(
-                groupAlbumItemList.value!![i].groupAlbumDao.copy(),
-                false,
-                true
-            )
-            groupAlbumItemList.value!![i] = newItem
-        }
-        groupAlbumItemList.value = groupAlbumItemList.value
-    }
+    private fun copyGroupAlbumItem(groupAlbumItem: GroupAlbumItem) =
+        GroupAlbumItem(groupAlbumItem.groupAlbumDao.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
 }

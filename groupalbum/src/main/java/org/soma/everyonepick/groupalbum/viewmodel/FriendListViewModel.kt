@@ -12,6 +12,10 @@ import javax.inject.Inject
 
 class FriendListViewModel: ViewModel() {
     val friends: MutableLiveData<Friends<Friend>> = MutableLiveData()
+    // 초기에는 리스트는 비었지만 작업을 처리중인 것이기에, "No Friends"를 띄우는 게 아니라
+    // ProgressBar를 띄우는 것이 적합합니다.
+    // loading |-- Friends
+    //          `- "No Friends"
     val isApiLoading = MutableLiveData(true)
     init {
         fetchFriends()

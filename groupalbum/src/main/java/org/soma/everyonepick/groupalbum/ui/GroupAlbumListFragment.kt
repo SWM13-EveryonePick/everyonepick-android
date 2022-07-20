@@ -47,10 +47,7 @@ class GroupAlbumListFragment : Fragment() {
         }
 
         parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
-            when(groupAlbumListMode) {
-                GroupAlbumListMode.NORMAL_MODE.ordinal -> viewModel.setCheckboxGone()
-                else -> viewModel.setCheckboxVisible()
-            }
+            viewModel.setIsCheckboxVisible(groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal)
         }
     }
 
