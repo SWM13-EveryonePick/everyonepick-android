@@ -9,17 +9,17 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 import org.soma.everyonepick.login.R
-import org.soma.everyonepick.login.databinding.FragmentFaceInformationCompleteBinding
+import org.soma.everyonepick.login.databinding.FragmentFaceinformationcompleteBinding
 
 class FaceInformationCompleteFragment : Fragment() {
-    private var _binding: FragmentFaceInformationCompleteBinding? = null
+    private var _binding: FragmentFaceinformationcompleteBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFaceInformationCompleteBinding.inflate(inflater, container, false)
+        _binding = FragmentFaceinformationcompleteBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
 

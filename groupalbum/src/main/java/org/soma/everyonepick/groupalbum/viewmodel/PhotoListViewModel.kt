@@ -13,9 +13,11 @@ class PhotoListViewModel @Inject constructor(
     private val photoRepository: PhotoRepository
 ): ViewModel() {
     val photoItemList = MutableLiveData<MutableList<PhotoItem>>()
-    val isApiLoading = MutableLiveData(true) // TODO: true -> Retrofit2 -> false
+    val isApiLoading = MutableLiveData(true)
 
     fun fetchPhotoItemList(groupAlbumId: Long) {
+        isApiLoading.value = true
+
         val newPhotoItemList = photoRepository.getPhotoItemList(groupAlbumId)
         photoItemList.value = newPhotoItemList
 

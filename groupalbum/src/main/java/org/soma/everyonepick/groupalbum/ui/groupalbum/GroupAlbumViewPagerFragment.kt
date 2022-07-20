@@ -52,7 +52,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewpager2.let {
-            it.adapter = GroupAlbumViewPagerAdapter(this, args.groupAlbumId)
+            it.adapter = GroupAlbumViewPagerAdapter(this)
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)

@@ -9,10 +9,10 @@ class PhotoRepository {
             PhotoDao(2, "https://picsum.photos/200"),
             PhotoDao(3, "https://picsum.photos/200")
         )
-        return convertPhotoDatListToPhotoItemList(photoDaoList)
+        return convertPhotoDaoListToPhotoItemList(photoDaoList)
     }
 
-    private fun convertPhotoDatListToPhotoItemList(photoDaoList: MutableList<PhotoDao>): MutableList<PhotoItem> {
+    fun convertPhotoDaoListToPhotoItemList(photoDaoList: MutableList<PhotoDao>): MutableList<PhotoItem> {
         val photoItemList = mutableListOf<PhotoItem>()
         for(i in 0 until photoDaoList.size) {
             photoItemList.add(PhotoItem(photoDaoList[i], false, false))

@@ -24,15 +24,12 @@ class FriendListFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        initializeRecyclerView()
-
-        return binding.root
-    }
-
-    private fun initializeRecyclerView() {
         val adapter = FriendAdapter()
         binding.recyclerviewFriend.adapter = adapter
+
         subscribeUi(adapter)
+
+        return binding.root
     }
 
     private fun subscribeUi(adapter: FriendAdapter) {

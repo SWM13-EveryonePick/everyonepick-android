@@ -25,7 +25,7 @@ class PermissionFragment : Fragment() {
     private val requestPermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { isGranted ->
-        if(isGranted.all{ it.value }) {
+        if(isGranted.all{ it.value }){
             navigateToPreview()
         }else{
             Toast.makeText(requireContext(), "권한이 필요합니다.", Toast.LENGTH_SHORT).show()
@@ -47,7 +47,7 @@ class PermissionFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        if (!hasAllPermissions(requireContext(), PERMISSIONS_REQUIRED)) {
+        if(!hasAllPermissions(requireContext(), PERMISSIONS_REQUIRED)){
             requestPermissionsLauncher.launch(PERMISSIONS_REQUIRED)
         }else{
             navigateToPreview()

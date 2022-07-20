@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.login.R
-import org.soma.everyonepick.login.databinding.FragmentFaceInformationCameraBinding
+import org.soma.everyonepick.login.databinding.FragmentFaceinformationcameraBinding
 
 class FaceInformationCameraFragment : Fragment() {
-    private var _binding: FragmentFaceInformationCameraBinding? = null
+    private var _binding: FragmentFaceinformationcameraBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFaceInformationCameraBinding.inflate(inflater, container, false)
+        _binding = FragmentFaceinformationcameraBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
 
