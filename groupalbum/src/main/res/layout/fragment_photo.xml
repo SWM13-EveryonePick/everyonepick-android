@@ -7,6 +7,9 @@
         <variable
             name="fragment"
             type="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoFragment" />
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,12 +17,37 @@
         android:layout_height="match_parent"
         tools:context=".ui.groupalbum.photo.PhotoFragment">
 
-        <org.soma.everyonepick.common_ui.CustomActionBar
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:hasBackButton="true"
-            app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
+            >
+
+            <org.soma.everyonepick.common_ui.CustomActionBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:hasBackButton="true"
+                app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="삭제"
+                android:layout_marginRight="@dimen/margin_action_bar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:photoUrl="@{viewModel.photoUrl}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
