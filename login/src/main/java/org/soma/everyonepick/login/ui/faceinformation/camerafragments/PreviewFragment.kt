@@ -55,12 +55,12 @@ class PreviewFragment : Fragment() {
 
     private fun updateCameraUi() {
         cameraUiContainerBinding?.root?.let{
-            binding.constraintlayoutRoot.removeView(it)
+            binding.layoutRoot.removeView(it)
         }
 
         cameraUiContainerBinding = CameraUiContainerBinding.inflate(
             LayoutInflater.from(requireContext()),
-            binding.constraintlayoutRoot,
+            binding.layoutRoot,
             true
         )
     }
