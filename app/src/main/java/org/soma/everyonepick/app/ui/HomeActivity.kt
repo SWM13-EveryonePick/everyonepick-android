@@ -14,9 +14,10 @@ import com.google.android.material.navigation.NavigationBarMenu
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
+import org.soma.everyonepick.common.HomeActivityUtility
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), HomeActivityUtility {
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,5 +62,13 @@ class HomeActivity : AppCompatActivity() {
         }else{
             window.decorView.systemUiVisibility = View.VISIBLE
         }
+    }
+
+    override fun hideBottomNavigationView() {
+        binding.bottomnavigationview.visibility = View.GONE
+    }
+
+    override fun showBottomNavigationView() {
+        binding.bottomnavigationview.visibility = View.VISIBLE
     }
 }

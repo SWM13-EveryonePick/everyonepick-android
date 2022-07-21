@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel
@@ -30,12 +31,16 @@ class PhotoFragment : Fragment() {
 
         viewModel.photoUrl.value = args.photoUrl
 
+        (activity as HomeActivityUtility).hideBottomNavigationView()
+
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+
+        (activity as HomeActivityUtility).showBottomNavigationView()
     }
 
 
