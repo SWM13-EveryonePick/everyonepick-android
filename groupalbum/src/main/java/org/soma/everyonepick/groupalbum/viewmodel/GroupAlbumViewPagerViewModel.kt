@@ -13,8 +13,6 @@ class GroupAlbumViewPagerViewModel: ViewModel() {
     val photoListMode = MutableLiveData(PhotoListMode.NORMAL_MODE.ordinal)
     // TODO: 합성중 / 합성완료 모드
 
-    val isTitleEditable = MutableLiveData(false)
-
     fun updateGroupAlbumTitle(newTitle: String) {
         val newGroupAlbum = groupAlbum.value?.copy(title = newTitle)
         groupAlbum.value = newGroupAlbum

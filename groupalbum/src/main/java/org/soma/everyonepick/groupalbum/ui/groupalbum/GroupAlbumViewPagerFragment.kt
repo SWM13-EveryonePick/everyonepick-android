@@ -2,11 +2,13 @@ package org.soma.everyonepick.groupalbum.ui.groupalbum
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -90,11 +92,20 @@ class GroupAlbumViewPagerFragment: Fragment() {
     }
 
     fun onClickDrawerTitleEditButton() {
-        viewModel.isTitleEditable.value = !viewModel.isTitleEditable.value!!
-    }
-
-    fun onDrawerTitleTextChanged(newTitle: CharSequence) {
-        viewModel.updateGroupAlbumTitle(newTitle.toString())
+        val editText = EditText(context).apply {
+            setText(viewModel.groupAlbum.value?.title)
+            hint = "예시) 밴드부 동아리"
+        }
+        AlertDialog.Builder(context)
+            .setTitle("단체공유앨범 이름 변경")
+            .setView(editText)
+            .setPositiveButton("확인") { _, _ ->
+                viewModel.updateGroupAlbumTitle(editText.text.toString())
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.cancel()
+            }
+            .create().show()
     }
 
     fun onClickDrawerExitButton() {
