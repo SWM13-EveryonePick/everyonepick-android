@@ -7,14 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
 
 class PhotoFragment : Fragment() {
+    private var _binding: FragmentPhotoBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_photo, container, false)
+        _binding = FragmentPhotoBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.fragment = this
+
+        return binding.root
     }
 
 

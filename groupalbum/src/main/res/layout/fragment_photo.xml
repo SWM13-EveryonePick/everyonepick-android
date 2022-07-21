@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
             app:hasBackButton="true"
+            app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

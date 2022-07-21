@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_groupalbum"
     app:startDestination="@id/fragment_groupalbumparentviewpager">
 
     <fragment
         android:id="@+id/fragment_groupalbumparentviewpager"
-        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragment">
+        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragment"
+        tools:layout="@layout/fragment_groupalbumparentviewpager">
         <action
             android:id="@+id/action_groupalbumparentviewpager_to_groupalbumviewpager"
             app:destination="@id/fragment_groupalbumviewpager"/>
@@ -15,9 +17,22 @@
     <!-- TODO: 앨범 -> 앨범리스트 ... 앨범 아이디 전달 to refresh information -->
     <fragment
         android:id="@+id/fragment_groupalbumviewpager"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment">
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment"
+        tools:layout="@layout/fragment_groupalbumviewpager">
         <argument
             android:name="groupAlbumId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_groupalbumviewpager_to_photo"
+            app:destination="@id/fragment_photo"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_photo"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoFragment"
+        tools:layout="@layout/fragment_photo">
+        <argument
+            android:name="photoUrl"
+            app:argType="string" />
     </fragment>
 </navigation>
