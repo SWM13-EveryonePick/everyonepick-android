@@ -28,7 +28,7 @@
             <org.soma.everyonepick.common_ui.CustomActionBar
                 android:id="@+id/customactionbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_action_bar"
                 app:title="단체공유앨범"
                 app:layout_constraintTop_toTopOf="parent"
                 />

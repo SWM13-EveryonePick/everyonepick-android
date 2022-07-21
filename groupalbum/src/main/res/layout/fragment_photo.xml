@@ -25,7 +25,7 @@
 
             <org.soma.everyonepick.common_ui.CustomActionBar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_action_bar"
                 app:layout_constraintTop_toTopOf="parent"
                 app:hasBackButton="true"
                 app:onClickBackButton="@{() -> fragment.onClickBackButton()}"

@@ -38,6 +38,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="3"
+                    tools:listitem="@layout/item_photo"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
