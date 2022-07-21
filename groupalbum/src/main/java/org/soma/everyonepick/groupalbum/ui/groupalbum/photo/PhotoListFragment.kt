@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbum
+package org.soma.everyonepick.groupalbum.ui.groupalbum.photo
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
 import org.soma.everyonepick.groupalbum.data.PhotoDao
 import org.soma.everyonepick.groupalbum.data.PhotoItem

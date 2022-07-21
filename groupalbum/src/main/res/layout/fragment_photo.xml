@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="fragment"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.groupalbum.photo.PhotoFragment">
+
+        <org.soma.everyonepick.common_ui.CustomActionBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
+            app:hasBackButton="true"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
