@@ -100,6 +100,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
             .setTitle("단체공유앨범 이름 변경")
             .setView(editText)
             .setPositiveButton("확인") { _, _ ->
+                // TODO: API
                 viewModel.updateGroupAlbumTitle(editText.text.toString())
             }
             .setNegativeButton("취소") { dialog, _ ->
@@ -111,6 +112,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
     fun onClickDrawerExitButton() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButton("확인") { _, _ ->
+                // TODO: API
                 val result = Bundle().apply {
                     putLong("id", args.groupAlbumId)
                 }

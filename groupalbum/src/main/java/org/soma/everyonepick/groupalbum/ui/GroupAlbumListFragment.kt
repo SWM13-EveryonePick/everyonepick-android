@@ -62,6 +62,11 @@ class GroupAlbumListFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // TODO: viewModel.fetchGroupAlbumItemList() -> 자동 업데이트
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
