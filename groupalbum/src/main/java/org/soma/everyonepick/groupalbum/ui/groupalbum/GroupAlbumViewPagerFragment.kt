@@ -89,6 +89,14 @@ class GroupAlbumViewPagerFragment: Fragment() {
         binding.drawerlayout.openDrawer(GravityCompat.END)
     }
 
+    fun onClickDrawerTitleEditButton() {
+        viewModel.isTitleEditable.value = !viewModel.isTitleEditable.value!!
+    }
+
+    fun onDrawerTitleTextChanged(newTitle: CharSequence) {
+        viewModel.updateGroupAlbumTitle(newTitle.toString())
+    }
+
     fun onClickDrawerExitButton() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButton("확인") { _, _ ->
