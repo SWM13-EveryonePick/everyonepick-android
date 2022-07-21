@@ -73,14 +73,14 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margintop_fab"
+                android:layout_marginTop="@dimen/margin_top_fab"
                 android:src="@drawable/ic_baseline_people_alt_24"
                 android:onClick="@{() -> fragment.onClickProcessButton()}"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margintop_fab"
+                android:layout_marginTop="@dimen/margin_top_fab"
                 android:src="@drawable/ic_baseline_close_24"
                 android:onClick="@{() -> fragment.onClickCancelButton()}"/>
 
