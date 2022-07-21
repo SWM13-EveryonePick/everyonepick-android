@@ -135,7 +135,8 @@
                         android:background="@null"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:onClick="@{() -> fragment.onClickDrawerExitButton()}"/>
 
                     <ImageButton
                         android:layout_width="@dimen/size_drawer_bottom_icon"

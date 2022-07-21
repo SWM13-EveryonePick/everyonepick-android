@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbum
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
@@ -18,6 +20,7 @@ import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
+import org.soma.everyonepick.groupalbum.ui.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import javax.inject.Inject
@@ -84,5 +87,20 @@ class GroupAlbumViewPagerFragment: Fragment() {
 
     fun onClickDrawerButton() {
         binding.drawerlayout.openDrawer(GravityCompat.END)
+    }
+
+    fun onClickDrawerExitButton() {
+        AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
+            .setPositiveButton("확인") { _, _ ->
+                val result = Bundle().apply {
+                    putLong("id", args.groupAlbumId)
+                }
+                activity?.supportFragmentManager?.setFragmentResult(GROUP_ALBUM_REMOVED, result)
+                findNavController().navigateUp()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.cancel()
+            }
+            .create().show()
     }
 }
