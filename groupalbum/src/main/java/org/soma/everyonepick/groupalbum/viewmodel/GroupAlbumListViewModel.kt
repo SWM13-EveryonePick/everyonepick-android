@@ -61,4 +61,15 @@ class GroupAlbumListViewModel @Inject constructor(
 
     private fun copyGroupAlbumItem(groupAlbumItem: GroupAlbumItem) =
         GroupAlbumItem(groupAlbumItem.groupAlbumDao.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
+
+    fun deleteGroupAlbum(id: Long) {
+        if(groupAlbumItemList.value == null) return
+
+        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        for(i in 0 until groupAlbumItemList.value!!.size) {
+            if(groupAlbumItemList.value!![i].groupAlbumDao.id != id)
+                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
+        }
+        groupAlbumItemList.value = newGroupAlbumItemList
+    }
 }

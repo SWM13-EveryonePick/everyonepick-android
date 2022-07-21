@@ -20,7 +20,7 @@
         tools:context=".ui.groupalbum.GroupAlbumViewPagerFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintlayout_actionbar"
+            android:id="@+id/layout_actionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
@@ -51,7 +51,7 @@
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/constraintlayout_actionbar"
+            app:layout_constraintTop_toBottomOf="@id/layout_actionbar"
             app:layout_constraintBottom_toTopOf="@id/viewpager2"/>
 
         <androidx.viewpager2.widget.ViewPager2

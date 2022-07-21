@@ -1,10 +1,12 @@
 package org.soma.everyonepick.groupalbum.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
@@ -37,6 +39,7 @@ class GroupAlbumListFragment : Fragment() {
         binding.recyclerviewGroupalbum.adapter = adapter
 
         subscribeUi(adapter)
+        setFragmentResultListeners()
 
         return binding.root
     }
@@ -49,6 +52,19 @@ class GroupAlbumListFragment : Fragment() {
         parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
             viewModel.setIsCheckboxVisible(groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal)
         }
+    }
+
+    // 내부 뎁스에서의 변경 사항을 받아와서 API call 없이 바로 적용합니다.
+    private fun setFragmentResultListeners() {
+        activity?.supportFragmentManager?.setFragmentResultListener(GROUP_ALBUM_REMOVED, viewLifecycleOwner) { _, bundle ->
+            val id = bundle.getLong("id")
+            viewModel.deleteGroupAlbum(id)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // TODO: viewModel.fetchGroupAlbumItemList() -> 자동 업데이트
     }
 
     override fun onDestroy() {
@@ -70,5 +86,10 @@ class GroupAlbumListFragment : Fragment() {
 
     fun onClickCancelButton() {
         parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+    }
+
+    companion object {
+        // Request keys for FragmentResultListener
+        const val GROUP_ALBUM_REMOVED = "group_album_removed"
     }
 }
