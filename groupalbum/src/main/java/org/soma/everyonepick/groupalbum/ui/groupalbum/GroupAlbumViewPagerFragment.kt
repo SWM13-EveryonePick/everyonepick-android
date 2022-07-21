@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
@@ -79,5 +80,9 @@ class GroupAlbumViewPagerFragment: Fragment() {
         viewModel.photoListMode.value =
             if(viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal
             else PhotoListMode.NORMAL_MODE.ordinal
+    }
+
+    fun onClickDrawerButton() {
+        binding.drawerlayout.openDrawer(GravityCompat.END)
     }
 }

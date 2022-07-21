@@ -14,55 +14,85 @@
         <import type="org.soma.everyonepick.groupalbum.utility.PhotoListMode"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbum.GroupAlbumViewPagerFragment">
+        tools:openDrawer="end">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintlayout_actionbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            tools:context=".ui.groupalbum.GroupAlbumViewPagerFragment">
 
-            <org.soma.everyonepick.common_ui.CustomActionBar
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintlayout_actionbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@{viewModel.groupAlbum.title}"
-                app:hasBackButton="true"
-                app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <org.soma.everyonepick.common_ui.CustomActionBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@{viewModel.groupAlbum.title}"
+                    app:hasBackButton="true"
+                    app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? @string/select: @string/cancel}"
+                    android:layout_marginRight="8dp"
+                    android:visibility="@{viewModel.currentItem == 1? View.GONE: View.VISIBLE}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/button_drawer"
+                    android:onClick="@{() -> fragment.onClickSelectButton()}"
+                    />
+
+                <ImageButton
+                    android:id="@+id/button_drawer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_baseline_menu_24"
+                    android:onClick="@{() -> fragment.onClickDrawerButton()}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? @string/select: @string/cancel}"
-                android:layout_marginRight="8dp"
-                android:visibility="@{viewModel.currentItem == 1? View.GONE: View.VISIBLE}"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintlayout_actionbar"
+                />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/tablayout"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{() -> fragment.onClickSelectButton()}"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/constraintlayout_actionbar"
-            />
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TEST"/>
+        </com.google.android.material.navigation.NavigationView>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/tablayout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>
