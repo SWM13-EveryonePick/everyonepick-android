@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.adapter.ImageAdapter
+import org.soma.everyonepick.groupalbum.databinding.FragmentImagepickerBinding
 
 private val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID
 private val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
@@ -14,13 +16,25 @@ private val INDEX_ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
 private val INDEX_DATE_ADDED = MediaStore.MediaColumns.DATE_ADDED
 
 class ImagePickerFragment : Fragment() {
+    private var _binding: FragmentImagepickerBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_imagepicker, container, false)
+        _binding = FragmentImagepickerBinding.inflate(inflater, container, false)
+
+        val adapter = ImageAdapter()
+        binding.recyclerviewImage.adapter = adapter
+
+        subscribeUi(adapter)
+
+        return binding.root
+    }
+
+    private fun subscribeUi(adapter: ImageAdapter) {
+
     }
 
     /*@SuppressLint("Range")
