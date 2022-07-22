@@ -23,6 +23,6 @@ class ParentPermissionFragment : Fragment() {
             .add(R.id.fragment_permission, fragment)
             .commit()
 
-        return inflater.inflate(R.layout.fragment_parent_permission, container, false)
+        return inflater.inflate(R.layout.fragment_parentpermission, container, false)
     }
 }

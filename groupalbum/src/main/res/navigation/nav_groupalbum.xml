@@ -25,7 +25,25 @@
         <action
             android:id="@+id/action_groupalbumviewpager_to_photo"
             app:destination="@id/fragment_photo"/>
+        <action
+            android:id="@+id/action_groupalbumviewpager_to_parentpermission"
+            app:destination="@id/fragment_parentpermission"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_parentpermission"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.ParentPermissionFragment"
+        tools:layout="@layout/fragment_parentpermission">
+        <action
+            android:id="@+id/action_parentpermission_to_imagepicker"
+            app:destination="@id/fragment_imagepicker"
+            app:popUpTo="@id/fragment_groupalbumviewpager"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_imagepicker"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.ImagePickerFragment"
+        tools:layout="@layout/fragment_imagepicker"/>
 
     <fragment
         android:id="@+id/fragment_photo"
