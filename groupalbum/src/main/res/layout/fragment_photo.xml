@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="삭제"
                 android:layout_marginRight="@dimen/margin_action_bar"
+                android:onClick="@{() -> fragment.onClickDeleteButton()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

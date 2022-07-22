@@ -52,6 +52,11 @@ class PhotoListFragment: Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // TODO: viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

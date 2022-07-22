@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbum.photo
 
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -92,5 +93,17 @@ class PhotoFragment : Fragment() {
             e.printStackTrace()
             Toast.makeText(context, "이미지 저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun onClickDeleteButton() {
+        AlertDialog.Builder(context).setMessage("사진을 삭제합니다.")
+            .setPositiveButton("확인") { _, _ ->
+                // TODO: API Call
+                findNavController().navigateUp()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.cancel()
+            }
+            .create().show()
     }
 }
