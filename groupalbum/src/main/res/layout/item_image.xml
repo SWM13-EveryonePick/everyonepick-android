@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="137dp"
-        android:layout_height="137dp">
+        android:layout_width="@dimen/size_image"
+        android:layout_height="@dimen/size_image">
 
         <ImageView
             android:id="@+id/image"

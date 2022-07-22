@@ -5,6 +5,7 @@
     <dimen name="margin_friend_item">10dp</dimen>
     <dimen name="size_group_album">120dp</dimen>
 
+    <dimen name="size_image">137dp</dimen>
     <dimen name="size_photo">120dp</dimen>
     <dimen name="margin_photo">10dp</dimen>
 
