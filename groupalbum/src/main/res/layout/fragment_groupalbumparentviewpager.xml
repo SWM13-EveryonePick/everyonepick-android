@@ -28,7 +28,7 @@
             <org.soma.everyonepick.common_ui.CustomActionBar
                 android:id="@+id/customactionbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_action_bar"
                 app:title="단체공유앨범"
                 app:layout_constraintTop_toTopOf="parent"
                 />
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal()? @string/select: @string/cancel}"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="@dimen/margin_action_bar"
                 android:visibility="@{viewModel.currentItem == 0? View.VISIBLE: View.GONE}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

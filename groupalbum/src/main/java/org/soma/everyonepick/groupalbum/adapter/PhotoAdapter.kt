@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
+import org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
 class PhotoAdapter(
@@ -37,7 +39,9 @@ class PhotoAdapter(
             val position = holder.absoluteAdapterPosition
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {
-                // TODO: 사진 뷰어로 이동
+                val photoUrl = getItem(position).photoDao.photoUrl
+                val direction = GroupAlbumViewPagerFragmentDirections.actionGroupalbumviewpagerToPhoto(photoUrl)
+                binding.root.findNavController().navigate(direction)
             }
         }
 

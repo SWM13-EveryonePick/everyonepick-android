@@ -2,7 +2,7 @@ package org.soma.everyonepick.groupalbum.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import org.soma.everyonepick.groupalbum.ui.groupalbum.PhotoListFragment
+import org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoListFragment
 
 class GroupAlbumViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun getItemCount() = 3

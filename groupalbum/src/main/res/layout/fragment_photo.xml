@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="fragment"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoFragment" />
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.groupalbum.photo.PhotoFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <org.soma.everyonepick.common_ui.CustomActionBar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_action_bar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:hasBackButton="true"
+                app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="삭제"
+                android:layout_marginRight="@dimen/margin_action_bar"
+                android:onClick="@{() -> fragment.onClickDeleteButton()}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:photoUrl="@{viewModel.photoUrl}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="24dp"
+            android:text="갤러리에 저장하기"
+            android:onClick="@{() -> fragment.onClickSaveButton()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
