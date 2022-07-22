@@ -43,12 +43,23 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:photoUrl="@{viewModel.photoUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="24dp"
+            android:text="갤러리에 저장하기"
+            android:onClick="@{() -> fragment.onClickSaveButton()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

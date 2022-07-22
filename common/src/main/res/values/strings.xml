@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">모두의 Pick</string>
+
     <string name="camera_menu_item">Camera</string>
     <string name="group_album_menu_item">Group Album</string>
     <string name="setting_menu_item">Setting</string>

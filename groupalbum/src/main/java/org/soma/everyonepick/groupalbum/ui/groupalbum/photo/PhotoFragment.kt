@@ -1,10 +1,15 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbum.photo
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,6 +17,11 @@ import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+import java.util.*
+
 
 class PhotoFragment : Fragment() {
     private var _binding: FragmentPhotoBinding? = null
@@ -46,5 +56,41 @@ class PhotoFragment : Fragment() {
 
     fun onClickBackButton() {
         findNavController().navigateUp()
+    }
+
+    fun onClickSaveButton() {
+        val appName = getString(org.soma.everyonepick.common.R.string.app_name)
+        val fileName = getFileName(appName)
+        val bitmap = binding.image.drawable.toBitmap()
+        saveBitmapInPictureDirectoryChild(fileName, appName, bitmap)
+    }
+
+    private fun getFileName(appName: String): String {
+        val calendar = Calendar.getInstance()
+        return "$appName" +
+                "_${calendar.get(Calendar.YEAR)}${calendar.get(Calendar.MONTH)}${calendar.get(Calendar.DAY_OF_MONTH)}" +
+                "_${calendar.get(Calendar.HOUR_OF_DAY)}${calendar.get(Calendar.MINUTE)}${calendar.get(Calendar.SECOND)}" +
+                "_${calendar.get(Calendar.MILLISECOND)}"
+    }
+
+    private fun saveBitmapInPictureDirectoryChild(fileName: String, child: String, bitmap: Bitmap) {
+        try {
+            val imageRoot = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                child
+            )
+            imageRoot.mkdir()
+            val filePath = File(imageRoot, "$fileName.png")
+
+            val outputStream: OutputStream = FileOutputStream(filePath)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            Toast.makeText(context, "이미지를 갤러리에 저장했습니다!", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "이미지 저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
