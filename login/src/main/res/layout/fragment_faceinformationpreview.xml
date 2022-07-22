@@ -7,7 +7,7 @@
         android:id="@+id/layout_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.faceinformation.camerafragments.PreviewFragment">
+        tools:context=".ui.faceinformation.camerafragments.FaceInformationPreviewFragment">
 
         <androidx.camera.view.PreviewView
             android:id="@+id/previewview"

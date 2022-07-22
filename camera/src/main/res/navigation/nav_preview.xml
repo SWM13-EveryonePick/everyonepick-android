@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fragmentPreview"
-        android:name="org.soma.everyonepick.camera.ui.camerafragments.Preview2Fragment"
+        android:name="org.soma.everyonepick.camera.ui.camerafragments.PreviewFragment"
         android:label="PreviewFragment"/>
 
 </navigation>
