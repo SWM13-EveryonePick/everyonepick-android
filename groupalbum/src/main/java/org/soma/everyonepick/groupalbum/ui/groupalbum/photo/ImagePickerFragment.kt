@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.ImageAdapter
@@ -24,8 +25,10 @@ class ImagePickerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentImagepickerBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.fragment = this
 
-        val adapter = ImageAdapter()
+        val adapter = ImageAdapter(viewModel)
         binding.recyclerviewImage.adapter = adapter
 
         viewModel.fetchImageItemList(requireContext())
@@ -45,5 +48,10 @@ class ImagePickerFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         (activity as HomeActivityUtility).showBottomNavigationView()
+    }
+
+
+    fun onClickBackButton() {
+        findNavController().navigateUp()
     }
 }

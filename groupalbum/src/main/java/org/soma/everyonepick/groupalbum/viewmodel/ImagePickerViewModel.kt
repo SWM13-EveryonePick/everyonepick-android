@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModel
 import org.soma.everyonepick.groupalbum.data.ImageItem
 import java.io.File
 
-private val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID
-private val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
-private val INDEX_ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
-private val INDEX_DATE_ADDED = MediaStore.MediaColumns.DATE_ADDED
+private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID
+private const val INDEX_MEDIA_URI = MediaStore.MediaColumns.DATA
+private const val INDEX_ALBUM_NAME = MediaStore.Images.Media.BUCKET_DISPLAY_NAME
+private const val INDEX_DATE_ADDED = MediaStore.MediaColumns.DATE_ADDED
 
 class ImagePickerViewModel: ViewModel() {
     val imageItemList = MutableLiveData<MutableList<ImageItem>>(mutableListOf())
