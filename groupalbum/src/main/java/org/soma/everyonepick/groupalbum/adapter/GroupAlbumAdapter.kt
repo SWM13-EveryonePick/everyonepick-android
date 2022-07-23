@@ -33,16 +33,14 @@ class GroupAlbumAdapter(
 
     private fun subscribeUi(binding: ItemGroupalbumBinding, holder: GroupAlbumViewHolder) {
         binding.root.setOnClickListener {
-            if(parentViewModel.groupAlbumItemList.value == null) return@setOnClickListener
-
             val position = holder.absoluteAdapterPosition
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {
-                val direction =
+                val directions =
                     GroupAlbumParentViewPagerFragmentDirections.actionGroupalbumparentviewpagerToGroupalbumviewpager(
                         getItem(position).groupAlbumDao.id
                     )
-                binding.root.findNavController().navigate(direction)
+                binding.root.findNavController().navigate(directions)
             }
         }
 

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.camera.ui.camerafragments
+package org.soma.everyonepick.login.ui.faceinformation.camerafragments
 
 import android.os.Build
 import android.os.Bundle
@@ -11,24 +11,25 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import org.soma.everyonepick.camera.databinding.CameraUiContainer2Binding
-import org.soma.everyonepick.camera.databinding.FragmentPreview2Binding
+import org.soma.everyonepick.login.databinding.CameraUiContainerBinding
+import org.soma.everyonepick.login.databinding.FragmentFaceinformationpreviewBinding
+
+import org.soma.everyonepick.login.utility.FROnnxMobileNet
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-
-class Preview2Fragment : Fragment() {
-    private var _binding: FragmentPreview2Binding? = null
+class FaceInformationPreviewFragment : Fragment() {
+    private var _binding: FragmentFaceinformationpreviewBinding? = null
     private val binding get() = _binding!!
 
-    private var cameraUiContainerBinding: CameraUiContainer2Binding? = null
+    private var cameraUiContainerBinding: CameraUiContainerBinding? = null
 
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
-    private var imageCapture: ImageCapture? = null
+    private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
 
     private lateinit var cameraExecutor: ExecutorService
@@ -37,7 +38,7 @@ class Preview2Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPreview2Binding.inflate(inflater, container, false)
+        _binding = FragmentFaceinformationpreviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -57,17 +58,11 @@ class Preview2Fragment : Fragment() {
             binding.layoutRoot.removeView(it)
         }
 
-        cameraUiContainerBinding = CameraUiContainer2Binding.inflate(
+        cameraUiContainerBinding = CameraUiContainerBinding.inflate(
             LayoutInflater.from(requireContext()),
             binding.layoutRoot,
             true
         )
-
-        cameraUiContainerBinding?.imagebuttonShutter?.setOnClickListener {
-            imageCapture?.let { imageCapture ->
-                // TODO: imageCapture.takePicture
-            }
-        }
     }
 
     private fun setUpCamera() {
@@ -79,41 +74,44 @@ class Preview2Fragment : Fragment() {
     }
 
     private fun bindCameraUseCases() {
-        val screenAspectRatio = calculateAspectRatio()
-        val cameraProvider = processCameraProvider
-            ?: throw IllegalStateException("Camera initialization failed.")
-        // TODO: 화면 전환
+        val screenAspectRatio = calculateAspectRatio()?: return
+        val cameraProvider = processCameraProvider?: return
         val cameraSelector = CameraSelector.Builder()
             .requireLensFacing(CameraSelector.LENS_FACING_BACK)
             .build()
 
         // Preview
         preview = Preview.Builder()
-            .setTargetAspectRatio(screenAspectRatio)
+            .setTargetAspectRatio(screenAspectRatio!!)
             .build()
 
-        // ImageCapture
-        imageCapture = ImageCapture.Builder()
-            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-            .setTargetAspectRatio(screenAspectRatio)
-            .setJpegQuality(50)
+        // ImageAnalyzer
+        imageAnalyzer = ImageAnalysis.Builder()
+            .setTargetAspectRatio(screenAspectRatio!!)
             .build()
+            .also {
+                it.setAnalyzer(cameraExecutor, FROnnxMobileNet(requireContext()) { floatArray ->
+                    Log.d(TAG, floatArray.contentToString())
+                })
+            }
 
         cameraProvider.unbindAll()
 
         try {
             preview?.setSurfaceProvider(binding.previewview.surfaceProvider)
             camera = cameraProvider.bindToLifecycle(
-                this as LifecycleOwner, cameraSelector, preview, imageCapture
+                this as LifecycleOwner, cameraSelector, preview, imageAnalyzer
             )
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
         }
     }
 
-    private fun calculateAspectRatio(): Int {
+    private fun calculateAspectRatio(): Int? {
+        val parentActivity = activity?: return null
+
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val metrics = requireActivity().windowManager.currentWindowMetrics.bounds
+            val metrics = parentActivity.windowManager.currentWindowMetrics.bounds
             aspectRatio(metrics.width(), metrics.height())
         } else {
             val metrics = resources.displayMetrics

@@ -1,19 +1,28 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbum.photo
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
-import org.soma.everyonepick.groupalbum.data.PhotoDao
-import org.soma.everyonepick.groupalbum.data.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotolistBinding
+import org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
+import java.io.File
+
 
 @AndroidEntryPoint
 class PhotoListFragment: Fragment() {
@@ -38,6 +47,7 @@ class PhotoListFragment: Fragment() {
         viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
 
         subscribeUi(adapter)
+        setFragmentResultListeners()
 
         return binding.root
     }
@@ -49,6 +59,17 @@ class PhotoListFragment: Fragment() {
 
         parentViewModel.photoListMode.observe(viewLifecycleOwner) { photoListMode ->
             viewModel.setIsCheckboxVisible(photoListMode == PhotoListMode.SELECTION_MODE.ordinal)
+        }
+    }
+
+    private fun setFragmentResultListeners() {
+        activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED, viewLifecycleOwner) { _, bundle ->
+            bundle.getStringArrayList("uriList")?.let { uriList ->
+                for(uri in uriList) {
+                    // TODO: 업로드 -> 성공 -> viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id) 다시 로드
+                    // 또는 1초에 한번씩 viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id) 호출 -> 성공 -> ToastMassage
+                }
+            }
         }
     }
 
@@ -64,13 +85,8 @@ class PhotoListFragment: Fragment() {
 
 
     fun onClickUploadPhotoButton() {
-        // TODO: 사진 업로드로 대체
-        val id = viewModel.photoItemList.value!!.size.toLong()
-        viewModel.addPhotoItem(PhotoItem(
-            PhotoDao(id, "https://picsum.photos/200"),
-            false,
-            false
-        ))
+        val directions = GroupAlbumViewPagerFragmentDirections.actionGroupalbumviewpagerToParentpermission()
+        findNavController().navigate(directions)
     }
 
     fun onClickDeleteButton() {
@@ -84,5 +100,9 @@ class PhotoListFragment: Fragment() {
 
     fun onClickCancelButton() {
         parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+    }
+
+    companion object {
+        const val URI_LIST_CHECKED = "uri_list_checked"
     }
 }

@@ -3,32 +3,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_camera"
-    app:startDestination="@id/fragmentPermission">
+    app:startDestination="@id/fragmentParentPermission">
 
     <fragment
-        android:id="@+id/fragmentPermission"
-        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.PermissionFragment"
-        android:label="PermissionFragment">
+        android:id="@+id/fragmentParentPermission"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.ParentPermissionFragment"
+        android:label="ParentPermissionFragment">
 
         <action
-            android:id="@+id/action_permission_to_preview"
-            app:destination="@id/fragmentPreview"
-            app:popUpTo="@id/fragmentPermission"
+            android:id="@+id/action_parentpermission_to_faceinformationpreview"
+            app:destination="@id/fragmentFaceInformationPreview"
+            app:popUpTo="@id/fragmentParentPermission"
             app:popUpToInclusive="true" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/fragmentPreview"
-        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.PreviewFragment"
-        android:label="PreviewFragment">
-
-        <action
-            android:id="@+id/action_preview_to_permission"
-            app:destination="@+id/fragmentPermission"
-            app:popUpTo="@id/fragmentPreview"
-            app:popUpToInclusive="true" />
-
-    </fragment>
+        android:id="@+id/fragmentFaceInformationPreview"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.FaceInformationPreviewFragment"
+        android:label="FaceInformationPreviewFragment"/>
 
 </navigation>

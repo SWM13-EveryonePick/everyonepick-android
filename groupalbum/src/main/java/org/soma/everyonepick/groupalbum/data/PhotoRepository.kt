@@ -5,9 +5,9 @@ class PhotoRepository {
         // TODO: Retrofit2 -> photoDaoList
         val photoDaoList = mutableListOf(
             PhotoDao(0, "https://picsum.photos/200"),
-            PhotoDao(1, "https://picsum.photos/200"),
-            PhotoDao(2, "https://picsum.photos/200"),
-            PhotoDao(3, "https://picsum.photos/200")
+            PhotoDao(1, "https://picsum.photos/201"),
+            PhotoDao(2, "https://picsum.photos/202"),
+            PhotoDao(3, "https://picsum.photos/203")
         )
         return convertPhotoDaoListToPhotoItemList(photoDaoList)
     }
