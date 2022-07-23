@@ -34,8 +34,6 @@ class PhotoAdapter(
 
     private fun subscribeUi(binding: ItemPhotoBinding, holder: PhotoViewHolder) {
         binding.root.setOnClickListener {
-            if(parentViewModel.photoItemList.value == null) return@setOnClickListener
-
             val position = holder.absoluteAdapterPosition
             // 일반 모드일 때
             if(binding.checkbox.visibility == View.GONE) {

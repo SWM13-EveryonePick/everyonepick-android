@@ -10,8 +10,11 @@ import com.bumptech.glide.Glide
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.ImageItem
 import org.soma.everyonepick.groupalbum.databinding.ItemImageBinding
+import org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel
 
-class ImageAdapter: ListAdapter<ImageItem, RecyclerView.ViewHolder>(ImageDiffCallback()) {
+class ImageAdapter(
+    private val parentViewModel: ImagePickerViewModel
+): ListAdapter<ImageItem, RecyclerView.ViewHolder>(ImageDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemImageBinding>(
             LayoutInflater.from(parent.context),
@@ -21,9 +24,18 @@ class ImageAdapter: ListAdapter<ImageItem, RecyclerView.ViewHolder>(ImageDiffCal
         )
 
         val holder = ImageViewHolder(binding)
-
+        subscribeUi(binding, holder)
 
         return holder
+    }
+
+    private fun subscribeUi(binding: ItemImageBinding, holder: ImageViewHolder) {
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
+            if(parentViewModel.imageItemList.value == null) return@setOnCheckedChangeListener
+
+            val position = holder.absoluteAdapterPosition
+            parentViewModel.imageItemList.value!![position].isChecked = isChecked
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -44,11 +56,10 @@ class ImageAdapter: ListAdapter<ImageItem, RecyclerView.ViewHolder>(ImageDiffCal
 
 private class ImageDiffCallback: DiffUtil.ItemCallback<ImageItem>() {
     override fun areItemsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
-        TODO("Not yet implemented")
+        return oldItem.uri == newItem.uri
     }
 
     override fun areContentsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
-        TODO("Not yet implemented")
+        return oldItem == newItem
     }
-
 }
