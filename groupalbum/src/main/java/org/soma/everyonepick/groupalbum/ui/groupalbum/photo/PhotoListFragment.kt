@@ -64,8 +64,12 @@ class PhotoListFragment: Fragment() {
 
     private fun setFragmentResultListeners() {
         activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED, viewLifecycleOwner) { _, bundle ->
-            val uriList = bundle.getStringArrayList("uriList")
-            Log.e("ASD", uriList.toString())
+            bundle.getStringArrayList("uriList")?.let { uriList ->
+                for(uri in uriList) {
+                    // TODO: 업로드 -> 성공 -> viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id) 다시 로드
+                    // 또는 1초에 한번씩 viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id) 호출 -> 성공 -> ToastMassage
+                }
+            }
         }
     }
 
