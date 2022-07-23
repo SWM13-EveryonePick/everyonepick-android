@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -113,10 +114,10 @@ class GroupAlbumViewPagerFragment: Fragment() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButton("확인") { _, _ ->
                 // TODO: API
-                val result = Bundle().apply {
-                    putLong("id", args.groupAlbumId)
-                }
-                activity?.supportFragmentManager?.setFragmentResult(GROUP_ALBUM_REMOVED, result)
+                activity?.supportFragmentManager?.setFragmentResult(
+                    GROUP_ALBUM_REMOVED,
+                    bundleOf("id" to args.groupAlbumId)
+                )
                 findNavController().navigateUp()
             }
             .setNegativeButton("취소") { dialog, _ ->

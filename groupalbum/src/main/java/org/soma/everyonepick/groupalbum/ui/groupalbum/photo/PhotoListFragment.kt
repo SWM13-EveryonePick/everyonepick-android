@@ -47,6 +47,7 @@ class PhotoListFragment: Fragment() {
         viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
 
         subscribeUi(adapter)
+        setFragmentResultListeners()
 
         return binding.root
     }
@@ -58,6 +59,13 @@ class PhotoListFragment: Fragment() {
 
         parentViewModel.photoListMode.observe(viewLifecycleOwner) { photoListMode ->
             viewModel.setIsCheckboxVisible(photoListMode == PhotoListMode.SELECTION_MODE.ordinal)
+        }
+    }
+
+    private fun setFragmentResultListeners() {
+        activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED, viewLifecycleOwner) { _, bundle ->
+            val uriList = bundle.getStringArrayList("uriList")
+            Log.e("ASD", uriList.toString())
         }
     }
 
@@ -88,5 +96,9 @@ class PhotoListFragment: Fragment() {
 
     fun onClickCancelButton() {
         parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+    }
+
+    companion object {
+        const val URI_LIST_CHECKED = "uri_list_checked"
     }
 }
