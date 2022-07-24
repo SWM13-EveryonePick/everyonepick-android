@@ -6,16 +6,16 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-private const val MAX_SCALE = 2f
+private const val MAX_SCALE = 1.5f
 private const val ANIMATION_DURATION = 300L
-private const val INDICATOR_MARGIN_BOTTOM = 30f
-private const val INDICATOR_WIDTH = 130f
-private const val INDICATOR_HEIGHT = 100f
+private const val INDICATOR_WIDTH = 170f
+private const val INDICATOR_HEIGHT = 120f
 
 open class IndicatorBottomNavigationView: BottomNavigationView {
     private var animator: ValueAnimator? = null
@@ -24,6 +24,9 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.primary_blue)
     }
+
+    private val View.centerX get() = left + width / 2f
+    private val View.centerY get() = height / 2f
 
     constructor(context: Context): super(context, null)
     constructor(context: Context, attrs: AttributeSet?): super(context, attrs, com.google.android.material.R.attr.bottomNavigationStyle)
@@ -40,7 +43,7 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
 
     override fun dispatchDraw(canvas: Canvas) {
         if(isLaidOut) {
-            val cornerRadius = 0.5f * indicator.height()
+            val cornerRadius = indicator.height() / 2f
             canvas.drawRoundRect(indicator, cornerRadius, cornerRadius, paint)
         }
         // indicator를 먼저 그린 뒤에 나머지 뷰를 그리게 됩니다.
@@ -55,16 +58,17 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
         val startCenterX = indicator.centerX()
         val startScale = indicator.width() / INDICATOR_WIDTH
 
-        // default로 시작하지 않는 것은, 이전 애니메이션이 끝나지 않았을 때를 대비하기 위함입니다.
+        // nextX: startCenterX -> 선택된 아이템의 centerX
+        // indicatorWidth: width -> width * MAX_SCALE -> width
         animator = ValueAnimator.ofFloat(startScale, MAX_SCALE, 1f).apply {
             addUpdateListener {
-                val distanceTravelled = linearInterpolation(it.animatedFraction, startCenterX, itemView.centerX)
+                val nextX = linearInterpolation(it.animatedFraction, startCenterX, itemView.centerX)
                 val indicatorWidth = INDICATOR_WIDTH * (it.animatedValue as Float)
 
-                val top = height - INDICATOR_MARGIN_BOTTOM - INDICATOR_HEIGHT
-                val bottom = height - INDICATOR_MARGIN_BOTTOM
-                val left = distanceTravelled - indicatorWidth / 2f
-                val right = distanceTravelled + indicatorWidth / 2f
+                val top = centerY - INDICATOR_HEIGHT / 2f
+                val bottom = centerY + INDICATOR_HEIGHT / 2f
+                val left = nextX - indicatorWidth / 2f
+                val right = nextX + indicatorWidth / 2f
 
                 indicator.set(left, top, right, bottom)
                 invalidate()
@@ -85,8 +89,6 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
 
     // t == 0.3 -> return 0.7a + 0.3b
     private fun linearInterpolation(t: Float, a: Float, b: Float) = (1 - t) * a + t * b
-
-    private val View.centerX get() = left + width / 2f
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
