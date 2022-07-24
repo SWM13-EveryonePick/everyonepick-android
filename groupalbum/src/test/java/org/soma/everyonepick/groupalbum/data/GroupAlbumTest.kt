@@ -4,7 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GroupAlbumTest {
-    private val groupAlbumDao = GroupAlbumDao(0, "id")
+    private val groupAlbumDao = GroupAlbumDao(0, "id", 100)
     @Test fun groupAlbumDaoListToGroupAlbumItemList() {
         val groupAlbumItemList = GroupAlbumRepository().convertGroupAlbumDaoListToGroupAlbumItemList(
             mutableListOf(groupAlbumDao)

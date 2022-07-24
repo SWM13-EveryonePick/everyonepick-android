@@ -77,8 +77,9 @@ class GroupAlbumListFragment : Fragment() {
     /** Databinding functions */
     // TODO: 생성 플로우 및 API로 대체
     fun onClickCreateGroupAlbumButton() {
-        val index = viewModel.groupAlbumItemList.value?.size?.toLong()
-        viewModel.addGroupAlbumItem(GroupAlbumItem(GroupAlbumDao(index ?: -1, "title$index"), false, false))
+        viewModel.groupAlbumItemList.value?.size?.toLong()?.let {
+            viewModel.addGroupAlbumItem(GroupAlbumItem(GroupAlbumDao(it, "title$it", 100+it.toInt()), false, false))
+        }
     }
 
     fun onClickDeleteButton() {

@@ -62,6 +62,7 @@ class GroupAlbumAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(groupAlbumItem: GroupAlbumItem) {
             binding.textTitle.text = groupAlbumItem.groupAlbumDao.title
+            binding.textPhotocount.text = "사진 ${groupAlbumItem.groupAlbumDao.photoCount}장"
             binding.checkbox.visibility = if(groupAlbumItem.isCheckboxVisible) View.VISIBLE else View.GONE
             binding.checkbox.isChecked = groupAlbumItem.isChecked
         }

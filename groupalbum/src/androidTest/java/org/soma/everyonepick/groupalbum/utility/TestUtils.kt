@@ -5,7 +5,7 @@ import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.PhotoDao
 import org.soma.everyonepick.groupalbum.data.PhotoItem
 
-val testGroupAlbumDao = GroupAlbumDao(0, "test")
+val testGroupAlbumDao = GroupAlbumDao(0, "test", 100)
 val testGroupAlbumItem = GroupAlbumItem(testGroupAlbumDao, false, false)
 
 val testPhotoDao = PhotoDao(0, "test")
