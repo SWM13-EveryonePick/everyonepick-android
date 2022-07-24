@@ -2,9 +2,9 @@
 <resources>
     <string name="app_name">모두의 Pick</string>
 
-    <string name="camera_menu_item">Camera</string>
-    <string name="group_album_menu_item">Group Album</string>
-    <string name="setting_menu_item">Setting</string>
+    <string name="camera_menu_item">카메라</string>
+    <string name="group_album_menu_item">단체공유앨범</string>
+    <string name="setting_menu_item">설정</string>
     <string name="select">선택</string>
     <string name="select_all">전체선택</string>
     <string name="cancel">취소</string>
