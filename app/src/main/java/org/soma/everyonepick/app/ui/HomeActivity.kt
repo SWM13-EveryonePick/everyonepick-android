@@ -1,10 +1,14 @@
 package org.soma.everyonepick.app.ui
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginBottom
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -15,6 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.HomeActivityUtility
+
+private const val ANIMATION_DURATION = 150L
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeActivityUtility {
@@ -64,11 +70,29 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
         }
     }
 
+
     override fun hideBottomNavigationView() {
-        binding.bottomnavigationview.visibility = View.GONE
+        val height = binding.bottomnavigationview.height
+        animateBottomNavigationViewBottomMargin(0, -height)
+    }
+
+    private fun animateBottomNavigationViewBottomMargin(start: Int, end: Int) {
+        val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
+        if(params.bottomMargin == end) return
+
+        ValueAnimator.ofInt(start, end).apply {
+            addUpdateListener { valueAnimator ->
+                params.bottomMargin = valueAnimator.animatedValue as Int
+                binding.bottomnavigationview.layoutParams = params
+            }
+            duration = ANIMATION_DURATION
+
+            start()
+        }
     }
 
     override fun showBottomNavigationView() {
-        binding.bottomnavigationview.visibility = View.VISIBLE
+        val height = binding.bottomnavigationview.height
+        animateBottomNavigationViewBottomMargin(-height, 0)
     }
 }
