@@ -19,30 +19,34 @@
         android:layout_height="match_parent"
         tools:context=".ui.groupalbum.GroupAlbumViewPagerFragment">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/group_album_background"
+            android:scaleType="fitStart"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_actionbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="170dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <org.soma.everyonepick.common_ui.CustomActionBar
-                android:id="@+id/customactionbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_action_bar"
-                app:title="단체공유앨범"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+            <!-- TODO: app_name, 단체공유앨범 텍스트 추가 after getting original background -->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal()? @string/select: @string/select_all}"
-                android:layout_marginRight="@dimen/margin_action_bar"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="68dp"
+                android:layout_marginRight="36dp"
                 android:visibility="@{viewModel.currentItem == 0? View.VISIBLE: View.GONE}"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:onClick="@{() -> fragment.onClickSelectButton()}"
+                tools:text="선택"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
