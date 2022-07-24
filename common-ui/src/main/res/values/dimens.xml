@@ -2,4 +2,5 @@
 <resources>
     <dimen name="height_action_bar">50dp</dimen>
     <dimen name="margin_action_bar">8dp</dimen>
+    <dimen name="height_bottom_navigation_view">60dp</dimen>
 </resources>
