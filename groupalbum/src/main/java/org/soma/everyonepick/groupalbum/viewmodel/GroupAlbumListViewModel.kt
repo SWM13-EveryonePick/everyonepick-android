@@ -55,10 +55,11 @@ class GroupAlbumListViewModel @Inject constructor(
         if(groupAlbumItemList.value == null) return
 
         val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
-        for(i in 0 until groupAlbumItemList.value!!.size) {
+        for(i in 0 until groupAlbumItemList.value!!.size - 1) {
             if(!groupAlbumItemList.value!![i].isChecked)
                 newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
         }
+        newGroupAlbumItemList.add(groupAlbumItemList.value!!.last())
         groupAlbumItemList.value = newGroupAlbumItemList
     }
 
