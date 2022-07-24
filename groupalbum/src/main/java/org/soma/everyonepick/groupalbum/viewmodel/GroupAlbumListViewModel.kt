@@ -32,11 +32,23 @@ class GroupAlbumListViewModel @Inject constructor(
         isApiLoading.value = false
     }
 
+
     fun addGroupAlbumItem(groupAlbumItem: GroupAlbumItem) {
         groupAlbumItemList.value?.let {
             it.add(it.size-1, groupAlbumItem)
             groupAlbumItemList.value = it
         }
+    }
+
+    fun deleteGroupAlbum(id: Long) {
+        if(groupAlbumItemList.value == null) return
+
+        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        for(i in 0 until groupAlbumItemList.value!!.size) {
+            if(groupAlbumItemList.value!![i].groupAlbumDao.id != id)
+                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
+        }
+        groupAlbumItemList.value = newGroupAlbumItemList
     }
 
     fun deleteCheckedItems() {
@@ -50,12 +62,14 @@ class GroupAlbumListViewModel @Inject constructor(
         groupAlbumItemList.value = newGroupAlbumItemList
     }
 
+
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         if(groupAlbumItemList.value == null) return
 
         for(i in 0 until groupAlbumItemList.value!!.size) {
             val newItem = copyGroupAlbumItem(groupAlbumItemList.value!![i])
             newItem.isCheckboxVisible = isCheckboxVisible
+            newItem.isChecked = false
             groupAlbumItemList.value!![i] = newItem
         }
         groupAlbumItemList.value = groupAlbumItemList.value
@@ -64,14 +78,15 @@ class GroupAlbumListViewModel @Inject constructor(
     private fun copyGroupAlbumItem(groupAlbumItem: GroupAlbumItem) =
         GroupAlbumItem(groupAlbumItem.groupAlbumDao.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
 
-    fun deleteGroupAlbum(id: Long) {
+    fun checkAll() {
         if(groupAlbumItemList.value == null) return
 
-        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        val isAllGroupAlbumChecked = groupAlbumItemList.value!!.all{ it.isChecked }
         for(i in 0 until groupAlbumItemList.value!!.size) {
-            if(groupAlbumItemList.value!![i].groupAlbumDao.id != id)
-                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
+            val newItem = copyGroupAlbumItem(groupAlbumItemList.value!![i])
+            newItem.isChecked = !isAllGroupAlbumChecked
+            groupAlbumItemList.value!![i] = newItem
         }
-        groupAlbumItemList.value = newGroupAlbumItemList
+        groupAlbumItemList.value = groupAlbumItemList.value
     }
 }

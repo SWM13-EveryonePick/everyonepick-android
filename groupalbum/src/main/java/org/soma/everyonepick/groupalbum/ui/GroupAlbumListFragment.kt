@@ -52,6 +52,10 @@ class GroupAlbumListFragment : Fragment() {
         parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
             viewModel.setIsCheckboxVisible(groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal)
         }
+
+        parentViewModel.checkAllTrigger.observe(viewLifecycleOwner) { _ ->
+            viewModel.checkAll()
+        }
     }
 
     // 내부 뎁스에서의 변경 사항을 받아와서 API call 없이 바로 적용합니다.
