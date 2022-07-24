@@ -60,6 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_delete_outline_24"
+                app:tint="@color/white"
                 android:onClick="@{() -> fragment.onClickDeleteButton()}"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -67,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_fab"
                 android:src="@drawable/ic_baseline_close_24"
+                app:tint="@color/white"
                 android:onClick="@{() -> fragment.onClickCancelButton()}"/>
 
         </LinearLayout>
