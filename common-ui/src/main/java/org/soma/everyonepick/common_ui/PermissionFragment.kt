@@ -30,6 +30,7 @@ class PermissionFragment(
         if(isGranted.all{ it.value }) {
             onSuccess.invoke()
         }else{
+            binding.button.visibility = View.VISIBLE
             Toast.makeText(requireContext(), "권한이 필요합니다.", Toast.LENGTH_SHORT).show()
         }
     }
