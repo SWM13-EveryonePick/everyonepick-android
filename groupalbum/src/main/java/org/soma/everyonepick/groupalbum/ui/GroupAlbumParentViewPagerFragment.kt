@@ -1,20 +1,28 @@
 package org.soma.everyonepick.groupalbum.ui
 
+import android.graphics.Color
+import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumParentViewPagerAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumparentviewpagerBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel
 
-private val TAB_ITEMS = listOf("앨범", "친구 목록")
+
+private val TAB_ITEMS = listOf("앨범", "친구목록")
 
 @AndroidEntryPoint
 class GroupAlbumParentViewPagerFragment : Fragment() {
@@ -47,9 +55,47 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
                 }
             })
         }
+
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
             tab.text = TAB_ITEMS[position]
         }.attach()
+
+        // 선택된 탭과 그렇지 않은 탭의 텍스트 스타일에 각각 변화를 줍니다.
+        binding.tablayout.apply {
+            for (i in 0 until tabCount) {
+                getTabAt(i)?.let { tab ->
+                    val textView = TextView(context)
+                    tab.customView = textView
+
+                    textView.let {
+                        it.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+                        it.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                        it.text = tab.text
+                        setTabLayoutText(it, i == selectedTabPosition)
+                    }
+                }
+            }
+
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    tab.customView?.let { setTabLayoutText(it as TextView, true) }
+                }
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    tab.customView?.let { setTabLayoutText(it as TextView, false) }
+                }
+                override fun onTabReselected(tab: TabLayout.Tab) {}
+            })
+        }
+    }
+
+    private fun setTabLayoutText(textView: TextView, isSelected: Boolean) {
+        if(isSelected){
+            textView.setTextColor(Color.WHITE)
+            textView.setTypeface(null, Typeface.BOLD)
+        }else{
+            textView.setTextColor(ContextCompat.getColor(requireContext(), org.soma.everyonepick.common_ui.R.color.cloud))
+            textView.setTypeface(null, Typeface.NORMAL)
+        }
     }
 
     override fun onDestroy() {
