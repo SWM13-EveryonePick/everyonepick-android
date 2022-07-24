@@ -75,13 +75,6 @@ class GroupAlbumListFragment : Fragment() {
 
 
     /** Databinding functions */
-    // TODO: 생성 플로우 및 API로 대체
-    fun onClickCreateGroupAlbumButton() {
-        viewModel.groupAlbumItemList.value?.size?.toLong()?.let {
-            viewModel.addGroupAlbumItem(GroupAlbumItem(GroupAlbumDao(it, "title$it", 100+it.toInt()), false, false))
-        }
-    }
-
     fun onClickDeleteButton() {
         viewModel.deleteCheckedItems()
         parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal

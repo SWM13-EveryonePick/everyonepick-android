@@ -34,6 +34,7 @@
                     android:id="@+id/recyclerview_groupalbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.groupAlbumItemList.size() > 1? View.VISIBLE: View.GONE}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -44,16 +45,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_fab"
-            android:src="@drawable/ic_baseline_add_24"
-            android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
-            android:onClick="@{() -> fragment.onClickCreateGroupAlbumButton()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -83,7 +74,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.groupAlbumItemList.size() == 0? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.groupAlbumItemList.size() == 1? View.VISIBLE: View.GONE}"
             >
             <TextView
                 android:layout_width="wrap_content"

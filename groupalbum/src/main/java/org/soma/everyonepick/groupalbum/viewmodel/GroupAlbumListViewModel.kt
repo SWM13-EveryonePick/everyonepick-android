@@ -33,8 +33,10 @@ class GroupAlbumListViewModel @Inject constructor(
     }
 
     fun addGroupAlbumItem(groupAlbumItem: GroupAlbumItem) {
-        groupAlbumItemList.value?.add(groupAlbumItem)
-        groupAlbumItemList.value = groupAlbumItemList.value
+        groupAlbumItemList.value?.let {
+            it.add(it.size-1, groupAlbumItem)
+            groupAlbumItemList.value = it
+        }
     }
 
     fun deleteCheckedItems() {
