@@ -78,6 +78,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
     }
 
 
+    /** Databinding functions */
     fun onClickBackButton() {
         findNavController().navigateUp()
     }

@@ -55,6 +55,7 @@ class PhotoFragment : Fragment() {
     }
 
 
+    /** Databinding functions */
     fun onClickBackButton() {
         findNavController().navigateUp()
     }

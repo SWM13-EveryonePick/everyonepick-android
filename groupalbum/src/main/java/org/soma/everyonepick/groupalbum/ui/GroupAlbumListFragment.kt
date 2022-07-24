@@ -55,6 +55,7 @@ class GroupAlbumListFragment : Fragment() {
     }
 
     // 내부 뎁스에서의 변경 사항을 받아와서 API call 없이 바로 적용합니다.
+    // TODO: onResume()에서 자동 업데이트 -> 불필요한 로직이 되기 때문에 제거할 것
     private fun setFragmentResultListeners() {
         activity?.supportFragmentManager?.setFragmentResultListener(GROUP_ALBUM_REMOVED, viewLifecycleOwner) { _, bundle ->
             val id = bundle.getLong("id")
@@ -73,7 +74,8 @@ class GroupAlbumListFragment : Fragment() {
     }
 
 
-    // TODO: Remove it after creating group album logic implemented
+    /** Databinding functions */
+    // TODO: 생성 플로우 및 API로 대체
     fun onClickCreateGroupAlbumButton() {
         val index = viewModel.groupAlbumItemList.value?.size?.toLong()
         viewModel.addGroupAlbumItem(GroupAlbumItem(GroupAlbumDao(index ?: -1, "title$index"), false, false))

@@ -62,6 +62,7 @@ class PhotoListFragment: Fragment() {
         }
     }
 
+    // ImagePicker에서 선택한 Uri 리스트를 받고 처리합니다.
     private fun setFragmentResultListeners() {
         activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED, viewLifecycleOwner) { _, bundle ->
             bundle.getStringArrayList("uriList")?.let { uriList ->
@@ -84,6 +85,7 @@ class PhotoListFragment: Fragment() {
     }
 
 
+    /** Databinding functions */
     fun onClickUploadPhotoButton() {
         val directions = GroupAlbumViewPagerFragmentDirections.actionGroupalbumviewpagerToParentpermission()
         findNavController().navigate(directions)
@@ -101,6 +103,7 @@ class PhotoListFragment: Fragment() {
     fun onClickCancelButton() {
         parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
     }
+
 
     companion object {
         const val URI_LIST_CHECKED = "uri_list_checked"
