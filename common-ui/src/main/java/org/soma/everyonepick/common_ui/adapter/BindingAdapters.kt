@@ -1,10 +1,11 @@
-package org.soma.everyonepick.common_ui
+package org.soma.everyonepick.common_ui.adapter
 
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import org.soma.everyonepick.common_ui.CustomActionBar
+import org.soma.everyonepick.common_ui.R
 
 object BindingAdapters {
     @JvmStatic

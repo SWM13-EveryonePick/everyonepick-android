@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common_ui
+package org.soma.everyonepick.common_ui.bottomnavigationview
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -11,6 +11,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.soma.everyonepick.common_ui.R
 
 private const val MAX_SCALE = 1.5f
 private const val ANIMATION_DURATION = 300L

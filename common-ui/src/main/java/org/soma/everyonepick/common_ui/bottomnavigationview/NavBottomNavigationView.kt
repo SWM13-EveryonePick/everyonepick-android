@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common_ui
+package org.soma.everyonepick.common_ui.bottomnavigationview
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
