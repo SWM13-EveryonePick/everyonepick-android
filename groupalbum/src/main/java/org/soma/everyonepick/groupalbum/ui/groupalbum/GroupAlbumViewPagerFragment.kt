@@ -1,6 +1,7 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbum
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.setFragmentResult
@@ -19,6 +21,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
@@ -40,6 +43,21 @@ class GroupAlbumViewPagerFragment: Fragment() {
 
     private val viewModel: GroupAlbumViewPagerViewModel by viewModels()
     private val args: GroupAlbumViewPagerFragmentArgs by navArgs()
+
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                when(viewModel.photoListMode.value) {
+                    PhotoListMode.NORMAL_MODE.ordinal -> findNavController().navigateUp()
+                    else -> viewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+                }
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +93,11 @@ class GroupAlbumViewPagerFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onBackPressedCallback.remove()
     }
 
 

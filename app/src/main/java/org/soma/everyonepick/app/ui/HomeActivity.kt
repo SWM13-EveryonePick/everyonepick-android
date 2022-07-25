@@ -2,6 +2,7 @@ package org.soma.everyonepick.app.ui
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.*
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -94,5 +96,16 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
     override fun showBottomNavigationView() {
         val height = binding.bottomnavigationview.height
         animateBottomNavigationViewBottomMargin(-height, 0)
+    }
+
+    override fun showAreYouSureDialog() {
+        AlertDialog.Builder(this).setMessage("${baseContext.getString(org.soma.everyonepick.common.R.string.app_name)}을 종료합니다.")
+            .setPositiveButton("확인") { _, _ ->
+                finish()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.cancel()
+            }
+            .create().show()
     }
 }

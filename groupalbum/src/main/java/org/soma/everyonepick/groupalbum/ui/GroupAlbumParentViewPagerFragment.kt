@@ -20,6 +20,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumParentViewPagerAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumparentviewpagerBinding
@@ -42,10 +43,9 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
         super.onAttach(context)
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
-                    activity?.finish()
-                }else{
-                    viewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+                when(viewModel.groupAlbumListMode.value) {
+                    GroupAlbumListMode.NORMAL_MODE.ordinal -> (activity as HomeActivityUtility).showAreYouSureDialog()
+                    else -> viewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
                 }
             }
         }
