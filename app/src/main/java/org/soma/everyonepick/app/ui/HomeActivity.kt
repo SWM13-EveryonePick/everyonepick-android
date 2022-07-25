@@ -31,9 +31,6 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         supportActionBar?.hide()
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        window.statusBarColor = Color.TRANSPARENT
-
         initializeNavigation()
     }
 

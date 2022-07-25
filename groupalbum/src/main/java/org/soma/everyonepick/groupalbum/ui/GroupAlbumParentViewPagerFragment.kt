@@ -1,16 +1,21 @@
 package org.soma.everyonepick.groupalbum.ui
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -30,6 +35,22 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: GroupAlbumParentViewPagerViewModel by viewModels()
+
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
+                    activity?.finish()
+                }else{
+                    viewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+                }
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,9 +119,31 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        // (해당 프래그먼트에서만) status bar를 투명화하고 뷰를 확장합니다.
+        activity?.window?.let {
+            it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            it.statusBarColor = Color.TRANSPARENT
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activity?.window?.let {
+            it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            it.statusBarColor = Color.WHITE
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onBackPressedCallback.remove()
     }
 
 
