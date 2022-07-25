@@ -34,12 +34,14 @@ class PhotoAdapter(
 
     private fun subscribeUi(binding: ItemPhotoBinding, holder: PhotoViewHolder) {
         binding.root.setOnClickListener {
-            val position = holder.absoluteAdapterPosition
+            val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
-            if(binding.checkbox.visibility == View.GONE) {
-                val photoUrl = getItem(position).photoDao.photoUrl
+            if(!item.isCheckboxVisible) {
+                val photoUrl = item.photoDao.photoUrl
                 val directions = GroupAlbumViewPagerFragmentDirections.actionGroupalbumviewpagerToPhoto(photoUrl)
                 binding.root.findNavController().navigate(directions)
+            }else{
+                binding.checkbox.isChecked = !binding.checkbox.isChecked
             }
         }
 

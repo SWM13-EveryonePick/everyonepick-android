@@ -30,6 +30,10 @@ class ImageAdapter(
     }
 
     private fun subscribeUi(binding: ItemImageBinding, holder: ImageViewHolder) {
+        binding.root.setOnClickListener {
+            binding.checkbox.isChecked = !binding.checkbox.isChecked
+        }
+
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             if(parentViewModel.imageItemList.value == null) return@setOnCheckedChangeListener
 
