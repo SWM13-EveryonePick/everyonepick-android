@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/height_bottom_navigation_view"
             android:background="@drawable/top_border_with_radius"
-            app:itemRippleColor="@color/primary_blue"
+            app:itemRippleColor="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
