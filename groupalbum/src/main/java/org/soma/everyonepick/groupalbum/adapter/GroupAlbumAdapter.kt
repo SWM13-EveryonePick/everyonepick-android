@@ -61,7 +61,7 @@ class GroupAlbumAdapter(
 
     // TODO: 생성 플로우로 대체
     private fun subscribeCreateGroupAlbumItemUi(binding: ItemCreategroupalbumBinding, holder: CreateGroupAlbumViewHolder) {
-        binding.root.setOnClickListener {
+        binding.cardview.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if(!item.isCheckboxVisible){

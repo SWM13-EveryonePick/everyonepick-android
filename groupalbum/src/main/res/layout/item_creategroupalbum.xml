@@ -7,11 +7,16 @@
         android:layout_width="@dimen/width_group_album"
         android:layout_height="@dimen/height_group_album">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:background="@drawable/border_with_radius_blue">
+            android:clickable="true"
+            app:cardCornerRadius="@dimen/radius_group_album"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="1dp"
+            app:rippleColor="@color/primary_blue">
 
             <ImageView
                 android:layout_width="40dp"
@@ -19,12 +24,9 @@
                 android:src="@drawable/ic_baseline_add_24"
                 tools:ignore="UseAppTint"
                 android:tint="@color/primary_blue"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:layout_gravity="center"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
