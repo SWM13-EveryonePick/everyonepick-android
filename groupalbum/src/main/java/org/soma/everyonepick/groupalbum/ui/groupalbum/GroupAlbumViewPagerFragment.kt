@@ -10,9 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
+import androidx.core.view.children
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
@@ -22,6 +24,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common.ViewUtility
+import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumViewPagerAdapter
 import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
 import org.soma.everyonepick.groupalbum.data.GroupAlbumRepository
@@ -81,13 +85,25 @@ class GroupAlbumViewPagerFragment: Fragment() {
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    viewModel.currentItem.value = binding.viewpager2.currentItem
+                    viewModel.currentItem.value = it.currentItem
                 }
             })
         }
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
             tab.text = TAB_ITEMS[position]
         }.attach()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.photoListMode.observe(viewLifecycleOwner) { photoListMode ->
+            setTabLayoutEnabled(
+                enabled = photoListMode == PhotoListMode.NORMAL_MODE.ordinal,
+                binding.viewpager2,
+                binding.tablayout
+            )
+        }
     }
 
     override fun onDestroy() {

@@ -21,6 +21,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common.ViewUtility
+import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumParentViewPagerAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumparentviewpagerBinding
@@ -121,10 +123,19 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         // (해당 프래그먼트에서만) status bar를 투명화하고 뷰를 확장합니다.
         activity?.window?.let {
             it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             it.statusBarColor = Color.TRANSPARENT
+        }
+
+        viewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
+            setTabLayoutEnabled(
+                enabled = groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal,
+                binding.viewpager2,
+                binding.tablayout
+            )
         }
     }
 
