@@ -57,13 +57,16 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
 
         val itemView = findViewById<View>(itemId) ?: return
         val startCenterX = indicator.centerX()
+        val endCenterX = itemView.centerX
         val startScale = indicator.width() / INDICATOR_WIDTH
+
+        if (startCenterX == endCenterX) return // 애니메이션 불필요
 
         // nextX: startCenterX -> 선택된 아이템의 centerX
         // indicatorWidth: width -> width * MAX_SCALE -> width
         animator = ValueAnimator.ofFloat(startScale, MAX_SCALE, 1f).apply {
             addUpdateListener {
-                val nextX = linearInterpolation(it.animatedFraction, startCenterX, itemView.centerX)
+                val nextX = linearInterpolation(it.animatedFraction, startCenterX, endCenterX)
                 val indicatorWidth = INDICATOR_WIDTH * (it.animatedValue as Float)
 
                 val top = centerY - INDICATOR_HEIGHT / 2f

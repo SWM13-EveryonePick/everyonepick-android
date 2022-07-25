@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
@@ -28,12 +29,6 @@ import kotlin.math.abs
  * 단, 내부 Item이 모두 Navigation라는 것을 가정하고 작성한 코드임에 주의해야 합니다.
  */
 
-private const val MAX_SCALE = 2f
-private const val ANIMATION_DURATION = 300L
-private const val INDICATOR_MARGIN_BOTTOM = 30f
-private const val INDICATOR_WIDTH = 130f
-private const val INDICATOR_HEIGHT = 100f
-
 class NavBottomNavigationView: IndicatorBottomNavigationView {
     constructor(context: Context): super(context, null)
     constructor(context: Context, attrs: AttributeSet?): super(context, attrs, com.google.android.material.R.attr.bottomNavigationStyle)
@@ -42,19 +37,17 @@ class NavBottomNavigationView: IndicatorBottomNavigationView {
 
     fun addOnItemSelectedListener(navController: NavController, listener: (MenuItem) -> Unit) {
         setOnItemSelectedListener { item ->
-            val prevItem = menu.findItem(selectedItemId)
-            if(item == prevItem) {
-                navController.navigate(item.itemId) // 내비게이션의 초기 상태(startDestination)로 돌아갑니다.
-                return@setOnItemSelectedListener true
-            }else{
-                startIndicatorAnimation(item.itemId)
-                listener.invoke(item)
+            listener.invoke(item)
+            return@setOnItemSelectedListener NavigationUI
+                .onNavDestinationSelected(item, navController)
+        }
 
-                return@setOnItemSelectedListener NavigationUI.onNavDestinationSelected(
-                    item,
-                    navController
-                )
-            }
+        setOnItemReselectedListener { item ->
+            navController.navigate(item.itemId) // 내비게이션의 초기 상태(startDestination)로 돌아갑니다.
+        }
+
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            startIndicatorAnimation(selectedItemId)
         }
     }
 }
