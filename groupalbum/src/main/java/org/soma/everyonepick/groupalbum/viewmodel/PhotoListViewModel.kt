@@ -45,6 +45,7 @@ class PhotoListViewModel @Inject constructor(
         for(i in 0 until photoItemList.value!!.size) {
             val newItem = copyPhotoItem(photoItemList.value!![i])
             newItem.isCheckboxVisible = isCheckboxVisible
+            newItem.isChecked = false
             photoItemList.value!![i] = newItem
         }
         photoItemList.value = photoItemList.value
