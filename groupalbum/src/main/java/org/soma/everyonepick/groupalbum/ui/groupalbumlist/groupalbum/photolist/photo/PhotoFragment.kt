@@ -32,7 +32,7 @@ class PhotoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPhotoBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
@@ -63,7 +63,7 @@ class PhotoFragment : Fragment() {
 
     private fun getFileName(appName: String): String {
         val calendar = Calendar.getInstance()
-        return "$appName" +
+        return appName +
                 "_${calendar.get(Calendar.YEAR)}${calendar.get(Calendar.MONTH)}${calendar.get(Calendar.DAY_OF_MONTH)}" +
                 "_${calendar.get(Calendar.HOUR_OF_DAY)}${calendar.get(Calendar.MINUTE)}${calendar.get(Calendar.SECOND)}" +
                 "_${calendar.get(Calendar.MILLISECOND)}"

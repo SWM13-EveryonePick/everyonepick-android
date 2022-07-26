@@ -18,10 +18,10 @@ class GroupAlbumRepository {
     fun convertGroupAlbumDaoListToGroupAlbumItemList(groupAlbumDaoList: MutableList<GroupAlbumDao>): MutableList<GroupAlbumItem> {
         val groupAlbumItemList = mutableListOf<GroupAlbumItem>()
         for(i in 0 until groupAlbumDaoList.size) {
-            groupAlbumItemList.add(GroupAlbumItem(groupAlbumDaoList[i], false, false))
+            groupAlbumItemList.add(GroupAlbumItem(groupAlbumDaoList[i], isChecked = false, isCheckboxVisible =  false))
         }
         // 마지막 아이템으로 더미데이터 -> CreateGroupAlbumItem
-        groupAlbumItemList.add(GroupAlbumItem(GroupAlbumDao(-1, "", 0), false, false))
+        groupAlbumItemList.add(GroupAlbumItem(GroupAlbumDao(-1, "", 0), isChecked = false, isCheckboxVisible = false))
         return groupAlbumItemList
     }
 

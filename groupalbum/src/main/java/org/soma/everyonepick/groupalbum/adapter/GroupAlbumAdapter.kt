@@ -66,7 +66,7 @@ class GroupAlbumAdapter(
                 val count = itemCount-1
                 parentViewModel.addGroupAlbumItem(
                     GroupAlbumItem(
-                    GroupAlbumDao(count.toLong(), "title$count", 100+count), false, false
+                    GroupAlbumDao(count.toLong(), "title$count", 100+count), isChecked = false, isCheckboxVisible = false
                 )
                 )
             }

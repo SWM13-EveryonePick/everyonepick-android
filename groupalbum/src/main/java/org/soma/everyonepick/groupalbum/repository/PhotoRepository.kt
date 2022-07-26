@@ -18,7 +18,7 @@ class PhotoRepository {
     fun convertPhotoDaoListToPhotoItemList(photoDaoList: MutableList<PhotoDao>): MutableList<PhotoItem> {
         val photoItemList = mutableListOf<PhotoItem>()
         for(i in 0 until photoDaoList.size) {
-            photoItemList.add(PhotoItem(photoDaoList[i], false, false))
+            photoItemList.add(PhotoItem(photoDaoList[i], isChecked = false, isCheckboxVisible = false))
         }
         return photoItemList
     }

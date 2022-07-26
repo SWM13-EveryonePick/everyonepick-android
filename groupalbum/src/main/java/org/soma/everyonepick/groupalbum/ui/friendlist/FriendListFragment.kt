@@ -19,7 +19,7 @@ class FriendListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFriendlistBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.adapter = FriendAdapter()

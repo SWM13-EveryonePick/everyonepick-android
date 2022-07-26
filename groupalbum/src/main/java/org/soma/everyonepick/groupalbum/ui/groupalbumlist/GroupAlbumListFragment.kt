@@ -25,7 +25,7 @@ class GroupAlbumListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentGroupalbumlistBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
@@ -48,7 +48,7 @@ class GroupAlbumListFragment : Fragment() {
             else (activity as HomeActivityUtility).showBottomNavigationView()
         }
 
-        parentViewModel.checkAllTrigger.observe(viewLifecycleOwner) { _ ->
+        parentViewModel.checkAllTrigger.observe(viewLifecycleOwner) {
             viewModel.checkAll()
         }
     }
