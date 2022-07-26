@@ -33,23 +33,17 @@ class GroupAlbumListFragment : Fragment() {
         _binding = FragmentGroupalbumlistBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
+        binding.adapter = GroupAlbumAdapter(viewModel)
         binding.viewModel = viewModel
         binding.parentViewModel = parentViewModel
 
-        val adapter = GroupAlbumAdapter(viewModel)
-        binding.recyclerviewGroupalbum.adapter = adapter
-
-        subscribeUi(adapter)
+        subscribeUi()
         setFragmentResultListeners()
 
         return binding.root
     }
 
-    private fun subscribeUi(adapter: GroupAlbumAdapter) {
-        viewModel.groupAlbumItemList.observe(viewLifecycleOwner) { groupAlbumItemList ->
-            adapter.submitList(groupAlbumItemList.toMutableList())
-        }
-
+    private fun subscribeUi() {
         parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
             val isSelectionMode = groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal
             viewModel.setIsCheckboxVisible(isSelectionMode)

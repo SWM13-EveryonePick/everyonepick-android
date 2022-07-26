@@ -39,24 +39,19 @@ class PhotoListFragment: Fragment() {
         _binding = FragmentPhotolistBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
+        binding.adapter = PhotoAdapter(viewModel)
         binding.parentViewModel = parentViewModel
         binding.viewModel = viewModel
 
-        val adapter = PhotoAdapter(viewModel)
-        binding.recyclerviewPhoto.adapter = adapter
         viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
 
-        subscribeUi(adapter)
+        subscribeUi()
         setFragmentResultListeners()
 
         return binding.root
     }
 
-    private fun subscribeUi(adapter: PhotoAdapter) {
-        viewModel.photoItemList.observe(viewLifecycleOwner) { photoItemList ->
-            adapter.submitList(photoItemList.toMutableList())
-        }
-
+    private fun subscribeUi() {
         parentViewModel.photoListMode.observe(viewLifecycleOwner) { photoListMode ->
             viewModel.setIsCheckboxVisible(photoListMode == PhotoListMode.SELECTION_MODE.ordinal)
         }

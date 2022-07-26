@@ -30,22 +30,14 @@ class ImagePickerFragment : Fragment() {
         _binding = FragmentImagepickerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
-
-        val adapter = ImageAdapter(viewModel)
-        binding.recyclerviewImage.adapter = adapter
+        binding.adapter = ImageAdapter(viewModel)
+        binding.viewModel = viewModel
 
         viewModel.fetchImageItemList(requireContext())
-        subscribeUi(adapter)
 
         (activity as HomeActivityUtility).hideBottomNavigationView()
 
         return binding.root
-    }
-
-    private fun subscribeUi(adapter: ImageAdapter) {
-        viewModel.imageItemList.observe(viewLifecycleOwner) { imageItemList ->
-            adapter.submitList(imageItemList)
-        }
     }
 
     override fun onDestroy() {

@@ -34,10 +34,10 @@
                 <org.soma.everyonepick.common_ui.CustomActionBar
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_action_bar"
-                    app:title="@{viewModel.groupAlbum.title}"
-                    app:hasBackButton="true"
-                    app:onBackPressed="@{true}"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    title="@{viewModel.groupAlbum.title}"
+                    hasBackButton="true"
+                    onBackPressed="@{true}"/>
 
                 <TextView
                     android:layout_width="wrap_content"

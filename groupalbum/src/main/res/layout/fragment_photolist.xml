@@ -15,6 +15,9 @@
         <variable
             name="parentViewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel"/>
+        <variable
+            name="adapter"
+            type="org.soma.everyonepick.groupalbum.adapter.PhotoAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,6 +42,8 @@
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
                     tools:listitem="@layout/item_photo"
+                    adapter="@{adapter}"
+                    submitList="@{viewModel.photoItemList}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

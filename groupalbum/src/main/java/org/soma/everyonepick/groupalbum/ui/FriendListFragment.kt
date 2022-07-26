@@ -22,20 +22,10 @@ class FriendListFragment : Fragment() {
     ): View? {
         _binding = FragmentFriendlistBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+        binding.adapter = FriendAdapter()
         binding.viewModel = viewModel
 
-        val adapter = FriendAdapter()
-        binding.recyclerviewFriend.adapter = adapter
-
-        subscribeUi(adapter)
-
         return binding.root
-    }
-
-    private fun subscribeUi(adapter: FriendAdapter) {
-        viewModel.friends.observe(viewLifecycleOwner) { friends ->
-            adapter.submitList(friends.elements)
-        }
     }
 
     override fun onDestroy() {
