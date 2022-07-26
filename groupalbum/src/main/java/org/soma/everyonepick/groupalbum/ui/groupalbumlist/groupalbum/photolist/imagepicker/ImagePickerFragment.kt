@@ -24,11 +24,18 @@ class ImagePickerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentImagePickerBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
-        binding.adapter = ImageAdapter(viewModel)
-        binding.viewModel = viewModel
+        _binding = FragmentImagePickerBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.adapter = ImageAdapter(viewModel)
+            it.onClickUploadButtonListener = View.OnClickListener {
+                activity?.supportFragmentManager?.setFragmentResult(
+                    URI_LIST_CHECKED,
+                    bundleOf("uriList" to viewModel.getCheckedImageUriList())
+                )
+                findNavController().navigateUp()
+            }
+        }
 
         viewModel.fetchImageItemList(requireContext())
 
@@ -40,14 +47,5 @@ class ImagePickerFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         (activity as HomeActivityUtility).showBottomNavigationView()
-    }
-
-
-    fun onClickUploadButton() {
-        activity?.supportFragmentManager?.setFragmentResult(
-            URI_LIST_CHECKED,
-            bundleOf("uriList" to viewModel.getCheckedImageUriList())
-        )
-        findNavController().navigateUp()
     }
 }

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCompleteFragment" />
+            name="onClickNextButton"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:onClick="@{() -> fragment.onClickNextButton()}"
+            android:onClick="@{onClickNextButton}"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

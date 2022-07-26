@@ -20,10 +20,11 @@ class FriendListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFriendListBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.adapter = FriendAdapter()
-        binding.viewModel = viewModel
+        _binding = FragmentFriendListBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.adapter = FriendAdapter()
+            it.viewModel = viewModel
+        }
 
         return binding.root
     }

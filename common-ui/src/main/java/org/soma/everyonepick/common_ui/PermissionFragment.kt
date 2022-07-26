@@ -62,9 +62,16 @@ class PermissionFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPermissionBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
+        _binding = FragmentPermissionBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            onRequestPermissionListener = View.OnClickListener {
+                val intent = Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.parse("package:${activity?.packageName}")
+                )
+                startActivity(intent)
+            }
+        }
 
         return binding.root
     }
@@ -86,14 +93,5 @@ class PermissionFragment(
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-
-    fun onClickStartSettingForPermissionButton() {
-        val intent = Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.parse("package:${activity?.packageName}")
-        )
-        startActivity(intent)
     }
 }

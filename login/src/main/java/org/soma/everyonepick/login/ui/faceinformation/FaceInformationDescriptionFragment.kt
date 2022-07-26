@@ -16,10 +16,12 @@ class FaceInformationDescriptionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFaceInformationDescriptionBinding.inflate(inflater, container, false)
-
-        binding.lifecycleOwner = this
-        binding.fragment = this
+        _binding = FragmentFaceInformationDescriptionBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            onClickNextButton = View.OnClickListener {
+                findNavController().navigate(FaceInformationDescriptionFragmentDirections.toFaceInformationCamera())
+            }
+        }
 
         return binding.root
     }
@@ -27,12 +29,5 @@ class FaceInformationDescriptionFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-
-    fun onClickNextButton() {
-        findNavController().navigate(
-            FaceInformationDescriptionFragmentDirections.toFaceInformationCamera()
-        )
     }
 }

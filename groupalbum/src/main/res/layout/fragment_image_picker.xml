@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment" />
+            name="onClickUploadButtonListener"
+            type="android.view.View.OnClickListener" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel" />
@@ -64,7 +64,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="18dp"
                 android:text="업로드하기"
-                android:onClick="@{() -> fragment.onClickUploadButton()}"/>
+                android:onClick="@{onClickUploadButtonListener}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

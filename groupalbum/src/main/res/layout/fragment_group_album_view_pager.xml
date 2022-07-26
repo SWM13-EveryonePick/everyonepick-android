@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment" />
+            name="listener"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment.GroupAlbumViewPagerFragmentListener" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
@@ -49,7 +49,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/button_drawer"
-                    android:onClick="@{() -> fragment.onClickSelectButton()}"
+                    android:onClick="@{() -> listener.onClickSelectButton()}"
                     />
 
                 <ImageButton
@@ -59,7 +59,7 @@
                     android:layout_marginRight="@dimen/margin_action_bar"
                     android:background="@null"
                     android:src="@drawable/ic_baseline_menu_24"
-                    android:onClick="@{() -> fragment.onClickDrawerButton()}"
+                    android:onClick="@{() -> listener.onClickDrawerButton()}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -118,7 +118,7 @@
                         app:layout_constraintTop_toTopOf="@id/text_drawer_title"
                         app:layout_constraintBottom_toBottomOf="@id/text_drawer_title"
                         app:layout_constraintStart_toEndOf="@id/text_drawer_title"
-                        android:onClick="@{() -> fragment.onClickDrawerTitleEditButton()}"/>
+                        android:onClick="@{() -> listener.onClickDrawerTitleEditButton()}"/>
 
                     <!-- TODO: 단체 인원 -->
 
@@ -139,7 +139,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:onClick="@{() -> fragment.onClickDrawerExitButton()}"/>
+                        android:onClick="@{() -> listener.onClickDrawerExitButton()}"/>
 
                     <ImageButton
                         android:layout_width="@dimen/size_drawer_bottom_icon"

@@ -28,12 +28,31 @@ class PhotoListFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPhotoListBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
-        binding.adapter = PhotoAdapter(viewModel)
-        binding.parentViewModel = parentViewModel
-        binding.viewModel = viewModel
+        _binding = FragmentPhotoListBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.adapter = PhotoAdapter(viewModel)
+            it.parentViewModel = parentViewModel
+            it.listener = object : PhotoListFragmentListener {
+                override fun onClickUploadPhotoButton() {
+                    val directions = GroupAlbumViewPagerFragmentDirections.toParentPermission()
+                    findNavController().navigate(directions)
+                }
+
+                override fun onClickDeleteButton() {
+                    viewModel.deleteCheckedItems()
+                    parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+                }
+
+                override fun onClickProcessButton() {
+                    // TODO: 합성 플로우
+                }
+
+                override fun onClickCancelButton() {
+                    parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+                }
+            }
+        }
 
         viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
 
@@ -72,27 +91,14 @@ class PhotoListFragment: Fragment() {
     }
 
 
-    /** Databinding functions */
-    fun onClickUploadPhotoButton() {
-        val directions = GroupAlbumViewPagerFragmentDirections.toParentPermission()
-        findNavController().navigate(directions)
-    }
-
-    fun onClickDeleteButton() {
-        viewModel.deleteCheckedItems()
-        parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
-    }
-
-    fun onClickProcessButton() {
-        // TODO: 합성 플로우
-    }
-
-    fun onClickCancelButton() {
-        parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
-    }
-
-
     companion object {
         const val URI_LIST_CHECKED = "uri_list_checked"
+    }
+
+    interface PhotoListFragmentListener {
+        fun onClickUploadPhotoButton()
+        fun onClickDeleteButton()
+        fun onClickProcessButton()
+        fun onClickCancelButton()
     }
 }

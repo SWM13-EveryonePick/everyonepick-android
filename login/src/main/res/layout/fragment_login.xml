@@ -6,8 +6,8 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.login.ui.LoginFragment" />
+            name="onClickLoginButton"
+            type="android.view.View.OnClickListener" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.login.viewmodel.LoginViewModel" />
@@ -27,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> fragment.onClickLogin()}"/>
+            android:onClick="@{onClickLoginButton}"/>
 
         <ProgressBar
             android:layout_width="@dimen/size_loginprogressbar"

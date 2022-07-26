@@ -16,9 +16,12 @@ class Landing3Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLanding3Binding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
+        _binding = FragmentLanding3Binding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            onClickNextButtonListener = View.OnClickListener {
+                findNavController().navigate(Landing3FragmentDirections.toLogin())
+            }
+        }
 
         return binding.root
     }
@@ -26,10 +29,5 @@ class Landing3Fragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-
-    fun onClickNextButton() {
-        findNavController().navigate(Landing3FragmentDirections.toLogin())
     }
 }

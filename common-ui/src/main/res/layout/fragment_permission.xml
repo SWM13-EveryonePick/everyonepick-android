@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.common_ui.PermissionFragment" />
+            name="onRequestPermissionListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> fragment.onClickStartSettingForPermissionButton()}"/>
+            android:onClick="@{onRequestPermissionListener}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

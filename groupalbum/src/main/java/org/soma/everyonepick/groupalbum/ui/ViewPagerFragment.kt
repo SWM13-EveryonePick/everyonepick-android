@@ -51,10 +51,17 @@ class ViewPagerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentViewPagerBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
-        binding.viewModel = viewModel
+        _binding = FragmentViewPagerBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.onClickSelectButtonListener = View.OnClickListener {
+                if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
+                    viewModel.groupAlbumListMode.value = GroupAlbumListMode.SELECTION_MODE.ordinal
+                }else{
+                    viewModel.checkAllTrigger.value = viewModel.checkAllTrigger.value?.plus(1)
+                }
+            }
+        }
 
         return binding.root
     }
@@ -148,14 +155,5 @@ class ViewPagerFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         onBackPressedCallback.remove()
-    }
-
-
-    fun onClickSelectButton() {
-        if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
-            viewModel.groupAlbumListMode.value = GroupAlbumListMode.SELECTION_MODE.ordinal
-        }else{
-            viewModel.checkAllTrigger.value = viewModel.checkAllTrigger.value?.plus(1)
-        }
     }
 }

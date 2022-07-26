@@ -7,8 +7,8 @@
         <import type="android.view.View"/>
         <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode"/>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment"/>
+            name="listener"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.GroupAlbumListFragmentListener"/>
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_delete_outline_24"
                 app:tint="@color/white"
-                android:onClick="@{() -> fragment.onClickDeleteButton()}"/>
+                android:onClick="@{() -> listener.onClickDeleteButton()}"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:layout_marginTop="@dimen/margin_top_fab"
                 android:src="@drawable/ic_baseline_close_24"
                 app:tint="@color/white"
-                android:onClick="@{() -> fragment.onClickCancelButton()}"/>
+                android:onClick="@{() -> listener.onClickCancelButton()}"/>
 
         </LinearLayout>
 

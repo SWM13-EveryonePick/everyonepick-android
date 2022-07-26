@@ -33,32 +33,36 @@ class PhotoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPhotoBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
-        binding.viewModel = viewModel
+        _binding = FragmentPhotoBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.listener = object : PhotoFragmentListener {
+                override fun onClickSaveButton() {
+                    val appName = getString(org.soma.everyonepick.common.R.string.app_name)
+                    val fileName = getFileName(appName)
+                    val bitmap = binding.image.drawable.toBitmap()
+                    saveBitmapInPictureDirectoryChild(fileName, appName, bitmap)
+                }
+
+                override fun onClickDeleteButton() {
+                    AlertDialog.Builder(context).setMessage("사진을 삭제합니다.")
+                        .setPositiveButton("확인") { _, _ ->
+                            // TODO: API Call
+                            findNavController().navigateUp()
+                        }
+                        .setNegativeButton("취소") { dialog, _ ->
+                            dialog.cancel()
+                        }
+                        .create().show()
+                }
+            }
+        }
 
         viewModel.photoUrl.value = args.photoUrl
 
         (activity as HomeActivityUtility).hideBottomNavigationView()
 
         return binding.root
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-
-        (activity as HomeActivityUtility).showBottomNavigationView()
-    }
-
-
-    /** Databinding functions */
-    fun onClickSaveButton() {
-        val appName = getString(org.soma.everyonepick.common.R.string.app_name)
-        val fileName = getFileName(appName)
-        val bitmap = binding.image.drawable.toBitmap()
-        saveBitmapInPictureDirectoryChild(fileName, appName, bitmap)
     }
 
     private fun getFileName(appName: String): String {
@@ -90,15 +94,15 @@ class PhotoFragment : Fragment() {
         }
     }
 
-    fun onClickDeleteButton() {
-        AlertDialog.Builder(context).setMessage("사진을 삭제합니다.")
-            .setPositiveButton("확인") { _, _ ->
-                // TODO: API Call
-                findNavController().navigateUp()
-            }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+
+        (activity as HomeActivityUtility).showBottomNavigationView()
+    }
+
+    interface PhotoFragmentListener {
+        fun onClickSaveButton()
+        fun onClickDeleteButton()
     }
 }

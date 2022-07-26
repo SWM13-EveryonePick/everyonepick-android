@@ -57,10 +57,55 @@ class GroupAlbumViewPagerFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGroupAlbumViewPagerBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
-        binding.viewModel = viewModel
+        _binding = FragmentGroupAlbumViewPagerBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.listener = object : GroupAlbumViewPagerFragmentListener {
+                override fun onClickSelectButton() {
+                    viewModel.photoListMode.value =
+                        if(viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal
+                        else PhotoListMode.NORMAL_MODE.ordinal
+                }
+
+                override fun onClickDrawerButton() {
+                    binding.drawerlayout.openDrawer(GravityCompat.END)
+                }
+
+                override fun onClickDrawerTitleEditButton() {
+                    val editText = EditText(context).apply {
+                        setText(viewModel.groupAlbum.value?.title)
+                        hint = "예시) 밴드부 동아리"
+                    }
+                    AlertDialog.Builder(context)
+                        .setTitle("단체공유앨범 이름 변경")
+                        .setView(editText)
+                        .setPositiveButton("확인") { _, _ ->
+                            // TODO: API
+                            viewModel.updateGroupAlbumTitle(editText.text.toString())
+                        }
+                        .setNegativeButton("취소") { dialog, _ ->
+                            dialog.cancel()
+                        }
+                        .create().show()
+                }
+
+                override fun onClickDrawerExitButton() {
+                    AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
+                        .setPositiveButton("확인") { _, _ ->
+                            // TODO: API
+                            activity?.supportFragmentManager?.setFragmentResult(
+                                GROUP_ALBUM_REMOVED,
+                                bundleOf("id" to args.groupAlbumId)
+                            )
+                            findNavController().navigateUp()
+                        }
+                        .setNegativeButton("취소") { dialog, _ ->
+                            dialog.cancel()
+                        }
+                        .create().show()
+                }
+            }
+        }
 
         viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbumDao(args.groupAlbumId)
 
@@ -107,48 +152,10 @@ class GroupAlbumViewPagerFragment: Fragment() {
     }
 
 
-    /** Databinding functions */
-    fun onClickSelectButton() {
-        viewModel.photoListMode.value =
-            if(viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal
-            else PhotoListMode.NORMAL_MODE.ordinal
-    }
-
-    fun onClickDrawerButton() {
-        binding.drawerlayout.openDrawer(GravityCompat.END)
-    }
-
-    fun onClickDrawerTitleEditButton() {
-        val editText = EditText(context).apply {
-            setText(viewModel.groupAlbum.value?.title)
-            hint = "예시) 밴드부 동아리"
-        }
-        AlertDialog.Builder(context)
-            .setTitle("단체공유앨범 이름 변경")
-            .setView(editText)
-            .setPositiveButton("확인") { _, _ ->
-                // TODO: API
-                viewModel.updateGroupAlbumTitle(editText.text.toString())
-            }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
-    }
-
-    fun onClickDrawerExitButton() {
-        AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
-            .setPositiveButton("확인") { _, _ ->
-                // TODO: API
-                activity?.supportFragmentManager?.setFragmentResult(
-                    GROUP_ALBUM_REMOVED,
-                    bundleOf("id" to args.groupAlbumId)
-                )
-                findNavController().navigateUp()
-            }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+    interface GroupAlbumViewPagerFragmentListener {
+        fun onClickSelectButton()
+        fun onClickDrawerButton()
+        fun onClickDrawerTitleEditButton()
+        fun onClickDrawerExitButton()
     }
 }

@@ -17,9 +17,17 @@ class FaceInformationCompleteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFaceInformationCompleteBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
+        _binding = FragmentFaceInformationCompleteBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.onClickNextButton = View.OnClickListener {
+                val intent = Intent(
+                    requireContext(),
+                    Class.forName(HOME_ACTIVITY_CLASS)
+                )
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            }
+        }
 
         return binding.root
     }
@@ -27,19 +35,5 @@ class FaceInformationCompleteFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-
-    fun onClickNextButton() {
-        startHomeActivity()
-    }
-
-    private fun startHomeActivity() {
-        val intent = Intent(
-            requireContext(),
-            Class.forName(HOME_ACTIVITY_CLASS)
-        )
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
     }
 }

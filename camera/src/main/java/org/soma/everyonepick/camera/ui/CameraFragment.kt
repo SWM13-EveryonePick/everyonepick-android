@@ -15,9 +15,9 @@ class CameraFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCameraBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
+        _binding = FragmentCameraBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         return binding.root
     }

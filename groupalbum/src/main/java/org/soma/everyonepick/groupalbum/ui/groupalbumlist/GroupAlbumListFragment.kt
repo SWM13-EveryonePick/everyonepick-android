@@ -26,12 +26,22 @@ class GroupAlbumListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGroupAlbumListBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
-        binding.adapter = GroupAlbumAdapter(viewModel)
-        binding.viewModel = viewModel
-        binding.parentViewModel = parentViewModel
+        _binding = FragmentGroupAlbumListBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.adapter = GroupAlbumAdapter(viewModel)
+            it.viewModel = viewModel
+            it.parentViewModel = parentViewModel
+            it.listener = object : GroupAlbumListFragmentListener {
+                override fun onClickDeleteButton() {
+                    viewModel.deleteCheckedItems()
+                    parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+                }
+
+                override fun onClickCancelButton() {
+                    parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+                }
+            }
+        }
 
         subscribeUi()
         setFragmentResultListeners()
@@ -73,18 +83,13 @@ class GroupAlbumListFragment : Fragment() {
     }
 
 
-    /** Databinding functions */
-    fun onClickDeleteButton() {
-        viewModel.deleteCheckedItems()
-        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
-    }
-
-    fun onClickCancelButton() {
-        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
-    }
-
     companion object {
         // Request keys for FragmentResultListener
         const val GROUP_ALBUM_REMOVED = "group_album_removed"
+    }
+
+    interface GroupAlbumListFragmentListener {
+        fun onClickDeleteButton()
+        fun onClickCancelButton()
     }
 }
