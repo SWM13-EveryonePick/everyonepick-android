@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode"/>
+        <variable
+            name="listener"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.GroupAlbumListFragmentListener"/>
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
+        <variable
+            name="parentViewModel"
+            type="org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel"/>
+        <variable
+            name="adapter"
+            type="org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.groupalbumlist.GroupAlbumListFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_groupalbum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.groupAlbumItemList.size() > 1? View.VISIBLE: View.GONE}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"
+                    adapter="@{adapter}"
+                    submitList="@{viewModel.groupAlbumItemList}"
+                    tools:listitem="@layout/item_group_album"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_fab"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_delete_outline_24"
+                app:tint="@color/white"
+                android:onClick="@{() -> listener.onClickDeleteButton()}"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_fab"
+                android:src="@drawable/ic_baseline_close_24"
+                app:tint="@color/white"
+                android:onClick="@{() -> listener.onClickCancelButton()}"/>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.groupAlbumItemList.size() == 1? View.VISIBLE: View.GONE}"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="NO GROUP ALBUMS"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

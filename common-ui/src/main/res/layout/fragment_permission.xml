@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.common_ui.PermissionFragment" />
+            name="onRequestPermissionListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,14 +14,17 @@
         android:background="#000000">
 
         <Button
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="설정에서 권한을 허용합니다."
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> fragment.onClickStartSettingForPermissionButton()}"/>
+            android:onClick="@{onRequestPermissionListener}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

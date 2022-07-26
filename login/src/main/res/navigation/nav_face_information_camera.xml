@@ -11,7 +11,7 @@
         android:label="ParentPermissionFragment">
 
         <action
-            android:id="@+id/action_parentpermission_to_faceinformationpreview"
+            android:id="@+id/to_face_information_preview"
             app:destination="@id/fragmentFaceInformationPreview"
             app:popUpTo="@id/fragmentParentPermission"
             app:popUpToInclusive="true" />

@@ -3,9 +3,8 @@ package org.soma.everyonepick.groupalbum.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.soma.everyonepick.groupalbum.data.PhotoDao
-import org.soma.everyonepick.groupalbum.data.PhotoItem
-import org.soma.everyonepick.groupalbum.data.PhotoRepository
+import org.soma.everyonepick.groupalbum.data.item.PhotoItem
+import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,6 +45,7 @@ class PhotoListViewModel @Inject constructor(
         for(i in 0 until photoItemList.value!!.size) {
             val newItem = copyPhotoItem(photoItemList.value!![i])
             newItem.isCheckboxVisible = isCheckboxVisible
+            newItem.isChecked = false
             photoItemList.value!![i] = newItem
         }
         photoItemList.value = photoItemList.value

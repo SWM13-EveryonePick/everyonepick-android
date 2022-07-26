@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_group_album"
+    app:startDestination="@id/fragment_viewpager">
+
+    <fragment
+        android:id="@+id/fragment_viewpager"
+        android:name="org.soma.everyonepick.groupalbum.ui.ViewPagerFragment"
+        tools:layout="@layout/fragment_view_pager">
+        <action
+            android:id="@+id/to_group_album_view_pager"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/fragment_group_album_view_pager"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_group_album_view_pager"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment"
+        tools:layout="@layout/fragment_group_album_view_pager">
+        <argument
+            android:name="groupAlbumId"
+            app:argType="long" />
+        <action
+            android:id="@+id/to_photo"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:destination="@id/fragment_photo"/>
+        <action
+            android:id="@+id/to_parent_permission"
+            app:destination="@id/fragment_parent_permission"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_parent_permission"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ParentPermissionFragment"
+        tools:layout="@layout/fragment_parent_permission">
+        <action
+            android:id="@+id/to_image_picker"
+            app:destination="@id/fragment_image_picker"
+            app:popUpTo="@id/fragment_group_album_view_pager"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_image_picker"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment"
+        tools:layout="@layout/fragment_image_picker"/>
+
+    <fragment
+        android:id="@+id/fragment_photo"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment"
+        tools:layout="@layout/fragment_photo">
+        <argument
+            android:name="photoUrl"
+            app:argType="string" />
+    </fragment>
+</navigation>

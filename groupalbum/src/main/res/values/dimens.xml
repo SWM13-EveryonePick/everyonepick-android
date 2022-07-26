@@ -3,7 +3,8 @@
     <dimen name="height_friend_item">100dp</dimen>
     <dimen name="size_friend_profile">80dp</dimen>
     <dimen name="margin_friend_item">10dp</dimen>
-    <dimen name="size_group_album">120dp</dimen>
+    <dimen name="width_group_album">190dp</dimen>
+    <dimen name="height_group_album">140dp</dimen>
 
     <dimen name="size_image">137dp</dimen>
     <dimen name="size_photo">120dp</dimen>
@@ -15,4 +16,6 @@
     <dimen name="margin_drawer">16dp</dimen>
     <dimen name="margin_drawer_bottom_icon">8dp</dimen>
     <dimen name="size_drawer_bottom_icon">32dp</dimen>
+
+    <dimen name="radius_group_album">30dp</dimen>
 </resources>

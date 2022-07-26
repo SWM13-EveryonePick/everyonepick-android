@@ -7,4 +7,6 @@ package org.soma.everyonepick.common
 interface HomeActivityUtility {
     fun hideBottomNavigationView()
     fun showBottomNavigationView()
+
+    fun showAreYouSureDialog()
 }

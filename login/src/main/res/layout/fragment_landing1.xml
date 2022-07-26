@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.login.ui.landing.Landing1Fragment" />
+            name="onClickNextButton"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> fragment.onClickNextButton()}"
+            android:onClick="@{onClickNextButton}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

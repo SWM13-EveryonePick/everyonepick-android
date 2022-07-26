@@ -7,7 +7,7 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.soma.everyonepick.groupalbum.data.ImageItem
+import org.soma.everyonepick.groupalbum.data.item.ImageItem
 import java.io.File
 
 private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID
@@ -36,9 +36,11 @@ class ImagePickerViewModel: ViewModel() {
         cursor?.let {
             while(cursor.moveToNext()) {
                 val mediaPath = cursor.getString(cursor.getColumnIndex(INDEX_MEDIA_URI))
-                imageItemList.value!!.add(ImageItem(
+                imageItemList.value!!.add(
+                    ImageItem(
                     Uri.fromFile(File(mediaPath)), false
-                ))
+                )
+                )
             }
         }
 

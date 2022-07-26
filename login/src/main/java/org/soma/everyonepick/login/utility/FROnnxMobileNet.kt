@@ -5,10 +5,8 @@ import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtLoggingLevel
 import ai.onnxruntime.OrtSession
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.*
 import android.os.SystemClock
-import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import org.soma.everyonepick.login.R
@@ -19,7 +17,7 @@ import java.util.*
 typealias OnnxListener = (FloatArray) -> Unit
 
 class FROnnxMobileNet(private val context: Context, listener: OnnxListener): ImageAnalysis.Analyzer {
-    private val listeners = ArrayList<OnnxListener>().apply { listener?.let { add(it) } }
+    private val listeners = ArrayList<OnnxListener>().apply { listener.let { add(it) } }
 
     // 안드로이드 가속화
     private var enableNNAPI: Boolean = false

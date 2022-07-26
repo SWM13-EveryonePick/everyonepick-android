@@ -15,10 +15,13 @@ class Landing2Fragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentLanding2Binding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
+    ): View {
+        _binding = FragmentLanding2Binding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            onClickNextButton = View.OnClickListener {
+                findNavController().navigate(Landing2FragmentDirections.toLanding3())
+            }
+        }
 
         return binding.root
     }
@@ -26,12 +29,5 @@ class Landing2Fragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-
-    fun onClickNextButton() {
-        findNavController().navigate(
-            Landing2FragmentDirections.actionLanding2ToLanding3()
-        )
     }
 }

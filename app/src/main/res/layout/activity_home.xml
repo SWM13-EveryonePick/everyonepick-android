@@ -22,14 +22,18 @@
             />
 
 
-        <org.soma.everyonepick.common_ui.NavBottomNavigationView
+        <org.soma.everyonepick.common_ui.bottomnavigationview.NavBottomNavigationView
             android:id="@+id/bottomnavigationview"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/height_bottom_navigation_view"
+            android:background="@drawable/top_border_with_radius"
+            app:itemRippleColor="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:labelVisibilityMode="labeled"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconTint="@color/bottom_nav_item_color"
+            app:itemIconSize="32dp"
             app:menu="@menu/menu_home"
             />
 

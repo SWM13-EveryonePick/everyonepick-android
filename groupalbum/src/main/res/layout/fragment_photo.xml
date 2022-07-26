@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoFragment" />
+            name="listener"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment.PhotoFragmentListener" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel" />
@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbum.photo.PhotoFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,16 +27,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_action_bar"
                 app:layout_constraintTop_toTopOf="parent"
-                app:hasBackButton="true"
-                app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
-                />
+                app:hasBackButton="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="삭제"
                 android:layout_marginRight="@dimen/margin_action_bar"
-                android:onClick="@{() -> fragment.onClickDeleteButton()}"
+                android:onClick="@{() -> listener.onClickDeleteButton()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -47,9 +45,9 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:photoUrl="@{viewModel.photoUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            photoUrl="@{viewModel.photoUrl}"
             />
 
         <Button
@@ -57,7 +55,7 @@
             android:layout_height="50dp"
             android:layout_margin="24dp"
             android:text="갤러리에 저장하기"
-            android:onClick="@{() -> fragment.onClickSaveButton()}"
+            android:onClick="@{() -> listener.onClickSaveButton()}"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

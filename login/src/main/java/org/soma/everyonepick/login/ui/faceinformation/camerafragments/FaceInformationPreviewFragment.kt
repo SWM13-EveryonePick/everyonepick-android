@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import org.soma.everyonepick.login.databinding.CameraUiContainerBinding
-import org.soma.everyonepick.login.databinding.FragmentFaceinformationpreviewBinding
+import org.soma.everyonepick.login.databinding.FragmentFaceInformationPreviewBinding
 
 import org.soma.everyonepick.login.utility.FROnnxMobileNet
 import java.util.concurrent.ExecutorService
@@ -22,7 +22,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class FaceInformationPreviewFragment : Fragment() {
-    private var _binding: FragmentFaceinformationpreviewBinding? = null
+    private var _binding: FragmentFaceInformationPreviewBinding? = null
     private val binding get() = _binding!!
 
     private var cameraUiContainerBinding: CameraUiContainerBinding? = null
@@ -37,8 +37,8 @@ class FaceInformationPreviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentFaceinformationpreviewBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentFaceInformationPreviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -82,12 +82,12 @@ class FaceInformationPreviewFragment : Fragment() {
 
         // Preview
         preview = Preview.Builder()
-            .setTargetAspectRatio(screenAspectRatio!!)
+            .setTargetAspectRatio(screenAspectRatio)
             .build()
 
         // ImageAnalyzer
         imageAnalyzer = ImageAnalysis.Builder()
-            .setTargetAspectRatio(screenAspectRatio!!)
+            .setTargetAspectRatio(screenAspectRatio)
             .build()
             .also {
                 it.setAnalyzer(cameraExecutor, FROnnxMobileNet(requireContext()) { floatArray ->

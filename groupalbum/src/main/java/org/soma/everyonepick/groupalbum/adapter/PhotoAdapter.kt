@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.PhotoItem
+import org.soma.everyonepick.groupalbum.data.item.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
-import org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
 class PhotoAdapter(
@@ -34,12 +34,14 @@ class PhotoAdapter(
 
     private fun subscribeUi(binding: ItemPhotoBinding, holder: PhotoViewHolder) {
         binding.root.setOnClickListener {
-            val position = holder.absoluteAdapterPosition
+            val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
-            if(binding.checkbox.visibility == View.GONE) {
-                val photoUrl = getItem(position).photoDao.photoUrl
-                val directions = GroupAlbumViewPagerFragmentDirections.actionGroupalbumviewpagerToPhoto(photoUrl)
+            if(!item.isCheckboxVisible) {
+                val photoUrl = item.photoDao.photoUrl
+                val directions = GroupAlbumViewPagerFragmentDirections.toPhoto(photoUrl)
                 binding.root.findNavController().navigate(directions)
+            }else{
+                binding.checkbox.isChecked = !binding.checkbox.isChecked
             }
         }
 

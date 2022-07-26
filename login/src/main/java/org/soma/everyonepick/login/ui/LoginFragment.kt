@@ -1,15 +1,13 @@
 package org.soma.everyonepick.login.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
@@ -29,44 +27,42 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentLoginBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.onClickLoginButton = View.OnClickListener {
+                if(viewModel.isApiLoading.value == true) return@OnClickListener
 
-        binding.fragment = this
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+                viewModel.isApiLoading.value = true
+                val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                    if(error != null) onLoginFailure()
+                    else if(token != null) onLoginSuccess()
+                }
 
-        return binding.root
-    }
+                // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+                if(UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+                    UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
+                        if(error != null) {
+                            onLoginFailure()
 
-    fun onClickLogin() {
-        if(viewModel.isApiLoading.value == true) return
-
-        viewModel.isApiLoading.value = true
-        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            if(error != null) onLoginFailure()
-            else if(token != null) onLoginSuccess()
-        }
-
-        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-        if(UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
-            UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
-                if(error != null) {
-                    onLoginFailure()
-
-                    // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도한다.
-                    // 단, 사용자가 의도적으로 로그인을 취소한 경우는 제외한다.
-                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                        viewModel.isApiLoading.value = false
-                        return@loginWithKakaoTalk
+                            // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도한다.
+                            // 단, 사용자가 의도적으로 로그인을 취소한 경우는 제외한다.
+                            if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+                                viewModel.isApiLoading.value = false
+                                return@loginWithKakaoTalk
+                            }
+                            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
+                        }
+                        else if(token != null) onLoginSuccess()
                     }
+                } else {
                     UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
                 }
-                else if(token != null) onLoginSuccess()
             }
-        } else {
-            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
         }
+
+        return binding.root
     }
 
     private fun onLoginFailure() {
@@ -92,7 +88,7 @@ class LoginFragment : Fragment() {
                 if(true){
                     // TODO: 회원가입 진행
                     findNavController().navigate(
-                         LoginFragmentDirections.actionLoginToFaceinformationdescription()
+                         LoginFragmentDirections.toFaceInformationDescription()
                     )
                 }else{
                     startHomeActivity()
