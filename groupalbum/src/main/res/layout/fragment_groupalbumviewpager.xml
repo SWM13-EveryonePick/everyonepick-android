@@ -6,7 +6,7 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.groupalbum.GroupAlbumViewPagerFragment">
+            tools:context=".ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_actionbar"
@@ -36,7 +36,7 @@
                     android:layout_height="@dimen/height_action_bar"
                     app:layout_constraintTop_toTopOf="parent"
                     title="@{viewModel.groupAlbum.title}"
-                    hasBackButton="true"
+                    app:hasBackButton="true"
                     onBackPressed="@{true}"/>
 
                 <TextView

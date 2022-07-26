@@ -1,8 +1,7 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbum.photo
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo
 
 import android.app.AlertDialog
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel
 import java.io.File

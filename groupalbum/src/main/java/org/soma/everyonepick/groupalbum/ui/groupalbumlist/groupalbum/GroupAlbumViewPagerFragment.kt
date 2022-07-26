@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbum
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.app.AlertDialog
 import android.content.Context
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import javax.inject.Inject

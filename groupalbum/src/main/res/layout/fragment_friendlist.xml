@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.FriendListFragment">
+        tools:context=".ui.friendlist.FriendListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_friend"

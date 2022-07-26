@@ -6,7 +6,7 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.ImagePickerFragment" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel" />
@@ -18,7 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbum.photo.ImagePickerFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment">
 
         <org.soma.everyonepick.common_ui.CustomActionBar
             android:id="@+id/customactionbar"
@@ -26,8 +26,8 @@
             android:layout_height="@dimen/height_action_bar"
             app:layout_constraintTop_toTopOf="parent"
             onBackPressed="@{true}"
-            hasBackButton="true"
-            title="업로드할 사진을 선택하세요."
+            app:hasBackButton="true"
+            app:title="업로드할 사진을 선택하세요."
             />
 
         <ScrollView

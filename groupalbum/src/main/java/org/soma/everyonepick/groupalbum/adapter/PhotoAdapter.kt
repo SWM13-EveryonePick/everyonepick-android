@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.item.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
-import org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
 class PhotoAdapter(

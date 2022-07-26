@@ -8,7 +8,7 @@
         <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode"/>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.GroupAlbumListFragment"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment"/>
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.GroupAlbumListFragment">
+        tools:context=".ui.groupalbumlist.GroupAlbumListFragment">
 
         <ScrollView
             android:layout_width="match_parent"

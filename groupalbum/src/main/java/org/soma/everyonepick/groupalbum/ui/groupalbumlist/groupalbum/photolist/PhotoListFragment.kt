@@ -1,27 +1,19 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbum.photo
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotolistBinding
-import org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
-import java.io.File
 
 
 @AndroidEntryPoint

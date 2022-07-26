@@ -6,7 +6,7 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoFragment" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel" />
@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbum.photo.PhotoFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_action_bar"
                 app:layout_constraintTop_toTopOf="parent"
-                hasBackButton="true"
+                app:hasBackButton="true"
                 onBackPressed="@{true}"
                 />
 

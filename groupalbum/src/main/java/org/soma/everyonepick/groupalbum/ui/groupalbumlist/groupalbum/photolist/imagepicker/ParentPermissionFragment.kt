@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbum.photo
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker
 
 import android.Manifest
 import android.os.Bundle

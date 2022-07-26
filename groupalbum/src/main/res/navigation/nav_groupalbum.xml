@@ -17,7 +17,7 @@
     <!-- TODO: 앨범 -> 앨범리스트 ... 앨범 아이디 전달 to refresh information -->
     <fragment
         android:id="@+id/fragment_groupalbumviewpager"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.GroupAlbumViewPagerFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment"
         tools:layout="@layout/fragment_groupalbumviewpager">
         <argument
             android:name="groupAlbumId"
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/fragment_parentpermission"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.ParentPermissionFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ParentPermissionFragment"
         tools:layout="@layout/fragment_parentpermission">
         <action
             android:id="@+id/action_parentpermission_to_imagepicker"
@@ -42,12 +42,12 @@
 
     <fragment
         android:id="@+id/fragment_imagepicker"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.ImagePickerFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment"
         tools:layout="@layout/fragment_imagepicker"/>
 
     <fragment
         android:id="@+id/fragment_photo"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbum.photo.PhotoFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment"
         tools:layout="@layout/fragment_photo">
         <argument
             android:name="photoUrl"
