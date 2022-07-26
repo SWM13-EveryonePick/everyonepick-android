@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
-import org.soma.everyonepick.groupalbum.repository.GroupAlbumRepository
+import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.utility.testGroupAlbumItem
 import javax.inject.Inject
 

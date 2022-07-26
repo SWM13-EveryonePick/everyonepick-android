@@ -1,7 +1,7 @@
 package org.soma.everyonepick.groupalbum.adapter.groupalbum
 
 import android.view.View
-import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 
 class GroupAlbumViewHolder(

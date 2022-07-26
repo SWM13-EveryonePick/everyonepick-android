@@ -2,8 +2,9 @@ package org.soma.everyonepick.groupalbum.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
-import org.soma.everyonepick.groupalbum.repository.GroupAlbumRepository
+import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.model.GroupAlbumDao
+import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 
 class GroupAlbumTest {
     private val groupAlbumDao = GroupAlbumDao(0, "id", 100)

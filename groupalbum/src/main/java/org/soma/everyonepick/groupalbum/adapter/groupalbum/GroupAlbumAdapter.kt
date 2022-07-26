@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
-import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.model.GroupAlbumDao
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections

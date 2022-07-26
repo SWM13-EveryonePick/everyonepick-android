@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.item.ImageItem
+import org.soma.everyonepick.groupalbum.data.item.ImageItem
 import org.soma.everyonepick.groupalbum.databinding.ItemImageBinding
 import org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel
 

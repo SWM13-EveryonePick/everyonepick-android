@@ -7,7 +7,7 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.soma.everyonepick.groupalbum.item.ImageItem
+import org.soma.everyonepick.groupalbum.data.item.ImageItem
 import java.io.File
 
 private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID

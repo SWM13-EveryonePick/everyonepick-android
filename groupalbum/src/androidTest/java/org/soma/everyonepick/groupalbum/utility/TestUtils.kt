@@ -1,9 +1,9 @@
 package org.soma.everyonepick.groupalbum.utility
 
-import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
-import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
-import org.soma.everyonepick.groupalbum.data.PhotoDao
-import org.soma.everyonepick.groupalbum.item.PhotoItem
+import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.item.PhotoItem
+import org.soma.everyonepick.groupalbum.data.model.GroupAlbumDao
+import org.soma.everyonepick.groupalbum.data.model.PhotoDao
 
 val testGroupAlbumDao = GroupAlbumDao(0, "test", 100)
 val testGroupAlbumItem = GroupAlbumItem(testGroupAlbumDao, false, false)

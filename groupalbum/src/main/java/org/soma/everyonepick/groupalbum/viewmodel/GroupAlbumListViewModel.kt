@@ -3,9 +3,8 @@ package org.soma.everyonepick.groupalbum.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
-import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
-import org.soma.everyonepick.groupalbum.repository.GroupAlbumRepository
+import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import javax.inject.Inject
 
 /**

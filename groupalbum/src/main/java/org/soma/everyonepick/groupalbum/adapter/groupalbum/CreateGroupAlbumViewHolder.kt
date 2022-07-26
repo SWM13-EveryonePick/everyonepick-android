@@ -1,6 +1,6 @@
 package org.soma.everyonepick.groupalbum.adapter.groupalbum
 
-import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 
 class CreateGroupAlbumViewHolder(

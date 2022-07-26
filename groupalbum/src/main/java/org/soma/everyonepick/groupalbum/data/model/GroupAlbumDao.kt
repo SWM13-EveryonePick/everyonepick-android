@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.data
+package org.soma.everyonepick.groupalbum.data.model
 
 data class GroupAlbumDao(
     val id: Long,

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.item
+package org.soma.everyonepick.groupalbum.data.item
 
 import android.net.Uri
 

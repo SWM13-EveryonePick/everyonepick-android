@@ -1,6 +1,7 @@
-package org.soma.everyonepick.groupalbum.item
+package org.soma.everyonepick.groupalbum.data.item
 
-import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
+import org.soma.everyonepick.groupalbum.data.model.GroupAlbumDao
+
 
 // GroupAlbum Recycler View에 들어가는 Item 객체입니다.
 class GroupAlbumItem(
