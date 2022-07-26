@@ -11,10 +11,13 @@
         tools:layout="@layout/fragment_view_pager">
         <action
             android:id="@+id/to_group_album_view_pager"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/fragment_group_album_view_pager"/>
     </fragment>
 
-    <!-- TODO: 앨범 -> 앨범리스트 ... 앨범 아이디 전달 to refresh information -->
     <fragment
         android:id="@+id/fragment_group_album_view_pager"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment"
@@ -24,6 +27,10 @@
             app:argType="long" />
         <action
             android:id="@+id/to_photo"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/fragment_photo"/>
         <action
             android:id="@+id/to_parent_permission"

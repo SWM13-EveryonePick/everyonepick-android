@@ -140,8 +140,8 @@ class ViewPagerFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         activity?.window?.let {
             it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             it.statusBarColor = Color.WHITE

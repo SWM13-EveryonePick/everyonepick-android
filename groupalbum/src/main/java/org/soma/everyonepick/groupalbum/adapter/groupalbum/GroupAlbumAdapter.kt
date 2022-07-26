@@ -61,11 +61,9 @@ class GroupAlbumAdapter(
             // 일반 모드일 때
             if(!item.isCheckboxVisible){
                 val count = itemCount-1
-                parentViewModel.addGroupAlbumItem(
-                    GroupAlbumItem(
+                parentViewModel.addGroupAlbumItem(GroupAlbumItem(
                     GroupAlbumDao(count.toLong(), "title$count", 100+count), isChecked = false, isCheckboxVisible = false
-                )
-                )
+                ))
             }
         }
     }
