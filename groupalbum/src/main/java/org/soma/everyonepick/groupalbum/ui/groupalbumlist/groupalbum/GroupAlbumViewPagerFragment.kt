@@ -38,6 +38,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
     private val viewModel: GroupAlbumViewPagerViewModel by viewModels()
     private val args: GroupAlbumViewPagerFragmentArgs by navArgs()
 
+    // 선택 모드일 때 뒤로가기 버튼을 누르면 선택 모드를 취소해야 하며, 이를 위한 콜백입니다.
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun onAttach(context: Context) {

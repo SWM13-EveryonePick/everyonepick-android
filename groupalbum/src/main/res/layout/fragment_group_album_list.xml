@@ -17,7 +17,7 @@
             type="org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel"/>
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter"/>
+            type="org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

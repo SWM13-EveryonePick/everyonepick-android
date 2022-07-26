@@ -3,6 +3,7 @@ package org.soma.everyonepick.groupalbum.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
 import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.repository.GroupAlbumRepository
 import javax.inject.Inject
@@ -10,6 +11,9 @@ import javax.inject.Inject
 /**
  * groupAlbumItemList의 값을 수정하더라도 MutableLiveData의 특성으로 인해
  * 주소값이 변하여야 observer가 작동하므로, 데이터를 변경할 때 이를 감안하여야 합니다.
+ *
+ * GroupAlbum RecyclerView의 설계상, 가장 마지막 아이템을 '생성 버튼' 취급하게 되므로
+ * 마지막 아이템에는 [GroupAlbumItem.dummyData]가 위치하는 것을 보장해야 합니다.
  */
 
 @HiltViewModel
@@ -23,18 +27,22 @@ class GroupAlbumListViewModel @Inject constructor(
         fetchGroupAlbumItemList()
     }
 
+    /**
+     * [GroupAlbumRepository]에서 데이터를 가져온 뒤 값을 적용합니다.
+     */
     fun fetchGroupAlbumItemList() {
         isApiLoading.value = true
 
         val newGroupAlbumItemList = groupAlbumRepository.getGroupAlbumItemList()
+        newGroupAlbumItemList.add(GroupAlbumItem.dummyData()) // 더미데이터 추가
         groupAlbumItemList.value = newGroupAlbumItemList
 
         isApiLoading.value = false
     }
 
-
     fun addGroupAlbumItem(groupAlbumItem: GroupAlbumItem) {
         groupAlbumItemList.value?.let {
+            // 가장 마지막 아이템(생성 버튼) 이전 위치에 삽입해야 합니다.
             it.add(it.size-1, groupAlbumItem)
             groupAlbumItemList.value = it
         }
@@ -55,6 +63,7 @@ class GroupAlbumListViewModel @Inject constructor(
         if(groupAlbumItemList.value == null) return
 
         val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
+        // 가장 마지막 아이템은 생성 버튼이므로 제거해선 안 됩니다.
         for(i in 0 until groupAlbumItemList.value!!.size - 1) {
             if(!groupAlbumItemList.value!![i].isChecked)
                 newGroupAlbumItemList.add(groupAlbumItemList.value!![i])

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.viewholder
+package org.soma.everyonepick.groupalbum.adapter.groupalbum
 
 import android.view.View
 import org.soma.everyonepick.groupalbum.item.GroupAlbumItem

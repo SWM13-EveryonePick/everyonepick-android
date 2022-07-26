@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter
+package org.soma.everyonepick.groupalbum.adapter.groupalbum
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,9 +15,6 @@ import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumViewType
-import org.soma.everyonepick.groupalbum.viewholder.CreateGroupAlbumViewHolder
-import org.soma.everyonepick.groupalbum.viewholder.GroupAlbumViewHolder
-import org.soma.everyonepick.groupalbum.viewholder.ParentGroupAlbumViewHolder
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 /**
