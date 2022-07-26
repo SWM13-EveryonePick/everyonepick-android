@@ -54,10 +54,6 @@ class ImagePickerFragment : Fragment() {
     }
 
 
-    fun onClickBackButton() {
-        findNavController().navigateUp()
-    }
-
     fun onClickUploadButton() {
         activity?.supportFragmentManager?.setFragmentResult(
             URI_LIST_CHECKED,

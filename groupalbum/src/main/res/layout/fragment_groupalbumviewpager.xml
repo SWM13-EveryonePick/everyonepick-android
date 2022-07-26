@@ -36,7 +36,7 @@
                     android:layout_height="@dimen/height_action_bar"
                     app:title="@{viewModel.groupAlbum.title}"
                     app:hasBackButton="true"
-                    app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
+                    app:onBackPressed="@{true}"
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView

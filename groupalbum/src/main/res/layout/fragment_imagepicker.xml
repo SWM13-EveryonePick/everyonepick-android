@@ -18,7 +18,7 @@
             android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_action_bar"
-            app:onClickBackButton="@{() -> fragment.onClickBackButton()}"
+            app:onBackPressed="@{true}"
             app:hasBackButton="true"
             app:title="업로드할 사진을 선택하세요."
             app:layout_constraintTop_toTopOf="parent"

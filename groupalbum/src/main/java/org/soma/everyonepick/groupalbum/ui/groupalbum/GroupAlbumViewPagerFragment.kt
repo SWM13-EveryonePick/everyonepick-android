@@ -118,10 +118,6 @@ class GroupAlbumViewPagerFragment: Fragment() {
 
 
     /** Databinding functions */
-    fun onClickBackButton() {
-        findNavController().navigateUp()
-    }
-
     fun onClickSelectButton() {
         viewModel.photoListMode.value =
             if(viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal

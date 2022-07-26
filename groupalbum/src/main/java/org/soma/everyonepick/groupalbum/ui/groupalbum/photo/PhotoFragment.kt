@@ -56,10 +56,6 @@ class PhotoFragment : Fragment() {
 
 
     /** Databinding functions */
-    fun onClickBackButton() {
-        findNavController().navigateUp()
-    }
-
     fun onClickSaveButton() {
         val appName = getString(org.soma.everyonepick.common.R.string.app_name)
         val fileName = getFileName(appName)
