@@ -25,10 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_action_bar"
             app:layout_constraintTop_toTopOf="parent"
-            onBackPressed="@{true}"
             app:hasBackButton="true"
-            app:title="업로드할 사진을 선택하세요."
-            />
+            app:title="업로드할 사진을 선택하세요." />
 
         <ScrollView
             android:layout_width="match_parent"

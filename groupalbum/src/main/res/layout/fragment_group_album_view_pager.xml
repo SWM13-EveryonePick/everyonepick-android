@@ -36,8 +36,7 @@
                     android:layout_height="@dimen/height_action_bar"
                     app:layout_constraintTop_toTopOf="parent"
                     title="@{viewModel.groupAlbum.title}"
-                    app:hasBackButton="true"
-                    onBackPressed="@{true}"/>
+                    app:hasBackButton="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"
