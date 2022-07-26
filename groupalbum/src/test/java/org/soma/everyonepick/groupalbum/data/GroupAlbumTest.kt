@@ -1,6 +1,7 @@
 package org.soma.everyonepick.groupalbum.data
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.model.GroupAlbumDao
@@ -12,6 +13,7 @@ class GroupAlbumTest {
         val groupAlbumItemList = GroupAlbumRepository().convertGroupAlbumDaoListToGroupAlbumItemList(
             mutableListOf(groupAlbumDao)
         )
-        assertEquals(groupAlbumItemList, mutableListOf(GroupAlbumItem(groupAlbumDao, false, false)))
+        assertFalse(groupAlbumItemList[0].isChecked)
+        assertFalse(groupAlbumItemList[0].isCheckboxVisible)
     }
 }

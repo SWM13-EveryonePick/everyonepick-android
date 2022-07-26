@@ -18,7 +18,7 @@ class GroupAlbumRepository {
     fun convertGroupAlbumDaoListToGroupAlbumItemList(groupAlbumDaoList: MutableList<GroupAlbumDao>): MutableList<GroupAlbumItem> {
         val groupAlbumItemList = mutableListOf<GroupAlbumItem>()
         for(i in 0 until groupAlbumDaoList.size) {
-            groupAlbumItemList.add(GroupAlbumItem(groupAlbumDaoList[i], isChecked = false, isCheckboxVisible =  false))
+            groupAlbumItemList.add(GroupAlbumItem(groupAlbumDaoList[i], isChecked = false, isCheckboxVisible = false))
         }
         return groupAlbumItemList
     }
