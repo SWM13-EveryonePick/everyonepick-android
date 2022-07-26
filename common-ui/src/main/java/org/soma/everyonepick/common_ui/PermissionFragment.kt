@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import org.soma.everyonepick.common_ui.databinding.FragmentPermissionBinding
 
 /**
@@ -62,7 +61,7 @@ class PermissionFragment(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPermissionBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this

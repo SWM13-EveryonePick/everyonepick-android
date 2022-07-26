@@ -16,13 +16,13 @@ class ParentPermissionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val fragment = PermissionFragment(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            val directions = ParentPermissionFragmentDirections.actionParentpermissionToImagepicker()
+            val directions = ParentPermissionFragmentDirections.toImagePicker()
             findNavController().navigate(directions)
         }
         childFragmentManager.beginTransaction()
             .add(R.id.fragment_permission, fragment)
             .commit()
 
-        return inflater.inflate(R.layout.fragment_parentpermission, container, false)
+        return inflater.inflate(R.layout.fragment_parent_permission, container, false)
     }
 }

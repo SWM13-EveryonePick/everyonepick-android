@@ -6,10 +6,10 @@
     <data>
         <variable
             name="fragment"
-            type="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragment" />
+            type="org.soma.everyonepick.groupalbum.ui.ViewPagerFragment" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel" />
+            type="org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel" />
         <import type="android.view.View" />
         <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode" />
     </data>

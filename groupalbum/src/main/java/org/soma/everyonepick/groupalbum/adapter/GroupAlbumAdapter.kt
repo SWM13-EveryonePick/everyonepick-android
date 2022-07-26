@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
 import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
-import org.soma.everyonepick.groupalbum.databinding.ItemCreategroupalbumBinding
-import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
+import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
+import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumViewType
 import org.soma.everyonepick.groupalbum.viewholder.CreateGroupAlbumViewHolder
 import org.soma.everyonepick.groupalbum.viewholder.GroupAlbumViewHolder
@@ -38,14 +38,14 @@ class GroupAlbumAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             GroupAlbumViewType.CREATE.ordinal -> {
-                val binding = getViewDataBinding<ItemCreategroupalbumBinding>(parent, R.layout.item_creategroupalbum)
+                val binding = getViewDataBinding<ItemCreateGroupAlbumBinding>(parent, R.layout.item_create_group_album)
                 val holder = CreateGroupAlbumViewHolder(binding)
                 subscribeCreateGroupAlbumItemUi(binding, holder)
 
                 holder
             }
             else -> {
-                val binding = getViewDataBinding<ItemGroupalbumBinding>(parent, R.layout.item_groupalbum)
+                val binding = getViewDataBinding<ItemGroupAlbumBinding>(parent, R.layout.item_group_album)
                 val holder = GroupAlbumViewHolder(binding)
                 subscribeGroupAlbumItemUi(binding, holder)
 
@@ -58,7 +58,7 @@ class GroupAlbumAdapter(
         DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutRes, parent, false)
 
     // TODO: 생성 플로우로 대체
-    private fun subscribeCreateGroupAlbumItemUi(binding: ItemCreategroupalbumBinding, holder: CreateGroupAlbumViewHolder) {
+    private fun subscribeCreateGroupAlbumItemUi(binding: ItemCreateGroupAlbumBinding, holder: CreateGroupAlbumViewHolder) {
         binding.cardview.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
@@ -73,13 +73,13 @@ class GroupAlbumAdapter(
         }
     }
 
-    private fun subscribeGroupAlbumItemUi(binding: ItemGroupalbumBinding, holder: GroupAlbumViewHolder) {
+    private fun subscribeGroupAlbumItemUi(binding: ItemGroupAlbumBinding, holder: GroupAlbumViewHolder) {
         binding.root.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if(!item.isCheckboxVisible) {
-                val directions = GroupAlbumParentViewPagerFragmentDirections
-                        .actionGroupalbumparentviewpagerToGroupalbumviewpager(item.groupAlbumDao.id)
+                val directions = ViewPagerFragmentDirections
+                        .toGroupAlbumViewPager(item.groupAlbumDao.id)
                 binding.root.findNavController().navigate(directions)
             }else{
                 binding.checkbox.isChecked = !binding.checkbox.isChecked

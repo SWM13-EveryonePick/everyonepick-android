@@ -18,19 +18,19 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
-import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumparentviewpagerBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentViewPagerBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
 
 
 private val TAB_ITEMS = listOf("앨범", "친구목록")
 
 @AndroidEntryPoint
-class GroupAlbumParentViewPagerFragment : Fragment() {
-    private var _binding: FragmentGroupalbumparentviewpagerBinding? = null
+class ViewPagerFragment : Fragment() {
+    private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: GroupAlbumParentViewPagerViewModel by viewModels()
+    private val viewModel: ViewPagerViewModel by viewModels()
 
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
@@ -51,7 +51,7 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGroupalbumparentviewpagerBinding.inflate(inflater, container, false)
+        _binding = FragmentViewPagerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
         binding.viewModel = viewModel
@@ -63,7 +63,7 @@ class GroupAlbumParentViewPagerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewpager2.let {
-            it.adapter = GroupAlbumParentViewPagerAdapter(this)
+            it.adapter = ViewPagerAdapter(this)
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)

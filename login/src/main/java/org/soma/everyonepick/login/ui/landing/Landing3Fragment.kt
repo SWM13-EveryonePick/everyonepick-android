@@ -15,7 +15,7 @@ class Landing3Fragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLanding3Binding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
@@ -30,8 +30,6 @@ class Landing3Fragment : Fragment() {
 
 
     fun onClickNextButton() {
-        findNavController().navigate(
-            Landing3FragmentDirections.actionLanding3ToLogin()
-        )
+        findNavController().navigate(Landing3FragmentDirections.toLogin())
     }
 }

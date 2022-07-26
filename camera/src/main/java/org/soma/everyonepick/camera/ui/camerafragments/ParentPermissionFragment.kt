@@ -16,13 +16,13 @@ class ParentPermissionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val fragment = PermissionFragment(arrayOf(Manifest.permission.CAMERA)) {
-            val directions = ParentPermissionFragmentDirections.actionParentpermissionToPreview()
+            val directions = ParentPermissionFragmentDirections.toPreview()
             findNavController().navigate(directions)
         }
         childFragmentManager.beginTransaction()
             .add(R.id.fragment_permission, fragment)
             .commit()
 
-        return inflater.inflate(R.layout.fragment_parentpermission, container, false)
+        return inflater.inflate(R.layout.fragment_parent_permission, container, false)
     }
 }

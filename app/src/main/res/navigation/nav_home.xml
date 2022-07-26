@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_home"
-    app:startDestination="@id/nav_groupalbum">
+    app:startDestination="@id/nav_group_album">
 
     <include app:graph="@navigation/nav_camera"/>
-    <include app:graph="@navigation/nav_groupalbum"/>
+    <include app:graph="@navigation/nav_group_album"/>
     <include app:graph="@navigation/nav_setting"/>
 
 </navigation>

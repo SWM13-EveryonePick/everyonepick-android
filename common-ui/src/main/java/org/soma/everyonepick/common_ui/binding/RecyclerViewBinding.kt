@@ -1,7 +1,6 @@
 package org.soma.everyonepick.common_ui.binding
 
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 

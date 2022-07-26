@@ -5,7 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import org.soma.everyonepick.groupalbum.ui.friendlist.FriendListFragment
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment
 
-class GroupAlbumParentViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
+class ViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {

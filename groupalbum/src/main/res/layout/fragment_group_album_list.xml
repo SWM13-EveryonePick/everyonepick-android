@@ -14,7 +14,7 @@
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
         <variable
             name="parentViewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel"/>
+            type="org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel"/>
         <variable
             name="adapter"
             type="org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter"/>
@@ -45,7 +45,7 @@
                     app:spanCount="2"
                     adapter="@{adapter}"
                     submitList="@{viewModel.groupAlbumItemList}"
-                    tools:listitem="@layout/item_groupalbum"/>
+                    tools:listitem="@layout/item_group_album"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

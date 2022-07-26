@@ -2,48 +2,48 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_groupalbum"
-    app:startDestination="@id/fragment_groupalbumparentviewpager">
+    android:id="@+id/nav_group_album"
+    app:startDestination="@id/fragment_viewpager">
 
     <fragment
-        android:id="@+id/fragment_groupalbumparentviewpager"
-        android:name="org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragment"
-        tools:layout="@layout/fragment_groupalbumparentviewpager">
+        android:id="@+id/fragment_viewpager"
+        android:name="org.soma.everyonepick.groupalbum.ui.ViewPagerFragment"
+        tools:layout="@layout/fragment_view_pager">
         <action
-            android:id="@+id/action_groupalbumparentviewpager_to_groupalbumviewpager"
-            app:destination="@id/fragment_groupalbumviewpager"/>
+            android:id="@+id/to_group_album_view_pager"
+            app:destination="@id/fragment_group_album_view_pager"/>
     </fragment>
 
     <!-- TODO: 앨범 -> 앨범리스트 ... 앨범 아이디 전달 to refresh information -->
     <fragment
-        android:id="@+id/fragment_groupalbumviewpager"
+        android:id="@+id/fragment_group_album_view_pager"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment"
-        tools:layout="@layout/fragment_groupalbumviewpager">
+        tools:layout="@layout/fragment_group_album_view_pager">
         <argument
             android:name="groupAlbumId"
             app:argType="long" />
         <action
-            android:id="@+id/action_groupalbumviewpager_to_photo"
+            android:id="@+id/to_photo"
             app:destination="@id/fragment_photo"/>
         <action
-            android:id="@+id/action_groupalbumviewpager_to_parentpermission"
-            app:destination="@id/fragment_parentpermission"/>
+            android:id="@+id/to_parent_permission"
+            app:destination="@id/fragment_parent_permission"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_parentpermission"
+        android:id="@+id/fragment_parent_permission"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ParentPermissionFragment"
-        tools:layout="@layout/fragment_parentpermission">
+        tools:layout="@layout/fragment_parent_permission">
         <action
-            android:id="@+id/action_parentpermission_to_imagepicker"
-            app:destination="@id/fragment_imagepicker"
-            app:popUpTo="@id/fragment_groupalbumviewpager"/>
+            android:id="@+id/to_image_picker"
+            app:destination="@id/fragment_image_picker"
+            app:popUpTo="@id/fragment_group_album_view_pager"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_imagepicker"
+        android:id="@+id/fragment_image_picker"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment"
-        tools:layout="@layout/fragment_imagepicker"/>
+        tools:layout="@layout/fragment_image_picker"/>
 
     <fragment
         android:id="@+id/fragment_photo"

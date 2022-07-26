@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import org.soma.everyonepick.groupalbum.adapter.FriendAdapter
-import org.soma.everyonepick.groupalbum.databinding.FragmentFriendlistBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentFriendListBinding
 import org.soma.everyonepick.groupalbum.viewmodel.FriendListViewModel
 
 class FriendListFragment : Fragment() {
-    private var _binding: FragmentFriendlistBinding? = null
+    private var _binding: FragmentFriendListBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: FriendListViewModel by viewModels()
@@ -20,7 +20,7 @@ class FriendListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFriendlistBinding.inflate(inflater, container, false)
+        _binding = FragmentFriendListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.adapter = FriendAdapter()
         binding.viewModel = viewModel

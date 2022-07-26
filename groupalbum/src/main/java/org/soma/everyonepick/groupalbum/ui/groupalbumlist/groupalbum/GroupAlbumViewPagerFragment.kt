@@ -19,7 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.repository.GroupAlbumRepository
-import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumviewpagerBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.utility.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
@@ -32,7 +32,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
     @Inject
     lateinit var groupAlbumRepository: GroupAlbumRepository
 
-    private var _binding: FragmentGroupalbumviewpagerBinding? = null
+    private var _binding: FragmentGroupAlbumViewPagerBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: GroupAlbumViewPagerViewModel by viewModels()
@@ -57,7 +57,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGroupalbumviewpagerBinding.inflate(inflater, container, false)
+        _binding = FragmentGroupAlbumViewPagerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
         binding.viewModel = viewModel

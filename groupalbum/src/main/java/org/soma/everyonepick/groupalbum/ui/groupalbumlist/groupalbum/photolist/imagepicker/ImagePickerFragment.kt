@@ -10,12 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.adapter.ImageAdapter
-import org.soma.everyonepick.groupalbum.databinding.FragmentImagepickerBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentImagePickerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment.Companion.URI_LIST_CHECKED
 import org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel
 
 class ImagePickerFragment : Fragment() {
-    private var _binding: FragmentImagepickerBinding? = null
+    private var _binding: FragmentImagePickerBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: ImagePickerViewModel by viewModels()
@@ -24,7 +24,7 @@ class ImagePickerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentImagepickerBinding.inflate(inflater, container, false)
+        _binding = FragmentImagePickerBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
         binding.adapter = ImageAdapter(viewModel)

@@ -1,10 +1,10 @@
 package org.soma.everyonepick.groupalbum.viewholder
 
 import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
-import org.soma.everyonepick.groupalbum.databinding.ItemCreategroupalbumBinding
+import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 
 class CreateGroupAlbumViewHolder(
-    binding: ItemCreategroupalbumBinding
+    binding: ItemCreateGroupAlbumBinding
 ): ParentGroupAlbumViewHolder(binding) {
     override fun bind(groupAlbumItem: GroupAlbumItem) {}
 }

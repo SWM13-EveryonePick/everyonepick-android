@@ -9,24 +9,24 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.adapter.GroupAlbumAdapter
-import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumlistBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
 
 @AndroidEntryPoint
 class GroupAlbumListFragment : Fragment() {
-    private var _binding: FragmentGroupalbumlistBinding? = null
+    private var _binding: FragmentGroupAlbumListBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: GroupAlbumListViewModel by viewModels()
-    private val parentViewModel: GroupAlbumParentViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val parentViewModel: ViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGroupalbumlistBinding.inflate(inflater, container, false)
+        _binding = FragmentGroupAlbumListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.fragment = this
         binding.adapter = GroupAlbumAdapter(viewModel)

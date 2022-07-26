@@ -1,24 +1,11 @@
 package org.soma.everyonepick.common_ui.bottomnavigationview
 
-import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MenuItem
-import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.view.doOnPreDraw
-import androidx.fragment.app.Fragment
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.internal.ThemeEnforcement
-import kotlin.math.abs
 
 /**
  * 각 Item이 Fragment가 아닌, Navigation으로 이루어졌을 때의 [BottomNavigationView]입니다.

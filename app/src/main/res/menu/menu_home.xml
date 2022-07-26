@@ -8,7 +8,7 @@
         android:enabled="true"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/nav_groupalbum"
+        android:id="@+id/nav_group_album"
         android:title="@string/group_album_menu_item"
         android:icon="@drawable/ic_outline_photo_24"
         android:enabled="true"

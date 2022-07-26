@@ -1,15 +1,12 @@
 package org.soma.everyonepick.common_ui.binding
 
 import android.content.ContextWrapper
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.internal.managers.ViewComponentManager
 import org.soma.everyonepick.common_ui.CustomActionBar
-import org.soma.everyonepick.common_ui.R
 
 object ViewBinding {
     @JvmStatic
