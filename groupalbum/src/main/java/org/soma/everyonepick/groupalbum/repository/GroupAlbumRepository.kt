@@ -1,4 +1,7 @@
-package org.soma.everyonepick.groupalbum.data
+package org.soma.everyonepick.groupalbum.repository
+
+import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
+import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
 
 class GroupAlbumRepository {
     fun getGroupAlbumItemList(): MutableList<GroupAlbumItem> {

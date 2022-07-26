@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter
+package org.soma.everyonepick.groupalbum.ui
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

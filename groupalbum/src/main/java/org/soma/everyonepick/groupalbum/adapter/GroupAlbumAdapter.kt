@@ -1,8 +1,6 @@
 package org.soma.everyonepick.groupalbum.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -12,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.GroupAlbumDao
-import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemCreategroupalbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
 import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragmentDirections
@@ -66,9 +64,11 @@ class GroupAlbumAdapter(
             // 일반 모드일 때
             if(!item.isCheckboxVisible){
                 val count = itemCount-1
-                parentViewModel.addGroupAlbumItem(GroupAlbumItem(
+                parentViewModel.addGroupAlbumItem(
+                    GroupAlbumItem(
                     GroupAlbumDao(count.toLong(), "title$count", 100+count), false, false
-                ))
+                )
+                )
             }
         }
     }

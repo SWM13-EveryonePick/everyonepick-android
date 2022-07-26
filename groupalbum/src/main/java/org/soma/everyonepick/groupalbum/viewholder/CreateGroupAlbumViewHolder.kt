@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.viewholder
 
-import androidx.recyclerview.widget.RecyclerView
-import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemCreategroupalbumBinding
 
 class CreateGroupAlbumViewHolder(

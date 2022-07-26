@@ -1,11 +1,8 @@
 package org.soma.everyonepick.groupalbum.viewholder
 
 import android.view.View
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupalbumBinding
-import org.soma.everyonepick.groupalbum.ui.GroupAlbumParentViewPagerFragmentDirections
 
 class GroupAlbumViewHolder(
     private val binding: ItemGroupalbumBinding

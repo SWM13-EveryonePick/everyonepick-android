@@ -2,7 +2,7 @@ package org.soma.everyonepick.groupalbum.viewholder
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import org.soma.everyonepick.groupalbum.data.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.item.GroupAlbumItem
 
 abstract class ParentGroupAlbumViewHolder(
     binding: ViewDataBinding

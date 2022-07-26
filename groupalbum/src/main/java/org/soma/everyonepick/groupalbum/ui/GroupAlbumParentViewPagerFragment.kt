@@ -3,9 +3,7 @@ package org.soma.everyonepick.groupalbum.ui
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,17 +12,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.common.ViewUtility
 import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
-import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.adapter.GroupAlbumParentViewPagerAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupalbumparentviewpagerBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumParentViewPagerViewModel
