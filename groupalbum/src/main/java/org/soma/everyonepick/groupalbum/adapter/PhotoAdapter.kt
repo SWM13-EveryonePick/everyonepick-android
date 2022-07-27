@@ -38,7 +38,7 @@ class PhotoAdapter(
             // 일반 모드일 때
             if(!item.isCheckboxVisible) {
                 val photoUrl = item.photoDao.photoUrl
-                val directions = GroupAlbumViewPagerFragmentDirections.toPhoto(photoUrl)
+                val directions = GroupAlbumViewPagerFragmentDirections.toPhotoFragment(photoUrl)
                 binding.root.findNavController().navigate(directions)
             }else{
                 binding.checkbox.isChecked = !binding.checkbox.isChecked

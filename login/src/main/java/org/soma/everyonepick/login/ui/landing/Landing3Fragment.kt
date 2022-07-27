@@ -19,7 +19,7 @@ class Landing3Fragment : Fragment() {
         _binding = FragmentLanding3Binding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             onClickNextButtonListener = View.OnClickListener {
-                findNavController().navigate(Landing3FragmentDirections.toLogin())
+                findNavController().navigate(Landing3FragmentDirections.toLoginFragment())
             }
         }
 

@@ -3,23 +3,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_camera"
-    app:startDestination="@id/fragmentParentPermission">
+    app:startDestination="@id/parentPermissionFragment">
 
     <fragment
-        android:id="@+id/fragmentParentPermission"
+        android:id="@+id/parentPermissionFragment"
         android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.ParentPermissionFragment"
         android:label="ParentPermissionFragment">
 
         <action
-            android:id="@+id/to_face_information_preview"
-            app:destination="@id/fragmentFaceInformationPreview"
-            app:popUpTo="@id/fragmentParentPermission"
+            android:id="@+id/to_faceInformationPreviewFragment"
+            app:destination="@id/faceInformationPreviewFragment"
+            app:popUpTo="@id/parentPermissionFragment"
             app:popUpToInclusive="true" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/fragmentFaceInformationPreview"
+        android:id="@+id/faceInformationPreviewFragment"
         android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.FaceInformationPreviewFragment"
         android:label="FaceInformationPreviewFragment"/>
 

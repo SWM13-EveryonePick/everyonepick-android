@@ -74,7 +74,7 @@ class GroupAlbumAdapter(
             // 일반 모드일 때
             if(!item.isCheckboxVisible) {
                 val directions = ViewPagerFragmentDirections
-                        .toGroupAlbumViewPager(item.groupAlbumDao.id)
+                        .toGroupAlbumViewPagerFragment(item.groupAlbumDao.id)
                 binding.root.findNavController().navigate(directions)
             }else{
                 binding.checkbox.isChecked = !binding.checkbox.isChecked

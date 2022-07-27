@@ -2,66 +2,59 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_login"
-    app:startDestination="@id/fragment_landing1">
+    app:startDestination="@id/landing1Fragment">
 
     <fragment
-        android:id="@+id/fragment_landing1"
-        android:name="org.soma.everyonepick.login.ui.landing.Landing1Fragment"
-        android:label="Landing1Fragment">
+        android:id="@+id/landing1Fragment"
+        android:name="org.soma.everyonepick.login.ui.landing.Landing1Fragment">
         <action
-            android:id="@+id/to_landing2"
-            app:destination="@id/fragment_landing2"/>
+            android:id="@+id/to_landing2Fragment"
+            app:destination="@id/landing2Fragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_landing2"
-        android:name="org.soma.everyonepick.login.ui.landing.Landing2Fragment"
-        android:label="Landing2Fragment">
+        android:id="@+id/landing2Fragment"
+        android:name="org.soma.everyonepick.login.ui.landing.Landing2Fragment">
         <action
-            android:id="@+id/to_landing3"
-            app:destination="@id/fragment_landing3"/>
+            android:id="@+id/to_landing3Fragment"
+            app:destination="@id/landing3Fragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_landing3"
-        android:name="org.soma.everyonepick.login.ui.landing.Landing3Fragment"
-        android:label="Landing3Fragment">
+        android:id="@+id/landing3Fragment"
+        android:name="org.soma.everyonepick.login.ui.landing.Landing3Fragment">
         <action
-            android:id="@+id/to_login"
-            app:destination="@id/fragment_login"/>
+            android:id="@+id/to_loginFragment"
+            app:destination="@id/loginFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_login"
-        android:name="org.soma.everyonepick.login.ui.LoginFragment"
-        android:label="LoginFragment">
+        android:id="@+id/loginFragment"
+        android:name="org.soma.everyonepick.login.ui.LoginFragment">
         <action
-            android:id="@+id/to_face_information_description"
-            app:destination="@id/fragment_face_information_description"/>
+            android:id="@+id/to_faceInformationDescriptionFragment"
+            app:destination="@id/faceInformationDescriptionFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_face_information_description"
-        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationDescriptionFragment"
-        android:label="FaceInformationDescriptionFragment">
+        android:id="@+id/faceInformationDescriptionFragment"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationDescriptionFragment">
         <action
-            android:id="@+id/to_face_information_camera"
-            app:destination="@id/fragment_face_information_camera"/>
+            android:id="@+id/to_faceInformationCameraFragment"
+            app:destination="@id/faceInformationCameraFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_face_information_camera"
-        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment"
-        android:label="FaceInformationCameraFragment">
+        android:id="@+id/faceInformationCameraFragment"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment">
         <action
-            android:id="@+id/to_face_information_complete"
-            app:destination="@id/fragment_face_information_complete"/>
+            android:id="@+id/to_faceInformationCompleteFragment"
+            app:destination="@id/faceInformationCompleteFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_face_information_complete"
-        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCompleteFragment"
-        android:label="FaceInformationCompleteFragment">
+        android:id="@+id/faceInformationCompleteFragment"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCompleteFragment">
     </fragment>
 
 </navigation>

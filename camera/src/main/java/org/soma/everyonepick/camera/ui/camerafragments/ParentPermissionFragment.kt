@@ -16,7 +16,7 @@ class ParentPermissionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val fragment = PermissionFragment(arrayOf(Manifest.permission.CAMERA)) {
-            val directions = ParentPermissionFragmentDirections.toPreview()
+            val directions = ParentPermissionFragmentDirections.toPreviewFragment()
             findNavController().navigate(directions)
         }
         childFragmentManager.beginTransaction()
