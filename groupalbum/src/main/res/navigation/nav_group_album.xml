@@ -84,5 +84,8 @@
         <argument
             android:name="inviteFriends"
             app:argType="com.kakao.sdk.talk.model.Friend[]"/>
+        <action
+            android:id="@+id/to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
 </navigation>

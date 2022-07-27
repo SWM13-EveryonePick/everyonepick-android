@@ -14,7 +14,7 @@ class ParentPermissionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragment = PermissionFragment(arrayOf(Manifest.permission.CAMERA)) {
             val directions = ParentPermissionFragmentDirections.toFaceInformationPreviewFragment()
             findNavController().navigate(directions)

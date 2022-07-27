@@ -14,7 +14,7 @@ class ParentPermissionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragment = PermissionFragment(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             val directions = ParentPermissionFragmentDirections.toImagePickerFragment()
             findNavController().navigate(directions)
