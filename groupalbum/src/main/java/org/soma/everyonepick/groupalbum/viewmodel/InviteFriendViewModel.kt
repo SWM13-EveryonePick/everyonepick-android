@@ -8,10 +8,14 @@ import com.kakao.sdk.talk.model.Friend
 import com.kakao.sdk.talk.model.Friends
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.groupalbum.data.item.InviteFriendItem
+import org.soma.everyonepick.groupalbum.data.repository.FriendRepository
 import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
 import javax.inject.Inject
 
-class InviteFriendViewModel: ViewModel() {
+@HiltViewModel
+class InviteFriendViewModel @Inject constructor(
+    private val friendRepository: FriendRepository
+): ViewModel() {
     val inviteFriendItemList: MutableLiveData<MutableList<InviteFriendItem>> = MutableLiveData()
     val isApiLoading = MutableLiveData(true)
     init {
@@ -20,17 +24,9 @@ class InviteFriendViewModel: ViewModel() {
 
     fun fetchInviteFriendItemList() {
         isApiLoading.value = true
-
-        TalkApiClient.instance.friends { newFriends, error ->
-            if(error != null) {
-                Log.e("TAG", "카카오톡 친구 목록 가져오기 실패", error)
-            } else if(newFriends != null) {
-                Log.i("TAG", "카카오톡 친구 목록 가져오기 성공")
-                val newInviteFriendItemList = convertFriendsToInviteFriendItemList(newFriends)
-                inviteFriendItemList.postValue(newInviteFriendItemList)
-            }
-
-            isApiLoading.value = false
+        friendRepository.fetchFriends({ isApiLoading.value = false }) { newFriends ->
+            val newInviteFriendItemList = convertFriendsToInviteFriendItemList(newFriends)
+            inviteFriendItemList.postValue(newInviteFriendItemList)
         }
     }
 

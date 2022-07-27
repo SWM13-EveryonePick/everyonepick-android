@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
 import org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel
 
+@AndroidEntryPoint
 class InviteFriendFragment : Fragment() {
     private var _binding: FragmentInviteFriendBinding? = null
     private val binding get() = _binding!!
