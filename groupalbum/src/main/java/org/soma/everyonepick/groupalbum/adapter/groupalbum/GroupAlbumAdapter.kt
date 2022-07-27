@@ -54,16 +54,13 @@ class GroupAlbumAdapter(
     private fun <T: ViewDataBinding> getViewDataBinding(parent: ViewGroup, layoutRes: Int): T =
         DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutRes, parent, false)
 
-    // TODO: 생성 플로우로 대체
     private fun subscribeCreateGroupAlbumItemUi(binding: ItemCreateGroupAlbumBinding, holder: CreateGroupAlbumViewHolder) {
         binding.cardview.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
-            if(!item.isCheckboxVisible){
-                val count = itemCount-1
-                parentViewModel.addGroupAlbumItem(GroupAlbumItem(
-                    GroupAlbumDao(count.toLong(), "title$count", 100+count), isChecked = false, isCheckboxVisible = false
-                ))
+            if (!item.isCheckboxVisible) {
+                val directions = ViewPagerFragmentDirections.toInvitationFragment()
+                binding.root.findNavController().navigate(directions)
             }
         }
     }
@@ -74,7 +71,7 @@ class GroupAlbumAdapter(
             // 일반 모드일 때
             if(!item.isCheckboxVisible) {
                 val directions = ViewPagerFragmentDirections
-                        .toGroupAlbumViewPager(item.groupAlbumDao.id)
+                        .toGroupAlbumViewPagerFragment(item.groupAlbumDao.id)
                 binding.root.findNavController().navigate(directions)
             }else{
                 binding.checkbox.isChecked = !binding.checkbox.isChecked
@@ -82,10 +79,10 @@ class GroupAlbumAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            if(parentViewModel.groupAlbumItemList.value == null) return@setOnCheckedChangeListener
-
-            val position = holder.absoluteAdapterPosition
-            parentViewModel.groupAlbumItemList.value!![position].isChecked = isChecked
+            parentViewModel.groupAlbumItemList.value?.let { groupAlbumItemList ->
+                val position = holder.absoluteAdapterPosition
+                groupAlbumItemList[position].isChecked = isChecked
+            }
         }
     }
 

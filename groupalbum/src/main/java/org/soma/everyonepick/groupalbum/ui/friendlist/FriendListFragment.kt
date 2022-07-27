@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.FriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentFriendListBinding
 import org.soma.everyonepick.groupalbum.viewmodel.FriendListViewModel
 
+@AndroidEntryPoint
 class FriendListFragment : Fragment() {
     private var _binding: FragmentFriendListBinding? = null
     private val binding get() = _binding!!

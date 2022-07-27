@@ -35,7 +35,7 @@ class PhotoListFragment: Fragment() {
             it.parentViewModel = parentViewModel
             it.listener = object : PhotoListFragmentListener {
                 override fun onClickUploadPhotoButton() {
-                    val directions = GroupAlbumViewPagerFragmentDirections.toParentPermission()
+                    val directions = GroupAlbumViewPagerFragmentDirections.toParentPermissionFragment()
                     findNavController().navigate(directions)
                 }
 

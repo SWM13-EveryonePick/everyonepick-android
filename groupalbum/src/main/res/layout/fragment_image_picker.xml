@@ -60,7 +60,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="18dp"
+                android:layout_margin="@dimen/margin_bottom_button"
                 android:text="업로드하기"
                 android:onClick="@{onClickUploadButtonListener}"/>
 

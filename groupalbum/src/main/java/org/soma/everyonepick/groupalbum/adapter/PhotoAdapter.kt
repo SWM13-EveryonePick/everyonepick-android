@@ -38,7 +38,7 @@ class PhotoAdapter(
             // 일반 모드일 때
             if(!item.isCheckboxVisible) {
                 val photoUrl = item.photoDao.photoUrl
-                val directions = GroupAlbumViewPagerFragmentDirections.toPhoto(photoUrl)
+                val directions = GroupAlbumViewPagerFragmentDirections.toPhotoFragment(photoUrl)
                 binding.root.findNavController().navigate(directions)
             }else{
                 binding.checkbox.isChecked = !binding.checkbox.isChecked
@@ -46,10 +46,10 @@ class PhotoAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            if(parentViewModel.photoItemList.value == null) return@setOnCheckedChangeListener
-
-            val position = holder.absoluteAdapterPosition
-            parentViewModel.photoItemList.value!![position].isChecked = isChecked
+            parentViewModel.photoItemList.value?.let { photoItemList ->
+                val position = holder.absoluteAdapterPosition
+                photoItemList[position].isChecked = isChecked
+            }
         }
     }
 

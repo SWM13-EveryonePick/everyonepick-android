@@ -31,7 +31,7 @@ class FaceInformationCameraFragment : Fragment() {
 
     fun onClickNextButton() {
         findNavController().navigate(
-            FaceInformationCameraFragmentDirections.toFaceInformationComplete()
+            FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
         )
     }
 }

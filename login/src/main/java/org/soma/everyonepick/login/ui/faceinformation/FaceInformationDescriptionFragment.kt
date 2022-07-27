@@ -19,7 +19,7 @@ class FaceInformationDescriptionFragment : Fragment() {
         _binding = FragmentFaceInformationDescriptionBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             onClickNextButton = View.OnClickListener {
-                findNavController().navigate(FaceInformationDescriptionFragmentDirections.toFaceInformationCamera())
+                findNavController().navigate(FaceInformationDescriptionFragmentDirections.toFaceInformationCameraFragment())
             }
         }
 

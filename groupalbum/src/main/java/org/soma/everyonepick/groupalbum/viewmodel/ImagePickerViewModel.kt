@@ -51,7 +51,7 @@ class ImagePickerViewModel: ViewModel() {
     fun getCheckedImageUriList(): MutableList<String> {
         val checkedImageUriList = mutableListOf<String>()
         imageItemList.value?.let {
-            for(imageItem in imageItemList.value!!) {
+            for(imageItem in it) {
                 if(imageItem.isChecked) checkedImageUriList.add(imageItem.uri.toString())
             }
         }

@@ -3,61 +3,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_group_album"
-    app:startDestination="@id/fragment_viewpager">
+    app:startDestination="@id/viewPagerFragment">
 
     <fragment
-        android:id="@+id/fragment_viewpager"
+        android:id="@+id/viewPagerFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.ViewPagerFragment"
         tools:layout="@layout/fragment_view_pager">
         <action
-            android:id="@+id/to_group_album_view_pager"
+            android:id="@+id/to_groupAlbumViewPagerFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:destination="@id/fragment_group_album_view_pager"/>
+            app:destination="@id/groupAlbumViewPagerFragment"/>
+        <action
+            android:id="@+id/to_invitationFragment"
+            app:destination="@id/invitationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_group_album_view_pager"
+        android:id="@+id/groupAlbumViewPagerFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment"
         tools:layout="@layout/fragment_group_album_view_pager">
         <argument
             android:name="groupAlbumId"
             app:argType="long" />
         <action
-            android:id="@+id/to_photo"
+            android:id="@+id/to_photoFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:destination="@id/fragment_photo"/>
+            app:destination="@id/photoFragment"/>
         <action
-            android:id="@+id/to_parent_permission"
-            app:destination="@id/fragment_parent_permission"/>
+            android:id="@+id/to_parentPermissionFragment"
+            app:destination="@id/parentPermissionFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_parent_permission"
+        android:id="@+id/parentPermissionFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ParentPermissionFragment"
         tools:layout="@layout/fragment_parent_permission">
         <action
-            android:id="@+id/to_image_picker"
-            app:destination="@id/fragment_image_picker"
-            app:popUpTo="@id/fragment_group_album_view_pager"/>
+            android:id="@+id/to_imagePickerFragment"
+            app:destination="@id/imagePickerFragment"
+            app:popUpTo="@id/groupAlbumViewPagerFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_image_picker"
+        android:id="@+id/imagePickerFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment"
         tools:layout="@layout/fragment_image_picker"/>
 
     <fragment
-        android:id="@+id/fragment_photo"
+        android:id="@+id/photoFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment"
         tools:layout="@layout/fragment_photo">
         <argument
             android:name="photoUrl"
-            app:argType="string" />
+            app:argType="string"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/invitationFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendFragment"
+        tools:layout="@layout/fragment_invite_friend" >
+        <action
+            android:id="@+id/to_groupAlbumTitleFragment"
+            app:destination="@id/groupAlbumTitleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/groupAlbumTitleFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.GroupAlbumTitleFragment"
+        tools:layout="@layout/fragment_group_album_title">
+        <argument
+            android:name="inviteFriends"
+            app:argType="com.kakao.sdk.talk.model.Friend[]"/>
+        <action
+            android:id="@+id/to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
     </fragment>
 </navigation>

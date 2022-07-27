@@ -88,7 +88,7 @@ class LoginFragment : Fragment() {
                 if(true){
                     // TODO: 회원가입 진행
                     findNavController().navigate(
-                         LoginFragmentDirections.toFaceInformationDescription()
+                         LoginFragmentDirections.toFaceInformationDescriptionFragment()
                     )
                 }else{
                     startHomeActivity()
