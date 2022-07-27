@@ -70,6 +70,6 @@
 
     <fragment
         android:id="@+id/invitationFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InvitationFragment"
-        tools:layout="@layout/fragment_invitation" />
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendFragment"
+        tools:layout="@layout/fragment_invite_friend" />
 </navigation>
