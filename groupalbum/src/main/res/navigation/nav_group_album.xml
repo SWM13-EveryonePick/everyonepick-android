@@ -71,5 +71,18 @@
     <fragment
         android:id="@+id/invitationFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendFragment"
-        tools:layout="@layout/fragment_invite_friend" />
+        tools:layout="@layout/fragment_invite_friend" >
+        <action
+            android:id="@+id/to_groupAlbumTitleFragment"
+            app:destination="@id/groupAlbumTitleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/groupAlbumTitleFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.GroupAlbumTitleFragment"
+        tools:layout="@layout/fragment_group_album_title">
+        <argument
+            android:name="inviteFriends"
+            app:argType="com.kakao.sdk.talk.model.Friend[]"/>
+    </fragment>
 </navigation>

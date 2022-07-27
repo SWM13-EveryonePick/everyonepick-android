@@ -7,8 +7,7 @@
 
     <fragment
         android:id="@+id/parentPermissionFragment"
-        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.ParentPermissionFragment"
-        android:label="ParentPermissionFragment">
+        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.ParentPermissionFragment">
 
         <action
             android:id="@+id/to_faceInformationPreviewFragment"
@@ -20,7 +19,6 @@
 
     <fragment
         android:id="@+id/faceInformationPreviewFragment"
-        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.FaceInformationPreviewFragment"
-        android:label="FaceInformationPreviewFragment"/>
+        android:name="org.soma.everyonepick.login.ui.faceinformation.camerafragments.FaceInformationPreviewFragment" />
 
 </navigation>

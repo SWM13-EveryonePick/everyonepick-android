@@ -39,6 +39,14 @@
             submitList="@{viewModel.inviteFriendItemList}"
             tools:listitem="@layout/item_invite_friend"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:text="다음 단계"
+            android:onClick="@{onClickNextButtonListener}"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+        
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

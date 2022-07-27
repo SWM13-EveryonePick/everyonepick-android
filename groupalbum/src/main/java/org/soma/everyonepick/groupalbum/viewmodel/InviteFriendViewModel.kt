@@ -39,4 +39,14 @@ class InviteFriendViewModel @Inject constructor(
         }
         return result
     }
+
+    fun getCheckedFriendList(): MutableList<Friend> {
+        val checkedFriendList = mutableListOf<Friend>()
+        inviteFriendItemList.value?.let {
+            for(inviteFriendItem in it) {
+                if(inviteFriendItem.isChecked) checkedFriendList.add(inviteFriendItem.friend)
+            }
+        }
+        return checkedFriendList
+    }
 }

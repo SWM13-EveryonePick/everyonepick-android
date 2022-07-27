@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
+import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel
 
 @AndroidEntryPoint
@@ -28,7 +31,10 @@ class InviteFriendFragment : Fragment() {
             it.adapter = InviteFriendAdapter(viewModel)
             it.viewModel = viewModel
             it.onClickNextButtonListener = View.OnClickListener {
-                // TODO: 다음 페이지
+                val directions = InviteFriendFragmentDirections.toGroupAlbumTitleFragment(
+                    viewModel.getCheckedFriendList().toTypedArray()
+                )
+                findNavController().navigate(directions)
             }
         }
 
