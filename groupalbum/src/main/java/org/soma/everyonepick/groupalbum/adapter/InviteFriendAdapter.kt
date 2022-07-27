@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +13,36 @@ import com.kakao.sdk.talk.model.Friend
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.item.InviteFriendItem
 import org.soma.everyonepick.groupalbum.databinding.ItemInviteFriendBinding
+import org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel
 
-class InviteFriendAdapter: ListAdapter<InviteFriendItem, RecyclerView.ViewHolder>(InviteFriendDiffCallback()) {
+class InviteFriendAdapter(
+    private val parentViewModel: InviteFriendViewModel
+): ListAdapter<InviteFriendItem, RecyclerView.ViewHolder>(InviteFriendDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return InviteFriendViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_invite_friend,
-                parent,
-                false
-            )
+        val binding = DataBindingUtil.inflate<ItemInviteFriendBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_invite_friend,
+            parent,
+            false
         )
+        val holder = InviteFriendViewHolder(binding)
+        subscribeUi(binding, holder)
+
+        return holder
+    }
+
+    private fun subscribeUi(binding: ItemInviteFriendBinding, holder: InviteFriendViewHolder) {
+        // 체크박스 터치 영역 확장
+        binding.root.setOnClickListener {
+            binding.checkbox.isChecked = !binding.checkbox.isChecked
+        }
+
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
+            parentViewModel.inviteFriendItemList.value?.let { inviteFriendItemList ->
+                val position = holder.absoluteAdapterPosition
+                inviteFriendItemList[position].isChecked = isChecked
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

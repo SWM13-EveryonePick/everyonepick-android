@@ -23,7 +23,7 @@ class InviteFriendFragment : Fragment() {
     ): View? {
         _binding = FragmentInviteFriendBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
-            it.adapter = InviteFriendAdapter()
+            it.adapter = InviteFriendAdapter(viewModel)
             it.viewModel = viewModel
             it.onClickNextButtonListener = View.OnClickListener {
                 // TODO: 다음 페이지

@@ -79,10 +79,10 @@ class GroupAlbumAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            if(parentViewModel.groupAlbumItemList.value == null) return@setOnCheckedChangeListener
-
-            val position = holder.absoluteAdapterPosition
-            parentViewModel.groupAlbumItemList.value!![position].isChecked = isChecked
+            parentViewModel.groupAlbumItemList.value?.let { groupAlbumItemList ->
+                val position = holder.absoluteAdapterPosition
+                groupAlbumItemList[position].isChecked = isChecked
+            }
         }
     }
 
