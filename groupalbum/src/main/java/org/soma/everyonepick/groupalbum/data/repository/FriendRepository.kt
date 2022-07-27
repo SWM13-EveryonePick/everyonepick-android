@@ -25,6 +25,9 @@ class FriendRepository {
             } else if(newFriends != null) {
                 Log.i(TAG, "카카오톡 친구 목록 가져오기 성공")
                 onSuccess.invoke(newFriends)
+
+                // No Friends 테스트 코드:
+                // onSuccess.invoke(Friends(0, listOf(), 0, "", ""))
             }
             onAlways.invoke()
         }
