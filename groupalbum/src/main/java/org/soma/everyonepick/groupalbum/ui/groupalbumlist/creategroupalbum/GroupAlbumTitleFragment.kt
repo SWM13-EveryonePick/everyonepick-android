@@ -27,6 +27,7 @@ class GroupAlbumTitleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentGroupAlbumTitleBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickCreateButton = View.OnClickListener {
                 /* TODO: API 호출 + 성공할 때까지 대기 후 나가기

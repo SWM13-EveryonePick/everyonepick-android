@@ -42,6 +42,9 @@ class InviteFriendAdapter(
                 val position = holder.absoluteAdapterPosition
                 inviteFriendItemList[position].isChecked = isChecked
             }
+            parentViewModel.checked.value =
+                if(isChecked) parentViewModel.checked.value?.plus(1)
+                else parentViewModel.checked.value?.minus(1)
         }
     }
 

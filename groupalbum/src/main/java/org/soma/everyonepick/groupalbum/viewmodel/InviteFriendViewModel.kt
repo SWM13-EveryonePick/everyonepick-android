@@ -17,6 +17,7 @@ class InviteFriendViewModel @Inject constructor(
     private val friendRepository: FriendRepository
 ): ViewModel() {
     val inviteFriendItemList: MutableLiveData<MutableList<InviteFriendItem>> = MutableLiveData()
+    val checked = MutableLiveData(0)
     val isApiLoading = MutableLiveData(true)
     init {
         fetchInviteFriendItemList()

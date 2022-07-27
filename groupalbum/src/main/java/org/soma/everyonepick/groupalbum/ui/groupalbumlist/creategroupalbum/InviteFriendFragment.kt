@@ -38,6 +38,10 @@ class InviteFriendFragment : Fragment() {
             }
         }
 
+        // 백스택 시, 체크박스들이 체크되지 않은 상태에서 시작하여 bind() 동작을 수행하게 됩니다.
+        // 이때 체크박스가 체크되면서 checked 값도 같이 변하므로, bind() 이전에 checked를 초기화 시켜야 합니다.
+        viewModel.checked.value = 0
+
         return binding.root
     }
 }

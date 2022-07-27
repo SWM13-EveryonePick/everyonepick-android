@@ -17,6 +17,13 @@
         android:layout_height="match_parent"
         tools:context=".ui.groupalbumlist.creategroupalbum.GroupAlbumTitleFragment">
 
+        <org.soma.everyonepick.common_ui.CustomActionBar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_action_bar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:hasBackButton="true"
+            onBackPressed="@{true}"/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,6 +37,7 @@
             android:layout_margin="@dimen/margin_bottom_button"
             android:text="생성하기"
             android:onClick="@{onClickCreateButton}"
+            android:enabled="@{!viewModel.title.empty}"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
