@@ -3,6 +3,11 @@
     <dimen name="height_friend_item">100dp</dimen>
     <dimen name="size_friend_profile">80dp</dimen>
     <dimen name="margin_friend_item">10dp</dimen>
+
+    <dimen name="height_invite_friend_item">80dp</dimen>
+    <dimen name="size_invite_friend_profile">50dp</dimen>
+    <dimen name="margin_invite_friend_item">20dp</dimen>
+
     <dimen name="width_group_album">190dp</dimen>
     <dimen name="height_group_album">140dp</dimen>
 
