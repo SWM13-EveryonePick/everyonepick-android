@@ -115,7 +115,6 @@
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/layout_search"
             app:layout_constraintBottom_toTopOf="@id/button_next">
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,6 +123,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     adapter="@{adapter}"
                     submitList="@{viewModel.inviteFriendItemList}"
