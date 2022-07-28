@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/radius_group_album"
+            app:cardCornerRadius="@dimen/radius_large"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

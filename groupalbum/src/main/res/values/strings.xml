@@ -1,6 +1,7 @@
 <resources>
     <string name="title_fragment_invite_friend">초대할 인원을\n선택해주세요</string>
     <string name="description_fragment_invite_friend">최대 9명까지 초대할 수 있어요!</string>
+    <string name="hint_search_bar">이름으로 검색하세요</string>
     <string name="checked_fragment_invite_friend">(%s/9)</string>
     <string name="next_step">다음 단계</string>
 </resources>

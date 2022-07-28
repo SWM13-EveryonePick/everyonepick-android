@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="16dp"
             app:layout_constraintStart_toEndOf="@id/image_profile"
             app:layout_constraintEnd_toStartOf="@id/checkbox"
             tools:text="서달미"

@@ -94,11 +94,14 @@ class PhotoFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as HomeActivityUtility).showBottomNavigationView()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-
-        (activity as HomeActivityUtility).showBottomNavigationView()
     }
 
     interface PhotoFragmentListener {

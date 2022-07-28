@@ -12,4 +12,5 @@
     <color name="cloud">#ecf0f1</color>
     <color name="gray">#777777</color>
     <color name="light_gray">#b9b9b9</color>
+    <color name="border_line">#DFE3E6</color>
 </resources>
