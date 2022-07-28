@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsAnimation
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,10 +38,14 @@ class InviteFriendFragment : Fragment() {
             it.adapter = InviteFriendAdapter(viewModel)
             it.viewModel = viewModel
             it.onClickNextButtonListener = View.OnClickListener {
-                val directions = InviteFriendFragmentDirections.toGroupAlbumTitleFragment(
-                    viewModel.getCheckedFriendList().toTypedArray()
-                )
-                findNavController().navigate(directions)
+                if (viewModel.checked.value!! <= 9) {
+                    val directions = InviteFriendFragmentDirections.toGroupAlbumTitleFragment(
+                        viewModel.getCheckedFriendList().toTypedArray()
+                    )
+                    findNavController().navigate(directions)
+                } else {
+                    Toast.makeText(context, "선택 인원을 초과했어요! 초대 인원은 최대 9명까지입니다.", Toast.LENGTH_LONG).show()
+                }
             }
         }
 

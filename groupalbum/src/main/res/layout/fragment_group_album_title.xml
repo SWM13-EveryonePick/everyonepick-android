@@ -46,7 +46,7 @@
             android:layout_marginRight="@dimen/margin_side"
             android:layout_marginTop="20dp"
             android:textColor="@color/black"
-            app:text="@{@string/description_fragment_group_album_title}"
+            app:text="@{@string/description_fragment_group_album_title(@string/max_title_length)}"
             app:colorStart="@{3}"
             app:colorEnd="@{5}"
             app:color="@{@color/primary_blue}"
@@ -57,21 +57,16 @@
             android:id="@+id/text_titlelength"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primary_blue"
+            android:layout_marginLeft="4dp"
+            android:textColor="@color/black"
+            app:prefix="@{`(`}"
             app:text="@{Integer.toString(viewModel.title.length())}"
+            app:suffix="@{@string/suffix_count(@string/max_title_length)}"
+            color="@{@color/primary_blue}"
             app:layout_constraintStart_toEndOf="@id/text_description"
             app:layout_constraintTop_toTopOf="@id/text_description"
             app:layout_constraintBottom_toBottomOf="@id/text_description"
             />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="/12)"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@id/text_titlelength"
-            app:layout_constraintTop_toTopOf="@id/text_description"
-            app:layout_constraintBottom_toBottomOf="@id/text_description"/>
 
         <EditText
             android:id="@+id/edittext_title"

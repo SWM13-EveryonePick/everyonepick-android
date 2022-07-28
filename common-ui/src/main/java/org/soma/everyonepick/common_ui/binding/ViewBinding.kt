@@ -68,4 +68,16 @@ object ViewBinding {
         )
         view.text = spannable
     }
+
+    @JvmStatic
+    @BindingAdapter("prefix", "text", "suffix", "color", requireAll = true)
+    fun setTextViewColor(view: TextView, prefix: String, text: String, suffix: String, color: Int) {
+        val spannable = SpannableStringBuilder(text)
+        spannable.setSpan(
+            ForegroundColorSpan(color), 0, text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannable.insert(0, prefix)
+        spannable.insert(spannable.length, suffix)
+        view.text = spannable
+    }
 }
