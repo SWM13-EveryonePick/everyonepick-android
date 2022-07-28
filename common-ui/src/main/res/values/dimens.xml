@@ -4,4 +4,5 @@
     <dimen name="margin_action_bar">8dp</dimen>
     <dimen name="height_bottom_navigation_view">60dp</dimen>
     <dimen name="margin_bottom_button">18dp</dimen>
+    <dimen name="margin_side">20dp</dimen>
 </resources>

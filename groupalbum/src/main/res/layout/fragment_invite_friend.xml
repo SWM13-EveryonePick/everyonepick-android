@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="androidx.core.content.ContextCompat"/>
         <import type="android.view.View"/>
         <variable
             name="onClickNextButtonListener"
@@ -29,10 +30,63 @@
             app:hasBackButton="true"
             onBackPressed="@{true}"/>
 
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:text="@{@string/title_fragment_invite_friend}"
+            app:boldStart="@{0}"
+            app:boldEnd="@{6}"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            app:text="@{@string/description_fragment_invite_friend}"
+            app:colorStart="@{3}"
+            app:colorEnd="@{5}"
+            app:color="@{@color/primary_blue}"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textColor="@color/black"
+            app:text="@{@string/checked_fragment_invite_friend(viewModel.checked)}"
+            app:colorStart="@{1}"
+            app:colorEnd="@{2}"
+            app:color="@{@color/primary_blue}"
+            app:layout_constraintStart_toEndOf="@id/text_description"
+            app:layout_constraintTop_toTopOf="@id/text_description"
+            app:layout_constraintBottom_toBottomOf="@id/text_description"
+            />
+
+        <EditText
+            android:id="@+id/edittext_search"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/text_description"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            app:layout_constraintTop_toBottomOf="@id/edittext_search"
             app:layout_constraintBottom_toBottomOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -51,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_bottom_button"
-            android:text="다음 단계"
+            android:text="@string/next_step"
             android:onClick="@{onClickNextButtonListener}"
             android:enabled="@{viewModel.checked > 0}"
             app:layout_constraintBottom_toBottomOf="parent"/>
