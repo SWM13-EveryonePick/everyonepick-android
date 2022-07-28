@@ -18,14 +18,65 @@
         tools:context=".ui.groupalbumlist.creategroupalbum.GroupAlbumTitleFragment">
 
         <org.soma.everyonepick.common_ui.CustomActionBar
+            android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_action_bar"
             app:layout_constraintTop_toTopOf="parent"
             app:hasBackButton="true"/>
 
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:text="@{@string/title_fragment_group_album_title}"
+            app:boldStart="@{4}"
+            app:boldEnd="@{10}"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            app:text="@{@string/description_fragment_group_album_title}"
+            app:colorStart="@{3}"
+            app:colorEnd="@{5}"
+            app:color="@{@color/primary_blue}"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_titlelength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_blue"
+            app:text="@{Integer.toString(viewModel.title.length())}"
+            app:layout_constraintStart_toEndOf="@id/text_description"
+            app:layout_constraintTop_toTopOf="@id/text_description"
+            app:layout_constraintBottom_toBottomOf="@id/text_description"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/12)"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@id/text_titlelength"
+            app:layout_constraintTop_toTopOf="@id/text_description"
+            app:layout_constraintBottom_toBottomOf="@id/text_description"/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/hint_title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@={viewModel.title}"/>
