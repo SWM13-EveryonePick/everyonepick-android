@@ -32,7 +32,6 @@ class KeyboardUtil {
             activity.currentFocus?.let {
                 val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(it.windowToken, 0)
-                it.clearFocus()
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.soma.everyonepick.common_ui.setVisibility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.item.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
@@ -65,7 +66,7 @@ class PhotoAdapter(
             Glide.with(binding.root)
                 .load(photoItem.photoDao.photoUrl)
                 .into(binding.imagePhoto)
-            binding.checkbox.visibility = if(photoItem.isCheckboxVisible) View.VISIBLE else View.GONE
+            binding.checkbox.setVisibility(photoItem.isCheckboxVisible)
             binding.checkbox.isChecked = photoItem.isChecked
         }
     }

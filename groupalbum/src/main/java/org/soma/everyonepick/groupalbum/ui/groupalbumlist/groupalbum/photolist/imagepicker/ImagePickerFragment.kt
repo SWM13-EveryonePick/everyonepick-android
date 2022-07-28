@@ -43,9 +43,4 @@ class ImagePickerFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        (activity as HomeActivityUtility).showBottomNavigationView()
-    }
 }

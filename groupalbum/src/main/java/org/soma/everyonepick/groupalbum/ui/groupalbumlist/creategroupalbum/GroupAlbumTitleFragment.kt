@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common_ui.KeyboardUtil
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumTitleViewModel
@@ -39,6 +41,9 @@ class GroupAlbumTitleFragment : Fragment() {
                 Toast.makeText(context, "단체공유앨범을 생성했습니다!", Toast.LENGTH_LONG).show()
             }
         }
+
+        KeyboardUtil.setOnTouchListenerToHideKeyboard(binding.root, requireActivity())
+        (activity as HomeActivityUtility).hideBottomNavigationView()
 
         return binding.root
     }

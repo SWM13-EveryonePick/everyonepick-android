@@ -60,8 +60,6 @@ class PhotoFragment : Fragment() {
 
         viewModel.photoUrl.value = args.photoUrl
 
-        (activity as HomeActivityUtility).hideBottomNavigationView()
-
         return binding.root
     }
 
@@ -92,11 +90,6 @@ class PhotoFragment : Fragment() {
             e.printStackTrace()
             Toast.makeText(context, "이미지 저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        (activity as HomeActivityUtility).showBottomNavigationView()
     }
 
     override fun onDestroy() {

@@ -51,6 +51,8 @@ class ViewPagerFragment : Fragment() {
             }
         }
 
+        (activity as HomeActivityUtility).showBottomNavigationView()
+
         return binding.root
     }
 
