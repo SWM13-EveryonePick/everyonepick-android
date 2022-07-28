@@ -15,7 +15,7 @@ class KeyboardUtil {
          * 모든 하위 뷰에 OnTouchListener를 적용합니다.
          */
         fun setOnTouchListenerToHideKeyboard(view: View, activity: Activity) {
-            if (!view.hasOnClickListeners()) {
+            if (view !is EditText) {
                 view.setOnTouchListener { _, _ ->
                     hideKeyboard(activity)
                     false
@@ -25,6 +25,23 @@ class KeyboardUtil {
             if (view is ViewGroup) {
                 for (child in view.children) {
                     setOnTouchListenerToHideKeyboard(child, activity)
+                }
+            }
+        }
+
+        fun setOnTouchListenerToHideKeyboard(view: View, activity: Activity, exceptionViews: List<View>) {
+            if (view in exceptionViews) return
+
+            if (view !is EditText) {
+                view.setOnTouchListener { _, _ ->
+                    hideKeyboard(activity)
+                    false
+                }
+            }
+
+            if (view is ViewGroup) {
+                for (child in view.children) {
+                    setOnTouchListenerToHideKeyboard(child, activity, exceptionViews)
                 }
             }
         }

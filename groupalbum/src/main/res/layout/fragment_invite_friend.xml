@@ -26,6 +26,7 @@
             android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_action_bar"
+            app:hasBackButton="true"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
