@@ -4,4 +4,6 @@
     <string name="hint_search_bar">이름으로 검색하세요</string>
     <string name="checked_fragment_invite_friend">(%s/9)</string>
     <string name="next_step">다음 단계</string>
+    <string name="no_friends">아직 서비스를 이용하는 친구가 없어요 :/</string>
+    <string name="no_friends_with_keyword">해당하는 친구가 없어요 :/</string>
 </resources>
