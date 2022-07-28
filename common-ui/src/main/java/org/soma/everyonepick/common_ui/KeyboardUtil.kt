@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.core.view.children
 
 class KeyboardUtil {
@@ -33,6 +34,16 @@ class KeyboardUtil {
                 val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(it.windowToken, 0)
             }
+        }
+
+        fun showKeyboard(view: EditText, activity: Activity){
+            val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+            view.requestFocus()
+            imm.showSoftInput(view, 0)
+
+            // Set cursor at the end of view
+            view.setSelection(view.text.toString().length)
         }
     }
 }

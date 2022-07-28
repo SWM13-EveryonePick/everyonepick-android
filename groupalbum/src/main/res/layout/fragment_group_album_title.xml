@@ -74,18 +74,34 @@
             app:layout_constraintBottom_toBottomOf="@id/text_description"/>
 
         <EditText
-            android:layout_width="match_parent"
+            android:id="@+id/edittext_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/primary_blue"
+            android:textSize="24sp"
+            android:minEms="6"
+            android:maxLength="12"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
             android:hint="@string/hint_title"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:text="@={viewModel.title}"/>
+            android:background="@null"
+            app:layout_constraintTop_toBottomOf="@id/text_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@={viewModel.title}">
+            <requestFocus/>
+        </EditText>
 
         <Button
+            android:id="@+id/button_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_bottom_button"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="@dimen/margin_bottom_button"
             android:text="생성하기"
+            android:textColor="@color/white"
+            android:background="@drawable/button_with_small_radius_blue"
             android:onClick="@{onClickCreateButton}"
             android:enabled="@{!viewModel.title.empty}"
             app:layout_constraintBottom_toBottomOf="parent"/>

@@ -42,9 +42,13 @@ class GroupAlbumTitleFragment : Fragment() {
             }
         }
 
-        KeyboardUtil.setOnTouchListenerToHideKeyboard(binding.root, requireActivity())
         (activity as HomeActivityUtility).hideBottomNavigationView()
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
     }
 }
