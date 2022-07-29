@@ -32,13 +32,12 @@ class GroupAlbumTitleFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickCreateButton = View.OnClickListener {
-                /* TODO: API 호출 + 성공할 때까지 대기 후 나가기
+                /* TODO: API 호출 + 성공할 때까지 대기 후 내비게이션
                 args.inviteFriends
                 viewModel.title
                 */
-                val directions = GroupAlbumTitleFragmentDirections.toViewPagerFragment()
+                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment()
                 findNavController().navigate(directions)
-                Toast.makeText(context, "단체공유앨범을 생성했습니다!", Toast.LENGTH_LONG).show()
             }
         }
 

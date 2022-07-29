@@ -85,6 +85,15 @@
             android:name="inviteFriends"
             app:argType="com.kakao.sdk.talk.model.Friend[]"/>
         <action
+            android:id="@+id/to_createGroupAlbumCompleteFragment"
+            app:destination="@id/createGroupAlbumCompleteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createGroupAlbumCompleteFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.CreateGroupAlbumCompleteFragment"
+        android:label="CreateGroupAlbumCompleteFragment" >
+        <action
             android:id="@+id/to_viewPagerFragment"
             app:destination="@id/viewPagerFragment" />
     </fragment>
