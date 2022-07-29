@@ -18,9 +18,10 @@
             android:id="@+id/layout_actionbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="24dp"
             android:clipToPadding="false"
             android:onClick="@{onClickNextButton}"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -37,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/next"
                 android:textColor="@color/primary_blue"
-                android:textSize="15sp"
-                android:layout_marginRight="4dp"
+                android:textSize="18sp"
+                android:layout_marginRight="6dp"
                 app:layout_constraintTop_toTopOf="@id/image_next"
                 app:layout_constraintBottom_toBottomOf="@id/image_next"
                 app:layout_constraintEnd_toStartOf="@id/image_next"/>
@@ -49,6 +50,7 @@
             android:id="@+id/viewpager2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/layout_actionbar"
             />

@@ -17,6 +17,7 @@
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true"
+            android:theme="@style/Theme.WhiteStatusBar.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"

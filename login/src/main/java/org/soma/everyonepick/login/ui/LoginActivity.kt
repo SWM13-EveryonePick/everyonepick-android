@@ -22,14 +22,6 @@ class LoginActivity : AppCompatActivity() {
         KakaoSdk.init(this, NATIVE_APP_KEY)
     }
 
-    override fun onStart() {
-        super.onStart()
-        window?.let {
-            it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            it.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
     /**
      * 새로운 환경에서 개발을 할 때마다 아래 함수를 실행하여 해시를 얻고,
      * Kakao Developers 계정주가 해당 해시를 등록해야 합니다.
