@@ -30,7 +30,11 @@ class FriendRepository {
                 // onSuccess.invoke(Friends(0, listOf(), 0, "", ""))
 
                 // Many Friends:
-                onSuccess.invoke(Friends(10, List(10) { Friend(0, "", "서달미", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0)}, 0, "",""))
+                onSuccess.invoke(Friends(3, listOf(
+                    Friend(0, "", "DalMi Seo", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(2, "", "Shumann", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0)
+                ), 0, "",""))
             }
             onAlways.invoke()
         }

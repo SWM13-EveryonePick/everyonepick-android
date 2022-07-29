@@ -24,24 +24,37 @@ class InviteFriendViewModel @Inject constructor(
 ): ViewModel() {
     val keyword = MutableStateFlow("")
     val inviteFriendItemList: MutableLiveData<MutableList<InviteFriendItem>> = MutableLiveData()
+    val filteredList: MutableLiveData<MutableList<InviteFriendItem>> = MutableLiveData()
+
     val checked = MutableLiveData(0)
     val isApiLoading = MutableLiveData(true)
 
     init {
+        fetchInviteFriendItemList()
         viewModelScope.launch {
             keyword.collectLatest {
-                fetchInviteFriendItemList(it)
+                updateFilteredListByKeyword(it)
             }
         }
     }
 
-    private fun fetchInviteFriendItemList(keyword: String) {
+    private fun fetchInviteFriendItemList() {
         isApiLoading.value = true
         friendRepository.fetchFriends({ isApiLoading.value = false }) { newFriends ->
             val newInviteFriendItemList = convertFriendsToInviteFriendItemList(newFriends)
-                .filter { it.friend.profileNickname?.contains(keyword) ?: false }.toMutableList()
-            inviteFriendItemList.postValue(newInviteFriendItemList)
+            inviteFriendItemList.value = newInviteFriendItemList
+
+            // 실제로 보여주는 데이터는 filteredList이므로
+            updateFilteredListByKeyword("")
         }
+    }
+
+    private fun updateFilteredListByKeyword(keyword: String) {
+        if (inviteFriendItemList.value.isNullOrEmpty()) return
+
+        val newFilteredList = inviteFriendItemList.value!!
+            .filter { it.friend.profileNickname?.contains(keyword) ?: false }.toMutableList()
+        filteredList.postValue(newFilteredList)
     }
 
     private fun convertFriendsToInviteFriendItemList(friends: Friends<Friend>): MutableList<InviteFriendItem> {
