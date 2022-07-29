@@ -36,6 +36,8 @@ class GroupAlbumTitleFragment : Fragment() {
                 args.inviteFriends
                 viewModel.title
                 */
+                KeyboardUtil.hideKeyboard(requireActivity())
+
                 val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(
                     viewModel.title.value?: ""
                 )
