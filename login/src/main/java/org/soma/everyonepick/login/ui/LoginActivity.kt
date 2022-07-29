@@ -1,8 +1,10 @@
 package org.soma.everyonepick.login.ui
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
@@ -15,8 +17,17 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        supportActionBar?.hide()
 
         KakaoSdk.init(this, NATIVE_APP_KEY)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        window?.let {
+            it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            it.statusBarColor = Color.TRANSPARENT
+        }
     }
 
     /**

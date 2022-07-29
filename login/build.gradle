@@ -57,6 +57,8 @@ dependencies {
     implementation "com.kakao.sdk:v2-all:2.11.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
 
     implementation project(path: ':foundation')
+    implementation project(path: ':common-ui')
+    implementation project(path: ':common')
 
     // CameraX
     def camerax_version = "1.2.0-alpha02"
