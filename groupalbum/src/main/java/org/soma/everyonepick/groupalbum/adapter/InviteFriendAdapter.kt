@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kakao.sdk.talk.model.Friend
+import org.soma.everyonepick.common_ui.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.item.InviteFriendItem
 import org.soma.everyonepick.groupalbum.databinding.ItemInviteFriendBinding
@@ -34,8 +35,7 @@ class InviteFriendAdapter(
     private fun subscribeUi(binding: ItemInviteFriendBinding, holder: InviteFriendViewHolder) {
         // 체크박스 터치 영역 확장
         binding.root.setOnClickListener {
-            binding.checkbox.isChecked = !binding.checkbox.isChecked
-            onClickCheckBox(binding, holder)
+            binding.checkbox.performTouch()
         }
 
         binding.checkbox.setOnClickListener {
