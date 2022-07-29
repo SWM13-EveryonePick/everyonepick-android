@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsetsAnimation
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +22,7 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel
 
 @AndroidEntryPoint
@@ -28,6 +31,8 @@ class InviteFriendFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: InviteFriendViewModel by viewModels()
+
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,5 +58,26 @@ class InviteFriendFragment : Fragment() {
         (activity as HomeActivityUtility).hideBottomNavigationView()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.checked.value == 0) findNavController().navigateUp()
+                else {
+                    AlertDialog.Builder(context).setMessage("단체공유앨범 생성을 취소합니다.")
+                        .setPositiveButton("확인") { _, _ -> findNavController().navigateUp() }
+                        .setNegativeButton("취소") { dialog, _ -> dialog.cancel() }
+                        .create().show()
+                }
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onBackPressedCallback.remove()
     }
 }
