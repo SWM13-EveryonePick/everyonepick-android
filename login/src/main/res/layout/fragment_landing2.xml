@@ -8,15 +8,40 @@
         android:layout_height="match_parent"
         tools:context=".ui.landing.Landing2Fragment">
 
-        <Button
+        <ImageView
+            android:id="@+id/image_illustration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_img_landing_2"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Landing2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/black"
+            android:fontFamily="@font/noto_sans_kr_black"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@id/image_illustration"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            tools:text="원하는 사진을 원하는 그룹에게\n모두의 PICK, 공유"
+            colorStart="@{26}"
+            colorEnd="@{29}"
+            color="@{@color/primary_blue}"
+            text="@{@string/landing2_title}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/landing2_description"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

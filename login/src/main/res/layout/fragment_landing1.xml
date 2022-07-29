@@ -28,6 +28,7 @@
             app:layout_constraintTop_toBottomOf="@id/image_illustration"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            tools:text="잘 나온 사진이 달라도 괜찮아요!\n모두의 PICK, 합성"
             colorStart="@{28}"
             colorEnd="@{31}"
             color="@{@color/primary_blue}"
