@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="androidx.core.content.ContextCompat"/>
         <import type="android.view.View"/>
         <variable
             name="onClickNextButtonListener"
@@ -19,46 +20,147 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.groupalbumlist.creategroupalbum.InviteFriendFragment">
 
         <org.soma.everyonepick.common_ui.CustomActionBar
             android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_action_bar"
-            app:layout_constraintTop_toTopOf="parent"
             app:hasBackButton="true"
-            onBackPressed="@{true}"/>
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:text="@{@string/title_fragment_invite_friend}"
+            app:boldStart="@{0}"
+            app:boldEnd="@{6}"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            app:text="@{@string/description_fragment_invite_friend(@string/max_checked)}"
+            app:colorStart="@{3}"
+            app:colorEnd="@{5}"
+            app:color="@{@color/primary_blue}"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textColor="@color/black"
+            app:prefix="@{`(`}"
+            app:text="@{Integer.toString(viewModel.checked)}"
+            app:suffix="@{@string/suffix_count(@string/max_checked)}"
+            app:color="@{viewModel.checked &lt;= 9? @color/primary_blue: @color/light_red}"
+            app:layout_constraintStart_toEndOf="@id/text_description"
+            app:layout_constraintTop_toTopOf="@id/text_description"
+            app:layout_constraintBottom_toBottomOf="@id/text_description"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_search_bar"
+            android:layout_marginLeft="@dimen/margin_side"
+            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginTop="30dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="@drawable/border_with_small_radius"
+            app:layout_constraintTop_toBottomOf="@id/text_description">
+            <EditText
+                android:id="@+id/edittext_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:text="@={viewModel.keyword}"
+                android:hint="@string/hint_search_bar"
+                android:textSize="17sp"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_search"/>
+            <ImageButton
+                android:id="@+id/image_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/ic_btn_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="UseAppTint"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/customactionbar"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/layout_search"
+            app:layout_constraintBottom_toTopOf="@id/button_next">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     adapter="@{adapter}"
-                    submitList="@{viewModel.inviteFriendItemList}"
+                    submitList="@{viewModel.filteredList}"
                     tools:listitem="@layout/item_invite_friend"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/gradient_white_to_transparent"
+            app:layout_constraintTop_toTopOf="@id/scrollview"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/gradient_transparent_to_white"
+            app:layout_constraintBottom_toBottomOf="@id/scrollview"/>
 
         <Button
+            android:id="@+id/button_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_bottom_button"
-            android:text="다음 단계"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="@dimen/margin_bottom_button"
+            android:text="@string/next_step"
+            android:textColor="@color/white"
+            android:background="@drawable/button_with_small_radius_blue"
             android:onClick="@{onClickNextButtonListener}"
             android:enabled="@{viewModel.checked > 0}"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/scrollview"
+            app:layout_constraintBottom_toBottomOf="@id/scrollview"
             android:visibility="@{viewModel.inviteFriendItemList.size() == 0? View.VISIBLE: View.GONE}">
 
             <TextView
@@ -69,7 +171,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="NO FRIENDS"/>
+                android:text="@{viewModel.keyword.empty? @string/no_friends: @string/no_friends_with_keyword}"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"

@@ -24,10 +24,17 @@ class FriendRepository {
                 onFailure.invoke(error)
             } else if(newFriends != null) {
                 Log.i(TAG, "카카오톡 친구 목록 가져오기 성공")
-                onSuccess.invoke(newFriends)
+                // onSuccess.invoke(newFriends)
 
-                // No Friends 테스트 코드:
+                // No Friends:
                 // onSuccess.invoke(Friends(0, listOf(), 0, "", ""))
+
+                // Many Friends:
+                onSuccess.invoke(Friends(3, listOf(
+                    Friend(0, "", "DalMi Seo", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(2, "", "Shumann", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0)
+                ), 0, "",""))
             }
             onAlways.invoke()
         }

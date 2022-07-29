@@ -54,7 +54,7 @@ class GroupAlbumListFragment : Fragment() {
             val isSelectionMode = groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal
             viewModel.setIsCheckboxVisible(isSelectionMode)
 
-            if(isSelectionMode) (activity as HomeActivityUtility).hideBottomNavigationView()
+            if (isSelectionMode) (activity as HomeActivityUtility).hideBottomNavigationView()
             else (activity as HomeActivityUtility).showBottomNavigationView()
         }
 

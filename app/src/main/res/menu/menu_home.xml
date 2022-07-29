@@ -4,19 +4,19 @@
     <item
         android:id="@+id/nav_camera"
         android:title="@string/camera_menu_item"
-        android:icon="@drawable/ic_outline_camera_alt_24"
+        android:icon="@drawable/ic_tab_01"
         android:enabled="true"
         app:showAsAction="always"/>
     <item
         android:id="@+id/nav_group_album"
         android:title="@string/group_album_menu_item"
-        android:icon="@drawable/ic_outline_photo_24"
+        android:icon="@drawable/ic_tab_02"
         android:enabled="true"
         app:showAsAction="always"/>
     <item
         android:id="@+id/nav_setting"
         android:title="@string/setting_menu_item"
-        android:icon="@drawable/ic_outline_settings_24"
+        android:icon="@drawable/ic_tab_03"
         android:enabled="true"
         app:showAsAction="always"/>
 </menu>

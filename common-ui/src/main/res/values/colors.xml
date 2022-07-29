@@ -8,7 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary_blue">#4880ee</color>
+    <color name="primary_blue">#3182f6</color>
     <color name="cloud">#ecf0f1</color>
+    <color name="gray">#777777</color>
     <color name="light_gray">#b9b9b9</color>
+    <color name="border_line">#DFE3E6</color>
+
+    <color name="title">#333333</color>
+    <color name="subtext">#767780</color>
+    <color name="light_red">#e74c3c</color>
 </resources>

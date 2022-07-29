@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
@@ -109,6 +110,8 @@ class GroupAlbumViewPagerFragment: Fragment() {
         }
 
         viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbumDao(args.groupAlbumId)
+
+        (activity as HomeActivityUtility).hideBottomNavigationView()
 
         return binding.root
     }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kakao.sdk.talk.model.Friend
+import org.soma.everyonepick.common_ui.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.item.InviteFriendItem
 import org.soma.everyonepick.groupalbum.databinding.ItemInviteFriendBinding
@@ -34,18 +35,28 @@ class InviteFriendAdapter(
     private fun subscribeUi(binding: ItemInviteFriendBinding, holder: InviteFriendViewHolder) {
         // 체크박스 터치 영역 확장
         binding.root.setOnClickListener {
-            binding.checkbox.isChecked = !binding.checkbox.isChecked
+            binding.checkbox.performTouch()
         }
 
-        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            parentViewModel.inviteFriendItemList.value?.let { inviteFriendItemList ->
-                val position = holder.absoluteAdapterPosition
-                inviteFriendItemList[position].isChecked = isChecked
-            }
-            parentViewModel.checked.value =
-                if(isChecked) parentViewModel.checked.value?.plus(1)
-                else parentViewModel.checked.value?.minus(1)
+        binding.checkbox.setOnClickListener {
+            onClickCheckBox(binding, holder)
         }
+    }
+
+    private fun onClickCheckBox(binding: ItemInviteFriendBinding, holder: InviteFriendViewHolder) {
+        val inviteFriendItemList = parentViewModel.inviteFriendItemList.value?: return
+        val filteredList = parentViewModel.filteredList.value?: return
+        val isChecked = binding.checkbox.isChecked
+
+        val itemAtFilteredList = filteredList[holder.absoluteAdapterPosition]
+        // 현재 보여지고 있는 리스트는 filteredList이며, 체크를 했을 때 데이터 처리는
+        // inviteFriendItemList에 대해서 수행되어야 합니다.
+        val itemAtInviteFriendItemList = inviteFriendItemList.find { it.friend.id == itemAtFilteredList.friend.id }
+        itemAtInviteFriendItemList?.isChecked = isChecked
+
+        parentViewModel.checked.value =
+            if(isChecked) parentViewModel.checked.value?.plus(1)
+            else parentViewModel.checked.value?.minus(1)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

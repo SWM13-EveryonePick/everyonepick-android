@@ -60,8 +60,6 @@ class PhotoFragment : Fragment() {
 
         viewModel.photoUrl.value = args.photoUrl
 
-        (activity as HomeActivityUtility).hideBottomNavigationView()
-
         return binding.root
     }
 
@@ -97,8 +95,6 @@ class PhotoFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-
-        (activity as HomeActivityUtility).showBottomNavigationView()
     }
 
     interface PhotoFragmentListener {

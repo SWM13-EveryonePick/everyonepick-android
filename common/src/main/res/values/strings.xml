@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">모두의 Pick</string>
+    <string name="app_name">모두의 PICK</string>
 
     <string name="camera_menu_item">카메라</string>
     <string name="group_album_menu_item">단체공유앨범</string>

@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common_ui.KeyboardUtil
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumTitleViewModel
@@ -30,16 +32,26 @@ class GroupAlbumTitleFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickCreateButton = View.OnClickListener {
-                /* TODO: API 호출 + 성공할 때까지 대기 후 나가기
+                /* TODO: API 호출 + 성공할 때까지 대기 후 내비게이션
                 args.inviteFriends
                 viewModel.title
                 */
-                val directions = GroupAlbumTitleFragmentDirections.toViewPagerFragment()
+                KeyboardUtil.hideKeyboard(requireActivity())
+
+                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(
+                    viewModel.title.value?: ""
+                )
                 findNavController().navigate(directions)
-                Toast.makeText(context, "단체공유앨범을 생성했습니다!", Toast.LENGTH_LONG).show()
             }
         }
 
+        (activity as HomeActivityUtility).hideBottomNavigationView()
+
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
     }
 }

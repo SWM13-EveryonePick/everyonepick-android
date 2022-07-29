@@ -74,7 +74,11 @@
         tools:layout="@layout/fragment_invite_friend" >
         <action
             android:id="@+id/to_groupAlbumTitleFragment"
-            app:destination="@id/groupAlbumTitleFragment" />
+            app:destination="@id/groupAlbumTitleFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay"
+            app:popEnterAnim="@anim/stay"
+            app:popExitAnim="@anim/slide_out_bottom"/>
     </fragment>
 
     <fragment
@@ -85,7 +89,25 @@
             android:name="inviteFriends"
             app:argType="com.kakao.sdk.talk.model.Friend[]"/>
         <action
+            android:id="@+id/to_createGroupAlbumCompleteFragment"
+            app:popUpTo="@id/viewPagerFragment"
+            app:destination="@id/createGroupAlbumCompleteFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay"
+            app:popEnterAnim="@anim/stay"
+            app:popExitAnim="@anim/slide_out_bottom"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/createGroupAlbumCompleteFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.CreateGroupAlbumCompleteFragment">
+        <argument
+            android:name="title"
+            app:argType="string"/>
+        <action
             android:id="@+id/to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment" />
+            app:destination="@id/viewPagerFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popEnterAnim="@anim/slide_in_right"/>
     </fragment>
 </navigation>
