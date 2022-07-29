@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.ui
+package org.soma.everyonepick.login.ui.landing
 
 import android.content.Intent
 import android.os.Bundle
@@ -88,7 +88,7 @@ class LoginFragment : Fragment() {
                 if(true){
                     // TODO: 회원가입 진행
                     findNavController().navigate(
-                         LoginFragmentDirections.toFaceInformationDescriptionFragment()
+                         LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
                     )
                 }else{
                     startHomeActivity()
