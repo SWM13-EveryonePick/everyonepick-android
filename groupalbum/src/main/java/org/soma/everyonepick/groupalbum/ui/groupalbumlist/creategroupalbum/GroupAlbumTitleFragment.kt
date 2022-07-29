@@ -36,7 +36,9 @@ class GroupAlbumTitleFragment : Fragment() {
                 args.inviteFriends
                 viewModel.title
                 */
-                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment()
+                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(
+                    viewModel.title.value?: ""
+                )
                 findNavController().navigate(directions)
             }
         }
