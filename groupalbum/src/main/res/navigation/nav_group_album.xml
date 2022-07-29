@@ -90,6 +90,7 @@
             app:argType="com.kakao.sdk.talk.model.Friend[]"/>
         <action
             android:id="@+id/to_createGroupAlbumCompleteFragment"
+            app:popUpTo="@id/viewPagerFragment"
             app:destination="@id/createGroupAlbumCompleteFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/stay"
