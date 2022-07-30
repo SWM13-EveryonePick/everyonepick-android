@@ -5,4 +5,5 @@
     <string name="landing2_description">사진들을 단체별로 쉽게,\n관리하고 공유하세요.</string>
     <string name="login_title">2인부터 7인까지 모두에게 맞는\n모두의 PICK, 추천</string>
     <string name="login_description">어떤 포즈를 할지 모르시겠다면\n단체사진 포즈를 추천해드립니다.</string>
+    <string name="terms_description">위 버튼을 클릭하시면 모두의 PICK의 서비스 이용약관과\n개인정보 취급방침에 동의하게 됩니다.</string>
 </resources>

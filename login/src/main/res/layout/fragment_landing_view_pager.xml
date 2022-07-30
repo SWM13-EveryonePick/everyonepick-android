@@ -4,14 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel" />
         <variable
             name="onClickNextButton"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="onClickLoginButton"
             type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         tools:context=".ui.landing.LandingViewPagerFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +30,7 @@
             android:clipToPadding="false"
             android:onClick="@{onClickNextButton}"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:visibility="@{viewModel.currentItem == 2? View.INVISIBLE: View.VISIBLE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -52,16 +61,65 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/layout_actionbar"
+            app:layout_constraintBottom_toTopOf="@id/tablayout"
             />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/viewpager2"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toTopOf="@id/layout_bottom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:visibility="@{viewModel.currentItem == 2? View.VISIBLE: View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/imagebutton_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kakao_login_medium_wide"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@id/text_termsdescription"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{onClickLoginButton}"/>
+
+            <ProgressBar
+                android:layout_width="@dimen/size_loginprogressbar"
+                android:layout_height="@dimen/size_loginprogressbar"
+                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                app:layout_constraintTop_toTopOf="@id/imagebutton_login"
+                app:layout_constraintBottom_toBottomOf="@id/imagebutton_login"
+                app:layout_constraintStart_toStartOf="@id/imagebutton_login"
+                app:layout_constraintEnd_toEndOf="@id/imagebutton_login"
+                />
+
+            <TextView
+                android:id="@+id/text_termsdescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/subtext"
+                android:gravity="center_horizontal"
+                android:clickable="true"
+                android:focusable="true"
+                android:linksClickable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:text="@{@string/terms_description}"
+                app:colorStart="@{12}"
+                app:colorEnd="@{20}"
+                app:color="@{@color/primary_blue}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

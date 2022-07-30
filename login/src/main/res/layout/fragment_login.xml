@@ -8,9 +8,6 @@
         <variable
             name="onClickLoginButton"
             type="android.view.View.OnClickListener" />
-        <variable
-            name="viewModel"
-            type="org.soma.everyonepick.login.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
