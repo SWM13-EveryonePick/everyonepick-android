@@ -15,8 +15,12 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_side_bottom_button"
+            android:layout_marginRight="@dimen/margin_side_bottom_button"
+            android:textColor="@color/white"
+            android:background="@drawable/button_with_small_radius_blue"
             android:text="설정에서 권한을 허용합니다."
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
