@@ -59,14 +59,14 @@
             android:id="@+id/viewpager2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="30dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/tablayout"
+            app:layout_constraintBottom_toTopOf="@id/customindicator"
             />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
-            android:layout_width="100dp"
+        <org.soma.everyonepick.common_ui.CustomIndicator
+            android:id="@+id/customindicator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toTopOf="@id/layout_bottom"

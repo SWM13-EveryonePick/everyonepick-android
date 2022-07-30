@@ -132,9 +132,8 @@ class LandingViewPagerFragment : Fragment() {
                     viewModel.currentItem.value = it.currentItem
                 }
             })
+            binding.customindicator.setupViewPager2(it)
         }
-
-        TabLayoutMediator(binding.tablayout, binding.viewpager2) { _, _ -> } .attach()
     }
 
     override fun onResume() {
