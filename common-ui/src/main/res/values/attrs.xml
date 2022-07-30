@@ -5,4 +5,11 @@
         <attr name="title" format="string"/>
         <attr name="hasBackButton" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomIndicator">
+        <attr name="selectedIndicatorCenterWidth" format="dimension"/>
+        <attr name="indicatorMargin" format="dimension"/>
+        <attr name="indicatorColor" format="color"/>
+        <attr name="selectedIndicatorColor" format="color"/>
+    </declare-styleable>
 </resources>
