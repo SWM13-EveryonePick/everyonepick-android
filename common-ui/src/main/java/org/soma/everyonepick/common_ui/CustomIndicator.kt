@@ -18,9 +18,7 @@ import org.soma.everyonepick.common_ui.databinding.ViewCustomIndicatorBinding
 
 /**
  * CustomIndicator는 [ViewPager2]와 결합되어 사용됩니다.
- * 각 indicator는 ViewPager2의 위치에 따라서 색상과 길이가 달라지며,
- * 특히 늘어나는 원을 구현하기 위해 layout_dot에 (왼쪽 반원) + (직사각형) + (오른쪽 반원)을 두었고,
- * 오프셋에 따라 가운데 있는 직사각형의 width가 변함으로써 원이 늘어나는 효과를 구현하였습니다.
+ * 각 indicator는 ViewPager2의 위치에 따라서 색상과 길이가 달라집니다.
  */
 class CustomIndicator: FrameLayout {
     constructor(context: Context): super(context) {
@@ -35,15 +33,16 @@ class CustomIndicator: FrameLayout {
         getAttrs(attrs)
     }
 
-    private val indicatorSize = 20
-    private var selectedIndicatorCenterWidth = 40
-    private var indicatorMargin = 10
+    private var indicatorSize = 20
+    private var indicatorMargin = 15
+    private var indicatorRadius = indicatorSize*0.5f
+    private var selectedIndicatorWidthScale = 2
 
     private var indicatorColor = ContextCompat.getColor(context, R.color.light_gray)
     private var selectedIndicatorColor = ContextCompat.getColor(context, R.color.primary_blue)
 
     private lateinit var binding: ViewCustomIndicatorBinding
-    private var dots = mutableListOf<Triple<ImageView, ImageView, ImageView>>()
+    private var dots = mutableListOf<ImageView>()
     private lateinit var viewPager2: ViewPager2
 
     private fun initializeView(context: Context) {
@@ -56,7 +55,9 @@ class CustomIndicator: FrameLayout {
     }
 
     private fun setTypedArray(typedArray: TypedArray) {
-        selectedIndicatorCenterWidth = typedArray.getDimensionPixelSize(R.styleable.CustomIndicator_selectedIndicatorCenterWidth, selectedIndicatorCenterWidth)
+        indicatorSize = typedArray.getDimensionPixelSize(R.styleable.CustomIndicator_customIndicatorSize, indicatorSize)
+        indicatorRadius = indicatorSize * 0.5f
+        selectedIndicatorWidthScale = typedArray.getDimensionPixelSize(R.styleable.CustomIndicator_selectedIndicatorWidthScale, selectedIndicatorWidthScale)
         indicatorMargin = typedArray.getDimensionPixelSize(R.styleable.CustomIndicator_indicatorMargin, indicatorMargin)
 
         indicatorColor = typedArray.getColor(R.styleable.CustomIndicator_indicatorColor, indicatorColor)
@@ -97,33 +98,23 @@ class CustomIndicator: FrameLayout {
         val dot = LayoutInflater.from(context).inflate(R.layout.layout_dot, this, false)
         dot.layoutDirection = View.LAYOUT_DIRECTION_LTR
 
-        val imageLeft = dot.findViewById<ImageView>(R.id.image_left)
-        val imageCenter = dot.findViewById<ImageView>(R.id.image_center)
-        val imageRight = dot.findViewById<ImageView>(R.id.image_right)
+        // 색상
+        val imageView = dot.findViewById<ImageView>(R.id.image_dot)
+        imageView.background = (imageView.background as GradientDrawable).apply {
+            setColor(if (index == 0) selectedIndicatorColor else indicatorColor)
+        }
 
-        // 색상 초기화
-        val color = if (index == 0) selectedIndicatorColor else indicatorColor
-        imageLeft.background = (imageLeft.background as GradientDrawable).apply { setColor(color) }
-        imageCenter.background = (imageCenter.background as GradientDrawable).apply { setColor(color) }
-        imageRight.background = (imageRight.background as GradientDrawable).apply { setColor(color) }
+        // 크기, 마진
+        val params = imageView.layoutParams as LinearLayout.LayoutParams
+        params.height = indicatorSize
+        params.width = if (index == 0) selectedIndicatorWidthScale*indicatorSize else indicatorSize
+        params.setMargins(indicatorMargin, 0, 0, 0)
+        params.setMargins(0, 0, indicatorMargin, 0)
 
-        val leftParams = imageLeft.layoutParams as LinearLayout.LayoutParams
-        val centerParams = imageCenter.layoutParams as LinearLayout.LayoutParams
-        val rightParams = imageRight.layoutParams as LinearLayout.LayoutParams
+        // Rectangle에 radius를 두어 원으로 보이게 합니다.
+        (imageView.background as GradientDrawable).cornerRadius = indicatorRadius
 
-        // 높이 초기화
-        leftParams.height = indicatorSize
-        centerParams.height = indicatorSize
-        rightParams.height = indicatorSize
-
-        // center item 길이 초기화
-        centerParams.width = if (index == 0) selectedIndicatorCenterWidth else 0
-
-        // 마진 초기화
-        leftParams.setMargins(indicatorMargin, 0, 0, 0)
-        rightParams.setMargins(0, 0, indicatorMargin, 0)
-
-        dots.add(Triple(imageLeft, imageCenter, imageRight))
+        dots.add(imageView)
         binding.layout.addView(dot)
     }
 
@@ -136,12 +127,8 @@ class CustomIndicator: FrameLayout {
         val firstColor = ColorUtils.blendARGB(selectedIndicatorColor, indicatorColor, positionOffset)
         val secondColor = ColorUtils.blendARGB(indicatorColor, selectedIndicatorColor, positionOffset)
 
-        dots[firstIndex].first.background = (dots[firstIndex].first.background as GradientDrawable).apply { setColor(firstColor) }
-        dots[secondIndex].first.background = (dots[secondIndex].first.background as GradientDrawable).apply { setColor(secondColor) }
-        dots[firstIndex].second.background = (dots[firstIndex].second.background as GradientDrawable).apply { setColor(firstColor) }
-        dots[secondIndex].second.background = (dots[secondIndex].second.background as GradientDrawable).apply { setColor(secondColor) }
-        dots[firstIndex].third.background = (dots[firstIndex].third.background as GradientDrawable).apply { setColor(firstColor) }
-        dots[secondIndex].third.background = (dots[secondIndex].third.background as GradientDrawable).apply { setColor(secondColor) }
+        dots[firstIndex].background = (dots[firstIndex].background as GradientDrawable).apply { setColor(firstColor) }
+        dots[secondIndex].background = (dots[secondIndex].background as GradientDrawable).apply { setColor(secondColor) }
     }
 
     private fun refreshTwoDotWidth(
@@ -152,14 +139,14 @@ class CustomIndicator: FrameLayout {
         val firstWidth = calculateWidthByOffset(positionOffset)
         val secondWidth = calculateWidthByOffset(1 - positionOffset)
 
-        val firstParams = dots[firstIndex].second.layoutParams
-        val secondParams = dots[secondIndex].second.layoutParams
+        val firstParams = dots[firstIndex].layoutParams
+        val secondParams = dots[secondIndex].layoutParams
         firstParams.width = firstWidth.toInt()
         secondParams.width = secondWidth.toInt()
 
-        dots[firstIndex].second.layoutParams = firstParams
-        dots[secondIndex].second.layoutParams = secondParams
+        dots[firstIndex].layoutParams = firstParams
+        dots[secondIndex].layoutParams = secondParams
     }
 
-    private fun calculateWidthByOffset(offset: Float) = selectedIndicatorCenterWidth*(1-offset)
+    private fun calculateWidthByOffset(offset: Float) = indicatorSize * offset + indicatorSize * selectedIndicatorWidthScale * (1-offset)
 }
