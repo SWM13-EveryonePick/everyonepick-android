@@ -12,6 +12,10 @@
         tools:layout="@layout/fragment_landing_view_pager">
         <action
             android:id="@+id/to_faceInformationDescriptionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/faceInformationDescriptionFragment"/>
     </fragment>
 
@@ -21,6 +25,10 @@
         tools:layout="@layout/fragment_face_information_description">
         <action
             android:id="@+id/to_faceInformationCameraFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/faceInformationCameraFragment"/>
     </fragment>
 
@@ -30,6 +38,10 @@
         tools:layout="@layout/fragment_face_information_camera">
         <action
             android:id="@+id/to_faceInformationCompleteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/faceInformationCompleteFragment"/>
     </fragment>
 
