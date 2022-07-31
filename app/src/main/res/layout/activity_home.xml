@@ -3,9 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="onClickTutorialListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+    
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         tools:context=".HomeActivity">
 
         <androidx.fragment.app.FragmentContainerView
@@ -36,6 +43,50 @@
             app:itemIconSize="32dp"
             app:menu="@menu/menu_home"
             />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_tutorial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="8dp"
+            android:onClick="@{onClickTutorialListener}">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tutorial_top"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/image_tutorial"/>
+
+            <ImageView
+                android:id="@+id/image_tutorialleft"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tutorial_left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_tutorialright"/>
+
+            <View
+                android:id="@+id/image_tutorialright"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="#404040"
+                app:layout_constraintStart_toEndOf="@id/image_tutorialleft"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:id="@+id/image_tutorial"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/tutorial"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

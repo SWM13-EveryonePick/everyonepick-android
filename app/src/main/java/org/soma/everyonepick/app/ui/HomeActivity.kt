@@ -26,7 +26,11 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding = DataBindingUtil.setContentView<ActivityHomeBinding?>(this, R.layout.activity_home).apply {
+            onClickTutorialListener = View.OnClickListener {
+                layoutTutorial.visibility = View.GONE
+            }
+        }
         supportActionBar?.hide()
 
         initializeNavigation()
