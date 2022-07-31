@@ -56,19 +56,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="업로드하기"
-            android:layout_marginLeft="@dimen/margin_side_bottom_button"
-            android:layout_marginRight="@dimen/margin_side_bottom_button"
-            android:layout_marginBottom="@dimen/margin_bottom_bottom_button"
-            android:textColor="@color/white"
-            android:background="@drawable/button_with_small_radius_blue"
+            style="@style/BottomButton"
+            android:text="@string/do_upload"
             app:layout_constraintBottom_toBottomOf="parent"
             android:onClick="@{onClickUploadButtonListener}"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="갤러리 내에 사진이 없어요 :/"
+            android:text="@string/no_images_in_gallery"
             android:visibility="@{viewModel.imageItemList.size() == 0? View.VISIBLE: View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -48,11 +48,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_side_bottom_button"
-            android:layout_marginRight="@dimen/margin_side_bottom_button"
-            android:layout_marginBottom="@dimen/margin_bottom_bottom_button"
-            android:textColor="@color/white"
-            android:background="@drawable/button_with_small_radius_blue"
+            style="@style/BottomButton"
             android:onClick="@{onClickNextButton}"
             android:text="@string/face_information_description_button"
             app:layout_constraintBottom_toBottomOf="parent"/>
