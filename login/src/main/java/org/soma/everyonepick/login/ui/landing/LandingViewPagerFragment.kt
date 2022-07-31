@@ -129,10 +129,10 @@ class LandingViewPagerFragment : Fragment() {
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    viewModel.currentItem.value = it.currentItem
+                    viewModel.currentPosition.value = it.currentItem
                 }
             })
-            binding.customindicator.setupViewPager2(it)
+            binding.customindicator.setupViewPager2(it, it.currentItem)
         }
     }
 

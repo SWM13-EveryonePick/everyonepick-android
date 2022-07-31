@@ -66,11 +66,11 @@ class CustomIndicator: FrameLayout {
         typedArray.recycle()
     }
 
-    fun setupViewPager2(viewPager2: ViewPager2) {
+    fun setupViewPager2(viewPager2: ViewPager2, currentPosition: Int) {
         this.viewPager2 = viewPager2
 
         val itemCount = viewPager2.adapter?.itemCount?: 0
-        for(i in 0 until itemCount) addDot(i)
+        for(i in 0 until itemCount) addDot(i, currentPosition)
 
         viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -94,20 +94,20 @@ class CustomIndicator: FrameLayout {
         })
     }
 
-    private fun addDot(index: Int) {
+    private fun addDot(index: Int, currentPosition: Int) {
         val dot = LayoutInflater.from(context).inflate(R.layout.layout_dot, this, false)
         dot.layoutDirection = View.LAYOUT_DIRECTION_LTR
 
         // 색상
         val imageView = dot.findViewById<ImageView>(R.id.image_dot)
         imageView.background = (imageView.background as GradientDrawable).apply {
-            setColor(if (index == 0) selectedIndicatorColor else indicatorColor)
+            setColor(if (index == currentPosition) selectedIndicatorColor else indicatorColor)
         }
 
         // 크기, 마진
         val params = imageView.layoutParams as LinearLayout.LayoutParams
         params.height = indicatorSize
-        params.width = if (index == 0) selectedIndicatorWidthScale*indicatorSize else indicatorSize
+        params.width = if (index == currentPosition) selectedIndicatorWidthScale*indicatorSize else indicatorSize
         params.setMargins(indicatorMargin, 0, 0, 0)
         params.setMargins(0, 0, indicatorMargin, 0)
 
