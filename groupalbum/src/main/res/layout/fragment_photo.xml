@@ -32,7 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="삭제"
+                android:text="@string/delete"
                 android:layout_marginRight="@dimen/margin_action_bar"
                 android:onClick="@{() -> listener.onClickDeleteButton()}"
                 app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/BottomButton"
-            android:text="갤러리에 저장하기"
+            android:text="@string/save_in_gallery"
             android:onClick="@{() -> listener.onClickSaveButton()}"
             app:layout_constraintBottom_toBottomOf="parent"
             />

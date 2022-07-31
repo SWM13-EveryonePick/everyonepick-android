@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/BottomButton"
-            android:text="생성하기"
+            android:text="@string/do_create"
             android:onClick="@{onClickCreateButton}"
             android:enabled="@{!viewModel.title.empty}"
             app:layout_constraintBottom_toBottomOf="parent"/>
