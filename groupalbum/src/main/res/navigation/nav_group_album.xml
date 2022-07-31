@@ -11,18 +11,18 @@
         tools:layout="@layout/fragment_view_pager">
         <action
             android:id="@+id/to_groupAlbumViewPagerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/groupAlbumViewPagerFragment"/>
         <action
             android:id="@+id/to_invitationFragment"
             app:destination="@id/invitationFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"/>
     </fragment>
 
     <fragment
@@ -34,10 +34,10 @@
             app:argType="long" />
         <action
             android:id="@+id/to_photoFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/photoFragment"/>
         <action
             android:id="@+id/to_parentPermissionFragment"
@@ -76,8 +76,8 @@
             android:id="@+id/to_groupAlbumTitleFragment"
             app:destination="@id/groupAlbumTitleFragment"
             app:enterAnim="@anim/slide_in_bottom"
-            app:exitAnim="@anim/stay"
-            app:popEnterAnim="@anim/stay"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"/>
     </fragment>
 
@@ -93,8 +93,8 @@
             app:popUpTo="@id/viewPagerFragment"
             app:destination="@id/createGroupAlbumCompleteFragment"
             app:enterAnim="@anim/slide_in_bottom"
-            app:exitAnim="@anim/stay"
-            app:popEnterAnim="@anim/stay"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"/>
     </fragment>
 
@@ -107,7 +107,9 @@
         <action
             android:id="@+id/to_viewPagerFragment"
             app:destination="@id/viewPagerFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_in_right"/>
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"/>
     </fragment>
 </navigation>

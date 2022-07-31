@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
-import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationCompleteBinding
 
 class FaceInformationCompleteFragment : Fragment() {
@@ -27,7 +26,7 @@ class FaceInformationCompleteFragment : Fragment() {
                 )
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
-                activity?.overridePendingTransition(org.soma.everyonepick.common_ui.R.anim.slide_in_right, org.soma.everyonepick.common_ui.R.anim.slide_out_left);
+                activity?.overridePendingTransition(org.soma.everyonepick.common_ui.R.anim.slide_in_bottom, org.soma.everyonepick.common_ui.R.anim.stay_out);
             }
         }
 
