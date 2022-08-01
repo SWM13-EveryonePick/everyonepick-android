@@ -80,4 +80,21 @@ object ViewBinding {
         spannable.insert(spannable.length, suffix)
         view.text = spannable
     }
+
+    @JvmStatic
+    @BindingAdapter("text", "boldColorStart", "boldColorEnd", "color", requireAll = true)
+    fun setTextViewBoldAndColorWithRange(view: TextView, text: String, boldColorStart: Int, boldColorEnd: Int, color: Int) {
+        val spannable = SpannableString(text)
+        spannable.setSpan(
+            ForegroundColorSpan(color),
+            boldColorStart, boldColorEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannable.setSpan(
+            StyleSpan(Typeface.BOLD),
+            boldColorStart, boldColorEnd,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        view.text = spannable
+    }
 }

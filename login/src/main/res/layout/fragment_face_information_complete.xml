@@ -14,10 +14,46 @@
         android:layout_height="match_parent"
         tools:context=".ui.FaceInformationCompleteFragment">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_face_id_illust"
+            android:layout_marginBottom="35dp"
+            app:layout_constraintBottom_toTopOf="@id/text_title"
+            />
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/face_information_complete_title"
+            android:textColor="@color/title"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/subtext"
+            android:layout_marginTop="20dp"
+            text="@{@string/face_information_complete_description}"
+            boldColorStart="@{4}"
+            boldColorEnd="@{12}"
+            color="@{@color/primary_blue}"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="이제, 모두의 PICK을 마을껏 이용해보세요!"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:text="@string/face_information_complete_button"
+            style="@style/BottomButton"
             android:onClick="@{onClickNextButton}"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

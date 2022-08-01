@@ -16,13 +16,7 @@ class Landing2Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLanding2Binding.inflate(inflater, container, false).apply {
-            lifecycleOwner = viewLifecycleOwner
-            onClickNextButton = View.OnClickListener {
-                findNavController().navigate(Landing2FragmentDirections.toLanding3Fragment())
-            }
-        }
-
+        _binding = FragmentLanding2Binding.inflate(inflater, container, false)
         return binding.root
     }
 

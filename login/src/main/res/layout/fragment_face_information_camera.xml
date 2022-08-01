@@ -23,13 +23,29 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_face_information_camera"/>
 
-        <Button
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="TODO: 버튼 지우고 자동으로 넘어가기"
+            android:text="@string/face_information_camera_title"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="8dp"
             android:onClick="@{() -> fragment.onClickNextButton()}"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toTopOf="@id/text_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/face_information_camera_description"
+            android:textColor="@color/white"
+            android:layout_marginBottom="40dp"
+            android:onClick="@{() -> fragment.onClickNextButton()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

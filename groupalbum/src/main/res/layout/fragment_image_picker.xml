@@ -53,24 +53,18 @@
 
         </ScrollView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_bottom_button"
-                android:text="업로드하기"
-                android:onClick="@{onClickUploadButtonListener}"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            style="@style/BottomButton"
+            android:text="@string/do_upload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{onClickUploadButtonListener}"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="갤러리 내에 사진이 없어요 :/"
+            android:text="@string/no_images_in_gallery"
             android:visibility="@{viewModel.imageItemList.size() == 0? View.VISIBLE: View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

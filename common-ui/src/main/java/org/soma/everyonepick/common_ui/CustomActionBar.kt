@@ -34,11 +34,6 @@ class CustomActionBar: ConstraintLayout {
         setTypedArray(typedArray)
     }
 
-    private fun getAttrs(attrs: AttributeSet?, defStyle: Int){
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomActionBar, defStyle, 0)
-        setTypedArray(typedArray)
-    }
-
     private fun setTypedArray(typedArray: TypedArray) {
         val hasBackButton = typedArray.getBoolean(R.styleable.CustomActionBar_hasBackButton, false)
         binding.imageBackbutton.visibility = when(hasBackButton) {

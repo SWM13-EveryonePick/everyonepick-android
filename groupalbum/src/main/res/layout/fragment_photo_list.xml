@@ -109,7 +109,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="NO PHOTOS"/>
+                android:text="@string/no_photos"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_description">모두가 마음에 들어하는 사진을 쉽고 빠르게</string>
+    <string name="next">다음</string>
+    <string name="delete">삭제</string>
+    <string name="do_create">생성하기</string>
+    <string name="next_step">다음 단계</string>
+    <string name="confirm">확인</string>
+    <string name="do_upload">업로드하기</string>
+    <string name="accept_permission_in_settings">설정에서 권한을 허용합니다.</string>
+</resources>
