@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp' version "1.6.10-1.0.4"
 }
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk 32
@@ -36,6 +38,21 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation "com.squareup.okhttp3:okhttp:4.7.2"
     implementation project(path: ':foundation')
+
+    // Room
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.4")
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$roomVersion")
+    // To use Kotlin Symbolic Processing (KSP)
+    ksp("androidx.room:room-compiler:$roomVersion")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$roomVersion")
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:$roomVersion")
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

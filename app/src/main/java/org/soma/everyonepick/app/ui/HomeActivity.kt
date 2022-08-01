@@ -3,6 +3,7 @@ package org.soma.everyonepick.app.ui
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -16,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.foundation.utility.PREFERENCE_HAS_TUTORIAL_SHOWN
 
 
 private const val ANIMATION_DURATION = 150L
@@ -31,9 +33,24 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
                 layoutTutorial.visibility = View.GONE
             }
         }
+
+        showTutorialAndEditPreference()
         supportActionBar?.hide()
 
         initializeNavigation()
+    }
+
+    private fun showTutorialAndEditPreference() {
+        val pref = getPreferences(Context.MODE_PRIVATE)
+        val hasTutorialShown = pref.getBoolean(PREFERENCE_HAS_TUTORIAL_SHOWN, false)
+        // 테스트용 코드: hasTutorialShown = true
+        if (!hasTutorialShown) {
+            binding.layoutTutorial.visibility = View.VISIBLE
+            with(pref.edit()) {
+                putBoolean(PREFERENCE_HAS_TUTORIAL_SHOWN, true)
+                apply()
+            }
+        }
     }
 
     private fun initializeNavigation() {
