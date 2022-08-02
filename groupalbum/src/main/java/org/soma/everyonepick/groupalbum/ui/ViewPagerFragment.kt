@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentViewPagerBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
@@ -26,7 +28,7 @@ import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
 private val TAB_ITEMS = listOf("앨범", "친구목록")
 
 @AndroidEntryPoint
-class ViewPagerFragment : Fragment() {
+class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
 
@@ -74,9 +76,9 @@ class ViewPagerFragment : Fragment() {
         }.attach()
 
         // 선택된 탭과 그렇지 않은 탭의 텍스트 스타일에 각각 변화를 줍니다.
-        binding.tablayout.apply {
-            for (i in 0 until tabCount) {
-                getTabAt(i)?.let { tab ->
+        binding.tablayout.let { tabLayout ->
+            for (i in 0 until tabLayout.tabCount) {
+                tabLayout.getTabAt(i)?.let { tab ->
                     val textView = TextView(context)
                     tab.customView = textView
 
@@ -84,31 +86,24 @@ class ViewPagerFragment : Fragment() {
                         it.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
                         it.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
                         it.text = tab.text
-                        setTabLayoutText(it, i == selectedTabPosition)
+                        setTabLayoutText(it, i == tabLayout.selectedTabPosition)
                     }
                 }
             }
 
-            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    tab.customView?.let { setTabLayoutText(it as TextView, true) }
-                }
-                override fun onTabUnselected(tab: TabLayout.Tab) {
-                    tab.customView?.let { setTabLayoutText(it as TextView, false) }
-                }
-                override fun onTabReselected(tab: TabLayout.Tab) {}
-            })
+            tabLayout.addOnTabSelectedListener(this)
         }
     }
 
     private fun setTabLayoutText(textView: TextView, isSelected: Boolean) {
-        if(isSelected){
-            textView.setTextColor(Color.WHITE)
-            textView.setTypeface(null, Typeface.BOLD)
-        }else{
-            textView.setTextColor(ContextCompat.getColor(requireContext(), org.soma.everyonepick.common_ui.R.color.cloud))
-            textView.setTypeface(null, Typeface.NORMAL)
-        }
+        textView.setTextColor(
+            if (isSelected) Color.WHITE
+            else ContextCompat.getColor(requireContext(), org.soma.everyonepick.common_ui.R.color.cloud)
+        )
+        textView.setTypeface(
+            Typeface.DEFAULT_BOLD,
+            if (isSelected) Typeface.BOLD else Typeface.NORMAL
+        )
     }
 
     override fun onStart() {
@@ -159,4 +154,14 @@ class ViewPagerFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+
+    // OnTabSelectedListener
+    override fun onTabSelected(tab: TabLayout.Tab) {
+        tab.customView?.let { setTabLayoutText(it as TextView, true) }
+    }
+    override fun onTabUnselected(tab: TabLayout.Tab) {
+        tab.customView?.let { setTabLayoutText(it as TextView, false) }
+    }
+    override fun onTabReselected(tab: TabLayout.Tab) {}
 }
