@@ -97,6 +97,7 @@
                         android:layout_height="60dp"
                         android:src="@drawable/ico_empty_person"
                         android:layout_marginBottom="20dp"
+                        android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                         app:layout_constraintBottom_toTopOf="@id/text_nofriends"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
@@ -123,6 +124,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:clickable="true"
+                        android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                         app:layout_constraintTop_toBottomOf="@id/text_nofriends"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
