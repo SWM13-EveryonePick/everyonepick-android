@@ -57,8 +57,6 @@
                                 android:clipToPadding="false"
                                 android:padding="25dp"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:layout_editor_absoluteX="0dp"
-                                tools:layout_editor_absoluteY="0dp"
                                 tools:listitem="@layout/item_friend" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </ScrollView>
@@ -73,36 +71,45 @@
                         android:background="@drawable/gradient_transparent_to_white"
                         app:layout_constraintBottom_toBottomOf="@id/scrollview"/>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:visibility="@{viewModel.friends.elements.size() == 0? View.VISIBLE: View.GONE}"
+                style="@style/ListCardView"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    >
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:visibility="@{viewModel.friends.elements.size() == 0? View.VISIBLE: View.GONE}"
-                        >
+                        android:text="@string/no_friends"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:text="@string/no_friends"/>
-
-                        <ProgressBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
