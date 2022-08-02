@@ -26,6 +26,9 @@ class FriendListFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
             it.adapter = FriendAdapter()
             it.viewModel = viewModel
+            it.onClickKakaoButton = View.OnClickListener {
+                // TODO: 카카오톡 메시지 보내기
+            }
         }
 
         return binding.root
