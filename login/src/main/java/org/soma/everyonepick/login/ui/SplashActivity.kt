@@ -22,7 +22,6 @@ class SplashActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         supportActionBar?.hide()
 
-        startTextViewAnimation()
         finishSplash()
     }
 
@@ -38,22 +37,6 @@ class SplashActivity : AppCompatActivity() {
         window?.let {
             it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             it.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    private fun startTextViewAnimation() {
-        val descriptionParams = binding.textDescription.layoutParams as ConstraintLayout.LayoutParams
-        ValueAnimator.ofInt(100, 0).apply {
-            addUpdateListener { valueAnimator ->
-                binding.textTitle.alpha = animatedFraction
-                binding.textDescription.alpha = animatedFraction
-
-                descriptionParams.bottomMargin = valueAnimator.animatedValue as Int
-                binding.textDescription.layoutParams = descriptionParams
-            }
-            duration = 300
-
-            start()
         }
     }
 }
