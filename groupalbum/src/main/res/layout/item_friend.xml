@@ -5,9 +5,7 @@
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_friend_item"
-        android:layout_marginLeft="@dimen/margin_friend_item"
-        android:layout_marginRight="@dimen/margin_friend_item">
+        android:layout_height="@dimen/height_friend_item">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_profile"
@@ -23,7 +21,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/title"
+            android:layout_marginLeft="16dp"
             app:layout_constraintStart_toEndOf="@id/image_profile"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="서달미"
