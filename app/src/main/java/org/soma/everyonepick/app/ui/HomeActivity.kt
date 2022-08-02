@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,8 @@ private const val ANIMATION_DURATION = 150L
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeActivityUtility {
     private lateinit var binding: ActivityHomeBinding
+
+    private var valueAnimator: ValueAnimator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,15 +94,18 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
 
 
     override fun hideBottomNavigationView() {
+        val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
         val height = binding.bottomnavigationview.height
-        animateBottomNavigationViewBottomMargin(0, -height)
+        animateBottomNavigationViewBottomMargin(params.bottomMargin, -height)
     }
 
     private fun animateBottomNavigationViewBottomMargin(start: Int, end: Int) {
         val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
         if(params.bottomMargin == end) return
 
-        ValueAnimator.ofInt(start, end).apply {
+        valueAnimator?.cancel()
+
+        valueAnimator = ValueAnimator.ofInt(start, end).apply {
             addUpdateListener { valueAnimator ->
                 params.bottomMargin = valueAnimator.animatedValue as Int
                 binding.bottomnavigationview.layoutParams = params
@@ -111,8 +117,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
     }
 
     override fun showBottomNavigationView() {
-        val height = binding.bottomnavigationview.height
-        animateBottomNavigationViewBottomMargin(-height, 0)
+        val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
+        animateBottomNavigationViewBottomMargin(params.bottomMargin, 0)
     }
 
     override fun showAreYouSureDialog() {

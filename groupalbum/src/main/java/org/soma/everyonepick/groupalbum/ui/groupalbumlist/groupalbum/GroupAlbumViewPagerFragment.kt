@@ -111,8 +111,6 @@ class GroupAlbumViewPagerFragment: Fragment() {
 
         viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbumDao(args.groupAlbumId)
 
-        (activity as HomeActivityUtility).hideBottomNavigationView()
-
         return binding.root
     }
 
@@ -143,6 +141,8 @@ class GroupAlbumViewPagerFragment: Fragment() {
                 binding.tablayout
             )
         }
+
+        (activity as HomeActivityUtility).hideBottomNavigationView()
     }
 
     override fun onDestroy() {

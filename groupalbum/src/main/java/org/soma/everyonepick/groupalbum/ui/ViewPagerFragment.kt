@@ -53,8 +53,6 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             }
         }
 
-        (activity as HomeActivityUtility).showBottomNavigationView()
-
         return binding.root
     }
 
@@ -122,6 +120,8 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
                 binding.tablayout
             )
         }
+
+        (activity as HomeActivityUtility).showBottomNavigationView()
     }
 
     override fun onResume() {
