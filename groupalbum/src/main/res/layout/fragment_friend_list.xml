@@ -30,6 +30,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="350dp"
                 style="@style/ListCardView"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -77,7 +78,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="350dp"
                 android:visibility="@{viewModel.friends.elements.size() == 0? View.VISIBLE: View.GONE}"
                 style="@style/ListCardView"
                 app:layout_constraintTop_toTopOf="parent">
@@ -89,18 +90,58 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-
                     >
 
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ico_empty_person"
+                        android:layout_marginBottom="20dp"
+                        app:layout_constraintBottom_toTopOf="@id/text_nofriends"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
                     <TextView
+                        android:id="@+id/text_nofriends"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                        android:textSize="16sp"
+                        android:gravity="center_horizontal"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:text="@string/no_friends"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:clickable="true"
+                        app:layout_constraintTop_toBottomOf="@id/text_nofriends"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:cardCornerRadius="@dimen/radius_medium"
+                        app:strokeColor="@color/primary_blue"
+                        app:strokeWidth="1dp"
+                        app:rippleColor="@color/primary_blue">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:text="@string/invite_with_kakao"
+                            android:textColor="@color/primary_blue"/>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                     <ProgressBar
                         android:layout_width="wrap_content"
@@ -120,6 +161,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{viewModel.friends.elements.size() > 0? View.VISIBLE: View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
