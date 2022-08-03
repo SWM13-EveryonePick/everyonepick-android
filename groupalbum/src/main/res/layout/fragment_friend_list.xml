@@ -78,7 +78,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="@dimen/height_empty_card_view"
                 android:visibility="@{viewModel.friends.elements.size() == 0? View.VISIBLE: View.GONE}"
                 style="@style/ListCardView"
                 app:layout_constraintTop_toTopOf="parent">
@@ -93,10 +93,10 @@
                     >
 
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="@dimen/size_empty_image"
+                        android:layout_height="@dimen/size_empty_image"
                         android:src="@drawable/ico_empty_person"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="@dimen/margin_bottom_empty_image"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                         app:layout_constraintBottom_toTopOf="@id/text_nofriends"
                         app:layout_constraintStart_toStartOf="parent"
@@ -120,15 +120,13 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="@dimen/margin_top_empty_button"
                         android:clickable="true"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                         app:layout_constraintTop_toBottomOf="@id/text_nofriends"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:cardCornerRadius="@dimen/radius_medium"
+                        app:cardCornerRadius="@dimen/radius_large"
                         app:strokeColor="@color/primary_blue"
                         app:strokeWidth="1dp"
                         app:rippleColor="@color/primary_blue">
@@ -136,12 +134,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="15dp"
                             android:text="@string/invite_with_kakao"
-                            android:textColor="@color/primary_blue"/>
+                            style="@style/EmptyButtonInnerText"/>
 
                     </com.google.android.material.card.MaterialCardView>
 
