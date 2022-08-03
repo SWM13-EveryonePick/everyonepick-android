@@ -54,10 +54,14 @@ class InviteFriendFragment : Fragment() {
             }
         }
 
-        KeyboardUtil.setOnTouchListenerToHideKeyboard(binding.root, requireActivity(), listOf(binding.customactionbar, binding.buttonNext))
-        (activity as HomeActivityUtility).hideBottomNavigationView()
-
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        (activity as HomeActivityUtility).hideBottomNavigationView()
+        KeyboardUtil.setOnTouchListenerToHideKeyboard(binding.root, requireActivity(), listOf(binding.customactionbar, binding.buttonNext))
     }
 
     override fun onResume() {

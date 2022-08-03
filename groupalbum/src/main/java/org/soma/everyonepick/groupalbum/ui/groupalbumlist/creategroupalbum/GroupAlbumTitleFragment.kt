@@ -45,13 +45,13 @@ class GroupAlbumTitleFragment : Fragment() {
             }
         }
 
-        (activity as HomeActivityUtility).hideBottomNavigationView()
-
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
+
+        (activity as HomeActivityUtility).hideBottomNavigationView()
         KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
     }
 }

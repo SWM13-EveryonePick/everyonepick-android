@@ -19,9 +19,13 @@ class CameraFragment : Fragment() {
         _binding = FragmentCameraBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
         }
-        (activity as HomeActivityUtility).showBottomNavigationView()
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
     }
 
     override fun onDestroy() {

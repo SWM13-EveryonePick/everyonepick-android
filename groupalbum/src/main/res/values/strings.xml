@@ -1,8 +1,12 @@
 <resources>
-    <!--메인-->
+    <!--단체공유앨범-->
     <string name="group_album">단체공유앨범</string>
     <string name="group_album_with_space">단체 공유 앨범</string>
     <string name="no_group_albums">단체공유앨범이 없습니다.</string>
+    <string name="create_group_album">앨범 생성</string>
+
+    <!--친구-->
+    <string name="invite_with_kakao">카톡으로 초대 메시지 보내기</string>
 
     <!--생성 플로우-->
     <string name="title_fragment_invite_friend">초대할 인원을\n선택해주세요</string>

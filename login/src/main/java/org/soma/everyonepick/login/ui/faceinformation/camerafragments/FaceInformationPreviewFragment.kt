@@ -77,7 +77,7 @@ class FaceInformationPreviewFragment : Fragment() {
         val screenAspectRatio = calculateAspectRatio()?: return
         val cameraProvider = processCameraProvider?: return
         val cameraSelector = CameraSelector.Builder()
-            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
             .build()
 
         // Preview

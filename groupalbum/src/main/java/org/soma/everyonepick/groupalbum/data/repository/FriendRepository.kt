@@ -31,9 +31,23 @@ class FriendRepository {
 
                 // Many Friends:
                 onSuccess.invoke(Friends(3, listOf(
-                    Friend(0, "", "DalMi Seo", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(2, "", "Shumann", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0)
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
+                    Friend(2, "", "Shumann", "https://picsum.photos/202", favorite = false, allowedMsg = false, 0),
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
+                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
+                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
                 ), 0, "",""))
             }
             onAlways.invoke()

@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
+import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
 
 @AndroidEntryPoint
-class GroupAlbumListFragment : Fragment() {
+class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     private var _binding: FragmentGroupAlbumListBinding? = null
     private val binding get() = _binding!!
 
@@ -31,16 +33,7 @@ class GroupAlbumListFragment : Fragment() {
             it.adapter = GroupAlbumAdapter(viewModel)
             it.viewModel = viewModel
             it.parentViewModel = parentViewModel
-            it.listener = object : GroupAlbumListFragmentListener {
-                override fun onClickDeleteButton() {
-                    viewModel.deleteCheckedItems()
-                    parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
-                }
-
-                override fun onClickCancelButton() {
-                    parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
-                }
-            }
+            it.listener = this
         }
 
         subscribeUi()
@@ -88,8 +81,23 @@ class GroupAlbumListFragment : Fragment() {
         const val GROUP_ALBUM_REMOVED = "group_album_removed"
     }
 
-    interface GroupAlbumListFragmentListener {
-        fun onClickDeleteButton()
-        fun onClickCancelButton()
+    override fun onClickDeleteButton() {
+        viewModel.deleteCheckedItems()
+        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
     }
+
+    override fun onClickCancelButton() {
+        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+    }
+
+    override fun onClickCreateGroupAlbumButton() {
+        val directions = ViewPagerFragmentDirections.toInvitationFragment()
+        findNavController().navigate(directions)
+    }
+}
+
+interface GroupAlbumListFragmentListener {
+    fun onClickDeleteButton()
+    fun onClickCancelButton()
+    fun onClickCreateGroupAlbumButton()
 }

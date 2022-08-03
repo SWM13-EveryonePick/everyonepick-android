@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ListCardView" parent="CardView">
+        <item name="android:layout_marginLeft">@dimen/margin_side</item>
+        <item name="android:layout_marginRight">@dimen/margin_side</item>
+        <item name="cardCornerRadius">@dimen/radius_large</item>
+    </style>
+    <style name="EmptyButtonInnerText" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:textColor">@color/primary_blue</item>
+    </style>
+</resources>

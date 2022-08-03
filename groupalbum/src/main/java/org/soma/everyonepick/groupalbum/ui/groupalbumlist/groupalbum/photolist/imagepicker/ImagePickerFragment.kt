@@ -39,8 +39,11 @@ class ImagePickerFragment : Fragment() {
 
         viewModel.fetchImageItemList(requireContext())
 
-        (activity as HomeActivityUtility).hideBottomNavigationView()
-
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as HomeActivityUtility).hideBottomNavigationView()
     }
 }
