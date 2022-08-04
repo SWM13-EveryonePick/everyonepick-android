@@ -1,17 +1,13 @@
 package org.soma.everyonepick.login.ui.landing
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,25 +18,32 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.flow.map
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.PreferencesDataStore
+import org.soma.everyonepick.common.api.Retrofit2Factory
+import org.soma.everyonepick.foundation.data.model.ProviderName
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
-import org.soma.everyonepick.login.R
+import org.soma.everyonepick.login.api.AuthService
+import org.soma.everyonepick.login.data.model.SignUpRequest
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.Util
 import org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LandingViewPagerFragment : Fragment() {
     private var _binding: FragmentLandingViewPagerBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
+
+    @Inject
+    lateinit var authService: AuthService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +59,7 @@ class LandingViewPagerFragment : Fragment() {
                 if(viewModel.isApiLoading.value == true) return@OnClickListener
 
                 viewModel.isApiLoading.value = true
-                Util.doKakaoLogin(requireContext(), { _,_ -> onLoginSuccess() }, { _,_ -> onLoginFailure() })
+                Util.loginWithKakao(requireContext(), { token,_ -> onLoginSuccess(token) }, { _,_ -> onLoginFailure() })
             }
         }
 
@@ -68,33 +71,39 @@ class LandingViewPagerFragment : Fragment() {
         Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun onLoginSuccess() {
-        UserApiClient.instance.me { user, error ->
-            viewModel.isApiLoading.value = false
+    private fun onLoginSuccess(token: OAuthToken?) {
+        lifecycleScope.launch {
+            try {
+                val req = SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())
+                val res = authService.signUp(req)
 
-            if(error != null){
-                Toast.makeText(requireContext(), "사용자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
-            }else if(user != null) {
-                Log.d(TAG, "사용자 정보 요청 성공\n회원번호: ${user.id}" +
-                            "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-                            "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+                PreferencesDataStore(requireContext()).editAccessToken(res.data.everyonepickAccessToken)
+                PreferencesDataStore(requireContext()).editRefreshToken(res.data.everyonepickRefreshToken)
 
-                // TODO: signUp
-                // 성공: token data store에 저장
-                lifecycleScope.launch {
-                    PreferencesDataStore(requireContext()).editAccessToken("TODO: 토큰값으로 변경")
-                    PreferencesDataStore(requireContext()).editRefreshToken("TODO: 토큰값으로 변경")
+                UserApiClient.instance.me { user, error ->
+                    viewModel.isApiLoading.value = false
+
+                    if (error != null) {
+                        Toast.makeText(requireContext(), "사용자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    } else if(user != null) {
+                        Log.d(TAG, "사용자 정보 요청 성공\n회원번호: ${user.id}" +
+                                "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
+                                "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+
+                        // TODO: 얼굴정보가 등록되었는가?
+                        if (true) {
+                            findNavController().navigate(
+                                LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
+                            )
+                        } else {
+                            startHomeActivity()
+                        }
+                    }
                 }
-                // 실패: onLoginFailure()
-
-                // TODO: 얼굴정보가 등록되었는가?
-                if(true){
-                    findNavController().navigate(
-                        LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
-                    )
-                }else{
-                    startHomeActivity()
-                }
+            } catch (e: Exception) {
+                Log.e(TAG, e.toString())
+                onLoginFailure()
+                viewModel.isApiLoading.value = false
             }
         }
     }

@@ -21,7 +21,7 @@ class Util {
             activity.overridePendingTransition(org.soma.everyonepick.common_ui.R.anim.slide_in_bottom, org.soma.everyonepick.common_ui.R.anim.stay_out);
         }
 
-        fun doKakaoLogin(
+        fun loginWithKakao(
             context: Context,
             onLoginSuccess: (OAuthToken?, Throwable?) -> Unit,
             onLoginFailure: (OAuthToken?, Throwable?) -> Unit

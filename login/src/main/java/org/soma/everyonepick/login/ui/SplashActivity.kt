@@ -32,36 +32,55 @@ class SplashActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         supportActionBar?.hide()
 
-        val activity = this
-        lifecycleScope.launch {
-            val accessTokenFlow = PreferencesDataStore(baseContext).accessToken
-            accessTokenFlow.collectLatest { token ->
-                if (token != null) {
-                    // TODO: Try to get access token by refresh token
-                    // 토큰을 얻는 데 성공했는가?(리프레시 토큰이 유효한가?)
-                    if (false) {
-                        Util.doKakaoLogin(baseContext, { _,_ ->
-                            Util.startHomeActivity(activity)
-                        }, { _,_ ->
-                            // 액세스 토큰까지 얻었지만 카카오톡 로그인이 안 되는 상태
-                            Toast.makeText(baseContext, "카카오톡 로그인에 실패했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                            startLoginActivity()
-                        })
-                    } else {
-                        startLoginActivity()
-                    }
-                } else {
-                    startLoginActivity()
-                }
-            }
+        lifecycleScope.launch { tryToLogin() }
+    }
+
+    /**
+     * 아래의 순차적으로 발생하는 세 조건이 모두 만족될 경우 바로 HomeActivity로 이동하게 됩니다.(자동 로그인)
+     * 1. 디바이스에 저장된 리프레시 토큰이 있으면서
+     * 2. 리프레시 토큰이 유효하여 액세스 토큰을 얻을 수 있고
+     * 3. 카카오톡 로그인에 성공할 경우
+     * 조건이 맞지 않을 경우 LoginActivity로 이동합니다.
+     */
+    private suspend fun tryToLogin() {
+        val refreshTokenFlow = PreferencesDataStore(baseContext).refreshToken
+        refreshTokenFlow.collectLatest { token ->
+            // 디바이스에 토큰이 저장되어 있는가?
+            if (token != null) tryToGetAccessToken(token)
+            else startLoginActivity()
         }
+    }
+
+    private suspend fun tryToGetAccessToken(refreshToken: String) {
+        try {
+            // TODO: val res = authService.getAccessToken(refreshToken)
+            val d = 1/0 // TODO: 제거할 것. 오류를 유도하기 위한 코드. 현재는 리프레시 api가 없으므로 무조건 실패해야 함.
+            PreferencesDataStore(baseContext).editAccessToken("TODO: 받아온 액세스 토큰")
+
+            // 액세스 토큰 호출에 성공
+            tryToLoginWithKakao()
+        } catch (e: Exception) {
+            // Refresh Token 만료
+            startLoginActivity()
+            Toast.makeText(baseContext, "Refresh Token이 유효하지 않습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun tryToLoginWithKakao() {
+        Util.loginWithKakao(baseContext, { _,_ ->
+            // 로그인 성공
+            Util.startHomeActivity(this)
+        }, { _,_ ->
+            // 로그인 실패
+            startLoginActivity()
+            Toast.makeText(baseContext, "카카오톡 로그인에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun startLoginActivity() {
         startActivity(Intent(applicationContext, LoginActivity::class.java))
         finish()
     }
-
 
 
     override fun onStart() {

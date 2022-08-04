@@ -8,10 +8,12 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
+import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.foundation.utility.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivityLoginBinding
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
