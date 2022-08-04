@@ -3,6 +3,7 @@ package org.soma.everyonepick.common
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -16,6 +17,7 @@ class PreferencesDataStore(private val context: Context) {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATA_STORE_NAME)
         private val accessTokenKey = stringPreferencesKey("access_token")
         private val refreshTokenKey = stringPreferencesKey("refresh_token")
+        private val hasTutorialShownKey = booleanPreferencesKey("has_tutorial_shown")
     }
 
     fun getAccessToken(): Flow<String?> = context.dataStore.data.map { preferences ->
@@ -37,6 +39,16 @@ class PreferencesDataStore(private val context: Context) {
         context.dataStore.edit { preferences ->
             if (refreshToken == null) preferences.remove(refreshTokenKey)
             else preferences[refreshTokenKey] = refreshToken
+        }
+    }
+
+    fun getHasShownTutorial(): Flow<Boolean?> = context.dataStore.data.map { preferences ->
+        preferences[hasTutorialShownKey]
+    }
+
+    suspend fun editHasShownTutorial(hasShownTutorial: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[hasTutorialShownKey] = hasShownTutorial
         }
     }
 }

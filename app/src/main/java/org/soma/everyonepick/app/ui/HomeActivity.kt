@@ -12,13 +12,16 @@ import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.foundation.utility.DATA_STORE_HAS_TUTORIAL_SHOWN
+import org.soma.everyonepick.common.PreferencesDataStore
 
 
 private const val ANIMATION_DURATION = 150L
@@ -37,21 +40,21 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
             }
         }
 
-        showTutorialAndEditPreference()
+        showTutorialAtFirst()
         supportActionBar?.hide()
 
         initializeNavigation()
     }
 
-    private fun showTutorialAndEditPreference() {
-        val pref = getPreferences(Context.MODE_PRIVATE)
-        val hasTutorialShown = pref.getBoolean(DATA_STORE_HAS_TUTORIAL_SHOWN, false)
-        // 테스트용 코드: hasTutorialShown = true
-        if (!hasTutorialShown) {
-            binding.layoutTutorial.visibility = View.VISIBLE
-            with(pref.edit()) {
-                putBoolean(DATA_STORE_HAS_TUTORIAL_SHOWN, true)
-                apply()
+    private fun showTutorialAtFirst() {
+        lifecycleScope.launch {
+            PreferencesDataStore(baseContext).run {
+                getHasShownTutorial().collectLatest { hasTutorialShown ->
+                    if (hasTutorialShown != true) {
+                        binding.layoutTutorial.visibility = View.VISIBLE
+                        editHasShownTutorial(true)
+                    }
+                }
             }
         }
     }
