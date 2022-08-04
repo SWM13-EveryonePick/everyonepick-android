@@ -1,28 +1,19 @@
 package org.soma.everyonepick.login.ui
 
-import android.animation.ValueAnimator
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.PreferencesDataStore
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
-import org.soma.everyonepick.login.utility.Util
+import org.soma.everyonepick.login.utility.LoginUtil
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
@@ -67,9 +58,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun tryToLoginWithKakao() {
-        Util.loginWithKakao(baseContext, { _,_ ->
+        LoginUtil.loginWithKakao(baseContext, { _, _ ->
             // 로그인 성공
-            Util.startHomeActivity(this)
+            LoginUtil.startHomeActivity(this)
         }, { _,_ ->
             // 로그인 실패
             startLoginActivity()

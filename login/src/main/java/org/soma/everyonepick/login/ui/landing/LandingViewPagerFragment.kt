@@ -21,17 +21,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.PreferencesDataStore
-import org.soma.everyonepick.common.api.Retrofit2Factory
 import org.soma.everyonepick.foundation.data.model.ProviderName
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 import org.soma.everyonepick.login.api.AuthService
 import org.soma.everyonepick.login.data.model.SignUpRequest
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
-import org.soma.everyonepick.login.utility.Util
+import org.soma.everyonepick.login.utility.LoginUtil
 import org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel
 import javax.inject.Inject
 
@@ -59,7 +56,7 @@ class LandingViewPagerFragment : Fragment() {
                 if(viewModel.isApiLoading.value == true) return@OnClickListener
 
                 viewModel.isApiLoading.value = true
-                Util.loginWithKakao(requireContext(), { token,_ -> onLoginSuccess(token) }, { _,_ -> onLoginFailure() })
+                LoginUtil.loginWithKakao(requireContext(), { token, _ -> onLoginSuccess(token) }, { _, _ -> onLoginFailure() })
             }
         }
 

@@ -9,7 +9,7 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 
-class Util {
+class LoginUtil {
     companion object {
         fun startHomeActivity(activity: Activity) {
             val intent = Intent(
