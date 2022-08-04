@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.foundation.utility.PREFERENCE_HAS_TUTORIAL_SHOWN
+import org.soma.everyonepick.foundation.utility.DATA_STORE_HAS_TUTORIAL_SHOWN
 
 
 private const val ANIMATION_DURATION = 150L
@@ -45,12 +45,12 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
 
     private fun showTutorialAndEditPreference() {
         val pref = getPreferences(Context.MODE_PRIVATE)
-        val hasTutorialShown = pref.getBoolean(PREFERENCE_HAS_TUTORIAL_SHOWN, false)
+        val hasTutorialShown = pref.getBoolean(DATA_STORE_HAS_TUTORIAL_SHOWN, false)
         // 테스트용 코드: hasTutorialShown = true
         if (!hasTutorialShown) {
             binding.layoutTutorial.visibility = View.VISIBLE
             with(pref.edit()) {
-                putBoolean(PREFERENCE_HAS_TUTORIAL_SHOWN, true)
+                putBoolean(DATA_STORE_HAS_TUTORIAL_SHOWN, true)
                 apply()
             }
         }

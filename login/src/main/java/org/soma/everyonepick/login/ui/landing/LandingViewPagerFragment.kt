@@ -1,5 +1,6 @@
 package org.soma.everyonepick.login.ui.landing
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -18,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -25,9 +27,13 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.PreferencesDataStore
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
+import org.soma.everyonepick.login.utility.Util
 import org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel
 
 class LandingViewPagerFragment : Fragment() {
@@ -50,30 +56,7 @@ class LandingViewPagerFragment : Fragment() {
                 if(viewModel.isApiLoading.value == true) return@OnClickListener
 
                 viewModel.isApiLoading.value = true
-                val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-                    if(error != null) onLoginFailure()
-                    else if(token != null) onLoginSuccess()
-                }
-
-                // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-                if(UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
-                    UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
-                        if(error != null) {
-                            onLoginFailure()
-
-                            // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도한다.
-                            // 단, 사용자가 의도적으로 로그인을 취소한 경우는 제외한다.
-                            if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                                viewModel.isApiLoading.value = false
-                                return@loginWithKakaoTalk
-                            }
-                            UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
-                        }
-                        else if(token != null) onLoginSuccess()
-                    }
-                } else {
-                    UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
-                }
+                Util.doKakaoLogin(requireContext(), { _,_ -> onLoginSuccess() }, { _,_ -> onLoginFailure() })
             }
         }
 
@@ -92,16 +75,20 @@ class LandingViewPagerFragment : Fragment() {
             if(error != null){
                 Toast.makeText(requireContext(), "사용자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
             }else if(user != null) {
-                Log.d(
-                    TAG, "사용자 정보 요청 성공" +
-                            "\n회원번호: ${user.id}" +
+                Log.d(TAG, "사용자 정보 요청 성공\n회원번호: ${user.id}" +
                             "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                             "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
 
-                // TODO: 가입 여부 체크
-                // 첫 로그인일 경우
+                // TODO: signUp
+                // 성공: token data store에 저장
+                lifecycleScope.launch {
+                    PreferencesDataStore(requireContext()).editAccessToken("TODO: 토큰값으로 변경")
+                    PreferencesDataStore(requireContext()).editRefreshToken("TODO: 토큰값으로 변경")
+                }
+                // 실패: onLoginFailure()
+
+                // TODO: 얼굴정보가 등록되었는가?
                 if(true){
-                    // TODO: 회원가입 진행
                     findNavController().navigate(
                         LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
                     )

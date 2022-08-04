@@ -11,6 +11,7 @@ import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationCompleteBinding
 import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_DURATION
 import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_Y_OFFSET
+import org.soma.everyonepick.login.utility.Util
 
 class FaceInformationCompleteFragment : Fragment() {
     private var _binding: FragmentFaceInformationCompleteBinding? = null
@@ -23,13 +24,7 @@ class FaceInformationCompleteFragment : Fragment() {
         _binding = FragmentFaceInformationCompleteBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.onClickNextButton = View.OnClickListener {
-                val intent = Intent(
-                    requireContext(),
-                    Class.forName(HOME_ACTIVITY_CLASS)
-                )
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                activity?.overridePendingTransition(org.soma.everyonepick.common_ui.R.anim.slide_in_bottom, org.soma.everyonepick.common_ui.R.anim.stay_out);
+                Util.startHomeActivity(requireActivity())
             }
         }
 
