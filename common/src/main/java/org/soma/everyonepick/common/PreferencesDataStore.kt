@@ -20,9 +20,20 @@ class PreferencesDataStore(private val context: Context) {
         private val hasTutorialShownKey = booleanPreferencesKey("has_tutorial_shown")
     }
 
-    fun getAccessToken(): Flow<String?> = context.dataStore.data.map { preferences ->
-        preferences[accessTokenKey]
-    }
+    val accessToken: Flow<String?>
+        get() = context.dataStore.data.map { preferences ->
+            preferences[accessTokenKey]
+        }
+
+    val refreshToken: Flow<String?>
+        get() = context.dataStore.data.map { preferences ->
+            preferences[refreshTokenKey]
+        }
+
+    val hasShownTutorial: Flow<Boolean?>
+        get() = context.dataStore.data.map { preferences ->
+            preferences[hasTutorialShownKey]
+        }
 
     suspend fun editAccessToken(accessToken: String?) {
         context.dataStore.edit { preferences ->
@@ -31,19 +42,11 @@ class PreferencesDataStore(private val context: Context) {
         }
     }
 
-    fun getRefreshToken(): Flow<String?> = context.dataStore.data.map { preferences ->
-        preferences[refreshTokenKey]
-    }
-
     suspend fun editRefreshToken(refreshToken: String?) {
         context.dataStore.edit { preferences ->
             if (refreshToken == null) preferences.remove(refreshTokenKey)
             else preferences[refreshTokenKey] = refreshToken
         }
-    }
-
-    fun getHasShownTutorial(): Flow<Boolean?> = context.dataStore.data.map { preferences ->
-        preferences[hasTutorialShownKey]
     }
 
     suspend fun editHasShownTutorial(hasShownTutorial: Boolean) {

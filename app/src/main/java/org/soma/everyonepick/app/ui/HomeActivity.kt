@@ -49,7 +49,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
     private fun showTutorialAtFirst() {
         lifecycleScope.launch {
             PreferencesDataStore(baseContext).run {
-                getHasShownTutorial().collectLatest { hasTutorialShown ->
+                hasShownTutorial.collectLatest { hasTutorialShown ->
                     if (hasTutorialShown != true) {
                         binding.layoutTutorial.visibility = View.VISIBLE
                         editHasShownTutorial(true)

@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
 
         val activity = this
         lifecycleScope.launch {
-            val accessTokenFlow = PreferencesDataStore(baseContext).getAccessToken()
+            val accessTokenFlow = PreferencesDataStore(baseContext).accessToken
             accessTokenFlow.collectLatest { token ->
                 if (token != null) {
                     // TODO: Try to get access token by refresh token
