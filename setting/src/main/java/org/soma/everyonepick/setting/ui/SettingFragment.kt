@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common.utility.HomeActivityUtility
 import org.soma.everyonepick.setting.R
 
 class SettingFragment : Fragment() {

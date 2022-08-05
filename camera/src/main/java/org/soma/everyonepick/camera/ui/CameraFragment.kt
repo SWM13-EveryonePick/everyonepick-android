@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.soma.everyonepick.camera.databinding.FragmentCameraBinding
-import org.soma.everyonepick.common.HomeActivityUtility
 
 class CameraFragment : Fragment() {
     private var _binding: FragmentCameraBinding? = null

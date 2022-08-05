@@ -31,7 +31,7 @@ class GroupAlbumAdapter(
     private val parentViewModel: GroupAlbumListViewModel
 ): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
     override fun getItemViewType(position: Int): Int {
-        return if(position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
+        return if (position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
         else GroupAlbumViewType.GROUP_ALBUM.ordinal
     }
 
@@ -72,10 +72,10 @@ class GroupAlbumAdapter(
         binding.root.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
-            if(!item.isCheckboxVisible) {
+            if (!item.isCheckboxVisible) {
                 val directions = ViewPagerFragmentDirections.toGroupAlbumViewPagerFragment(item.groupAlbumDao.id)
                 binding.root.findNavController().navigate(directions)
-            }else{
+            } else {
                 binding.checkbox.performTouch()
             }
         }

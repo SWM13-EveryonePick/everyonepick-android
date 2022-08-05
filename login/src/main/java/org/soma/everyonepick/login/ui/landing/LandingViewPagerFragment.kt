@@ -1,6 +1,5 @@
 package org.soma.everyonepick.login.ui.landing
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -19,18 +18,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.PreferencesDataStore
-import org.soma.everyonepick.common.api.Retrofit2Factory
+import org.soma.everyonepick.common.api.RetrofitFactory.Companion.toBearerToken
+import org.soma.everyonepick.common.data.PreferencesDataStore
 import org.soma.everyonepick.foundation.data.model.ProviderName
-import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 import org.soma.everyonepick.login.api.AuthService
 import org.soma.everyonepick.login.api.UserService
-import org.soma.everyonepick.login.data.model.Jwt
 import org.soma.everyonepick.login.data.model.SignUpRequest
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.LoginUtil
@@ -38,13 +32,15 @@ import org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LandingViewPagerFragment : Fragment() {
+class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
     private var _binding: FragmentLandingViewPagerBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
     @Inject lateinit var authService: AuthService
+    @Inject lateinit var userService: UserService
+    @Inject lateinit var preferencesDataStore: PreferencesDataStore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,77 +49,10 @@ class LandingViewPagerFragment : Fragment() {
         _binding = FragmentLandingViewPagerBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
-            it.onClickNextButton = View.OnClickListener {
-                binding.viewpager2.currentItem += 1
-            }
-            it.onClickLoginButton = View.OnClickListener {
-                if(viewModel.isApiLoading.value == true) return@OnClickListener
-
-                viewModel.isApiLoading.value = true
-                LoginUtil.loginWithKakao(requireContext(), { token, _ -> onLoginSuccess(token) }, { _, _ -> onLoginFailure() })
-            }
+            it.listener = this
         }
 
         return binding.root
-    }
-
-    private fun onLoginFailure() {
-        viewModel.isApiLoading.value = false
-        Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun onLoginSuccess(token: OAuthToken?) {
-        signUp(token) {
-            navigateToNextPageByFaceInformation(it.everyonepickAccessToken)
-            viewModel.isApiLoading.value = false
-        }
-    }
-
-    private fun signUp(token: OAuthToken?, callback: (jwt: Jwt) -> Unit) {
-        lifecycleScope.launch {
-            try {
-                val req = SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())
-                val res = authService.signUp(req)
-
-                // 서버 토큰 저장
-                PreferencesDataStore(requireContext()).editAccessToken(res.data.everyonepickAccessToken)
-                PreferencesDataStore(requireContext()).editRefreshToken(res.data.everyonepickRefreshToken)
-
-                callback.invoke(res.data)
-            } catch (e: Exception) {
-                Toast.makeText(context, "회원가입에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                viewModel.isApiLoading.value = false
-            }
-        }
-    }
-
-    private fun navigateToNextPageByFaceInformation(accessToken: String) {
-        lifecycleScope.launch {
-            try {
-                val userService = Retrofit2Factory.create(UserService::class.java, accessToken)
-                val user = userService.getUser().data
-
-                // TODO: 얼굴 정보가 등록되어 있는가? if (user.faceInformation != null)
-                if (false) {
-                    startHomeActivity()
-                } else {
-                    val directions = LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
-                    findNavController().navigate(directions)
-                }
-            } catch (e: Exception) {
-                Toast.makeText(context, "회원정보를 불러오는 데 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                viewModel.isApiLoading.value = false
-            }
-        }
-    }
-
-    private fun startHomeActivity() {
-        val intent = Intent(
-            requireContext(),
-            Class.forName(HOME_ACTIVITY_CLASS)
-        )
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -143,39 +72,99 @@ class LandingViewPagerFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.textTermsdescription.run {
-            val spannableStringBuilder = SpannableStringBuilder(text)
-            spannableStringBuilder.setSpan(
-                object: ClickableSpan() {
-                    override fun onClick(widget: View) {
-                        // TODO: 서비스 이용약관
-                        Log.d(TAG, "서비스 이용약관")
-                    }
-                    override fun updateDrawState(ds: TextPaint) {
-                        super.updateDrawState(ds)
-                        highlightColor = Color.TRANSPARENT
-                    }
-                }, 22, 30, Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-            spannableStringBuilder.setSpan(
-                object: ClickableSpan() {
-                    override fun onClick(widget: View) {
-                        // TODO: 개인정보 취급방침
-                        Log.d(TAG, "개인정보 취급방침")
-                    }
-                    override fun updateDrawState(ds: TextPaint) {
-                        super.updateDrawState(ds)
-                        highlightColor = Color.TRANSPARENT
-                    }
-                }, 32, 41, Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
+        // 이용약관 텍스트 일부 범위(e.g. 개인정보 처리방침)에 클릭 이벤트를 추가합니다.
+        binding.textTermsdescription.let {
+            it.movementMethod = LinkMovementMethod.getInstance()
+            it.text = SpannableStringBuilder(it.text).apply {
+                setSpan(
+                    object: ClickableSpan() {
+                        override fun onClick(widget: View) {
+                            // TODO: 서비스 이용약관
+                            Log.d(TAG, "서비스 이용약관")
+                        }
+                        override fun updateDrawState(ds: TextPaint) {
+                            super.updateDrawState(ds)
+                            it.highlightColor = Color.TRANSPARENT
+                        }
+                    }, 22, 30, Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                )
+                setSpan(
+                    object: ClickableSpan() {
+                        override fun onClick(widget: View) {
+                            // TODO: 개인정보 취급방침
+                            Log.d(TAG, "개인정보 취급방침")
+                        }
+                        override fun updateDrawState(ds: TextPaint) {
+                            super.updateDrawState(ds)
+                            it.highlightColor = Color.TRANSPARENT
+                        }
+                    }, 32, 41, Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                )
+            }
+        }
+    }
 
-            movementMethod = LinkMovementMethod.getInstance()
-            text = spannableStringBuilder
+    /** LandingViewPagerFragmentListener */
+    override fun onClickNextButton() {
+        binding.viewpager2.currentItem += 1
+    }
+
+    /**
+     * 1. 카카오톡으로 로그인
+     * 2. 카카오 토큰을 기반으로 [AuthService.signUp] 호출
+     * 3. 얼굴정보 등록 여부에 따라서, HomeActivity 혹은 FaceInformation 페이지로 이동
+     */
+    override fun onClickLoginButton() {
+        if (viewModel.isApiLoading.value == true) return
+
+        viewModel.isApiLoading.value = true
+        LoginUtil.loginWithKakao(requireContext(), { token, _ ->
+            lifecycleScope.launch {
+                signUpAndNavigate(token)
+            }
+        }, { _, _ ->
+            viewModel.isApiLoading.value = false
+            Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    private suspend fun signUpAndNavigate(token: OAuthToken?) {
+        try {
+            val data = authService.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
+            preferencesDataStore.editAccessToken(data.everyonepickAccessToken)
+            preferencesDataStore.editRefreshToken(data.everyonepickRefreshToken)
+
+            navigateToNextPageByFaceInformation(data.everyonepickAccessToken)
+        } catch (e: Exception) {
+            Toast.makeText(context, "회원가입에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            viewModel.isApiLoading.value = false
+        }
+    }
+
+    private suspend fun navigateToNextPageByFaceInformation(accessToken: String) {
+        try {
+            val data = userService.getUser(accessToken.toBearerToken()).data
+
+            // 얼굴 정보가 등록되어 있는가?
+            // TODO: if (data.faceInformation != null)
+            if (false) {
+                LoginUtil.startHomeActivity(requireActivity())
+            } else {
+                val directions = LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
+                findNavController().navigate(directions)
+            }
+        } catch (e: Exception) {
+            Toast.makeText(context, "회원정보를 불러오는 데 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            viewModel.isApiLoading.value = false
         }
     }
 
     companion object {
         private const val TAG = "LandingViewPager"
     }
+}
+
+interface LandingViewPagerFragmentListener {
+    fun onClickNextButton()
+    fun onClickLoginButton()
 }

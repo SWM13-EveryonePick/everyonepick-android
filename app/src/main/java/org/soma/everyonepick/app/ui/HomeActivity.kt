@@ -3,10 +3,8 @@ package org.soma.everyonepick.app.ui
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +14,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
-import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.common.PreferencesDataStore
+import org.soma.everyonepick.common.utility.HomeActivityUtility
+import org.soma.everyonepick.common.data.PreferencesDataStore
+import javax.inject.Inject
 
 
 private const val ANIMATION_DURATION = 150L
@@ -31,6 +30,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
     private lateinit var binding: ActivityHomeBinding
 
     private var valueAnimator: ValueAnimator? = null
+
+    @Inject lateinit var preferencesDataStore: PreferencesDataStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +49,11 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
 
     private fun showTutorialAtFirst() {
         lifecycleScope.launch {
-            PreferencesDataStore(baseContext).run {
-                hasShownTutorial.collectLatest { hasTutorialShown ->
-                    if (hasTutorialShown != true) {
-                        binding.layoutTutorial.visibility = View.VISIBLE
-                        editHasShownTutorial(true)
-                    }
+            preferencesDataStore.run {
+                val hasTutorialShown = hasShownTutorial.first()
+                if (hasTutorialShown != true) {
+                    binding.layoutTutorial.visibility = View.VISIBLE
+                    editHasShownTutorial(true)
                 }
             }
         }
@@ -75,27 +75,28 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
     private fun setFullScreenMode(flag: Boolean) {
         supportActionBar?.setShowHideAnimationEnabled(false)
 
-        if(flag) hideStatusBar()
+        if (flag) hideStatusBar()
         else showStatusBar()
     }
 
     private fun hideStatusBar() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }else{
+        } else {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         }
     }
 
     private fun showStatusBar() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.show(WindowInsets.Type.statusBars())
-        }else{
+        } else {
             window.decorView.systemUiVisibility = View.VISIBLE
         }
     }
 
 
+    /** HomeActivityUtility */
     override fun hideBottomNavigationView() {
         val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
         val height = binding.bottomnavigationview.height
@@ -104,7 +105,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtility {
 
     private fun animateBottomNavigationViewBottomMargin(start: Int, end: Int) {
         val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
-        if(params.bottomMargin == end) return
+        if (params.bottomMargin == end) return
 
         valueAnimator?.cancel()
 

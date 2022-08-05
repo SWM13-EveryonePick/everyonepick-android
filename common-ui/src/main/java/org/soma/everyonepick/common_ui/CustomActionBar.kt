@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import org.soma.everyonepick.common_ui.databinding.ViewCustomActionBarBinding
 
 class CustomActionBar: ConstraintLayout {
-    constructor(context: Context): super(context){
+    constructor(context: Context): super(context) {
         initializeView(context)
     }
 

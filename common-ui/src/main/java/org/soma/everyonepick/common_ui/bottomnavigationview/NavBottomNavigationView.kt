@@ -8,7 +8,7 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
- * 각 Item이 Fragment가 아닌, Navigation으로 이루어졌을 때의 [BottomNavigationView]입니다.
+ * 각 Item이 Fragment가 아니라, Navigation으로 이루어졌을 때의 [BottomNavigationView]입니다.
  * 해당 커스텀 뷰는 다음과 같은 문제를 해결합니다.
  *  - 현재 위치한 Item을 눌렀을 경우 해당 Item 내부 페이지가 초기화가 되지 않는 문제
  *  - setOnItemSelectedListener()에 추가 동작을 설정하려면 NavigationUI.onNavDestinationSelected()을

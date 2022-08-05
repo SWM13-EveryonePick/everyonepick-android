@@ -38,11 +38,11 @@ class PhotoAdapter(
         binding.root.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
-            if(!item.isCheckboxVisible) {
+            if (!item.isCheckboxVisible) {
                 val photoUrl = item.photoDao.photoUrl
                 val directions = GroupAlbumViewPagerFragmentDirections.toPhotoFragment(photoUrl)
                 binding.root.findNavController().navigate(directions)
-            }else{
+            } else {
                 binding.checkbox.performTouch()
             }
         }

@@ -28,14 +28,14 @@ class LoginUtil {
             onLoginFailure: (OAuthToken?, Throwable?) -> Unit
         ) {
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-                if(error != null) onLoginFailure(token, error)
-                else if(token != null) onLoginSuccess(token, error)
+                if (error != null) onLoginFailure(token, error)
+                else if (token != null) onLoginSuccess(token, error)
             }
 
             // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-            if(UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
                 UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
-                    if(error != null) {
+                    if (error != null) {
                         onLoginFailure(token, error)
 
                         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도한다.
@@ -46,7 +46,7 @@ class LoginUtil {
                         }
                         UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                     }
-                    else if(token != null) onLoginSuccess(token, error)
+                    else if (token != null) onLoginSuccess(token, error)
                 }
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)

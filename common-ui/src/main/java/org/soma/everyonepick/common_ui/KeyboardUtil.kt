@@ -53,7 +53,7 @@ class KeyboardUtil {
             }
         }
 
-        fun showKeyboard(view: EditText, activity: Activity){
+        fun showKeyboard(view: EditText, activity: Activity) {
             val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
             view.requestFocus()

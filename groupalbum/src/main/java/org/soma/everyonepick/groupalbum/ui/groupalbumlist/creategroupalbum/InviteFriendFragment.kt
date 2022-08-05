@@ -2,27 +2,19 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsetsAnimation
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common.utility.HomeActivityUtility
 import org.soma.everyonepick.common_ui.KeyboardUtil
-import org.soma.everyonepick.common_ui.getVisibility
-import org.soma.everyonepick.common_ui.setVisibility
-import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
-import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
-import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel
 
 @AndroidEntryPoint

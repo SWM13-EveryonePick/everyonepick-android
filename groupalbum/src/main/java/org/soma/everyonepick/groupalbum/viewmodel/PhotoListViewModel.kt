@@ -29,18 +29,18 @@ class PhotoListViewModel @Inject constructor(
     }
 
     fun deleteCheckedItems() {
-        if(photoItemList.value == null) return
+        if (photoItemList.value == null) return
 
         val newPhotoItemList = mutableListOf<PhotoItem>()
         for(i in 0 until photoItemList.value!!.size) {
-            if(!photoItemList.value!![i].isChecked)
+            if (!photoItemList.value!![i].isChecked)
                 newPhotoItemList.add(photoItemList.value!![i])
         }
         photoItemList.value = newPhotoItemList
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        if(photoItemList.value == null) return
+        if (photoItemList.value == null) return
 
         for(i in 0 until photoItemList.value!!.size) {
             val newItem = copyPhotoItem(photoItemList.value!![i])

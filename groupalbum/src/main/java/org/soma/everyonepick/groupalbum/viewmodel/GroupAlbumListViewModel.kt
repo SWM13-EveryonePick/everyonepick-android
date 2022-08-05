@@ -48,23 +48,23 @@ class GroupAlbumListViewModel @Inject constructor(
     }
 
     fun deleteGroupAlbum(id: Long) {
-        if(groupAlbumItemList.value == null) return
+        if (groupAlbumItemList.value == null) return
 
         val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
         for(i in 0 until groupAlbumItemList.value!!.size) {
-            if(groupAlbumItemList.value!![i].groupAlbumDao.id != id)
+            if (groupAlbumItemList.value!![i].groupAlbumDao.id != id)
                 newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
         }
         groupAlbumItemList.value = newGroupAlbumItemList
     }
 
     fun deleteCheckedItems() {
-        if(groupAlbumItemList.value == null) return
+        if (groupAlbumItemList.value == null) return
 
         val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
         // 가장 마지막 아이템은 생성 버튼이므로 제거해선 안 됩니다.
         for(i in 0 until groupAlbumItemList.value!!.size - 1) {
-            if(!groupAlbumItemList.value!![i].isChecked)
+            if (!groupAlbumItemList.value!![i].isChecked)
                 newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
         }
         newGroupAlbumItemList.add(groupAlbumItemList.value!!.last())
@@ -73,7 +73,7 @@ class GroupAlbumListViewModel @Inject constructor(
 
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        if(groupAlbumItemList.value == null) return
+        if (groupAlbumItemList.value == null) return
 
         for(i in 0 until groupAlbumItemList.value!!.size) {
             val newItem = copyGroupAlbumItem(groupAlbumItemList.value!![i])
@@ -88,7 +88,7 @@ class GroupAlbumListViewModel @Inject constructor(
         GroupAlbumItem(groupAlbumItem.groupAlbumDao.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
 
     fun checkAll() {
-        if(groupAlbumItemList.value == null) return
+        if (groupAlbumItemList.value == null) return
 
         val isAllGroupAlbumChecked = groupAlbumItemList.value!!.all{ it.isChecked }
         for(i in 0 until groupAlbumItemList.value!!.size) {

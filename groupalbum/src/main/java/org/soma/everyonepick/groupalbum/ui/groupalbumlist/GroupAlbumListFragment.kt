@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common.utility.HomeActivityUtility
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections

@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.soma.everyonepick.common.api.Retrofit2Factory
+import org.soma.everyonepick.common.api.RetrofitFactory
 import org.soma.everyonepick.login.api.AuthService
 import org.soma.everyonepick.login.api.UserService
 import javax.inject.Singleton
@@ -15,6 +15,12 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideAuthService(): AuthService {
-        return Retrofit2Factory.create(AuthService::class.java)
+        return RetrofitFactory.create(AuthService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserService(): UserService {
+        return RetrofitFactory.create(UserService::class.java)
     }
 }

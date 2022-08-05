@@ -1,10 +1,8 @@
 package org.soma.everyonepick.groupalbum.ui
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +15,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
-import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.common.utility.HomeActivityUtility
+import org.soma.everyonepick.common.utility.ViewUtility.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.databinding.FragmentViewPagerBinding
 import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
@@ -45,9 +42,9 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickSelectButtonListener = View.OnClickListener {
-                if(viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
+                if (viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
                     viewModel.groupAlbumListMode.value = GroupAlbumListMode.SELECTION_MODE.ordinal
-                }else{
+                } else {
                     viewModel.checkAllTrigger.value = viewModel.checkAllTrigger.value?.plus(1)
                 }
             }

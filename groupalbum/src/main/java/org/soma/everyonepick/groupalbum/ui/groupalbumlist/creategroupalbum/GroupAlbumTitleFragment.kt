@@ -1,18 +1,15 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.common.utility.HomeActivityUtility
 import org.soma.everyonepick.common_ui.KeyboardUtil
-import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumTitleViewModel
 

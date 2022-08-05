@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common
+package org.soma.everyonepick.common.utility
 
 import android.widget.LinearLayout
 import androidx.core.view.children

@@ -9,11 +9,8 @@
             name="viewModel"
             type="org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel" />
         <variable
-            name="onClickNextButton"
-            type="android.view.View.OnClickListener" />
-        <variable
-            name="onClickLoginButton"
-            type="android.view.View.OnClickListener" />
+            name="listener"
+            type="org.soma.everyonepick.login.ui.landing.LandingViewPagerFragmentListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +25,7 @@
             android:layout_height="wrap_content"
             android:padding="24dp"
             android:clipToPadding="false"
-            android:onClick="@{onClickNextButton}"
+            android:onClick="@{() -> listener.onClickNextButton()}"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:visibility="@{viewModel.currentPosition == 2? View.INVISIBLE: View.VISIBLE}"
             app:layout_constraintTop_toTopOf="parent"
@@ -90,7 +87,7 @@
                 app:layout_constraintBottom_toTopOf="@id/text_termsdescription"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{onClickLoginButton}"/>
+                android:onClick="@{() -> listener.onClickLoginButton()}"/>
 
             <ProgressBar
                 android:layout_width="@dimen/size_loginprogressbar"

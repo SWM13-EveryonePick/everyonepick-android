@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common
+package org.soma.everyonepick.common.utility
 
 /**
  * 최상위 모듈인 app 모듈에 있는 HomeActivity의 함수에

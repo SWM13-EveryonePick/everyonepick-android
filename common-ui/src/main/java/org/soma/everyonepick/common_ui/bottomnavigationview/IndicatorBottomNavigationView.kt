@@ -42,7 +42,7 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
     }
 
     override fun dispatchDraw(canvas: Canvas) {
-        if(isLaidOut) {
+        if (isLaidOut) {
             val cornerRadius = indicator.height() / 2f
             canvas.drawRoundRect(indicator, cornerRadius, cornerRadius, paint)
         }
@@ -76,14 +76,14 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
                 indicator.set(left, top, right, bottom)
                 invalidate()
             }
-            duration = if(animated) ANIMATION_DURATION else 0L
+            duration = if (animated) ANIMATION_DURATION else 0L
 
             start()
         }
     }
 
     private fun cancelAnimator(shouldAnimatorEnd: Boolean) = animator?.let {
-        if(shouldAnimatorEnd) it.end()
+        if (shouldAnimatorEnd) it.end()
         else it.cancel()
 
         it.removeAllUpdateListeners()

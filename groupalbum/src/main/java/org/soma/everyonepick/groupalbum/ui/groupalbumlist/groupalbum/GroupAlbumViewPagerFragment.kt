@@ -17,8 +17,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.common.ViewUtility.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.common.utility.HomeActivityUtility
+import org.soma.everyonepick.common.utility.ViewUtility.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
@@ -65,7 +65,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
             it.listener = object : GroupAlbumViewPagerFragmentListener {
                 override fun onClickSelectButton() {
                     viewModel.photoListMode.value =
-                        if(viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal
+                        if (viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal
                         else PhotoListMode.NORMAL_MODE.ordinal
                 }
 
