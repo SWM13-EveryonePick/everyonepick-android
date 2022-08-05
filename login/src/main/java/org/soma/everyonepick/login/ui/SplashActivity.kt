@@ -4,26 +4,40 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.kakao.sdk.common.KakaoSdk
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.PreferencesDataStore
+import org.soma.everyonepick.foundation.utility.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
+import org.soma.everyonepick.login.api.AuthService
+import org.soma.everyonepick.login.data.model.RefreshRequest
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.utility.LoginUtil
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+
+    @Inject
+    lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         supportActionBar?.hide()
 
-        lifecycleScope.launch { tryToLogin() }
+        KakaoSdk.init(this, NATIVE_APP_KEY)
+        tryToLogin()
     }
 
     /**
@@ -33,32 +47,38 @@ class SplashActivity : AppCompatActivity() {
      * 3. 카카오톡 로그인에 성공할 경우
      * 조건이 맞지 않을 경우 LoginActivity로 이동합니다.
      */
-    private suspend fun tryToLogin() {
-        val refreshTokenFlow = PreferencesDataStore(baseContext).refreshToken
-        refreshTokenFlow.collectLatest { token ->
-            // 디바이스에 토큰이 저장되어 있는가?
-            if (token != null) tryToGetAccessToken(token)
-            else startLoginActivity()
+    private fun tryToLogin() {
+        lifecycleScope.launch {
+            val refreshTokenFlow = PreferencesDataStore(baseContext).refreshToken
+            refreshTokenFlow.collectLatest { token ->
+                cancel()
+
+                // 디바이스에 토큰이 저장되어 있는가?
+                if (token != null) tryToRefreshAccessToken(token)
+                else startLoginActivity()
+            }
         }
+
     }
 
-    private suspend fun tryToGetAccessToken(refreshToken: String) {
-        try {
-            // TODO: val res = authService.getAccessToken(refreshToken)
-            val d = 1/0 // TODO: 제거할 것. 오류를 유도하기 위한 코드. 현재는 리프레시 api가 없으므로 무조건 실패해야 함.
-            PreferencesDataStore(baseContext).editAccessToken("TODO: 받아온 액세스 토큰")
+    private fun tryToRefreshAccessToken(refreshToken: String) {
+        lifecycleScope.launch {
+            try {
+                val res = authService.refresh(RefreshRequest(refreshToken))
+                PreferencesDataStore(baseContext).editAccessToken(res.data.everyonepickAccessToken)
 
-            // 액세스 토큰 호출에 성공
-            tryToLoginWithKakao()
-        } catch (e: Exception) {
-            // Refresh Token 만료
-            startLoginActivity()
-            Toast.makeText(baseContext, "Refresh Token이 유효하지 않습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
+                // 액세스 토큰 얻기 성공
+                tryToLoginWithKakao()
+            } catch (e: Exception) {
+                // Refresh Token 만료
+                startLoginActivity()
+                Toast.makeText(baseContext, "Refresh Token이 유효하지 않습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun tryToLoginWithKakao() {
-        LoginUtil.loginWithKakao(baseContext, { _, _ ->
+        LoginUtil.loginWithKakao(this, { _, _ ->
             // 로그인 성공
             LoginUtil.startHomeActivity(this)
         }, { _,_ ->

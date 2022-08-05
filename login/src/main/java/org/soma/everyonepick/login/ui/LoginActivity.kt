@@ -20,8 +20,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         supportActionBar?.hide()
-
-        KakaoSdk.init(this, NATIVE_APP_KEY)
     }
 
     /**
