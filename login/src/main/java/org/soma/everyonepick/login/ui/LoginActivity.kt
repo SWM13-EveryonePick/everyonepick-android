@@ -1,15 +1,11 @@
 package org.soma.everyonepick.login.ui
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.databinding.DataBindingUtil
-import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.foundation.utility.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivityLoginBinding
 

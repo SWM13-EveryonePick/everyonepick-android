@@ -21,7 +21,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.api.RetrofitFactory.Companion.toBearerToken
-import org.soma.everyonepick.common.data.PreferencesDataStore
+import org.soma.everyonepick.common.data.pref.PreferencesDataStore
 import org.soma.everyonepick.foundation.data.model.ProviderName
 import org.soma.everyonepick.login.api.AuthService
 import org.soma.everyonepick.login.api.UserService

@@ -1,8 +1,7 @@
-package org.soma.everyonepick.common_ui
+package org.soma.everyonepick.common.util
 
 import android.animation.ValueAnimator
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 
 class AnimationUtil {
     companion object {

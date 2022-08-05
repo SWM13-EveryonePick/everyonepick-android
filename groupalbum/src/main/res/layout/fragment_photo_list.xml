@@ -5,10 +5,10 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.utility.PhotoListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.util.PhotoListMode"/>
         <variable
             name="listener"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment.PhotoListFragmentListener"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragmentListener"/>
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel"/>

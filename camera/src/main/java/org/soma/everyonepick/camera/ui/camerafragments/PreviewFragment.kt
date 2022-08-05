@@ -138,6 +138,7 @@ class PreviewFragment : Fragment() {
         cameraExecutor.shutdown()
     }
 
+
     companion object {
         private const val TAG = "PreviewFragment"
         private const val RATIO_4_3_VALUE = 4.0 / 3.0

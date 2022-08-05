@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common_ui
+package org.soma.everyonepick.common.util
 
 import android.app.Activity
 import android.content.Context
@@ -29,6 +29,9 @@ class KeyboardUtil {
             }
         }
 
+        /**
+         * @param exceptionViews 예외 뷰들에는 'touch to hide keyboard'가 적용되지 않습니다.
+         */
         fun setOnTouchListenerToHideKeyboard(view: View, activity: Activity, exceptionViews: List<View>) {
             if (view in exceptionViews) return
 

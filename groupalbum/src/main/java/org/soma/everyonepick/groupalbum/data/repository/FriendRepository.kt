@@ -5,8 +5,6 @@ import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.talk.model.Friend
 import com.kakao.sdk.talk.model.Friends
 
-private const val TAG = "FriendRepository"
-
 class FriendRepository {
     fun fetchFriends(
         onAlways: () -> Unit,
@@ -26,10 +24,10 @@ class FriendRepository {
                 Log.i(TAG, "카카오톡 친구 목록 가져오기 성공")
                 // onSuccess.invoke(newFriends)
 
-                // No Friends:
+                // TEST - No Friends:
                 // onSuccess.invoke(Friends(0, listOf(), 0, "", ""))
 
-                // Many Friends:
+                // TEST - Many Friends:
                 onSuccess.invoke(Friends(3, listOf(
                     Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
                     Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
@@ -52,5 +50,9 @@ class FriendRepository {
             }
             onAlways.invoke()
         }
+    }
+
+    companion object {
+        private const val TAG = "FriendRepository"
     }
 }

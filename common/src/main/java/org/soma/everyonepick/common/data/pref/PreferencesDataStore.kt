@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common.data
+package org.soma.everyonepick.common.data.pref
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

@@ -10,7 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
-import org.soma.everyonepick.groupalbum.utility.testGroupAlbumItem
+import org.soma.everyonepick.groupalbum.util.testGroupAlbumItem
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -24,8 +24,7 @@ class GroupAlbumListViewModelTest {
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
 
-    @Inject
-    lateinit var groupAlbumRepository: GroupAlbumRepository
+    @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
 
     @Before
     fun setUp() {

@@ -17,12 +17,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.common.utility.HomeActivityUtility
-import org.soma.everyonepick.common.utility.ViewUtility.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
-import org.soma.everyonepick.groupalbum.utility.PhotoListMode
+import org.soma.everyonepick.groupalbum.util.PhotoListMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import javax.inject.Inject
 
@@ -30,8 +29,7 @@ private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
 
 @AndroidEntryPoint
 class GroupAlbumViewPagerFragment: Fragment() {
-    @Inject
-    lateinit var groupAlbumRepository: GroupAlbumRepository
+    @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
 
     private var _binding: FragmentGroupAlbumViewPagerBinding? = null
     private val binding get() = _binding!!
@@ -142,7 +140,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
             )
         }
 
-        (activity as HomeActivityUtility).hideBottomNavigationView()
+        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
     }
 
     override fun onDestroy() {

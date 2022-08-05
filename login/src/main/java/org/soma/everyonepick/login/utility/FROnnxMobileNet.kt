@@ -130,6 +130,7 @@ class FROnnxMobileNet(private val context: Context, listener: OnnxListener): Ima
         return imgData
     }
 
+
     companion object {
         private const val IMAGE_MEAN: Float = .0f
         private const val IMAGE_STD: Float = 255f

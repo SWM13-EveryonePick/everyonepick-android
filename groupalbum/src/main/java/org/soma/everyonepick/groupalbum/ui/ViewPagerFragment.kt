@@ -15,14 +15,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.common.utility.HomeActivityUtility
-import org.soma.everyonepick.common.utility.ViewUtility.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.databinding.FragmentViewPagerBinding
-import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
+import org.soma.everyonepick.groupalbum.util.GroupAlbumListMode
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
-
-
-private val TAB_ITEMS = listOf("앨범", "친구목록")
 
 @AndroidEntryPoint
 class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
@@ -118,7 +114,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             )
         }
 
-        (activity as HomeActivityUtility).showBottomNavigationView()
+        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showBottomNavigationView()
     }
 
     override fun onResume() {
@@ -126,7 +122,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 when(viewModel.groupAlbumListMode.value) {
-                    GroupAlbumListMode.NORMAL_MODE.ordinal -> (activity as HomeActivityUtility).showAreYouSureDialog()
+                    GroupAlbumListMode.NORMAL_MODE.ordinal -> (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showAreYouSureDialog()
                     else -> viewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
                 }
             }
@@ -153,7 +149,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     }
 
 
-    // OnTabSelectedListener
+    /** OnTabSelectedListener */
     override fun onTabSelected(tab: TabLayout.Tab) {
         tab.customView?.let { setTabLayoutText(it as TextView, true) }
     }
@@ -161,4 +157,9 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         tab.customView?.let { setTabLayoutText(it as TextView, false) }
     }
     override fun onTabReselected(tab: TabLayout.Tab) {}
+
+
+    companion object {
+        private val TAB_ITEMS = listOf("앨범", "친구목록")
+    }
 }

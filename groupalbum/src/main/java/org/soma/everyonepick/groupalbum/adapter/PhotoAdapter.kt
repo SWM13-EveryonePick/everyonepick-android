@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.soma.everyonepick.common_ui.performTouch
-import org.soma.everyonepick.common_ui.setVisibility
+import org.soma.everyonepick.common.util.performTouch
+import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.item.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding

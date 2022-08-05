@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.soma.everyonepick.common_ui.AnimationUtil
+import org.soma.everyonepick.common.util.AnimationUtil
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationCompleteBinding
 import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_DURATION
 import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_Y_OFFSET

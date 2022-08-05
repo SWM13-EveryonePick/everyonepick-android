@@ -18,15 +18,15 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
-import org.soma.everyonepick.common.utility.HomeActivityUtility
-import org.soma.everyonepick.common.data.PreferencesDataStore
+import org.soma.everyonepick.foundation.util.HomeActivityUtil
+import org.soma.everyonepick.common.data.pref.PreferencesDataStore
 import javax.inject.Inject
 
 
 private const val ANIMATION_DURATION = 150L
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), HomeActivityUtility {
+class HomeActivity : AppCompatActivity(), HomeActivityUtil {
     private lateinit var binding: ActivityHomeBinding
 
     private var valueAnimator: ValueAnimator? = null

@@ -10,7 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
-import org.soma.everyonepick.groupalbum.utility.testPhotoItem
+import org.soma.everyonepick.groupalbum.util.testPhotoItem
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -24,8 +24,7 @@ class PhotoListViewModelTest {
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
 
-    @Inject
-    lateinit var photoRepository: PhotoRepository
+    @Inject lateinit var photoRepository: PhotoRepository
 
     @Before
     fun setUp() {

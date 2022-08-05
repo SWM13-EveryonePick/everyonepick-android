@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.utility
+package org.soma.everyonepick.groupalbum.util
 
 import android.app.Application
 import android.content.Context

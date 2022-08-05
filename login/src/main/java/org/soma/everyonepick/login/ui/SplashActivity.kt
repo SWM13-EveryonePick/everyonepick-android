@@ -12,8 +12,8 @@ import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.data.PreferencesDataStore
-import org.soma.everyonepick.foundation.utility.NATIVE_APP_KEY
+import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.foundation.util.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.api.AuthService
 import org.soma.everyonepick.login.data.model.RefreshRequest
@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity() {
                 val data = authService.refresh(RefreshRequest(refreshToken)).data
                 preferencesDataStore.editAccessToken(data.everyonepickAccessToken)
 
-                tryToLoginWithKakao()
+                loginWithKakaoAndStartHomeActivity()
             } catch (e: Exception) {
                 // Refresh Token 만료
                 startLoginActivity()
@@ -64,7 +64,7 @@ class SplashActivity : AppCompatActivity() {
         else startLoginActivity()
     }
 
-    private fun tryToLoginWithKakao() {
+    private fun loginWithKakaoAndStartHomeActivity() {
         LoginUtil.loginWithKakao(this, { _, _ ->
             LoginUtil.startHomeActivity(this)
         }, { _,_ ->

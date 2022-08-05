@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.util.GroupAlbumListMode"/>
         <variable
             name="listener"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragmentListener"/>

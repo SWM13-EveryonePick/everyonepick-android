@@ -30,8 +30,7 @@ class FaceInformationCameraFragment : Fragment() {
 
     // TODO: 얼굴 인식 성공하면 자동으로 넘어가기
     fun onClickNextButton() {
-        findNavController().navigate(
-            FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
-        )
+        val directions = FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
+        findNavController().navigate(directions)
     }
 }
