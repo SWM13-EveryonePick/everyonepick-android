@@ -21,11 +21,16 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.PreferencesDataStore
+import org.soma.everyonepick.common.api.Retrofit2Factory
 import org.soma.everyonepick.foundation.data.model.ProviderName
 import org.soma.everyonepick.foundation.utility.HOME_ACTIVITY_CLASS
 import org.soma.everyonepick.login.api.AuthService
+import org.soma.everyonepick.login.api.UserService
+import org.soma.everyonepick.login.data.model.Jwt
 import org.soma.everyonepick.login.data.model.SignUpRequest
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.LoginUtil
@@ -39,8 +44,7 @@ class LandingViewPagerFragment : Fragment() {
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
-    @Inject
-    lateinit var authService: AuthService
+    @Inject lateinit var authService: AuthService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,37 +73,45 @@ class LandingViewPagerFragment : Fragment() {
     }
 
     private fun onLoginSuccess(token: OAuthToken?) {
+        signUp(token) {
+            navigateToNextPageByFaceInformation(it.everyonepickAccessToken)
+            viewModel.isApiLoading.value = false
+        }
+    }
+
+    private fun signUp(token: OAuthToken?, callback: (jwt: Jwt) -> Unit) {
         lifecycleScope.launch {
             try {
                 val req = SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())
                 val res = authService.signUp(req)
 
+                // 서버 토큰 저장
                 PreferencesDataStore(requireContext()).editAccessToken(res.data.everyonepickAccessToken)
                 PreferencesDataStore(requireContext()).editRefreshToken(res.data.everyonepickRefreshToken)
 
-                UserApiClient.instance.me { user, error ->
-                    viewModel.isApiLoading.value = false
+                callback.invoke(res.data)
+            } catch (e: Exception) {
+                Toast.makeText(context, "회원가입에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                viewModel.isApiLoading.value = false
+            }
+        }
+    }
 
-                    if (error != null) {
-                        Toast.makeText(requireContext(), "사용자 정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
-                    } else if(user != null) {
-                        Log.d(TAG, "사용자 정보 요청 성공\n회원번호: ${user.id}" +
-                                "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-                                "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+    private fun navigateToNextPageByFaceInformation(accessToken: String) {
+        lifecycleScope.launch {
+            try {
+                val userService = Retrofit2Factory.create(UserService::class.java, accessToken)
+                val user = userService.getUser().data
 
-                        // TODO: 얼굴정보가 등록되었는가?
-                        if (true) {
-                            findNavController().navigate(
-                                LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
-                            )
-                        } else {
-                            startHomeActivity()
-                        }
-                    }
+                // TODO: 얼굴 정보가 등록되어 있는가? if (user.faceInformation != null)
+                if (false) {
+                    startHomeActivity()
+                } else {
+                    val directions = LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
+                    findNavController().navigate(directions)
                 }
             } catch (e: Exception) {
-                Log.e(TAG, e.toString())
-                onLoginFailure()
+                Toast.makeText(context, "회원정보를 불러오는 데 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 viewModel.isApiLoading.value = false
             }
         }

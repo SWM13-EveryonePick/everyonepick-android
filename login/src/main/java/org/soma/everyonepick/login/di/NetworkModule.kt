@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.soma.everyonepick.common.api.Retrofit2Factory
 import org.soma.everyonepick.login.api.AuthService
+import org.soma.everyonepick.login.api.UserService
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

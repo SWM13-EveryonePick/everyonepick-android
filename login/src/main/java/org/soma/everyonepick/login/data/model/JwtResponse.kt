@@ -3,7 +3,8 @@ package org.soma.everyonepick.login.data.model
 import com.google.gson.annotations.SerializedName
 import java.math.BigInteger
 
-data class ApiResultJwt(
+// ApiResultJwt
+data class JwtResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("data")
