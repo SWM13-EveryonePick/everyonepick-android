@@ -1,7 +1,6 @@
-package org.soma.everyonepick.login.api
+package org.soma.everyonepick.common.api
 
-import org.soma.everyonepick.login.data.model.UserResponse
-import retrofit2.http.Body
+import org.soma.everyonepick.common.data.model.UserResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 

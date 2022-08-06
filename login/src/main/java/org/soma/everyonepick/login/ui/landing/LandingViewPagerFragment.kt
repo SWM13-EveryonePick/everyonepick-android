@@ -23,9 +23,9 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.api.RetrofitFactory.Companion.toBearerToken
 import org.soma.everyonepick.common.data.pref.PreferencesDataStore
 import org.soma.everyonepick.foundation.data.model.ProviderName
-import org.soma.everyonepick.login.api.AuthService
-import org.soma.everyonepick.login.api.UserService
-import org.soma.everyonepick.login.data.model.SignUpRequest
+import org.soma.everyonepick.common.api.AuthService
+import org.soma.everyonepick.common.api.UserService
+import org.soma.everyonepick.common.data.model.SignUpRequest
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.LoginUtil
 import org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel

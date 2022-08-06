@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.data.model
+package org.soma.everyonepick.common.data.model
 
 import com.google.gson.annotations.SerializedName
 

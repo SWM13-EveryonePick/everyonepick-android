@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.pref.PreferencesDataStore
 import org.soma.everyonepick.foundation.util.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
-import org.soma.everyonepick.login.api.AuthService
-import org.soma.everyonepick.login.data.model.RefreshRequest
+import org.soma.everyonepick.common.api.AuthService
+import org.soma.everyonepick.common.data.model.RefreshRequest
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.utility.LoginUtil
 import javax.inject.Inject
@@ -50,13 +50,11 @@ class SplashActivity : AppCompatActivity() {
         val refreshToken = preferencesDataStore.refreshToken.first()
         if (refreshToken != null) {
             try {
-                // 리프레시 토큰으로 액세스 토큰 얻기
                 val data = authService.refresh(RefreshRequest(refreshToken)).data
                 preferencesDataStore.editAccessToken(data.everyonepickAccessToken)
 
                 loginWithKakaoAndStartHomeActivity()
             } catch (e: Exception) {
-                // Refresh Token 만료
                 startLoginActivity()
                 Toast.makeText(baseContext, "Refresh Token이 유효하지 않습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
             }

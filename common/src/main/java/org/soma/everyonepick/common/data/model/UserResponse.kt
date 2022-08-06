@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.data.model
+package org.soma.everyonepick.common.data.model
 
 data class UserResponse(
     val message: String,

@@ -1,8 +1,8 @@
-package org.soma.everyonepick.login.api
+package org.soma.everyonepick.common.api
 
-import org.soma.everyonepick.login.data.model.SignUpRequest
-import org.soma.everyonepick.login.data.model.JwtResponse
-import org.soma.everyonepick.login.data.model.RefreshRequest
+import org.soma.everyonepick.common.data.model.SignUpRequest
+import org.soma.everyonepick.common.data.model.JwtResponse
+import org.soma.everyonepick.common.data.model.RefreshRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 
