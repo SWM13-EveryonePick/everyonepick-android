@@ -56,7 +56,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     }
 
     // 내부 뎁스에서의 변경 사항을 받아와서 API call 없이 바로 적용합니다.
-    // TODO: onResume()에서 자동 업데이트 -> 불필요한 로직이 되기 때문에 제거할 것
+    // TODO: onResume() 또는 onStart()에서 자동 업데이트 -> 불필요한 로직이 되기 때문에 제거할 것
     private fun setFragmentResultListeners() {
         activity?.supportFragmentManager?.setFragmentResultListener(GROUP_ALBUM_REMOVED, viewLifecycleOwner) { _, bundle ->
             val id = bundle.getLong("id")
@@ -64,9 +64,9 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        // TODO: viewModel.fetchGroupAlbumItemList() -> 자동 업데이트
+    override fun onStart() {
+        super.onStart()
+        viewModel.fetchGroupAlbumItemList()
     }
 
     override fun onDestroy() {

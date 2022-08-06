@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter

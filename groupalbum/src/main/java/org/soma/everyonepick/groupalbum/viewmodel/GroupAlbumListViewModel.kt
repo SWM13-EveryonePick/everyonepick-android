@@ -22,13 +22,6 @@ class GroupAlbumListViewModel @Inject constructor(
     val groupAlbumItemList = MutableLiveData<MutableList<GroupAlbumItem>>()
     val isApiLoading = MutableLiveData(true)
 
-    init {
-        fetchGroupAlbumItemList()
-    }
-
-    /**
-     * [GroupAlbumRepository]에서 데이터를 가져온 뒤 값을 적용합니다.
-     */
     fun fetchGroupAlbumItemList() {
         isApiLoading.value = true
 
