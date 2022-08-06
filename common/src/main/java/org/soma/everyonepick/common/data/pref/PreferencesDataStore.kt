@@ -14,19 +14,13 @@ import javax.inject.Singleton
 class PreferencesDataStore @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
-    companion object {
-        const val DATA_STORE_NAME = "app"
-
-        private val accessTokenKey = stringPreferencesKey("access_token")
-        private val refreshTokenKey = stringPreferencesKey("refresh_token")
-        private val hasTutorialShownKey = booleanPreferencesKey("has_tutorial_shown")
-    }
 
     val accessToken: Flow<String?> =
         dataStore.data.map { preferences -> preferences[accessTokenKey] }
 
     val refreshToken: Flow<String?> =
-        dataStore.data.map { preferences -> preferences[refreshTokenKey] }
+        // dataStore.data.map { preferences -> preferences[refreshTokenKey] }
+        dataStore.data.map { preferences -> "자동로그인 해제" }
 
     val hasShownTutorial: Flow<Boolean?> =
         dataStore.data.map { preferences -> preferences[hasTutorialShownKey] }
@@ -49,5 +43,14 @@ class PreferencesDataStore @Inject constructor(
         dataStore.edit { preferences ->
             preferences[hasTutorialShownKey] = hasShownTutorial
         }
+    }
+
+
+    companion object {
+        const val DATA_STORE_NAME = "app"
+
+        private val accessTokenKey = stringPreferencesKey("access_token")
+        private val refreshTokenKey = stringPreferencesKey("refresh_token")
+        private val hasTutorialShownKey = booleanPreferencesKey("has_tutorial_shown")
     }
 }

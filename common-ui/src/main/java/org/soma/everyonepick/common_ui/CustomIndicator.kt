@@ -20,18 +20,11 @@ import org.soma.everyonepick.common_ui.databinding.ViewCustomIndicatorBinding
  * CustomIndicator는 [ViewPager2]와 결합되어 사용됩니다.
  * 각 indicator는 ViewPager2의 위치에 따라서 색상과 길이가 달라집니다.
  */
-class CustomIndicator: FrameLayout {
-    constructor(context: Context): super(context) {
-        initializeView(context)
-    }
-    constructor(context: Context, attrs: AttributeSet?): super(context, attrs) {
-        initializeView(context)
-        getAttrs(attrs)
-    }
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int): super(context, attrs) {
-        initializeView(context)
-        getAttrs(attrs)
-    }
+class CustomIndicator @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+): FrameLayout(context, attrs, defStyle) {
 
     private var indicatorSize = 20
     private var indicatorMargin = 15
@@ -44,6 +37,11 @@ class CustomIndicator: FrameLayout {
     private lateinit var binding: ViewCustomIndicatorBinding
     private var dots = mutableListOf<ImageView>()
     private lateinit var viewPager2: ViewPager2
+
+    init {
+        initializeView(context)
+        getAttrs(attrs)
+    }
 
     private fun initializeView(context: Context) {
         binding = ViewCustomIndicatorBinding.inflate(LayoutInflater.from(context), this, true)
@@ -65,6 +63,7 @@ class CustomIndicator: FrameLayout {
 
         typedArray.recycle()
     }
+
 
     fun setupViewPager2(viewPager2: ViewPager2, currentPosition: Int) {
         this.viewPager2 = viewPager2

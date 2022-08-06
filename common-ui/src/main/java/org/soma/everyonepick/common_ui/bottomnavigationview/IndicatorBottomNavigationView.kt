@@ -17,7 +17,12 @@ private const val ANIMATION_DURATION = 300L
 private const val INDICATOR_WIDTH = 170f
 private const val INDICATOR_HEIGHT = 120f
 
-open class IndicatorBottomNavigationView: BottomNavigationView {
+open class IndicatorBottomNavigationView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+): BottomNavigationView(context, attrs, defStyle) {
+
     private var animator: ValueAnimator? = null
 
     private val indicator = RectF()
@@ -27,11 +32,6 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
 
     private val View.centerX get() = left + width / 2f
     private val View.centerY get() = height / 2f
-
-    constructor(context: Context): super(context, null)
-    constructor(context: Context, attrs: AttributeSet?): super(context, attrs, com.google.android.material.R.attr.bottomNavigationStyle)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int): super(context, attrs, defStyleAttr, com.google.android.material.R.style.Widget_Design_BottomNavigationView)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int): super(context, attrs, defStyleAttr, defStyleRes)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
