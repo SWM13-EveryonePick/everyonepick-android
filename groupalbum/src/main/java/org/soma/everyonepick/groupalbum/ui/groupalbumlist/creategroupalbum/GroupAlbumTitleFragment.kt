@@ -1,18 +1,14 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import org.soma.everyonepick.common.HomeActivityUtility
-import org.soma.everyonepick.common_ui.KeyboardUtil
-import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumTitleViewModel
 
@@ -38,9 +34,7 @@ class GroupAlbumTitleFragment : Fragment() {
                 */
                 KeyboardUtil.hideKeyboard(requireActivity())
 
-                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(
-                    viewModel.title.value?: ""
-                )
+                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(viewModel.title.value?: "")
                 findNavController().navigate(directions)
             }
         }
@@ -51,7 +45,7 @@ class GroupAlbumTitleFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        (activity as HomeActivityUtility).hideBottomNavigationView()
+        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
         KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
     }
 }

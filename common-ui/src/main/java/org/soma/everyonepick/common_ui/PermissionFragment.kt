@@ -25,7 +25,7 @@ import org.soma.everyonepick.common_ui.databinding.FragmentPermissionBinding
  *                                                  `-(X) - Stay here
  * ```
  *
- * 사용 예시는 다음과 같습니다.
+ * 외부 저장소를 사용한다고 했을 때의 사용 예시는 다음과 같습니다.
  * ```
  * val requiredPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
  * val permissionFragment = PermissionFragment(requiredPermissions) {
@@ -49,9 +49,9 @@ class PermissionFragment(
     private val requestPermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { isGranted ->
-        if(isGranted.all{ it.value }) {
+        if (isGranted.all{ it.value }) {
             onSuccess.invoke()
-        }else{
+        } else {
             binding.button.visibility = View.VISIBLE
             Toast.makeText(requireContext(), "권한이 필요합니다.", Toast.LENGTH_SHORT).show()
         }
@@ -81,7 +81,7 @@ class PermissionFragment(
 
         if (!hasAllPermissions(requireContext(), requiredPermissions)) {
             requestPermissionsLauncher.launch(requiredPermissions)
-        }else{
+        } else {
             onSuccess.invoke()
         }
     }

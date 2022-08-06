@@ -53,7 +53,7 @@ class PreviewFragment : Fragment() {
     }
 
     private fun updateCameraUi() {
-        cameraUiContainerBinding?.root?.let{
+        cameraUiContainerBinding?.root?.let {
             binding.layoutRoot.removeView(it)
         }
 
@@ -123,7 +123,7 @@ class PreviewFragment : Fragment() {
 
     private fun aspectRatio(width: Int, height: Int): Int {
         val previewRatio = max(width, height).toDouble() / min(width, height)
-        return if(abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
+        return if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
             AspectRatio.RATIO_4_3
         } else {
             AspectRatio.RATIO_16_9
@@ -137,6 +137,7 @@ class PreviewFragment : Fragment() {
 
         cameraExecutor.shutdown()
     }
+
 
     companion object {
         private const val TAG = "PreviewFragment"

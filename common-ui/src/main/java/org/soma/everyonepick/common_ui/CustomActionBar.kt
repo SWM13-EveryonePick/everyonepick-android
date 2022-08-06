@@ -8,22 +8,18 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import org.soma.everyonepick.common_ui.databinding.ViewCustomActionBarBinding
 
-class CustomActionBar: ConstraintLayout {
-    constructor(context: Context): super(context){
-        initializeView(context)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?): super(context, attrs) {
-        initializeView(context)
-        getAttrs(attrs)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int): super(context, attrs) {
-        initializeView(context)
-        getAttrs(attrs)
-    }
+class CustomActionBar @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+): ConstraintLayout(context, attrs, defStyle) {
 
     lateinit var binding: ViewCustomActionBarBinding
+
+    init {
+        initializeView(context)
+        getAttrs(attrs)
+    }
 
     private fun initializeView(context: Context?) {
         binding = ViewCustomActionBarBinding.inflate(LayoutInflater.from(context), this, true)
@@ -47,6 +43,7 @@ class CustomActionBar: ConstraintLayout {
         typedArray.recycle()
     }
 
+    
     fun setHasBackButton(hasBackButton: Boolean) {
         binding.imageBackbutton.visibility = when(hasBackButton) {
             true -> View.VISIBLE

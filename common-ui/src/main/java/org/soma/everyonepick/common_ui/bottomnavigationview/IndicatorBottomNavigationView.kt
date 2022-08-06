@@ -17,7 +17,12 @@ private const val ANIMATION_DURATION = 300L
 private const val INDICATOR_WIDTH = 170f
 private const val INDICATOR_HEIGHT = 120f
 
-open class IndicatorBottomNavigationView: BottomNavigationView {
+open class IndicatorBottomNavigationView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+): BottomNavigationView(context, attrs, defStyle) {
+
     private var animator: ValueAnimator? = null
 
     private val indicator = RectF()
@@ -28,11 +33,6 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
     private val View.centerX get() = left + width / 2f
     private val View.centerY get() = height / 2f
 
-    constructor(context: Context): super(context, null)
-    constructor(context: Context, attrs: AttributeSet?): super(context, attrs, com.google.android.material.R.attr.bottomNavigationStyle)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int): super(context, attrs, defStyleAttr, com.google.android.material.R.style.Widget_Design_BottomNavigationView)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int): super(context, attrs, defStyleAttr, defStyleRes)
-
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         doOnPreDraw {
@@ -42,7 +42,7 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
     }
 
     override fun dispatchDraw(canvas: Canvas) {
-        if(isLaidOut) {
+        if (isLaidOut) {
             val cornerRadius = indicator.height() / 2f
             canvas.drawRoundRect(indicator, cornerRadius, cornerRadius, paint)
         }
@@ -76,14 +76,14 @@ open class IndicatorBottomNavigationView: BottomNavigationView {
                 indicator.set(left, top, right, bottom)
                 invalidate()
             }
-            duration = if(animated) ANIMATION_DURATION else 0L
+            duration = if (animated) ANIMATION_DURATION else 0L
 
             start()
         }
     }
 
     private fun cancelAnimator(shouldAnimatorEnd: Boolean) = animator?.let {
-        if(shouldAnimatorEnd) it.end()
+        if (shouldAnimatorEnd) it.end()
         else it.cancel()
 
         it.removeAllUpdateListeners()

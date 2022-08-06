@@ -73,9 +73,9 @@ class FriendListFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.friends.value = viewModel.friends.value
+    override fun onStart() {
+        super.onStart()
+        viewModel.fetchFriends()
     }
 
     override fun onDestroy() {

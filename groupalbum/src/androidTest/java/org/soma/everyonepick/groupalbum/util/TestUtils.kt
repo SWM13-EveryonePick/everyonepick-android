@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.utility
+package org.soma.everyonepick.groupalbum.util
 
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.item.PhotoItem

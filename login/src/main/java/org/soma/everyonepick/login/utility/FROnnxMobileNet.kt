@@ -46,7 +46,7 @@ class FROnnxMobileNet(private val context: Context, listener: OnnxListener): Ima
     private fun readModel() = context.resources.openRawResource(R.raw.mobileface).readBytes()
 
     override fun analyze(image: ImageProxy) {
-        if(listeners.isEmpty()) {
+        if (listeners.isEmpty()) {
             image.close()
             return
         }
@@ -129,6 +129,7 @@ class FROnnxMobileNet(private val context: Context, listener: OnnxListener): Ima
         imgData.rewind()
         return imgData
     }
+
 
     companion object {
         private const val IMAGE_MEAN: Float = .0f

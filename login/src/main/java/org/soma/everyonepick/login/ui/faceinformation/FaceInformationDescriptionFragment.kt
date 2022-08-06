@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import org.soma.everyonepick.common_ui.AnimationUtil
+import org.soma.everyonepick.common.util.AnimationUtil
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationDescriptionBinding
 import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_DURATION
 import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_Y_OFFSET
@@ -22,7 +22,8 @@ class FaceInformationDescriptionFragment : Fragment() {
         _binding = FragmentFaceInformationDescriptionBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             onClickNextButton = View.OnClickListener {
-                findNavController().navigate(FaceInformationDescriptionFragmentDirections.toFaceInformationCameraFragment())
+                val directions = FaceInformationDescriptionFragmentDirections.toFaceInformationCameraFragment()
+                findNavController().navigate(directions)
             }
         }
 

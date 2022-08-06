@@ -3,7 +3,7 @@ package org.soma.everyonepick.groupalbum.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.soma.everyonepick.groupalbum.data.model.GroupAlbumDao
-import org.soma.everyonepick.groupalbum.utility.PhotoListMode
+import org.soma.everyonepick.groupalbum.util.PhotoListMode
 
 class GroupAlbumViewPagerViewModel: ViewModel() {
     // Fragment가 args를 통해 group album id를 가지고 있으므로, Fragment단에서 초기화를 진행합니다.

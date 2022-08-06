@@ -4,8 +4,7 @@ import android.util.Log
 import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.talk.model.Friend
 import com.kakao.sdk.talk.model.Friends
-
-private const val TAG = "FriendRepository"
+import org.soma.everyonepick.common.util.KakaoUtil
 
 class FriendRepository {
     fun fetchFriends(
@@ -19,38 +18,24 @@ class FriendRepository {
         onSuccess: (Friends<Friend>) -> Unit
     ) {
         TalkApiClient.instance.friends { newFriends, error ->
-            if(error != null) {
+            if (error != null) {
                 Log.e(TAG, "카카오톡 친구 목록 가져오기 실패", error)
                 onFailure.invoke(error)
-            } else if(newFriends != null) {
+            } else if (newFriends != null) {
                 Log.i(TAG, "카카오톡 친구 목록 가져오기 성공")
                 // onSuccess.invoke(newFriends)
 
-                // No Friends:
-                // onSuccess.invoke(Friends(0, listOf(), 0, "", ""))
+                // TEST - No Friends:
+                // onSuccess.invoke(KakaoUtil.emptyFriends)
 
-                // Many Friends:
-                onSuccess.invoke(Friends(3, listOf(
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                    Friend(2, "", "Shumann", "https://picsum.photos/202", favorite = false, allowedMsg = false, 0),
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                    Friend(0, "", "이주연", "https://picsum.photos/200", favorite = false, allowedMsg = false, 0),
-                    Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
-                ), 0, "",""))
+                // TEST - Many Friends:
+                onSuccess.invoke(KakaoUtil.manyFriends)
             }
             onAlways.invoke()
         }
+    }
+
+    companion object {
+        private const val TAG = "FriendRepository"
     }
 }

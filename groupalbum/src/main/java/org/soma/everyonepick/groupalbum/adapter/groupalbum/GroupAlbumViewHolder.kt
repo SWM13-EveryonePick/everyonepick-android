@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.adapter.groupalbum
 
-import android.view.View
-import org.soma.everyonepick.common_ui.setVisibility
+import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 

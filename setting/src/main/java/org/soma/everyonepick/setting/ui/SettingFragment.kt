@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.soma.everyonepick.common.HomeActivityUtility
+import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.setting.R
 
 class SettingFragment : Fragment() {
@@ -18,6 +18,6 @@ class SettingFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as HomeActivityUtility).showBottomNavigationView()
+        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showBottomNavigationView()
     }
 }

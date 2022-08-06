@@ -2,7 +2,7 @@ package org.soma.everyonepick.groupalbum.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.soma.everyonepick.groupalbum.utility.GroupAlbumListMode
+import org.soma.everyonepick.groupalbum.util.GroupAlbumListMode
 
 class ViewPagerViewModel: ViewModel() {
     // 현재 item index에 따라 우측 상단 버튼의 visibility가 달라집니다.

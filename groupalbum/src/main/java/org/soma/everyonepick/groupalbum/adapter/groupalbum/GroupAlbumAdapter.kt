@@ -1,8 +1,6 @@
 package org.soma.everyonepick.groupalbum.adapter.groupalbum
 
-import android.os.SystemClock
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -10,13 +8,13 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.soma.everyonepick.common_ui.performTouch
+import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
-import org.soma.everyonepick.groupalbum.utility.GroupAlbumViewType
+import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 
@@ -31,7 +29,7 @@ class GroupAlbumAdapter(
     private val parentViewModel: GroupAlbumListViewModel
 ): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
     override fun getItemViewType(position: Int): Int {
-        return if(position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
+        return if (position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
         else GroupAlbumViewType.GROUP_ALBUM.ordinal
     }
 
@@ -72,10 +70,10 @@ class GroupAlbumAdapter(
         binding.root.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
-            if(!item.isCheckboxVisible) {
+            if (!item.isCheckboxVisible) {
                 val directions = ViewPagerFragmentDirections.toGroupAlbumViewPagerFragment(item.groupAlbumDao.id)
                 binding.root.findNavController().navigate(directions)
-            }else{
+            } else {
                 binding.checkbox.performTouch()
             }
         }

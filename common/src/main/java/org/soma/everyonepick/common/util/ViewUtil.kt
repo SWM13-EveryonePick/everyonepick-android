@@ -1,11 +1,14 @@
-package org.soma.everyonepick.common
+package org.soma.everyonepick.common.util
 
+import android.os.SystemClock
+import android.view.MotionEvent
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.children
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 
-class ViewUtility {
+class ViewUtil {
     companion object {
         /**
          * TabLayout의 이동을 활성화 및 비활성화 합니다. 이때 ViewPager2 단에서
@@ -20,4 +23,17 @@ class ViewUtility {
             for(child in layout.children) child.isClickable = enabled
         }
     }
+}
+
+fun View.setVisibility(flag: Boolean) {
+    visibility = getVisibility(flag)
+}
+fun View.getVisibility(flag: Boolean) = if (flag) View.VISIBLE else View.GONE
+
+fun View.performTouch() {
+    val time = SystemClock.uptimeMillis()
+    val x = width/2f
+    val y = height/2f
+    dispatchTouchEvent(MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, x, y, 0))
+    dispatchTouchEvent(MotionEvent.obtain(time, time, MotionEvent.ACTION_UP, x, y, 0))
 }

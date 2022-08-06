@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.soma.everyonepick.common_ui.performTouch
-import org.soma.everyonepick.common_ui.setVisibility
+import org.soma.everyonepick.common.util.performTouch
+import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.item.PhotoItem
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
@@ -38,11 +38,11 @@ class PhotoAdapter(
         binding.root.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
-            if(!item.isCheckboxVisible) {
+            if (!item.isCheckboxVisible) {
                 val photoUrl = item.photoDao.photoUrl
                 val directions = GroupAlbumViewPagerFragmentDirections.toPhotoFragment(photoUrl)
                 binding.root.findNavController().navigate(directions)
-            }else{
+            } else {
                 binding.checkbox.performTouch()
             }
         }

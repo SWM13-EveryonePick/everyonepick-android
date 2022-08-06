@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.utility
+package org.soma.everyonepick.groupalbum.util
 
 /**
  * Mode는 ViewPager2 내부 프래그먼트 단위로 다르지만, ViewPager2에서도 버튼을 통해
