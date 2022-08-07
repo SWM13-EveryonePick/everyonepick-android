@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import org.soma.everyonepick.common_ui.databinding.ViewCustomActionBarBinding
+import org.soma.everyonepick.common_ui.databinding.LayoutCustomActionBarBinding
 
 class CustomActionBar @JvmOverloads constructor(
     context: Context,
@@ -14,7 +14,7 @@ class CustomActionBar @JvmOverloads constructor(
     defStyle: Int = 0
 ): ConstraintLayout(context, attrs, defStyle) {
 
-    lateinit var binding: ViewCustomActionBarBinding
+    lateinit var binding: LayoutCustomActionBarBinding
 
     init {
         initializeView(context)
@@ -22,7 +22,7 @@ class CustomActionBar @JvmOverloads constructor(
     }
 
     private fun initializeView(context: Context?) {
-        binding = ViewCustomActionBarBinding.inflate(LayoutInflater.from(context), this, true)
+        binding = LayoutCustomActionBarBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     private fun getAttrs(attrs: AttributeSet?) {
