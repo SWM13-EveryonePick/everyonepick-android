@@ -37,4 +37,10 @@
     <style name="TabText" parent="TextAppearance.AppCompat.Small">
         <item name="android:fontFamily">@font/noto_sans_kr_light</item>
     </style>
+    <style name="ImageViewFab" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:background">@drawable/fab_radius</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
 </resources>

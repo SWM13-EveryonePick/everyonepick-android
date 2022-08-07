@@ -57,14 +57,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
                 android:layout_margin="@dimen/margin_fab"
-                android:src="@drawable/ic_baseline_add_24"
+                android:src="@drawable/ic_btn_floating_add"
                 android:visibility="@{parentViewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
                 android:onClick="@{() -> listener.onClickUploadPhotoButton()}"
-                app:tint="@color/white"
+                style="@style/ImageViewFab"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -78,27 +76,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_delete_outline_24"
-                    app:tint="@color/white"
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_delete"
+                    android:layout_marginBottom="@dimen/margin_bottom_fab"
+                    style="@style/ImageViewFab"
                     android:onClick="@{() -> listener.onClickDeleteButton()}"/>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_top_fab"
-                    android:src="@drawable/ic_baseline_people_alt_24"
-                    app:tint="@color/white"
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_synthetic"
+                    android:layout_marginBottom="@dimen/margin_bottom_fab"
+                    style="@style/ImageViewFab"
                     android:onClick="@{() -> listener.onClickProcessButton()}"/>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_top_fab"
-                    android:src="@drawable/ic_baseline_close_24"
-                    app:tint="@color/white"
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_closed"
+                    style="@style/ImageViewFab"
                     android:onClick="@{() -> listener.onClickCancelButton()}"/>
 
             </LinearLayout>

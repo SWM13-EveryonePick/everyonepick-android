@@ -181,14 +181,11 @@
 
             <ImageButton
                 android:id="@+id/button_kakao"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:background="@drawable/fab_radius"
-                android:scaleType="fitXY"
                 android:layout_margin="7dp"
                 android:src="@drawable/ic_btn_floating_kakao"
                 android:elevation="2dp"
                 android:onClick="@{onClickKakaoButton}"
+                style="@style/ImageViewFab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

@@ -21,8 +21,8 @@
     <dimen name="size_photo">120dp</dimen>
     <dimen name="margin_photo">10dp</dimen>
 
-    <dimen name="margin_fab">16dp</dimen>
-    <dimen name="margin_top_fab">8dp</dimen>
+    <dimen name="margin_fab">8dp</dimen>
+    <dimen name="margin_bottom_fab">-20dp</dimen>
 
     <dimen name="margin_drawer">16dp</dimen>
     <dimen name="margin_drawer_bottom_icon">8dp</dimen>
