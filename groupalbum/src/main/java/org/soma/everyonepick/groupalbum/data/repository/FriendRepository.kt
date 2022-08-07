@@ -25,7 +25,7 @@ class FriendRepository {
                 Log.i(TAG, "카카오톡 친구 목록 가져오기 성공")
                 // onSuccess.invoke(newFriends)
 
-                // TEST - No Friends:
+                // TEST - Empty Friends:
                 // onSuccess.invoke(KakaoUtil.emptyFriends)
 
                 // TEST - Many Friends:

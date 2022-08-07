@@ -102,6 +102,7 @@
             android:visibility="@{viewModel.photoItemList.size() == 0? View.VISIBLE: View.GONE}">
 
             <TextView
+                android:id="@+id/text_emptyphotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
@@ -109,7 +110,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/no_photos"/>
+                android:text="@string/empty_photos"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"

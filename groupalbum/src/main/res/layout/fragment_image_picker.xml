@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_images_in_gallery"
+            android:text="@string/empty_images_in_gallery"
             android:visibility="@{viewModel.imageItemList.size() == 0? View.VISIBLE: View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

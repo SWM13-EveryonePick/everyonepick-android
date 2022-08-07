@@ -96,12 +96,12 @@
                     android:src="@drawable/ic_ico_empty"
                     android:layout_marginBottom="@dimen/margin_bottom_empty_image"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                    app:layout_constraintBottom_toTopOf="@id/text_nogroupalbums"
+                    app:layout_constraintBottom_toTopOf="@id/text_emptygroupalbums"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
                 <TextView
-                    android:id="@+id/text_nogroupalbums"
+                    android:id="@+id/text_emptygroupalbums"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
@@ -110,7 +110,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/no_group_albums"/>
+                    android:text="@string/empty_group_albums"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="150dp"
@@ -119,7 +119,7 @@
                     android:clickable="true"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                     android:onClick="@{() -> listener.onClickCreateGroupAlbumButton()}"
-                    app:layout_constraintTop_toBottomOf="@id/text_nogroupalbums"
+                    app:layout_constraintTop_toBottomOf="@id/text_emptygroupalbums"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:cardCornerRadius="@dimen/radius_medium"

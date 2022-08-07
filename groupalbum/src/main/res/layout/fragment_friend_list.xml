@@ -98,12 +98,12 @@
                         android:src="@drawable/ico_empty_person"
                         android:layout_marginBottom="@dimen/margin_bottom_empty_image"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                        app:layout_constraintBottom_toTopOf="@id/text_nofriends"
+                        app:layout_constraintBottom_toTopOf="@id/text_emptyfriends"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <TextView
-                        android:id="@+id/text_nofriends"
+                        android:id="@+id/text_emptyfriends"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
@@ -115,7 +115,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:text="@string/no_friends"/>
+                        android:text="@string/empty_friends"/>
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                         android:layout_marginTop="@dimen/margin_top_empty_button"
                         android:clickable="true"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                        app:layout_constraintTop_toBottomOf="@id/text_nofriends"
+                        app:layout_constraintTop_toBottomOf="@id/text_emptyfriends"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:cardCornerRadius="@dimen/radius_large"
