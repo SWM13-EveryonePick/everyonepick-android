@@ -94,7 +94,7 @@
                     android:layout_width="@dimen/size_empty_image"
                     android:layout_height="@dimen/size_empty_image"
                     android:src="@drawable/ic_ico_empty"
-                    android:layout_marginBottom="@dimen/margin_bottom_empty_image"
+                    android:layout_marginBottom="@dimen/margin_top_empty_text_in_card_view"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                     app:layout_constraintBottom_toTopOf="@id/text_emptygroupalbums"
                     app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                    android:textSize="16sp"
+                    style="@style/EmptyText"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,24 +113,19 @@
                     android:text="@string/empty_group_albums"/>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_top_empty_button"
-                    android:clickable="true"
+                    android:layout_marginTop="@dimen/margin_bottom_empty_text_in_card_view"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                     android:onClick="@{() -> listener.onClickCreateGroupAlbumButton()}"
+                    style="@style/EmptyButton"
                     app:layout_constraintTop_toBottomOf="@id/text_emptygroupalbums"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardCornerRadius="@dimen/radius_medium"
-                    app:strokeColor="@color/primary_blue"
-                    app:strokeWidth="1dp"
-                    app:rippleColor="@color/primary_blue">
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:text="@string/create_group_album"
                         style="@style/EmptyButtonInnerText"/>
 

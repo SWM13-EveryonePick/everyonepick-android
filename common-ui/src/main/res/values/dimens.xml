@@ -8,7 +8,7 @@
     <dimen name="margin_side">20dp</dimen>
     <dimen name="size_checkbox">24dp</dimen>
 
-    <dimen name="radius_small">10dp</dimen>
+    <dimen name="radius_small">15dp</dimen>
     <dimen name="radius_medium">20dp</dimen>
     <dimen name="radius_large">30dp</dimen>
 </resources>

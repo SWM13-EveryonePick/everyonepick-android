@@ -29,6 +29,7 @@
     <!--갤러리 내부-->
     <string name="empty_images_in_gallery">갤러리 내에 사진이 없어요 :/</string>
     <string name="save_in_gallery">갤러리에 저장하기</string>
+    <string name="upload_photo">사진 올리기</string>
 
     <!--사진-->
     <string name="empty_photos">사진이 없습니다 :/</string>

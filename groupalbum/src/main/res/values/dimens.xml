@@ -3,8 +3,10 @@
     <dimen name="height_friend_item">70dp</dimen>
     <dimen name="size_friend_profile">45dp</dimen>
     <dimen name="size_empty_image">60dp</dimen>
-    <dimen name="margin_bottom_empty_image">20dp</dimen>
-    <dimen name="margin_top_empty_button">25dp</dimen>
+    <dimen name="margin_top_empty_text_in_card_view">20dp</dimen>
+    <dimen name="margin_top_empty_text">25dp</dimen>
+    <dimen name="margin_bottom_empty_text_in_card_view">25dp</dimen>
+    <dimen name="margin_bottom_empty_text">40dp</dimen>
     <dimen name="height_empty_card_view">350dp</dimen>
 
     <dimen name="height_invite_friend_item">70dp</dimen>
