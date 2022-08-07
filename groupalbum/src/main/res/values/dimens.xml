@@ -18,8 +18,8 @@
     <dimen name="height_group_album">140dp</dimen>
 
     <dimen name="size_image">137dp</dimen>
-    <dimen name="size_photo">120dp</dimen>
-    <dimen name="margin_photo">10dp</dimen>
+    <dimen name="size_photo">115dp</dimen>
+    <dimen name="margin_photo">5dp</dimen>
 
     <dimen name="margin_fab">8dp</dimen>
     <dimen name="margin_bottom_fab">-20dp</dimen>

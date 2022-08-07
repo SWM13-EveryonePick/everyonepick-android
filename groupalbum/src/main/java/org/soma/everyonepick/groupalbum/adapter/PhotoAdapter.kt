@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -9,6 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
@@ -66,9 +67,14 @@ class PhotoAdapter(
         fun bind(photoItem: PhotoItem) {
             Glide.with(binding.root)
                 .load(photoItem.photoDao.photoUrl)
+                .transform(CenterCrop(), RoundedCorners(CORNER_RADIUS))
                 .into(binding.imagePhoto)
             binding.checkbox.setVisibility(photoItem.isCheckboxVisible)
             binding.checkbox.isChecked = photoItem.isChecked
+        }
+
+        companion object {
+            private const val CORNER_RADIUS = 50
         }
     }
 }
