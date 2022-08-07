@@ -103,7 +103,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.navigation.NavigationView
-            android:layout_width="350dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
             >
@@ -114,6 +114,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginLeft="@dimen/margin_drawer"
+                    android:layout_marginRight="@dimen/margin_drawer"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/layout_drawer_bottom">
 
@@ -122,20 +125,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.groupAlbum.title}"
-                        android:textSize="32sp"
-                        android:layout_margin="@dimen/margin_drawer"
+                        android:textSize="24sp"
+                        android:textColor="@color/title"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
-
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="SOMA TEAM"/>
 
                     <ImageButton
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_baseline_edit_24"
-                        android:layout_marginLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_btn_drawer_edit"
                         app:layout_constraintTop_toTopOf="@id/text_drawer_title"
                         app:layout_constraintBottom_toBottomOf="@id/text_drawer_title"
-                        app:layout_constraintStart_toEndOf="@id/text_drawer_title"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:onClick="@{() -> listener.onClickDrawerTitleEditButton()}"/>
 
                     <!-- TODO: 단체 인원 -->
@@ -146,13 +149,14 @@
                     android:id="@+id/layout_drawer_bottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white_smoke"
                     android:padding="@dimen/margin_drawer_bottom_icon"
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <ImageButton
-                        android:layout_width="@dimen/size_drawer_bottom_icon"
-                        android:layout_height="@dimen/size_drawer_bottom_icon"
-                        android:src="@drawable/ic_baseline_output_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_ico_exit"
                         android:background="@null"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -160,10 +164,11 @@
                         android:onClick="@{() -> listener.onClickDrawerExitButton()}"/>
 
                     <ImageButton
-                        android:layout_width="@dimen/size_drawer_bottom_icon"
-                        android:layout_height="@dimen/size_drawer_bottom_icon"
-                        android:src="@drawable/ic_baseline_group_remove_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_ico_out"
                         android:background="@null"
+                        android:layout_marginRight="24dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/button_drawer_notification"
@@ -171,9 +176,9 @@
 
                     <ImageButton
                         android:id="@+id/button_drawer_notification"
-                        android:layout_width="@dimen/size_drawer_bottom_icon"
-                        android:layout_height="@dimen/size_drawer_bottom_icon"
-                        android:src="@drawable/ic_baseline_notifications_none_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_ico_alarm"
                         android:background="@null"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"

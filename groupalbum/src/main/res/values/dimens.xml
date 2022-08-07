@@ -24,7 +24,6 @@
     <dimen name="margin_fab">8dp</dimen>
     <dimen name="margin_bottom_fab">-20dp</dimen>
 
-    <dimen name="margin_drawer">16dp</dimen>
-    <dimen name="margin_drawer_bottom_icon">8dp</dimen>
-    <dimen name="size_drawer_bottom_icon">32dp</dimen>
+    <dimen name="margin_drawer">24dp</dimen>
+    <dimen name="margin_drawer_bottom_icon">24dp</dimen>
 </resources>
