@@ -139,7 +139,7 @@
                         app:layout_constraintTop_toTopOf="@id/text_drawer_title"
                         app:layout_constraintBottom_toBottomOf="@id/text_drawer_title"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:onClick="@{() -> listener.onClickDrawerTitleEditButton()}"/>
+                        android:onClick="@{() -> listener.onClickUpdateDrawerTitleButton()}"/>
 
                     <!-- TODO: 단체 인원 -->
 

@@ -1,12 +1,12 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
@@ -71,22 +72,11 @@ class GroupAlbumViewPagerFragment: Fragment() {
                     binding.drawerlayout.openDrawer(GravityCompat.END)
                 }
 
-                override fun onClickDrawerTitleEditButton() {
-                    val editText = EditText(context).apply {
-                        setText(viewModel.groupAlbum.value?.title)
-                        hint = "예시) 밴드부 동아리"
-                    }
-                    AlertDialog.Builder(context)
-                        .setTitle("단체공유앨범 이름 변경")
-                        .setView(editText)
-                        .setPositiveButton("확인") { _, _ ->
-                            // TODO: API
-                            viewModel.updateGroupAlbumTitle(editText.text.toString())
-                        }
-                        .setNegativeButton("취소") { dialog, _ ->
-                            dialog.cancel()
-                        }
-                        .create().show()
+                override fun onClickUpdateDrawerTitleButton() {
+                    UpdateTitleDialogFragment {
+                        // TODO: API
+                        viewModel.updateGroupAlbumTitle(it)
+                    }.show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
                 }
 
                 override fun onClickDrawerExitButton() {
@@ -157,7 +147,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
     interface GroupAlbumViewPagerFragmentListener {
         fun onClickSelectButton()
         fun onClickDrawerButton()
-        fun onClickDrawerTitleEditButton()
+        fun onClickUpdateDrawerTitleButton()
         fun onClickDrawerExitButton()
     }
 }
