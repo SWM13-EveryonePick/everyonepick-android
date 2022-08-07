@@ -150,14 +150,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white_smoke"
-                    android:padding="@dimen/margin_drawer_bottom_icon"
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_ico_exit"
-                        android:background="@null"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="@dimen/margin_drawer_bottom_icon"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -167,8 +167,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_ico_out"
-                        android:background="@null"
-                        android:layout_marginRight="24dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="@dimen/margin_drawer_bottom_icon"
+                        android:layout_marginRight="@dimen/margin_drawer_bottom_icon"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/button_drawer_notification"
@@ -179,7 +180,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_ico_alarm"
-                        android:background="@null"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="@dimen/margin_drawer_bottom_icon"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
