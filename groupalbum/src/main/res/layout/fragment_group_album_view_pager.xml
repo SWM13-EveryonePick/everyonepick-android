@@ -26,59 +26,77 @@
             tools:context=".ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_actionbar"
+                android:id="@+id/layout_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bottom_border"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <org.soma.everyonepick.common_ui.CustomActionBar
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_actionbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_action_bar"
-                    app:layout_constraintTop_toTopOf="parent"
-                    title="@{viewModel.groupAlbum.title}"
-                    app:hasBackButton="true"/>
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageButton
+                    <org.soma.everyonepick.common_ui.CustomActionBar
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_action_bar"
+                        app:layout_constraintTop_toTopOf="parent"
+                        title="@{viewModel.groupAlbum.title}"
+                        app:hasBackButton="true"/>
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@{viewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? @drawable/ic_btn_gnb_check: @drawable/ic_btn_gnb_check_on}"
+                        android:layout_marginRight="@dimen/margin_action_bar_item"
+                        android:visibility="@{viewModel.currentItem == 1? View.GONE: View.VISIBLE}"
+                        android:padding="10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/button_drawer"
+                        android:onClick="@{() -> listener.onClickSelectButton()}"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/button_drawer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_marginRight="@dimen/margin_action_bar"
+                        android:src="@drawable/ic_btn_gnb_list"
+                        android:onClick="@{() -> listener.onClickDrawerButton()}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tablayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@{viewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? @drawable/ic_btn_gnb_check: @drawable/ic_btn_gnb_check_on}"
-                    android:layout_marginRight="@dimen/margin_action_bar_item"
-                    android:visibility="@{viewModel.currentItem == 1? View.GONE: View.VISIBLE}"
-                    android:padding="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/button_drawer"
-                    android:onClick="@{() -> listener.onClickSelectButton()}"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    app:tabGravity="start"
+                    app:tabTextAppearance="@style/TabText"
+                    app:tabPaddingStart="20dp"
+                    app:tabPaddingEnd="20dp"
+                    app:tabPaddingBottom="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/layout_actionbar"
+                    app:layout_constraintStart_toStartOf="parent"
                     />
 
-                <ImageButton
-                    android:id="@+id/button_drawer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:layout_marginRight="@dimen/margin_action_bar"
-                    android:src="@drawable/ic_btn_gnb_list"
-                    android:onClick="@{() -> listener.onClickDrawerButton()}"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/layout_actionbar"
-                />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/tablayout"
+                app:layout_constraintTop_toBottomOf="@id/layout_top"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
