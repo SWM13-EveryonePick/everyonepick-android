@@ -37,14 +37,14 @@
                     android:id="@+id/recyclerview_groupalbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.groupAlbumItemList.size() > 1? View.VISIBLE: View.GONE}"
+                    android:visibility="@{viewModel.groupAlbumItemList.getItemCount() > 0? View.VISIBLE: View.GONE}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"
                     adapter="@{adapter}"
-                    submitList="@{viewModel.groupAlbumItemList}"
+                    submitList="@{viewModel.groupAlbumItemList.data}"
                     tools:listitem="@layout/item_group_album"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -77,7 +77,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_empty_card_view"
-            android:visibility="@{viewModel.groupAlbumItemList.size() == 1? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.groupAlbumItemList.getItemCount() == 0? View.VISIBLE: View.GONE}"
             style="@style/ListCardView"
             app:layout_constraintTop_toTopOf="parent">
 
