@@ -26,4 +26,5 @@
 
     <dimen name="margin_drawer">24dp</dimen>
     <dimen name="margin_drawer_bottom_icon">24dp</dimen>
+    <dimen name="margin_half_drawer_bottom_icon">12dp</dimen>
 </resources>
