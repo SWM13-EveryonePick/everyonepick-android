@@ -18,6 +18,7 @@ import org.soma.everyonepick.common.data.item.MemberItem
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.ItemMemberBinding
 import org.soma.everyonepick.groupalbum.util.MemberViewType
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 
 /**
@@ -67,7 +68,11 @@ class MemberAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val memberItem = getItem(position)
-        (holder as MemberViewHolder).bind(memberItem, isInviteItem = position == itemCount - 1)
+        (holder as MemberViewHolder).bind(
+            memberItem,
+            isInviteItem = position == itemCount - 1,
+            isSelectionMode = parentViewModel.memberSelectionMode.value == SelectionMode.SELECTION_MODE.ordinal
+        )
     }
 
     class MemberViewHolder(
@@ -75,7 +80,8 @@ class MemberAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(
             memberItem: MemberItem,
-            isInviteItem: Boolean
+            isInviteItem: Boolean,
+            isSelectionMode: Boolean
         ) {
             if (isInviteItem) {
                 Glide.with(binding.root)
@@ -86,6 +92,7 @@ class MemberAdapter(
                     ContextCompat.getColor(binding.root.context, org.soma.everyonepick.common_ui.R.color.primary_blue)
                 )
                 binding.checkbox.visibility = View.GONE
+                binding.root.setVisibility(!isSelectionMode)
             } else {
                 Glide.with(binding.root)
                     .load(memberItem.user.thumbnailImageUrl)
