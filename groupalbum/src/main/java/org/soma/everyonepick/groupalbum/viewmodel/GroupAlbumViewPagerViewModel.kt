@@ -22,6 +22,7 @@ class GroupAlbumViewPagerViewModel @Inject constructor(
 
     val memberSelectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
     var memberItemList = MutableLiveData(MemberItemList())
+    val checked = MutableLiveData(0)
 
     fun updateGroupAlbumTitle(newTitle: String) {
         val newGroupAlbum = groupAlbum.value?.copy(title = newTitle)
@@ -35,6 +36,11 @@ class GroupAlbumViewPagerViewModel @Inject constructor(
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         memberItemList.value?.setIsCheckboxVisible(isCheckboxVisible)
+        memberItemList.value = memberItemList.value
+    }
+
+    fun removeCheckedItems() {
+        memberItemList.value?.removeCheckedItems()
         memberItemList.value = memberItemList.value
     }
 }

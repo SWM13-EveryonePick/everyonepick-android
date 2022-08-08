@@ -63,6 +63,9 @@ class MemberAdapter(
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             val position = holder.absoluteAdapterPosition
             parentViewModel.memberItemList.value?.data?.get(position)?.isChecked = isChecked
+            parentViewModel.checked.value =
+                if (isChecked) parentViewModel.checked.value?.plus(1)
+                else parentViewModel.checked.value?.minus(1)
         }
     }
 

@@ -151,8 +151,15 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
             .create().show()
     }
 
-    override fun onClickKickButton() {
+    override fun onClickKickIcon() {
         viewModel.memberSelectionMode.value = SelectionMode.SELECTION_MODE.ordinal
+    }
+
+    override fun onClickKickButton() {
+        if (viewModel.checked.value == null || viewModel.checked.value == 0) return
+
+        viewModel.removeCheckedItems()
+        viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }
 
     override fun onClickCancelKickButton() {
@@ -165,6 +172,7 @@ interface GroupAlbumViewPagerFragmentListener {
     fun onClickDrawerButton()
     fun onClickUpdateDrawerTitleButton()
     fun onClickDrawerExitButton()
+    fun onClickKickIcon()
     fun onClickKickButton()
     fun onClickCancelKickButton()
 }
