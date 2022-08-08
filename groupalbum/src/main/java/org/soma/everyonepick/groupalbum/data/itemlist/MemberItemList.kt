@@ -2,6 +2,9 @@ package org.soma.everyonepick.groupalbum.data.itemlist
 
 import org.soma.everyonepick.common.data.item.MemberItem
 
+/**
+ * @see GroupAlbumItemList
+ */
 class MemberItemList {
     var data: MutableList<MemberItem>
         set(value) {

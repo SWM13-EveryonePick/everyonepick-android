@@ -28,6 +28,7 @@ import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 class GroupAlbumAdapter(
     private val parentViewModel: GroupAlbumListViewModel
 ): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
+
     override fun getItemViewType(position: Int): Int {
         return if (position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
         else GroupAlbumViewType.GROUP_ALBUM.ordinal
