@@ -43,24 +43,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
     private val viewModel: GroupAlbumViewPagerViewModel by viewModels()
     private val args: GroupAlbumViewPagerFragmentArgs by navArgs()
 
-    // 선택 모드일 때 뒤로가기 버튼을 누르면 선택 모드를 취소해야 하며, 이를 위한 콜백입니다.
     private lateinit var onBackPressedCallback: OnBackPressedCallback
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (binding.drawerlayout.isDrawerOpen(GravityCompat.END)) {
-                    binding.drawerlayout.closeDrawer(GravityCompat.END)
-                } else if (viewModel.photoSelectionMode.value == SelectionMode.SELECTION_MODE.ordinal) {
-                    viewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
-                } else {
-                    findNavController().navigateUp()
-                }
-            }
-        }
-        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,14 +111,30 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
         (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.drawerlayout.isDrawerOpen(GravityCompat.END)) {
+                    binding.drawerlayout.closeDrawer(GravityCompat.END)
+                } else if (viewModel.photoSelectionMode.value == SelectionMode.SELECTION_MODE.ordinal) {
+                    viewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+                } else {
+                    findNavController().navigateUp()
+                }
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onBackPressedCallback.remove()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        onBackPressedCallback.remove()
     }
 
 
