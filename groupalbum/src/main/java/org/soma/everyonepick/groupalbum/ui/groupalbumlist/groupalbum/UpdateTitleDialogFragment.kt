@@ -44,4 +44,9 @@ class UpdateTitleDialogFragment(
             KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
         }, 100)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

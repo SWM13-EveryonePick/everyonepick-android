@@ -154,18 +154,24 @@
                         app:layout_constraintStart_toStartOf="parent"
                         tools:text="단체인원(3)"/>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerview_member"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
                         app:layout_constraintTop_toBottomOf="@id/text_membercount"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_member"
-                        adapter="@{adapter}"
-                        submitList="@{viewModel.memberItemList.data}"
-                        />
+                        app:layout_constraintBottom_toBottomOf="parent">
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerview_member"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_member"
+                            adapter="@{adapter}"
+                            submitList="@{viewModel.memberItemList.data}"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

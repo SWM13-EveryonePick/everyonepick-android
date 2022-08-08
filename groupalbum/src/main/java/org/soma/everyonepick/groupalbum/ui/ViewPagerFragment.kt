@@ -46,7 +46,19 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             }
         }
 
+        subscribeUi()
+
         return binding.root
+    }
+
+    private fun subscribeUi() {
+        viewModel.selectionMode.observe(viewLifecycleOwner) { selectionMode ->
+            setTabLayoutEnabled(
+                enabled = selectionMode == SelectionMode.NORMAL_MODE.ordinal,
+                binding.viewpager2,
+                binding.tablayout
+            )
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,14 +116,6 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         activity?.window?.let {
             it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             it.statusBarColor = Color.TRANSPARENT
-        }
-
-        viewModel.selectionMode.observe(viewLifecycleOwner) { selectionMode ->
-            setTabLayoutEnabled(
-                enabled = selectionMode == SelectionMode.NORMAL_MODE.ordinal,
-                binding.viewpager2,
-                binding.tablayout
-            )
         }
 
         (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showBottomNavigationView()

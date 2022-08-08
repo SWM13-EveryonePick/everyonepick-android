@@ -79,4 +79,9 @@ class InviteFriendFragment : Fragment() {
         super.onPause()
         onBackPressedCallback.remove()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

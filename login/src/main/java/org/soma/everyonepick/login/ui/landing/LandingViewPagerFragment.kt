@@ -105,6 +105,11 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     /** LandingViewPagerFragmentListener */
     override fun onClickNextButton() {
         binding.viewpager2.currentItem += 1

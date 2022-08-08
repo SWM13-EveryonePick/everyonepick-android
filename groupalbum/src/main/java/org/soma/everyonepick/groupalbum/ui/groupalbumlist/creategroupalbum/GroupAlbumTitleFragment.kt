@@ -48,4 +48,9 @@ class GroupAlbumTitleFragment : Fragment() {
         (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
         KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

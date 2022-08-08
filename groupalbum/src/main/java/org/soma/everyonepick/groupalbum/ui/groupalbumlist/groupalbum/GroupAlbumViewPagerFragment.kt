@@ -3,6 +3,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
@@ -80,7 +81,23 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
             viewModel.fetchMemberList()
         }
 
+        subscribeUi()
+
         return binding.root
+    }
+
+    private fun subscribeUi() {
+        viewModel.photoSelectionMode.observe(viewLifecycleOwner) { photoSelectionMode ->
+            setTabLayoutEnabled(
+                enabled = photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
+                binding.viewpager2,
+                binding.tablayout
+            )
+        }
+
+        viewModel.memberSelectionMode.observe(viewLifecycleOwner) { memberSelectionMode ->
+            viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,23 +119,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
 
     override fun onStart() {
         super.onStart()
-
-        subscribeUi()
         (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
-    }
-
-    private fun subscribeUi() {
-        viewModel.photoSelectionMode.observe(viewLifecycleOwner) { photoSelectionMode ->
-            setTabLayoutEnabled(
-                enabled = photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
-                binding.viewpager2,
-                binding.tablayout
-            )
-        }
-
-        viewModel.memberSelectionMode.observe(viewLifecycleOwner) { memberSelectionMode ->
-            viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
-        }
     }
 
     override fun onDestroy() {
