@@ -1,6 +1,6 @@
 package org.soma.everyonepick.groupalbum.data.model
 
-data class PhotoDao(
+data class Photo(
     val id: Long,
     var photoUrl: String
 )

@@ -97,7 +97,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
             }
         }
 
-        viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbumDao(args.groupAlbumId)
+        viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbum(args.groupAlbumId)
 
         return binding.root
     }

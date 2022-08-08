@@ -1,6 +1,6 @@
 package org.soma.everyonepick.groupalbum.data.model
 
-data class GroupAlbumDao(
+data class GroupAlbum(
     val id: Long,
     var title: String,
     var photoCount: Int

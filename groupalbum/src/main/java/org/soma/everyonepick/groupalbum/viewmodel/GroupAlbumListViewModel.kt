@@ -14,6 +14,8 @@ import javax.inject.Inject
  *
  * GroupAlbum RecyclerView의 설계상, 가장 마지막 아이템을 '생성 버튼' 취급하게 되므로
  * 마지막 아이템에는 [GroupAlbumItem.dummyData]가 위치하는 것을 보장해야 합니다.
+ * 이 책임은 [GroupAlbumItemList]가 지고 있습니다.
+ * @see [GroupAlbumItemList]
  */
 
 @HiltViewModel
@@ -25,8 +27,12 @@ class GroupAlbumListViewModel @Inject constructor(
 
     fun fetchGroupAlbumItemList() {
         isApiLoading.value = true
-        groupAlbumItemList.value?.data = groupAlbumRepository.getGroupAlbumItemList()
-        groupAlbumItemList.value = groupAlbumItemList.value
+
+        try {
+            groupAlbumItemList.value?.data = groupAlbumRepository.getGroupAlbumItemList()
+            groupAlbumItemList.value = groupAlbumItemList.value
+        } catch (e: Exception) {}
+
         isApiLoading.value = false
     }
 

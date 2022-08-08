@@ -16,7 +16,7 @@ class GroupAlbumItemList {
 
     fun removeById(id: Long) {
         for (i in 0 until getItemCount()) {
-            if (data[i].groupAlbumDao.id == id) {
+            if (data[i].groupAlbum.id == id) {
                 data.removeAt(i)
                 break
             }
@@ -50,5 +50,5 @@ class GroupAlbumItemList {
     }
 
     private fun copyGroupAlbumItem(groupAlbumItem: GroupAlbumItem) =
-        GroupAlbumItem(groupAlbumItem.groupAlbumDao.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
+        GroupAlbumItem(groupAlbumItem.groupAlbum.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
 }

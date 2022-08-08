@@ -2,11 +2,11 @@ package org.soma.everyonepick.groupalbum.util
 
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.item.PhotoItem
-import org.soma.everyonepick.groupalbum.data.model.GroupAlbumDao
-import org.soma.everyonepick.groupalbum.data.model.PhotoDao
+import org.soma.everyonepick.groupalbum.data.model.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.model.Photo
 
-val testGroupAlbumDao = GroupAlbumDao(0, "test", 100)
-val testGroupAlbumItem = GroupAlbumItem(testGroupAlbumDao, false, false)
+val testGroupAlbum = GroupAlbum(0, "test", 100)
+val testGroupAlbumItem = GroupAlbumItem(testGroupAlbum, false, false)
 
-val testPhotoDao = PhotoDao(0, "test")
-val testPhotoItem = PhotoItem(testPhotoDao, false, false)
+val testPhoto = Photo(0, "test")
+val testPhotoItem = PhotoItem(testPhoto, false, false)

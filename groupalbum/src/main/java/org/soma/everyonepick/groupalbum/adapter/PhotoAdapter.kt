@@ -40,7 +40,7 @@ class PhotoAdapter(
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val photoUrl = item.photoDao.photoUrl
+                val photoUrl = item.photo.photoUrl
                 val directions = GroupAlbumViewPagerFragmentDirections.toPhotoFragment(photoUrl)
                 binding.root.findNavController().navigate(directions)
             } else {
@@ -66,7 +66,7 @@ class PhotoAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(photoItem: PhotoItem) {
             Glide.with(binding.root)
-                .load(photoItem.photoDao.photoUrl)
+                .load(photoItem.photo.photoUrl)
                 .transform(CenterCrop(), RoundedCorners(CORNER_RADIUS))
                 .into(binding.imagePhoto)
             binding.checkbox.setVisibility(photoItem.isCheckboxVisible)
@@ -81,7 +81,7 @@ class PhotoAdapter(
 
 private class PhotoDiffCallback: DiffUtil.ItemCallback<PhotoItem>() {
     override fun areItemsTheSame(oldItem: PhotoItem, newItem: PhotoItem): Boolean {
-        return oldItem.photoDao.id == newItem.photoDao.id
+        return oldItem.photo.id == newItem.photo.id
     }
 
     override fun areContentsTheSame(oldItem: PhotoItem, newItem: PhotoItem): Boolean {
