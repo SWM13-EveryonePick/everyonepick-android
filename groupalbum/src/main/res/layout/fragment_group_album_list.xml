@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.util.GroupAlbumListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
         <variable
             name="listener"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragmentListener"/>
@@ -57,7 +57,7 @@
             android:padding="@dimen/margin_fab"
             android:orientation="vertical"
             android:clipToPadding="false"
-            android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            android:visibility="@{parentViewModel.selectionMode == SelectionMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 

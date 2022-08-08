@@ -6,7 +6,7 @@
     <data>
         <variable
             name="listener"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment.GroupAlbumViewPagerFragmentListener" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentListener" />
        <variable
            name="adapter"
            type="org.soma.everyonepick.groupalbum.adapter.MemberAdapter" />
@@ -14,7 +14,7 @@
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
         <import type="android.view.View" />
-        <import type="org.soma.everyonepick.groupalbum.util.PhotoListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -52,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@{viewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? @drawable/ic_btn_gnb_check: @drawable/ic_btn_gnb_check_on}"
+                        android:src="@{viewModel.photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? @drawable/ic_btn_gnb_check: @drawable/ic_btn_gnb_check_on}"
                         android:layout_marginRight="@dimen/margin_action_bar_item"
                         android:visibility="@{viewModel.currentItem == 1? View.GONE: View.VISIBLE}"
                         android:padding="10dp"
@@ -170,48 +170,82 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_drawer_bottom"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:background="@color/white_smoke"
                     app:layout_constraintBottom_toBottomOf="parent">
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_ico_exit"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:padding="@dimen/margin_drawer_bottom_icon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:onClick="@{() -> listener.onClickDrawerExitButton()}"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.memberSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}">>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ico_exit"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="@dimen/margin_drawer_bottom_icon"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:onClick="@{() -> listener.onClickDrawerExitButton()}"/>
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_ico_out"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:paddingTop="@dimen/margin_drawer_bottom_icon"
-                        android:paddingBottom="@dimen/margin_drawer_bottom_icon"
-                        android:paddingLeft="@dimen/margin_drawer_bottom_icon"
-                        android:paddingRight="@dimen/margin_half_drawer_bottom_icon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/button_drawer_notification"
-                        />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ico_out"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:paddingTop="@dimen/margin_drawer_bottom_icon"
+                            android:paddingBottom="@dimen/margin_drawer_bottom_icon"
+                            android:paddingLeft="@dimen/margin_drawer_bottom_icon"
+                            android:paddingRight="@dimen/margin_half_drawer_bottom_icon"
+                            android:onClick="@{() -> listener.onClickKickButton()}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/button_drawer_notification"
+                            />
 
-                    <ImageButton
-                        android:id="@+id/button_drawer_notification"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_ico_alarm"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:paddingTop="@dimen/margin_drawer_bottom_icon"
-                        android:paddingBottom="@dimen/margin_drawer_bottom_icon"
-                        android:paddingLeft="@dimen/margin_half_drawer_bottom_icon"
-                        android:paddingRight="@dimen/margin_drawer_bottom_icon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        <ImageButton
+                            android:id="@+id/button_drawer_notification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ico_alarm"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:paddingTop="@dimen/margin_drawer_bottom_icon"
+                            android:paddingBottom="@dimen/margin_drawer_bottom_icon"
+                            android:paddingLeft="@dimen/margin_half_drawer_bottom_icon"
+                            android:paddingRight="@dimen/margin_drawer_bottom_icon"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.memberSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? View.GONE: View.VISIBLE}">
+                        <TextView
+                            android:id="@+id/text_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cancel"
+                            android:gravity="center_horizontal"
+                            android:onClick="@{() -> listener.onClickCancelKickButton()}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/text_kick"/>
+                        <TextView
+                            android:id="@+id/text_kick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kick"
+                            android:gravity="center_horizontal"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/text_cancel"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

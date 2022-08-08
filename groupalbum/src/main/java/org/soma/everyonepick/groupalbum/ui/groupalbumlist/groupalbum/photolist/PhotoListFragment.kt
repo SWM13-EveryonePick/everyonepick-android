@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
-import org.soma.everyonepick.groupalbum.util.PhotoListMode
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
@@ -45,8 +45,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     private fun subscribeUi() {
-        parentViewModel.photoListMode.observe(viewLifecycleOwner) { photoListMode ->
-            viewModel.setIsCheckboxVisible(photoListMode == PhotoListMode.SELECTION_MODE.ordinal)
+        parentViewModel.photoSelectionMode.observe(viewLifecycleOwner) { selectionMode ->
+            viewModel.setIsCheckboxVisible(selectionMode == SelectionMode.SELECTION_MODE.ordinal)
         }
     }
 
@@ -81,7 +81,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
     override fun onClickDeleteButton() {
         viewModel.deleteCheckedItems()
-        parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+        parentViewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }
 
     override fun onClickProcessButton() {
@@ -89,7 +89,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     override fun onClickCancelButton() {
-        parentViewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+        parentViewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }
 
 

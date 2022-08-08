@@ -2,7 +2,7 @@ package org.soma.everyonepick.groupalbum.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.soma.everyonepick.groupalbum.util.GroupAlbumListMode
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 
 class ViewPagerViewModel: ViewModel() {
     // 현재 item index에 따라 우측 상단 버튼의 visibility가 달라집니다.
@@ -10,7 +10,7 @@ class ViewPagerViewModel: ViewModel() {
     val currentItem: MutableLiveData<Int> = MutableLiveData(0)
 
     // 앨범 탭에서의 일반 및 선택 모드를 나타내며, GroupAlbumListFragment에서도 해당 값을 참조합니다.
-    val groupAlbumListMode = MutableLiveData(GroupAlbumListMode.NORMAL_MODE.ordinal)
+    val selectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
 
     // 전체선택 버튼을 누를 때 해당 값을 증가시키며, 하위 프래그먼트에서 이 값을 관찰합니다.
     // 이 값이 변경되면 하위 프래그먼트에서 전체선택 액션을 수행하게 됩니다.

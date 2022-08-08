@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.util.PhotoListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
         <variable
             name="listener"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragmentListener"/>
@@ -63,7 +63,7 @@
             <ImageView
                 android:layout_margin="@dimen/margin_fab"
                 android:src="@drawable/ic_btn_floating_add"
-                android:visibility="@{parentViewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
+                android:visibility="@{parentViewModel.photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
                 android:onClick="@{() -> listener.onClickUploadPhotoButton()}"
                 style="@style/ImageViewFab"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,7 @@
                 android:padding="@dimen/margin_fab"
                 android:orientation="vertical"
                 android:clipToPadding="false"
-                android:visibility="@{parentViewModel.photoListMode == PhotoListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+                android:visibility="@{parentViewModel.photoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 

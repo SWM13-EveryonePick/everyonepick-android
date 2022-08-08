@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
-import org.soma.everyonepick.groupalbum.util.GroupAlbumListMode
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
 
@@ -42,8 +42,8 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     }
 
     private fun subscribeUi() {
-        parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
-            val isSelectionMode = groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal
+        parentViewModel.selectionMode.observe(viewLifecycleOwner) { selectionMode ->
+            val isSelectionMode = selectionMode == SelectionMode.SELECTION_MODE.ordinal
             viewModel.setIsCheckboxVisible(isSelectionMode)
 
             if (isSelectionMode) (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
@@ -78,11 +78,11 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     /** GroupAlbumListFragmentListener */
     override fun onClickDeleteButton() {
         viewModel.deleteCheckedItems()
-        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+        parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }
 
     override fun onClickCancelButton() {
-        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+        parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }
 
     override fun onClickCreateGroupAlbumButton() {

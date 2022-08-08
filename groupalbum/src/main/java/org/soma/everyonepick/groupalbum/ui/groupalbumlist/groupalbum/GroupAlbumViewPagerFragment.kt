@@ -1,13 +1,10 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Button
-import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
@@ -20,19 +17,18 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
-import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.adapter.MemberAdapter
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
-import org.soma.everyonepick.groupalbum.util.PhotoListMode
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import javax.inject.Inject
 
 private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
 
 @AndroidEntryPoint
-class GroupAlbumViewPagerFragment: Fragment() {
+class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListener {
     @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
 
     private var _binding: FragmentGroupAlbumViewPagerBinding? = null
@@ -48,9 +44,9 @@ class GroupAlbumViewPagerFragment: Fragment() {
         super.onAttach(context)
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                when(viewModel.photoListMode.value) {
-                    PhotoListMode.NORMAL_MODE.ordinal -> findNavController().navigateUp()
-                    else -> viewModel.photoListMode.value = PhotoListMode.NORMAL_MODE.ordinal
+                when(viewModel.photoSelectionMode.value) {
+                    SelectionMode.NORMAL_MODE.ordinal -> findNavController().navigateUp()
+                    else -> viewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
                 }
             }
         }
@@ -65,40 +61,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
             it.adapter = MemberAdapter(viewModel)
             it.viewModel = viewModel
-            it.listener = object : GroupAlbumViewPagerFragmentListener {
-                override fun onClickSelectButton() {
-                    viewModel.photoListMode.value =
-                        if (viewModel.photoListMode.value == PhotoListMode.NORMAL_MODE.ordinal) PhotoListMode.SELECTION_MODE.ordinal
-                        else PhotoListMode.NORMAL_MODE.ordinal
-                }
-
-                override fun onClickDrawerButton() {
-                    binding.drawerlayout.openDrawer(GravityCompat.END)
-                }
-
-                override fun onClickUpdateDrawerTitleButton() {
-                    UpdateTitleDialogFragment {
-                        // TODO: API
-                        viewModel.updateGroupAlbumTitle(it)
-                    }.show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
-                }
-
-                override fun onClickDrawerExitButton() {
-                    AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
-                        .setPositiveButton("확인") { _, _ ->
-                            // TODO: API
-                            activity?.supportFragmentManager?.setFragmentResult(
-                                GROUP_ALBUM_REMOVED,
-                                bundleOf("id" to args.groupAlbumId)
-                            )
-                            findNavController().navigateUp()
-                        }
-                        .setNegativeButton("취소") { dialog, _ ->
-                            dialog.cancel()
-                        }
-                        .create().show()
-                }
-            }
+            it.listener = this
         }
 
         viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbum(args.groupAlbumId)
@@ -129,12 +92,16 @@ class GroupAlbumViewPagerFragment: Fragment() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.photoListMode.observe(viewLifecycleOwner) { photoListMode ->
+        viewModel.photoSelectionMode.observe(viewLifecycleOwner) { photoSelectionMode ->
             setTabLayoutEnabled(
-                enabled = photoListMode == PhotoListMode.NORMAL_MODE.ordinal,
+                enabled = photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
                 binding.viewpager2,
                 binding.tablayout
             )
+        }
+
+        viewModel.memberSelectionMode.observe(viewLifecycleOwner) { memberSelectionMode ->
+            viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
         }
 
         (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
@@ -151,10 +118,53 @@ class GroupAlbumViewPagerFragment: Fragment() {
     }
 
 
-    interface GroupAlbumViewPagerFragmentListener {
-        fun onClickSelectButton()
-        fun onClickDrawerButton()
-        fun onClickUpdateDrawerTitleButton()
-        fun onClickDrawerExitButton()
+    override fun onClickSelectButton() {
+        viewModel.photoSelectionMode.value =
+            if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE.ordinal
+            else SelectionMode.NORMAL_MODE.ordinal
     }
+
+    override fun onClickDrawerButton() {
+        binding.drawerlayout.openDrawer(GravityCompat.END)
+    }
+
+    override fun onClickUpdateDrawerTitleButton() {
+        UpdateTitleDialogFragment {
+            // TODO: API
+            viewModel.updateGroupAlbumTitle(it)
+        }.show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
+    }
+
+    override fun onClickDrawerExitButton() {
+        AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
+            .setPositiveButton("확인") { _, _ ->
+                // TODO: API
+                activity?.supportFragmentManager?.setFragmentResult(
+                    GROUP_ALBUM_REMOVED,
+                    bundleOf("id" to args.groupAlbumId)
+                )
+                findNavController().navigateUp()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.cancel()
+            }
+            .create().show()
+    }
+
+    override fun onClickKickButton() {
+        viewModel.memberSelectionMode.value = SelectionMode.SELECTION_MODE.ordinal
+    }
+
+    override fun onClickCancelKickButton() {
+        viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+    }
+}
+
+interface GroupAlbumViewPagerFragmentListener {
+    fun onClickSelectButton()
+    fun onClickDrawerButton()
+    fun onClickUpdateDrawerTitleButton()
+    fun onClickDrawerExitButton()
+    fun onClickKickButton()
+    fun onClickCancelKickButton()
 }

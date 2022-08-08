@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.databinding.FragmentViewPagerBinding
-import org.soma.everyonepick.groupalbum.util.GroupAlbumListMode
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
 
 @AndroidEntryPoint
@@ -38,8 +38,8 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickSelectButtonListener = View.OnClickListener {
-                if (viewModel.groupAlbumListMode.value == GroupAlbumListMode.NORMAL_MODE.ordinal) {
-                    viewModel.groupAlbumListMode.value = GroupAlbumListMode.SELECTION_MODE.ordinal
+                if (viewModel.selectionMode.value == SelectionMode.NORMAL_MODE.ordinal) {
+                    viewModel.selectionMode.value = SelectionMode.SELECTION_MODE.ordinal
                 } else {
                     viewModel.checkAllTrigger.value = viewModel.checkAllTrigger.value?.plus(1)
                 }
@@ -106,9 +106,9 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             it.statusBarColor = Color.TRANSPARENT
         }
 
-        viewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
+        viewModel.selectionMode.observe(viewLifecycleOwner) { selectionMode ->
             setTabLayoutEnabled(
-                enabled = groupAlbumListMode == GroupAlbumListMode.NORMAL_MODE.ordinal,
+                enabled = selectionMode == SelectionMode.NORMAL_MODE.ordinal,
                 binding.viewpager2,
                 binding.tablayout
             )
@@ -121,9 +121,9 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         super.onResume()
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                when(viewModel.groupAlbumListMode.value) {
-                    GroupAlbumListMode.NORMAL_MODE.ordinal -> (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showAreYouSureDialog()
-                    else -> viewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+                when(viewModel.selectionMode.value) {
+                    SelectionMode.NORMAL_MODE.ordinal -> (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showAreYouSureDialog()
+                    else -> viewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
                 }
             }
         }
