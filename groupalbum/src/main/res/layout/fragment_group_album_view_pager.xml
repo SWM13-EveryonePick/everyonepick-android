@@ -199,6 +199,7 @@
                             android:paddingLeft="@dimen/margin_drawer_bottom_icon"
                             android:paddingRight="@dimen/margin_half_drawer_bottom_icon"
                             android:onClick="@{() -> listener.onClickKickIcon()}"
+                            android:visibility="@{viewModel.me.id == viewModel.groupAlbum.hostUserId? View.VISIBLE: View.GONE}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/button_drawer_notification"
