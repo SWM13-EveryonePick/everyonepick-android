@@ -48,7 +48,7 @@ class GroupAlbumListViewModel @Inject constructor(
 
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        groupAlbumItemList.value?.setIsCheckBoxVisible(isCheckboxVisible)
+        groupAlbumItemList.value?.setIsCheckboxVisible(isCheckboxVisible)
         groupAlbumItemList.value = groupAlbumItemList.value
     }
 

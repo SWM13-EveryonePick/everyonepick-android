@@ -31,7 +31,7 @@ class GroupAlbumItemList {
         data = newData
     }
 
-    fun setIsCheckBoxVisible(isCheckboxVisible: Boolean) {
+    fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         for (i in 0 until data.size) {
             val newItem = copyGroupAlbumItem(data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
