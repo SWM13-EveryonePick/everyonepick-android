@@ -7,10 +7,10 @@ class GroupAlbumRepository {
     fun getGroupAlbumItemList(): MutableList<GroupAlbumItem> {
         // TODO: Retrofit2 -> groupAlbumList
         val groupAlbumList = mutableListOf(
-            GroupAlbum(0, "title0", 100),
-            GroupAlbum(1, "title1", 101),
-            GroupAlbum(2, "title2", 102),
-            GroupAlbum(3, "title3", 103)
+            GroupAlbum(0, "title0", 0, 100),
+            GroupAlbum(1, "title1", 1, 101),
+            GroupAlbum(2, "title2", 2, 102),
+            GroupAlbum(3, "title3", 3, 103)
         )
         return convertGroupAlbumListToGroupAlbumItemList(groupAlbumList)
     }
@@ -26,7 +26,7 @@ class GroupAlbumRepository {
     fun getGroupAlbum(id: Long): GroupAlbum {
         // TODO: Retrofit2... req: id -> res: GroupAlbum
         return GroupAlbum(
-            id, "title$id", 100+id.toInt()
+            id, "title$id", id, 100+id.toInt()
         )
     }
 }

@@ -6,7 +6,7 @@ import org.soma.everyonepick.groupalbum.data.model.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 
 class GroupAlbumTest {
-    private val groupAlbum = GroupAlbum(0, "id", 100)
+    private val groupAlbum = GroupAlbum(0, "id", 0, 100)
     @Test fun groupAlbumDaoListToGroupAlbumItemList() {
         val groupAlbumItemList = GroupAlbumRepository().convertGroupAlbumListToGroupAlbumItemList(
             mutableListOf(groupAlbum)

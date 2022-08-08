@@ -9,7 +9,7 @@ class GroupAlbumItem(
     var isCheckboxVisible: Boolean
 ) {
     companion object {
-        val dummyData = GroupAlbumItem(GroupAlbum(-1, "", 0), isChecked = false, isCheckboxVisible = false)
+        val dummyData = GroupAlbumItem(GroupAlbum(-1, "", 0, 0), isChecked = false, isCheckboxVisible = false)
     }
 
     override fun equals(other: Any?) = super.equals(other)

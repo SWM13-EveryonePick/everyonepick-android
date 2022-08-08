@@ -16,6 +16,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
+        <ImageView
+            android:id="@+id/image_crown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ico_crown"
+            app:layout_constraintBottom_toBottomOf="@id/image_profile"
+            app:layout_constraintEnd_toEndOf="@id/image_profile"
+            />
+
         <TextView
             android:id="@+id/text_nickname"
             android:layout_width="0dp"

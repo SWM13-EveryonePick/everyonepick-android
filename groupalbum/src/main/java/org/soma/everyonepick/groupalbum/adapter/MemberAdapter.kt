@@ -53,8 +53,7 @@ class MemberAdapter(
             if (isInviteItem) {
                 // TODO: 초대하기
             } else {
-                val item = getItem(holder.absoluteAdapterPosition)
-                if (item.isCheckboxVisible) {
+                if (binding.checkbox.visibility == View.VISIBLE) {
                     binding.checkbox.performTouch()
                 }
             }
@@ -74,7 +73,7 @@ class MemberAdapter(
         (holder as MemberViewHolder).bind(
             memberItem,
             isInviteItem = position == itemCount - 1,
-            isSelectionMode = parentViewModel.memberSelectionMode.value == SelectionMode.SELECTION_MODE.ordinal
+            parentViewModel
         )
     }
 
@@ -84,7 +83,7 @@ class MemberAdapter(
         fun bind(
             memberItem: MemberItem,
             isInviteItem: Boolean,
-            isSelectionMode: Boolean
+            parentViewModel: GroupAlbumViewPagerViewModel
         ) {
             if (isInviteItem) {
                 Glide.with(binding.root)
@@ -95,14 +94,19 @@ class MemberAdapter(
                     ContextCompat.getColor(binding.root.context, org.soma.everyonepick.common_ui.R.color.primary_blue)
                 )
                 binding.checkbox.visibility = View.GONE
-                binding.root.setVisibility(!isSelectionMode)
+                binding.imageCrown.visibility = View.GONE
+                binding.root.setVisibility(parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal)
             } else {
                 Glide.with(binding.root)
                     .load(memberItem.user.thumbnailImageUrl)
                     .into(binding.imageProfile)
                 binding.textNickname.text = memberItem.user.nickname
-                binding.checkbox.setVisibility(memberItem.isCheckboxVisible)
                 binding.checkbox.isChecked = memberItem.isChecked
+
+                val isHostUser = parentViewModel.groupAlbum.value?.hostUserId == memberItem.user.id
+                binding.imageCrown.setVisibility(isHostUser)
+                // 방장 자기 자신은 강퇴할 수 없습니다.
+                binding.checkbox.setVisibility(memberItem.isCheckboxVisible && !isHostUser)
             }
         }
     }
