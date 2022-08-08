@@ -44,9 +44,12 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
         super.onAttach(context)
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                when(viewModel.photoSelectionMode.value) {
-                    SelectionMode.NORMAL_MODE.ordinal -> findNavController().navigateUp()
-                    else -> viewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+                if (binding.drawerlayout.isDrawerOpen(GravityCompat.END)) {
+                    binding.drawerlayout.closeDrawer(GravityCompat.END)
+                } else if (viewModel.photoSelectionMode.value == SelectionMode.SELECTION_MODE.ordinal) {
+                    viewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+                } else {
+                    findNavController().navigateUp()
                 }
             }
         }
