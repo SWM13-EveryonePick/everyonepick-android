@@ -12,13 +12,16 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.adapter.MemberAdapter
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
@@ -60,6 +63,7 @@ class GroupAlbumViewPagerFragment: Fragment() {
     ): View {
         _binding = FragmentGroupAlbumViewPagerBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
+            it.adapter = MemberAdapter(viewModel)
             it.viewModel = viewModel
             it.listener = object : GroupAlbumViewPagerFragmentListener {
                 override fun onClickSelectButton() {
@@ -98,6 +102,9 @@ class GroupAlbumViewPagerFragment: Fragment() {
         }
 
         viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbum(args.groupAlbumId)
+        lifecycleScope.launch {
+            viewModel.fetchMemberList()
+        }
 
         return binding.root
     }

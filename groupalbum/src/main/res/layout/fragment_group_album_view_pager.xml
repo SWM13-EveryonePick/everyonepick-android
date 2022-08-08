@@ -7,6 +7,9 @@
         <variable
             name="listener"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment.GroupAlbumViewPagerFragmentListener" />
+       <variable
+           name="adapter"
+           type="org.soma.everyonepick.groupalbum.adapter.MemberAdapter" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
@@ -141,7 +144,26 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:onClick="@{() -> listener.onClickUpdateDrawerTitleButton()}"/>
 
-                    <!-- TODO: 단체 인원 -->
+                    <TextView
+                        android:id="@+id/text_membercount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/member_count(viewModel.memberItemList.size())}"
+                        app:layout_constraintTop_toBottomOf="@id/text_drawer_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="단체인원(3)"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_member"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_membercount"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_member"
+                        adapter="@{adapter}"
+                        submitList="@{viewModel.memberItemList}"
+                        />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

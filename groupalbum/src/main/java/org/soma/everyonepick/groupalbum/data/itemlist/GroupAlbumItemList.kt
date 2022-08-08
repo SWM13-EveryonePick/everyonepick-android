@@ -6,11 +6,19 @@ import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
  * data의 마지막 아이템에 항상 [GroupAlbumItem.dummyData]가 위치하는 것을 보장하는 클래스입니다.
  */
 class GroupAlbumItemList {
-    var data = mutableListOf(GroupAlbumItem.dummyData)
+    var data: MutableList<GroupAlbumItem>
         set(value) {
             field = value
             field.add(GroupAlbumItem.dummyData)
         }
+
+    constructor() {
+        data = mutableListOf(GroupAlbumItem.dummyData)
+    }
+
+    constructor(groupAlbumItemList: MutableList<GroupAlbumItem>) {
+        data = groupAlbumItemList
+    }
 
     fun getItemCount() = data.size - 1
 

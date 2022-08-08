@@ -11,6 +11,7 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.util.testGroupAlbumItem
+import org.soma.everyonepick.groupalbum.util.testGroupAlbumItemList
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -30,15 +31,15 @@ class GroupAlbumListViewModelTest {
     fun setUp() {
         hiltRule.inject()
         viewModel = GroupAlbumListViewModel(groupAlbumRepository)
-        viewModel.groupAlbumItemList.value = mutableListOf(testGroupAlbumItem)
+        viewModel.groupAlbumItemList.value = testGroupAlbumItemList
     }
 
     @Test
     fun testSetIsCheckboxVisible() {
         runBlocking {
-            viewModel.groupAlbumItemList.value!![0].isCheckboxVisible = false
+            viewModel.groupAlbumItemList.value!!.data[0].isCheckboxVisible = false
             viewModel.setIsCheckboxVisible(true)
-            assertTrue(viewModel.groupAlbumItemList.value!![0].isCheckboxVisible)
+            assertTrue(viewModel.groupAlbumItemList.value!!.data[0].isCheckboxVisible)
         }
     }
 }
