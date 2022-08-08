@@ -36,8 +36,6 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
             it.listener = this
         }
 
-        viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
-
         subscribeUi()
         setFragmentResultListeners()
 
@@ -62,9 +60,11 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        // TODO: viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
+    override fun onStart() {
+        super.onStart()
+
+        parentViewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+        viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
     }
 
     override fun onDestroy() {

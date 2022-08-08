@@ -119,6 +119,12 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
 
     override fun onStart() {
         super.onStart()
+
+        viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+        lifecycleScope.launch {
+            viewModel.fetchMemberList()
+        }
+
         (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
     }
 
