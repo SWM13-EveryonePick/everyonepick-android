@@ -18,6 +18,6 @@ class SettingFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showBottomNavigationView()
+        (activity as HomeActivityUtil).showBottomNavigationView()
     }
 }

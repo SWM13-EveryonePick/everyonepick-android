@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
@@ -48,8 +49,8 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
             val isSelectionMode = selectionMode == SelectionMode.SELECTION_MODE.ordinal
             viewModel.setIsCheckboxVisible(isSelectionMode)
 
-            if (isSelectionMode) (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
-            else (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showBottomNavigationView()
+            if (isSelectionMode) (activity as HomeActivityUtil).hideBottomNavigationView()
+            else (activity as HomeActivityUtil).showBottomNavigationView()
         }
 
         parentViewModel.checkAllTrigger.observe(viewLifecycleOwner) {

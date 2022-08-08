@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.pref.PreferencesDataStore
 import org.soma.everyonepick.common.data.repository.UserRepository
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.adapter.MemberAdapter
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
@@ -108,7 +109,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
             viewModel.fetchMemberList()
         }
 
-        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
+        (activity as HomeActivityUtil).hideBottomNavigationView()
     }
 
     override fun onResume() {

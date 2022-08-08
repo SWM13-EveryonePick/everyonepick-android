@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentViewPagerBinding
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
@@ -117,7 +118,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             it.statusBarColor = Color.TRANSPARENT
         }
 
-        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showBottomNavigationView()
+        (activity as HomeActivityUtil).showBottomNavigationView()
     }
 
     override fun onResume() {
@@ -125,7 +126,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 when(viewModel.selectionMode.value) {
-                    SelectionMode.NORMAL_MODE.ordinal -> (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showAreYouSureDialog()
+                    SelectionMode.NORMAL_MODE.ordinal -> (activity as HomeActivityUtil).showAreYouSureDialog()
                     else -> viewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
                 }
             }

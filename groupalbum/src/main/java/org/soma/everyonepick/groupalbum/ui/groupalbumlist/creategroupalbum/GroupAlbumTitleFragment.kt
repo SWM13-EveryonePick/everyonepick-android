@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.soma.everyonepick.common.util.KeyboardUtil
+import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumTitleViewModel
 
@@ -45,7 +46,7 @@ class GroupAlbumTitleFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
+        (activity as HomeActivityUtil).hideBottomNavigationView()
         KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
     }
 
