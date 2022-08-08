@@ -15,7 +15,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.common.data.repository.UserRepository
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.groupalbum.adapter.MemberAdapter
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
@@ -30,6 +33,8 @@ private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
 @AndroidEntryPoint
 class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListener {
     @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
+    @Inject lateinit var preferencesDataStore: PreferencesDataStore
+    @Inject lateinit var userRepository: UserRepository
 
     private var _binding: FragmentGroupAlbumViewPagerBinding? = null
     private val binding get() = _binding!!
@@ -67,8 +72,11 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
             it.listener = this
         }
 
-        viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbum(args.groupAlbumId)
         lifecycleScope.launch {
+            viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbum(args.groupAlbumId)
+            viewModel.me = preferencesDataStore.accessToken.first()?.let {
+                userRepository.getUser(it).data
+            }
             viewModel.fetchMemberList()
         }
 
@@ -95,6 +103,11 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
     override fun onStart() {
         super.onStart()
 
+        subscribeUi()
+        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
+    }
+
+    private fun subscribeUi() {
         viewModel.photoSelectionMode.observe(viewLifecycleOwner) { photoSelectionMode ->
             setTabLayoutEnabled(
                 enabled = photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
@@ -106,8 +119,6 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
         viewModel.memberSelectionMode.observe(viewLifecycleOwner) { memberSelectionMode ->
             viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
         }
-
-        (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
     }
 
     override fun onDestroy() {
@@ -161,6 +172,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
     override fun onClickKickButton() {
         if (viewModel.checked.value == null || viewModel.checked.value == 0) return
 
+        // TODO: API
         viewModel.removeCheckedItems()
         viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }

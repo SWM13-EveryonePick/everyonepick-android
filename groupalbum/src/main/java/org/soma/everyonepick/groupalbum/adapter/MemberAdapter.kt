@@ -86,26 +86,30 @@ class MemberAdapter(
             parentViewModel: GroupAlbumViewPagerViewModel
         ) {
             if (isInviteItem) {
+                binding.root.setVisibility(parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal)
+
                 Glide.with(binding.root)
                     .load(R.drawable.ic_btn_drawer_add)
                     .into(binding.imageProfile)
+
                 binding.textNickname.text = "초대하기"
                 binding.textNickname.setTextColor(
                     ContextCompat.getColor(binding.root.context, org.soma.everyonepick.common_ui.R.color.primary_blue)
                 )
+
                 binding.checkbox.visibility = View.GONE
                 binding.imageCrown.visibility = View.GONE
-                binding.root.setVisibility(parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal)
             } else {
                 Glide.with(binding.root)
                     .load(memberItem.user.thumbnailImageUrl)
                     .into(binding.imageProfile)
+
                 binding.textNickname.text = memberItem.user.nickname
                 binding.checkbox.isChecked = memberItem.isChecked
 
                 val isHostUser = parentViewModel.groupAlbum.value?.hostUserId == memberItem.user.id
                 binding.imageCrown.setVisibility(isHostUser)
-                // 방장 자기 자신은 강퇴할 수 없습니다.
+                // 방장일 경우 체크박스를 표시하지 않습니다.
                 binding.checkbox.setVisibility(memberItem.isCheckboxVisible && !isHostUser)
             }
         }

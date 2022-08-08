@@ -2,6 +2,8 @@
 <resources>
     <dimen name="height_friend_item">70dp</dimen>
     <dimen name="size_friend_profile">45dp</dimen>
+    <dimen name="height_member_item">60dp</dimen>
+    <dimen name="size_member_profile">45dp</dimen>
     <dimen name="size_empty_image">60dp</dimen>
     <dimen name="margin_top_empty_text_in_card_view">20dp</dimen>
     <dimen name="margin_top_empty_text">25dp</dimen>
