@@ -12,7 +12,7 @@ class MemberItem(
 ) {
     companion object {
         val dummyData = MemberItem(
-            User(-1, "", "", "", isPushActive = false),
+            User(-1, "TEST", "", "", isPushActive = false),
             isChecked = false,
             isCheckboxVisible = false
         )

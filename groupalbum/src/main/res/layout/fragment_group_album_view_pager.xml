@@ -148,7 +148,7 @@
                         android:id="@+id/text_membercount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/member_count(viewModel.memberItemList.size())}"
+                        android:text="@{@string/member_count(viewModel.memberItemList.getItemCount())}"
                         app:layout_constraintTop_toBottomOf="@id/text_drawer_title"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:text="단체인원(3)"/>
@@ -161,7 +161,7 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_member"
                         adapter="@{adapter}"
-                        submitList="@{viewModel.memberItemList}"
+                        submitList="@{viewModel.memberItemList.data}"
                         />
 
 

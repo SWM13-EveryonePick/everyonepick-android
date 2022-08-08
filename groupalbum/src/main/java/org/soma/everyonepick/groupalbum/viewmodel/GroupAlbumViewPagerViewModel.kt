@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.common.data.item.MemberItem
 import org.soma.everyonepick.common.data.model.User
 import org.soma.everyonepick.common.data.repository.UserRepository
+import org.soma.everyonepick.groupalbum.data.itemlist.MemberItemList
 import org.soma.everyonepick.groupalbum.data.model.GroupAlbum
 import org.soma.everyonepick.groupalbum.util.PhotoListMode
 import javax.inject.Inject
@@ -21,10 +22,11 @@ class GroupAlbumViewPagerViewModel @Inject constructor(
     val photoListMode = MutableLiveData(PhotoListMode.NORMAL_MODE.ordinal)
     // TODO: 합성중 / 합성완료 모드
 
-    var memberItemList = mutableListOf<MemberItem>()
+    var memberItemList = MutableLiveData(MemberItemList())
 
     suspend fun fetchMemberList() {
-        memberItemList = userRepository.getMemberList(groupAlbum.value?.id?: -1)
+        memberItemList.value?.data = userRepository.getMemberList(groupAlbum.value?.id?: -1)
+        memberItemList.value = memberItemList.value
     }
 
     fun updateGroupAlbumTitle(newTitle: String) {
