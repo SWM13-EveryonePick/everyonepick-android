@@ -1,37 +1,21 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo
 
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
-import org.soma.everyonepick.groupalbum.util.FileUtil
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getFileName
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getUriFromBitmap
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.saveBitmapInPictureDirectory
-import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.toFileString
-import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.toString
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
-import java.util.*
 
 
 class PhotoFragment : Fragment(), PhotoFragmentListener {
@@ -93,7 +77,7 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
     }
 
     override fun onClickAddToStoryButton() {
-        val intent = Intent("com.instagram.share.ADD_TO_FEED").apply {
+        val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
             val bitmap = binding.imagePhoto.drawable.toBitmap()
             val uri = getUriFromBitmap(requireContext(), bitmap)
             setDataAndType(uri, "image/*")
