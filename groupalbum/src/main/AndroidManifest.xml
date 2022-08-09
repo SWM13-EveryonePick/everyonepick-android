@@ -7,4 +7,15 @@
     <queries>
         <package android:name="com.kakao.talk"/>
     </queries>
+    <application>
+        <provider
+            android:authorities="org.soma.everyonepick.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+    </application>
 </manifest>

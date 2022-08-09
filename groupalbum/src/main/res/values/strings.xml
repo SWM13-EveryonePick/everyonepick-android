@@ -36,4 +36,7 @@
 
     <!--사진-->
     <string name="empty_photos">사진이 없습니다 :/</string>
+    <string name="instagram">Instagram</string>
+    <string name="instagram_story">IG story</string>
+    <string name="facebook">Facebook</string>
 </resources>
