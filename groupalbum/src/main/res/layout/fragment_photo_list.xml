@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.util.PhotoListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
         <variable
             name="listener"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragmentListener"/>
@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.groupalbumlist.groupalbum.photolist.PhotoListFragment">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -37,6 +37,9 @@
                     android:id="@+id/recyclerview_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:clipToPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -48,68 +51,100 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_fab"
-            android:src="@drawable/ic_baseline_add_24"
-            android:visibility="@{parentViewModel.photoListMode == PhotoListMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
-            android:onClick="@{() -> listener.onClickUploadPhotoButton()}"
-            app:tint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:visibility="@{viewModel.photoItemList.size() == 0? View.GONE: View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_fab"
-            android:orientation="vertical"
-            android:clipToPadding="false"
-            android:visibility="@{parentViewModel.photoListMode == PhotoListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            <ImageView
+                android:layout_margin="@dimen/margin_fab"
+                android:src="@drawable/ic_btn_floating_add"
+                android:visibility="@{parentViewModel.photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
+                android:onClick="@{() -> listener.onClickUploadPhotoButton()}"
+                style="@style/ImageViewFab"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_delete_outline_24"
-                app:tint="@color/white"
-                android:onClick="@{() -> listener.onClickDeleteButton()}"/>
+                android:padding="@dimen/margin_fab"
+                android:orientation="vertical"
+                android:clipToPadding="false"
+                android:visibility="@{parentViewModel.photoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_top_fab"
-                android:src="@drawable/ic_baseline_people_alt_24"
-                app:tint="@color/white"
-                android:onClick="@{() -> listener.onClickProcessButton()}"/>
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_delete"
+                    android:layout_marginBottom="@dimen/margin_bottom_fab"
+                    style="@style/ImageViewFab"
+                    android:onClick="@{() -> listener.onClickDeleteButton()}"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_top_fab"
-                android:src="@drawable/ic_baseline_close_24"
-                app:tint="@color/white"
-                android:onClick="@{() -> listener.onClickCancelButton()}"/>
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_synthetic"
+                    android:layout_marginBottom="@dimen/margin_bottom_fab"
+                    style="@style/ImageViewFab"
+                    android:onClick="@{() -> listener.onClickProcessButton()}"/>
 
-        </LinearLayout>
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_closed"
+                    style="@style/ImageViewFab"
+                    android:onClick="@{() -> listener.onClickCancelButton()}"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{viewModel.photoItemList.size() == 0? View.VISIBLE: View.GONE}">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ico_empty"
+                android:layout_marginBottom="@dimen/margin_top_empty_text"
+                app:layout_constraintBottom_toTopOf="@id/text_emptyphotos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <TextView
+                android:id="@+id/text_emptyphotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                android:layout_marginBottom="@dimen/margin_bottom_empty_text"
+                style="@style/EmptyText"
+                app:layout_constraintBottom_toTopOf="@id/cardview_emptybutton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/empty_photos"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardview_emptybutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                style="@style/EmptyButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/no_photos"/>
+                android:onClick="@{() -> listener.onClickUploadPhotoButton()}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upload_photo"
+                    style="@style/EmptyButtonInnerText"/>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <ProgressBar
                 android:layout_width="wrap_content"

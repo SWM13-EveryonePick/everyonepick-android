@@ -167,7 +167,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@{viewModel.keyword.empty? @string/no_friends: @string/no_friends_with_keyword}"/>
+                android:text="@{viewModel.keyword.empty? @string/empty_friends: @string/empty_friends_with_keyword}"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"

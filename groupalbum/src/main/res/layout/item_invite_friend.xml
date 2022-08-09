@@ -6,8 +6,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_invite_friend_item"
-        android:layout_marginLeft="@dimen/margin_invite_friend_item"
-        android:layout_marginRight="@dimen/margin_invite_friend_item">
+        android:paddingLeft="@dimen/margin_invite_friend_item"
+        android:paddingRight="@dimen/margin_invite_friend_item"
+        android:background="?attr/selectableItemBackground">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_profile"

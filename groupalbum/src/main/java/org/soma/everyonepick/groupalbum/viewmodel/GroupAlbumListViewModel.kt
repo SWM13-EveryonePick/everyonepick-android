@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.data.itemlist.GroupAlbumItemList
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import javax.inject.Inject
 
@@ -13,82 +14,46 @@ import javax.inject.Inject
  *
  * GroupAlbum RecyclerView의 설계상, 가장 마지막 아이템을 '생성 버튼' 취급하게 되므로
  * 마지막 아이템에는 [GroupAlbumItem.dummyData]가 위치하는 것을 보장해야 합니다.
+ * 이 책임은 [GroupAlbumItemList]가 지고 있습니다.
+ * @see [GroupAlbumItemList]
  */
 
 @HiltViewModel
 class GroupAlbumListViewModel @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository
 ): ViewModel() {
-    val groupAlbumItemList = MutableLiveData<MutableList<GroupAlbumItem>>()
+    val groupAlbumItemList = MutableLiveData(GroupAlbumItemList())
     val isApiLoading = MutableLiveData(true)
 
     fun fetchGroupAlbumItemList() {
         isApiLoading.value = true
 
-        val newGroupAlbumItemList = groupAlbumRepository.getGroupAlbumItemList()
-        newGroupAlbumItemList.add(GroupAlbumItem.dummyData()) // 더미데이터 추가
-        groupAlbumItemList.value = newGroupAlbumItemList
+        try {
+            groupAlbumItemList.value?.data = groupAlbumRepository.getGroupAlbumItemList()
+            groupAlbumItemList.value = groupAlbumItemList.value
+        } catch (e: Exception) {}
 
         isApiLoading.value = false
     }
 
-    fun addGroupAlbumItem(groupAlbumItem: GroupAlbumItem) {
-        groupAlbumItemList.value?.let {
-            // 가장 마지막 아이템(생성 버튼) 이전 위치에 삽입해야 합니다.
-            it.add(it.size-1, groupAlbumItem)
-            groupAlbumItemList.value = it
-        }
-    }
-
     fun deleteGroupAlbum(id: Long) {
-        if (groupAlbumItemList.value == null) return
-
-        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
-        for(i in 0 until groupAlbumItemList.value!!.size) {
-            if (groupAlbumItemList.value!![i].groupAlbumDao.id != id)
-                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
-        }
-        groupAlbumItemList.value = newGroupAlbumItemList
+        groupAlbumItemList.value?.removeById(id)
+        groupAlbumItemList.value = groupAlbumItemList.value
     }
 
     fun deleteCheckedItems() {
-        if (groupAlbumItemList.value == null) return
-
-        val newGroupAlbumItemList = mutableListOf<GroupAlbumItem>()
-        // 가장 마지막 아이템은 생성 버튼이므로 제거해선 안 됩니다.
-        for(i in 0 until groupAlbumItemList.value!!.size - 1) {
-            if (!groupAlbumItemList.value!![i].isChecked)
-                newGroupAlbumItemList.add(groupAlbumItemList.value!![i])
-        }
-        newGroupAlbumItemList.add(groupAlbumItemList.value!!.last())
-        groupAlbumItemList.value = newGroupAlbumItemList
+        groupAlbumItemList.value?.removeCheckedItems()
+        groupAlbumItemList.value = groupAlbumItemList.value
     }
 
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        if (groupAlbumItemList.value == null) return
-
-        for(i in 0 until groupAlbumItemList.value!!.size) {
-            val newItem = copyGroupAlbumItem(groupAlbumItemList.value!![i])
-            newItem.isCheckboxVisible = isCheckboxVisible
-            newItem.isChecked = false
-            groupAlbumItemList.value!![i] = newItem
-        }
+        groupAlbumItemList.value?.setIsCheckboxVisible(isCheckboxVisible)
         groupAlbumItemList.value = groupAlbumItemList.value
     }
 
-    private fun copyGroupAlbumItem(groupAlbumItem: GroupAlbumItem) =
-        GroupAlbumItem(groupAlbumItem.groupAlbumDao.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
-
     fun checkAll() {
-        if (groupAlbumItemList.value == null) return
-
-        val isAllGroupAlbumChecked = groupAlbumItemList.value!!.all{ it.isChecked }
-        for(i in 0 until groupAlbumItemList.value!!.size) {
-            val newItem = copyGroupAlbumItem(groupAlbumItemList.value!![i])
-            newItem.isChecked = !isAllGroupAlbumChecked
-            groupAlbumItemList.value!![i] = newItem
-        }
+        groupAlbumItemList.value?.checkAll()
         groupAlbumItemList.value = groupAlbumItemList.value
     }
 }

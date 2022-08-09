@@ -1,17 +1,20 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import android.os.Bundle
+import android.text.Selection
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
-import org.soma.everyonepick.groupalbum.util.GroupAlbumListMode
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
 
@@ -42,12 +45,12 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     }
 
     private fun subscribeUi() {
-        parentViewModel.groupAlbumListMode.observe(viewLifecycleOwner) { groupAlbumListMode ->
-            val isSelectionMode = groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal
+        parentViewModel.selectionMode.observe(viewLifecycleOwner) { selectionMode ->
+            val isSelectionMode = selectionMode == SelectionMode.SELECTION_MODE.ordinal
             viewModel.setIsCheckboxVisible(isSelectionMode)
 
-            if (isSelectionMode) (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).hideBottomNavigationView()
-            else (activity as org.soma.everyonepick.foundation.util.HomeActivityUtil).showBottomNavigationView()
+            if (isSelectionMode) (activity as HomeActivityUtil).hideBottomNavigationView()
+            else (activity as HomeActivityUtil).showBottomNavigationView()
         }
 
         parentViewModel.checkAllTrigger.observe(viewLifecycleOwner) {
@@ -66,6 +69,8 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
 
     override fun onStart() {
         super.onStart()
+
+        parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
         viewModel.fetchGroupAlbumItemList()
     }
 
@@ -78,11 +83,11 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     /** GroupAlbumListFragmentListener */
     override fun onClickDeleteButton() {
         viewModel.deleteCheckedItems()
-        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+        parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }
 
     override fun onClickCancelButton() {
-        parentViewModel.groupAlbumListMode.value = GroupAlbumListMode.NORMAL_MODE.ordinal
+        parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
     }
 
     override fun onClickCreateGroupAlbumButton() {

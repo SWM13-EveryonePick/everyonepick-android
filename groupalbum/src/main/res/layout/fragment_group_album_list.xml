@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="org.soma.everyonepick.groupalbum.util.GroupAlbumListMode"/>
+        <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
         <variable
             name="listener"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragmentListener"/>
@@ -37,14 +37,14 @@
                     android:id="@+id/recyclerview_groupalbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.groupAlbumItemList.size() > 1? View.VISIBLE: View.GONE}"
+                    android:visibility="@{viewModel.groupAlbumItemList.getItemCount() > 0? View.VISIBLE: View.GONE}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"
                     adapter="@{adapter}"
-                    submitList="@{viewModel.groupAlbumItemList}"
+                    submitList="@{viewModel.groupAlbumItemList.data}"
                     tools:listitem="@layout/item_group_album"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -57,23 +57,19 @@
             android:padding="@dimen/margin_fab"
             android:orientation="vertical"
             android:clipToPadding="false"
-            android:visibility="@{parentViewModel.groupAlbumListMode == GroupAlbumListMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            android:visibility="@{parentViewModel.selectionMode == SelectionMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_delete_outline_24"
-                app:tint="@color/white"
+            <ImageView
+                android:src="@drawable/ic_btn_floating_delete"
+                android:layout_marginBottom="@dimen/margin_bottom_fab"
+                style="@style/ImageViewFab"
                 android:onClick="@{() -> listener.onClickDeleteButton()}"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_top_fab"
-                android:src="@drawable/ic_baseline_close_24"
-                app:tint="@color/white"
+            <ImageView
+                android:src="@drawable/ic_btn_floating_closed"
+                style="@style/ImageViewFab"
                 android:onClick="@{() -> listener.onClickCancelButton()}"/>
 
         </LinearLayout>
@@ -81,7 +77,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_empty_card_view"
-            android:visibility="@{viewModel.groupAlbumItemList.size() == 1? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.groupAlbumItemList.getItemCount() == 0? View.VISIBLE: View.GONE}"
             style="@style/ListCardView"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -94,43 +90,38 @@
                     android:layout_width="@dimen/size_empty_image"
                     android:layout_height="@dimen/size_empty_image"
                     android:src="@drawable/ic_ico_empty"
-                    android:layout_marginBottom="@dimen/margin_bottom_empty_image"
+                    android:layout_marginBottom="@dimen/margin_top_empty_text_in_card_view"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                    app:layout_constraintBottom_toTopOf="@id/text_nogroupalbums"
+                    app:layout_constraintBottom_toTopOf="@id/text_emptygroupalbums"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
                 <TextView
-                    android:id="@+id/text_nogroupalbums"
+                    android:id="@+id/text_emptygroupalbums"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                    android:textSize="16sp"
+                    style="@style/EmptyText"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/no_group_albums"/>
+                    android:text="@string/empty_group_albums"/>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_top_empty_button"
-                    android:clickable="true"
+                    android:layout_marginTop="@dimen/margin_bottom_empty_text_in_card_view"
                     android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                     android:onClick="@{() -> listener.onClickCreateGroupAlbumButton()}"
-                    app:layout_constraintTop_toBottomOf="@id/text_nogroupalbums"
+                    style="@style/EmptyButton"
+                    app:layout_constraintTop_toBottomOf="@id/text_emptygroupalbums"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:cardCornerRadius="@dimen/radius_medium"
-                    app:strokeColor="@color/primary_blue"
-                    app:strokeWidth="1dp"
-                    app:rippleColor="@color/primary_blue">
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:text="@string/create_group_album"
                         style="@style/EmptyButtonInnerText"/>
 

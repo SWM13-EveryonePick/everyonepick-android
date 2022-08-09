@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.di
+package org.soma.everyonepick.common.di
 
 import dagger.Module
 import dagger.Provides

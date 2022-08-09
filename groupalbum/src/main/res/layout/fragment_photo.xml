@@ -4,9 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
+        <import type="android.widget.LinearLayout.LayoutParams" />
         <variable
             name="listener"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment.PhotoFragmentListener" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragmentListener" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel" />
@@ -33,6 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delete"
+                android:textSize="16sp"
+                android:textColor="@color/title"
                 android:layout_marginRight="@dimen/margin_action_bar"
                 android:onClick="@{() -> listener.onClickDeleteButton()}"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,13 +46,94 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_photo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_sns"
+            app:layout_constraintVertical_chainStyle="packed"
             photoUrl="@{viewModel.photoUrl}"
             />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_sns"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <ImageButton
+                android:id="@+id/image_instagram"
+                android:src="@drawable/btn_insta"
+                android:onClick="@{() -> listener.onClickShareButton()}"
+                style="@style/SnsImageButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_igstory"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instagram"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/subtext"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/image_instagram"
+                app:layout_constraintStart_toStartOf="@id/image_instagram"
+                app:layout_constraintEnd_toEndOf="@id/image_instagram"
+                />
+
+            <ImageButton
+                android:id="@+id/image_igstory"
+                android:src="@drawable/btn_ig"
+                android:onClick="@{() -> listener.onClickAddToStoryButton()}"
+                style="@style/SnsImageButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_instagram"
+                app:layout_constraintEnd_toStartOf="@id/image_facebook"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instagram_story"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/subtext"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/image_igstory"
+                app:layout_constraintStart_toStartOf="@id/image_igstory"
+                app:layout_constraintEnd_toEndOf="@id/image_igstory"
+                />
+
+            <ImageButton
+                android:id="@+id/image_facebook"
+                android:src="@drawable/btn_facebook"
+                android:onClick="@{() -> listener.onClickShareButton()}"
+                style="@style/SnsImageButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_igstory"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/facebook"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/subtext"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/image_facebook"
+                app:layout_constraintStart_toStartOf="@id/image_facebook"
+                app:layout_constraintEnd_toEndOf="@id/image_facebook"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:layout_width="match_parent"
@@ -58,7 +143,6 @@
             android:onClick="@{() -> listener.onClickSaveButton()}"
             app:layout_constraintBottom_toBottomOf="parent"
             />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -96,40 +96,33 @@
                         android:layout_width="@dimen/size_empty_image"
                         android:layout_height="@dimen/size_empty_image"
                         android:src="@drawable/ico_empty_person"
-                        android:layout_marginBottom="@dimen/margin_bottom_empty_image"
+                        android:layout_marginBottom="@dimen/margin_top_empty_text_in_card_view"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                        app:layout_constraintBottom_toTopOf="@id/text_nofriends"
+                        app:layout_constraintBottom_toTopOf="@id/text_emptyfriends"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <TextView
-                        android:id="@+id/text_nofriends"
+                        android:id="@+id/text_emptyfriends"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                        android:textSize="16sp"
-                        android:gravity="center_horizontal"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
+                        style="@style/EmptyText"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:text="@string/no_friends"/>
+                        android:text="@string/empty_friends"/>
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_top_empty_button"
-                        android:clickable="true"
+                        android:layout_marginTop="@dimen/margin_bottom_empty_text_in_card_view"
                         android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
-                        app:layout_constraintTop_toBottomOf="@id/text_nofriends"
+                        style="@style/EmptyButton"
+                        app:layout_constraintTop_toBottomOf="@id/text_emptyfriends"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:cardCornerRadius="@dimen/radius_large"
-                        app:strokeColor="@color/primary_blue"
-                        app:strokeWidth="1dp"
-                        app:rippleColor="@color/primary_blue">
+                        app:layout_constraintEnd_toEndOf="parent">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -188,14 +181,11 @@
 
             <ImageButton
                 android:id="@+id/button_kakao"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:background="@drawable/fab_radius"
-                android:scaleType="fitXY"
                 android:layout_margin="7dp"
                 android:src="@drawable/ic_btn_floating_kakao"
                 android:elevation="2dp"
                 android:onClick="@{onClickKakaoButton}"
+                style="@style/ImageViewFab"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

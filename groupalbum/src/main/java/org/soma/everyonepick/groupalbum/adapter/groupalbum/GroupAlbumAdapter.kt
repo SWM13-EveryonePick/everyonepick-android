@@ -28,6 +28,7 @@ import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 class GroupAlbumAdapter(
     private val parentViewModel: GroupAlbumListViewModel
 ): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
+
     override fun getItemViewType(position: Int): Int {
         return if (position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
         else GroupAlbumViewType.GROUP_ALBUM.ordinal
@@ -71,7 +72,7 @@ class GroupAlbumAdapter(
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val directions = ViewPagerFragmentDirections.toGroupAlbumViewPagerFragment(item.groupAlbumDao.id)
+                val directions = ViewPagerFragmentDirections.toGroupAlbumViewPagerFragment(item.groupAlbum.id)
                 binding.root.findNavController().navigate(directions)
             } else {
                 binding.checkbox.performTouch()
@@ -79,10 +80,8 @@ class GroupAlbumAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            parentViewModel.groupAlbumItemList.value?.let { groupAlbumItemList ->
-                val position = holder.absoluteAdapterPosition
-                groupAlbumItemList[position].isChecked = isChecked
-            }
+            val position = holder.absoluteAdapterPosition
+            parentViewModel.groupAlbumItemList.value?.data?.get(position)?.isChecked = isChecked
         }
     }
 
@@ -94,7 +93,7 @@ class GroupAlbumAdapter(
 
 private class GroupAlbumDiffCallback: DiffUtil.ItemCallback<GroupAlbumItem>() {
     override fun areItemsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
-        return oldItem.groupAlbumDao.id == newItem.groupAlbumDao.id
+        return oldItem.groupAlbum.id == newItem.groupAlbum.id
     }
 
     override fun areContentsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {

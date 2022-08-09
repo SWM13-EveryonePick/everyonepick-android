@@ -26,6 +26,7 @@ import org.soma.everyonepick.foundation.data.model.ProviderName
 import org.soma.everyonepick.common.api.AuthService
 import org.soma.everyonepick.common.api.UserService
 import org.soma.everyonepick.common.data.model.SignUpRequest
+import org.soma.everyonepick.common.data.repository.UserRepository
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.LoginUtil
 import org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel
@@ -39,7 +40,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
     @Inject lateinit var authService: AuthService
-    @Inject lateinit var userService: UserService
+    @Inject lateinit var userRepository: UserRepository
     @Inject lateinit var preferencesDataStore: PreferencesDataStore
 
     override fun onCreateView(
@@ -104,6 +105,11 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     /** LandingViewPagerFragmentListener */
     override fun onClickNextButton() {
         binding.viewpager2.currentItem += 1
@@ -143,7 +149,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private suspend fun navigateToNextPageByFaceInformation(accessToken: String) {
         try {
-            val data = userService.getUser(accessToken.toBearerToken()).data
+            val data = userRepository.getUser(accessToken).data
 
             // 얼굴 정보가 등록되어 있는가?
             // TODO: if (data.faceInformation != null)

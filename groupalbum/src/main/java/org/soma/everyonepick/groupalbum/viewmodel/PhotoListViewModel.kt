@@ -52,5 +52,5 @@ class PhotoListViewModel @Inject constructor(
     }
 
     private fun copyPhotoItem(photoItem: PhotoItem) =
-        PhotoItem(photoItem.photoDao.copy(), photoItem.isChecked, photoItem.isCheckboxVisible)
+        PhotoItem(photoItem.photo.copy(), photoItem.isChecked, photoItem.isCheckboxVisible)
 }

@@ -1,7 +1,6 @@
 package org.soma.everyonepick.common_ui.binding
 
 import android.content.ContextWrapper
-import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,10 +11,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.internal.managers.ViewComponentManager
+
 
 @BindingAdapter("onBackPressed")
 fun bindBackButton(view: View, onBackPressed: Boolean) {
