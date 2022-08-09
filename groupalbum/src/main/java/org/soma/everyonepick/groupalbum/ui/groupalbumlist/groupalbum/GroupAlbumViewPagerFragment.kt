@@ -149,14 +149,14 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
         binding.drawerlayout.openDrawer(GravityCompat.END)
     }
 
-    override fun onClickUpdateDrawerTitleButton() {
+    override fun onClickUpdateTitleButton() {
         UpdateTitleDialogFragment {
             // TODO: API
             viewModel.updateGroupAlbumTitle(it)
         }.show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
     }
 
-    override fun onClickDrawerExitButton() {
+    override fun onClickExitButton() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButton("확인") { _, _ ->
                 // TODO: API
@@ -192,8 +192,8 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
 interface GroupAlbumViewPagerFragmentListener {
     fun onClickSelectButton()
     fun onClickDrawerButton()
-    fun onClickUpdateDrawerTitleButton()
-    fun onClickDrawerExitButton()
+    fun onClickUpdateTitleButton()
+    fun onClickExitButton()
     fun onClickKickIcon()
     fun onClickKickButton()
     fun onClickCancelKickButton()
