@@ -5,7 +5,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_member_item">
+        android:layout_height="@dimen/height_member_item"
+        android:paddingLeft="@dimen/margin_drawer"
+        android:paddingRight="@dimen/margin_drawer"
+        android:background="?attr/selectableItemBackground">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_profile"
