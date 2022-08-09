@@ -35,14 +35,14 @@ class FriendListFragment : Fragment() {
             it.adapter = FriendAdapter()
             it.viewModel = viewModel
             it.onClickKakaoButton = View.OnClickListener {
-                // TODO: 앱 딥링크(or 스토어 링크)로 변경 ... 앱 미설치 상태에서 딥링크 들어가면 스토어로 이동되는지 의문
+                // TODO: 스토어 링크 변경
                 val textTemplate = TextTemplate(
                     text = """
                         모두가 마음에 들어하는 사진을 쉽고 빠르게, 인공지능 단체사진 합성 서비스 [모두의 PICK]에 초대합니다!
                     """.trimIndent(),
                     link = Link(
-                        webUrl = "https://developers.kakao.com",
-                        mobileWebUrl = "https://developers.kakao.com"
+                        webUrl = "https://play.google.com/",
+                        mobileWebUrl = "https://play.google.com/"
                     )
                 )
                 shareKakaoMessage(textTemplate)
