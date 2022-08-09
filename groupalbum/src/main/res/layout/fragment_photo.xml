@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delete"
+                android:textColor="@color/title"
                 android:layout_marginRight="@dimen/margin_action_bar"
                 android:onClick="@{() -> listener.onClickDeleteButton()}"
                 app:layout_constraintTop_toTopOf="parent"
