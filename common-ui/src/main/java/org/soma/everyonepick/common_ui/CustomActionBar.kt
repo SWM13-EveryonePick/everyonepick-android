@@ -3,6 +3,7 @@ package org.soma.everyonepick.common_ui
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -39,6 +40,8 @@ class CustomActionBar @JvmOverloads constructor(
 
         val title = typedArray.getString(R.styleable.CustomActionBar_title)
         binding.textTitle.text = title
+        val titleSize = typedArray.getDimensionPixelSize(R.styleable.CustomActionBar_titleSize, 0)
+        if (titleSize > 0) binding.textTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize.toFloat())
 
         typedArray.recycle()
     }

@@ -23,6 +23,7 @@
             android:layout_height="@dimen/size_checkbox"
             android:button="@null"
             android:background="@drawable/checkbox"
+            android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

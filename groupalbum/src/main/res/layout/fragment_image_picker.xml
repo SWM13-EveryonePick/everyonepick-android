@@ -24,10 +24,11 @@
         <org.soma.everyonepick.common_ui.CustomActionBar
             android:id="@+id/customactionbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_action_bar"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:hasBackButton="true"
-            app:title="업로드할 사진을 선택하세요." />
+            app:title="업로드할 사진을 선택하세요."
+            app:titleSize="18sp" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -54,12 +55,27 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/button_upload"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/BottomButton"
             android:text="@string/do_upload"
             app:layout_constraintBottom_toBottomOf="parent"
             android:onClick="@{onClickUploadButtonListener}"/>
+        <View
+            android:id="@+id/view_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/gradient_transparent_to_white"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/view_gradient"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:layout_width="wrap_content"
