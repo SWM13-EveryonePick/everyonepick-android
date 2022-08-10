@@ -147,7 +147,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private suspend fun navigateToNextPageByFaceInformation(accessToken: String) {
         try {
-            val data = userUseCase.getUser(accessToken.toBearerToken()).data
+            val data = userUseCase.getUser(accessToken).data
 
             // 얼굴 정보가 등록되어 있는가?
             // TODO: if (data.faceInformation != null)

@@ -43,7 +43,9 @@ class GroupAlbumViewModel @Inject constructor(
     fun updateMemberModelList() {
         val newMemberModelList = mutableListOf<MemberModel>()
         groupAlbum.value?.users?.forEach {
-            newMemberModelList.add(MemberModel(it, isChecked = false, isCheckboxVisible = false))
+            it?.let {
+                newMemberModelList.add(MemberModel(it, isChecked = false, isCheckboxVisible = false))
+            }
         }
         memberModelList.value = MemberModelList(newMemberModelList)
     }

@@ -54,8 +54,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
         lifecycleScope.launch {
             dataStoreUseCase.accessToken.first()?.let {
-                viewModel.me = userUseCase.getUser(it.toBearerToken()).data
-                viewModel.groupAlbum.value = groupAlbumUseCase.getGroupAlbum(it.toBearerToken(), args.groupAlbumId)
+                viewModel.me = userUseCase.getUser(it).data
+                viewModel.groupAlbum.value = groupAlbumUseCase.getGroupAlbum(it, args.groupAlbumId)
             }
         }
 
