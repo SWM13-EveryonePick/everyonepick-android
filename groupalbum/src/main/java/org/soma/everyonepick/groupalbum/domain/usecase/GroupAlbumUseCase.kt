@@ -1,7 +1,7 @@
 package org.soma.everyonepick.groupalbum.domain.usecase
 
-import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetailDto
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadListDto
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
@@ -15,10 +15,7 @@ class GroupAlbumUseCase @Inject constructor(
         return groupAlbumList.toGroupAlbumModelList()
     }
 
-    fun getGroupAlbum(id: Long): GroupAlbum {
-        // TODO: Retrofit2... req: id -> res: GroupAlbum
-        return GroupAlbum(
-            id, "title$id", id, listOf(), 100+id.toInt()
-        )
+    suspend fun getGroupAlbum(token: String, id: Long): GroupAlbumReadDetailDto {
+        return groupAlbumRepository.getGroupAlbum(token, id).data
     }
 }

@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetailDto
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadListDto
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class GroupAlbumViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ): ViewModel() {
     // Fragment가 args를 통해 group album id를 가지고 있으므로, Fragment단에서 초기화를 진행합니다.
-    val groupAlbum = MutableLiveData(GroupAlbum(-1, "Loading", -1, listOf(), -1))
+    val groupAlbum = MutableLiveData(GroupAlbumReadDetailDto(-1, "Loading", -1, listOf(), listOf()))
     val currentItem: MutableLiveData<Int> = MutableLiveData(0)
     var me: User? = null
 

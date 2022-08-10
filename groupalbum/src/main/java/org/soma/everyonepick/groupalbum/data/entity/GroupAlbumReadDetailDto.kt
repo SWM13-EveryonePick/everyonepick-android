@@ -2,10 +2,10 @@ package org.soma.everyonepick.groupalbum.data.entity
 
 import org.soma.everyonepick.common.data.entity.User
 
-data class GroupAlbum(
+data class GroupAlbumReadDetailDto(
     val id: Long,
     var title: String,
     var hostUserId: Long,
     val users: List<User>,
-    var photoCnt: Int
+    var photos: List<Photo>
 )
