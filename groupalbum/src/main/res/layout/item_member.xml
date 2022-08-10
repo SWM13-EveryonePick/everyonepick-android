@@ -21,8 +21,10 @@
 
         <ImageView
             android:id="@+id/image_crown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="-3dp"
+            android:layout_marginBottom="-3dp"
             android:src="@drawable/ic_ico_crown"
             app:layout_constraintBottom_toBottomOf="@id/image_profile"
             app:layout_constraintEnd_toEndOf="@id/image_profile"
