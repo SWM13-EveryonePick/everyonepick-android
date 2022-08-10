@@ -9,7 +9,7 @@ class GroupAlbumViewHolder(
 ): ParentGroupAlbumViewHolder(binding) {
     override fun bind(groupAlbumItem: GroupAlbumItem) {
         binding.textTitle.text = groupAlbumItem.groupAlbum.title
-        binding.textPhotocount.text = "사진 ${groupAlbumItem.groupAlbum.photoCount}장"
+        binding.textPhotocount.text = "사진 ${groupAlbumItem.groupAlbum.photoCnt}장"
         binding.checkbox.setVisibility(groupAlbumItem.isCheckboxVisible)
         binding.checkbox.isChecked = groupAlbumItem.isChecked
     }

@@ -1,17 +1,18 @@
 package org.soma.everyonepick.groupalbum.data.repository
 
+import org.soma.everyonepick.common.api.RetrofitFactory.Companion.toBearerToken
+import org.soma.everyonepick.groupalbum.api.GroupAlbumService
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.model.GroupAlbum
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GroupAlbumRepository {
-    fun getGroupAlbumItemList(): MutableList<GroupAlbumItem> {
-        // TODO: Retrofit2 -> groupAlbumList
-        val groupAlbumList = mutableListOf(
-            GroupAlbum(0, "title0", 0, 100),
-            GroupAlbum(1, "title1", 1, 101),
-            GroupAlbum(2, "title2", 2, 102),
-            GroupAlbum(3, "title3", 3, 103)
-        )
+@Singleton
+class GroupAlbumRepository @Inject constructor(
+    private val groupAlbumService: GroupAlbumService
+) {
+    suspend fun getGroupAlbumItemList(token: String): MutableList<GroupAlbumItem> {
+        val groupAlbumList = groupAlbumService.getGroupAlbumList(token.toBearerToken()).data.toMutableList()
         return groupAlbumList.toGroupAlbumItemList()
     }
 
@@ -26,7 +27,7 @@ class GroupAlbumRepository {
     fun getGroupAlbum(id: Long): GroupAlbum {
         // TODO: Retrofit2... req: id -> res: GroupAlbum
         return GroupAlbum(
-            id, "title$id", id, 100+id.toInt()
+            id, "title$id", id, listOf(), 100+id.toInt()
         )
     }
 }

@@ -15,7 +15,7 @@ class GroupAlbumViewPagerViewModel @Inject constructor(
     private val userRepository: UserRepository
 ): ViewModel() {
     // Fragment가 args를 통해 group album id를 가지고 있으므로, Fragment단에서 초기화를 진행합니다.
-    val groupAlbum = MutableLiveData(GroupAlbum(-1, "Loading", -1,-1))
+    val groupAlbum = MutableLiveData(GroupAlbum(-1, "Loading", -1, listOf(), -1))
     val currentItem: MutableLiveData<Int> = MutableLiveData(0)
     var me: User? = null
 

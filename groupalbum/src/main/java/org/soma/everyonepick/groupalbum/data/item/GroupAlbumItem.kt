@@ -9,7 +9,7 @@ class GroupAlbumItem(
     var isCheckboxVisible: Boolean
 ) {
     companion object {
-        val dummyData = GroupAlbumItem(GroupAlbum(-1, "", 0, 0), isChecked = false, isCheckboxVisible = false)
+        val dummyData = GroupAlbumItem(GroupAlbum(-1, "", 0, listOf(), 0), isChecked = false, isCheckboxVisible = false)
     }
 
     // DiffCall의 areContentsTheSame()에서의 오류를 해결하기 위함

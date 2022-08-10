@@ -2,6 +2,7 @@ package org.soma.everyonepick.groupalbum.data.repository
 
 import org.soma.everyonepick.groupalbum.data.item.PhotoItem
 import org.soma.everyonepick.groupalbum.data.model.Photo
+import javax.inject.Singleton
 
 class PhotoRepository {
     fun getPhotoItemList(groupAlbumId: Long): MutableList<PhotoItem> {

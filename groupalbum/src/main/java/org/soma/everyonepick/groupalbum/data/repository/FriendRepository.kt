@@ -5,6 +5,7 @@ import com.kakao.sdk.talk.TalkApiClient
 import com.kakao.sdk.talk.model.Friend
 import com.kakao.sdk.talk.model.Friends
 import org.soma.everyonepick.common.util.KakaoUtil
+import javax.inject.Singleton
 
 /**
  * 카카오톡 API를 이용하여 [Friends]를 제공합니다. 카카오톡 API에서 Flow 같은 값을 반환하는 대신 콜백 함수를 제공하기 때문에

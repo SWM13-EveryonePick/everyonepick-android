@@ -4,15 +4,16 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
+import org.soma.everyonepick.common.api.RetrofitFactory
+import org.soma.everyonepick.groupalbum.api.GroupAlbumService
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class GroupAlbumModule {
+class NetworkModule {
     @Singleton
     @Provides
-    fun provideGroupAlbumRepository(): GroupAlbumRepository {
-        return GroupAlbumRepository()
+    fun provideGroupAlbumService(): GroupAlbumService {
+        return RetrofitFactory.create(GroupAlbumService::class.java)
     }
 }

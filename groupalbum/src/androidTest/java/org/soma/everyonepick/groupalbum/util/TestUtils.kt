@@ -6,7 +6,7 @@ import org.soma.everyonepick.groupalbum.data.itemlist.GroupAlbumItemList
 import org.soma.everyonepick.groupalbum.data.model.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.model.Photo
 
-val testGroupAlbum = GroupAlbum(0, "test", 0, 100)
+val testGroupAlbum = GroupAlbum(0, "test", 0, listOf(), 100)
 val testGroupAlbumItem = GroupAlbumItem(testGroupAlbum, false, false)
 val testGroupAlbumItemList = GroupAlbumItemList(mutableListOf(testGroupAlbumItem))
 
