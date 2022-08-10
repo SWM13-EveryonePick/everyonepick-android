@@ -1,24 +1,21 @@
 package org.soma.everyonepick.groupalbum.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.kakao.sdk.talk.model.Friend
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.item.InviteFriendItem
+import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.databinding.ItemInviteFriendBinding
 import org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel
 
 class InviteFriendAdapter(
     private val parentViewModel: InviteFriendViewModel
-): ListAdapter<InviteFriendItem, RecyclerView.ViewHolder>(InviteFriendDiffCallback()) {
+): ListAdapter<InviteFriendModel, RecyclerView.ViewHolder>(InviteFriendDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemInviteFriendBinding>(
             LayoutInflater.from(parent.context),
@@ -48,8 +45,8 @@ class InviteFriendAdapter(
         val isChecked = binding.checkbox.isChecked
 
         val itemAtFilteredList = filteredList[holder.absoluteAdapterPosition]
-        val itemAtInviteFriendItemList = inviteFriendItemList.find { it.friend.id == itemAtFilteredList.friend.id }
-        itemAtInviteFriendItemList?.isChecked = isChecked
+        val itemAtInviteFriendModelList = inviteFriendItemList.find { it.friend.id == itemAtFilteredList.friend.id }
+        itemAtInviteFriendModelList?.isChecked = isChecked
 
         parentViewModel.checked.value =
             if (isChecked) parentViewModel.checked.value?.plus(1)
@@ -64,7 +61,7 @@ class InviteFriendAdapter(
     class InviteFriendViewHolder(
         private val binding: ItemInviteFriendBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(inviteFriendItem: InviteFriendItem) {
+        fun bind(inviteFriendItem: InviteFriendModel) {
             Glide.with(binding.root)
                 .load(inviteFriendItem.friend.profileThumbnailImage)
                 .into(binding.imageProfile)
@@ -74,12 +71,12 @@ class InviteFriendAdapter(
     }
 }
 
-private class InviteFriendDiffCallback: DiffUtil.ItemCallback<InviteFriendItem>() {
-    override fun areItemsTheSame(oldItem: InviteFriendItem, newItem: InviteFriendItem): Boolean {
+private class InviteFriendDiffCallback: DiffUtil.ItemCallback<InviteFriendModel>() {
+    override fun areItemsTheSame(oldItem: InviteFriendModel, newItem: InviteFriendModel): Boolean {
         return oldItem.friend.id == newItem.friend.id
     }
 
-    override fun areContentsTheSame(oldItem: InviteFriendItem, newItem: InviteFriendItem): Boolean {
+    override fun areContentsTheSame(oldItem: InviteFriendModel, newItem: InviteFriendModel): Boolean {
         return oldItem == newItem
     }
 }

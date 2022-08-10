@@ -9,8 +9,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
-import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
-import org.soma.everyonepick.groupalbum.util.testPhotoItem
+import org.soma.everyonepick.groupalbum.domain.usecase.PhotoUseCase
+import org.soma.everyonepick.groupalbum.util.testPhotoModel
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -24,13 +24,13 @@ class PhotoListViewModelTest {
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
 
-    @Inject lateinit var photoRepository: PhotoRepository
+    @Inject lateinit var photoUseCase: PhotoUseCase
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        viewModel = PhotoListViewModel(photoRepository)
-        viewModel.photoItemList.value = mutableListOf(testPhotoItem)
+        viewModel = PhotoListViewModel(photoUseCase)
+        viewModel.photoItemList.value = mutableListOf(testPhotoModel)
     }
 
     @Test

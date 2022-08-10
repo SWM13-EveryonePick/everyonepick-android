@@ -7,14 +7,14 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.soma.everyonepick.groupalbum.data.item.ImageItem
+import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import java.io.File
 
 class ImagePickerViewModel: ViewModel() {
-    val imageItemList = MutableLiveData<MutableList<ImageItem>>(mutableListOf())
+    val imageItemList = MutableLiveData<MutableList<ImageModel>>(mutableListOf())
 
     @SuppressLint("Range")
-    fun fetchImageItemList(context: Context) {
+    fun fetchImageModelList(context: Context) {
         val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
             INDEX_MEDIA_ID,
@@ -31,7 +31,7 @@ class ImagePickerViewModel: ViewModel() {
         cursor?.let {
             while(cursor.moveToNext()) {
                 val mediaPath = cursor.getString(cursor.getColumnIndex(INDEX_MEDIA_URI))
-                imageItemList.value!!.add(ImageItem(Uri.fromFile(File(mediaPath)), false))
+                imageItemList.value!!.add(ImageModel(Uri.fromFile(File(mediaPath)), false))
                 imageItemList.postValue(imageItemList.value)
             }
         }

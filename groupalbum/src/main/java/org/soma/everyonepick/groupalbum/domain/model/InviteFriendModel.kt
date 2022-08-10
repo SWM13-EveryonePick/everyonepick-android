@@ -1,8 +1,8 @@
-package org.soma.everyonepick.groupalbum.data.item
+package org.soma.everyonepick.groupalbum.domain.model
 
 import com.kakao.sdk.talk.model.Friend
 
-data class InviteFriendItem(
+data class InviteFriendModel(
     val friend: Friend,
     var isChecked: Boolean
 )

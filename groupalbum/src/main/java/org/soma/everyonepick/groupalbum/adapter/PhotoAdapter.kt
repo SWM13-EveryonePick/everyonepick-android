@@ -13,14 +13,14 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.item.PhotoItem
+import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
 class PhotoAdapter(
     private val parentViewModel: PhotoListViewModel
-): ListAdapter<PhotoItem, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
+): ListAdapter<PhotoModel, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemPhotoBinding>(
             LayoutInflater.from(parent.context),
@@ -64,7 +64,7 @@ class PhotoAdapter(
     class PhotoViewHolder(
         private val binding: ItemPhotoBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(photoItem: PhotoItem) {
+        fun bind(photoItem: PhotoModel) {
             Glide.with(binding.root)
                 .load(photoItem.photo.photoUrl)
                 .transform(CenterCrop(), RoundedCorners(CORNER_RADIUS))
@@ -79,12 +79,12 @@ class PhotoAdapter(
     }
 }
 
-private class PhotoDiffCallback: DiffUtil.ItemCallback<PhotoItem>() {
-    override fun areItemsTheSame(oldItem: PhotoItem, newItem: PhotoItem): Boolean {
+private class PhotoDiffCallback: DiffUtil.ItemCallback<PhotoModel>() {
+    override fun areItemsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
         return oldItem.photo.id == newItem.photo.id
     }
 
-    override fun areContentsTheSame(oldItem: PhotoItem, newItem: PhotoItem): Boolean {
+    override fun areContentsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
         return oldItem == newItem
     }
 }

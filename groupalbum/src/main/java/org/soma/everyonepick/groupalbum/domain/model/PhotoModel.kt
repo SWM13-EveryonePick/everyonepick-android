@@ -1,7 +1,7 @@
-package org.soma.everyonepick.groupalbum.data.item
+package org.soma.everyonepick.groupalbum.domain.model
 import org.soma.everyonepick.groupalbum.data.entity.Photo
 
-data class PhotoItem(
+data class PhotoModel(
     val photo: Photo,
     var isChecked: Boolean,
     var isCheckboxVisible: Boolean

@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.item.ImageItem
+import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import org.soma.everyonepick.groupalbum.databinding.ItemImageBinding
 import org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel
 
 class ImageAdapter(
     private val parentViewModel: ImagePickerViewModel
-): ListAdapter<ImageItem, RecyclerView.ViewHolder>(ImageDiffCallback()) {
+): ListAdapter<ImageModel, RecyclerView.ViewHolder>(ImageDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemImageBinding>(
             LayoutInflater.from(parent.context),
@@ -51,7 +51,7 @@ class ImageAdapter(
     class ImageViewHolder(
         private val binding: ItemImageBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageItem: ImageItem) {
+        fun bind(imageItem: ImageModel) {
             Glide.with(binding.root)
                 .load(imageItem.uri)
                 .into(binding.image)
@@ -59,12 +59,12 @@ class ImageAdapter(
     }
 }
 
-private class ImageDiffCallback: DiffUtil.ItemCallback<ImageItem>() {
-    override fun areItemsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
+private class ImageDiffCallback: DiffUtil.ItemCallback<ImageModel>() {
+    override fun areItemsTheSame(oldItem: ImageModel, newItem: ImageModel): Boolean {
         return oldItem.uri == newItem.uri
     }
 
-    override fun areContentsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
+    override fun areContentsTheSame(oldItem: ImageModel, newItem: ImageModel): Boolean {
         return oldItem == newItem
     }
 }

@@ -1,6 +1,6 @@
 package org.soma.everyonepick.groupalbum.util
 
-import org.soma.everyonepick.groupalbum.data.item.PhotoItem
+import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.viewmodel.modellist.GroupAlbumModelList
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.Photo
@@ -11,4 +11,4 @@ val testGroupAlbumModel = GroupAlbumModel(testGroupAlbum, false, false)
 val testGroupAlbumModelList = GroupAlbumModelList(mutableListOf(testGroupAlbumModel))
 
 val testPhoto = Photo(0, "test")
-val testPhotoItem = PhotoItem(testPhoto, false, false)
+val testPhotoModel = PhotoModel(testPhoto, false, false)

@@ -5,9 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.soma.everyonepick.common.data.RetrofitFactory
-import org.soma.everyonepick.groupalbum.data.repository.FriendRepository
+import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
+import org.soma.everyonepick.groupalbum.domain.usecase.PhotoUseCase
 import javax.inject.Singleton
 
 
@@ -16,14 +17,14 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun provideFriendRepository(): FriendRepository {
-        return FriendRepository()
+    fun provideFriendUseCase(): FriendUseCase {
+        return FriendUseCase()
     }
 
     @Singleton
     @Provides
     fun providePhotoRepository(): PhotoRepository {
-        return PhotoRepository()
+        return RetrofitFactory.create(PhotoRepository::class.java)
     }
 
     @Singleton
