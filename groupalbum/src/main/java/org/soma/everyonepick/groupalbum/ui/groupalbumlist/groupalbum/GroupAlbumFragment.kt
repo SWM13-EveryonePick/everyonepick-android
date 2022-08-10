@@ -77,6 +77,10 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         viewModel.memberSelectionMode.observe(viewLifecycleOwner) { memberSelectionMode ->
             viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
         }
+
+        viewModel.groupAlbum.observe(viewLifecycleOwner) {
+            viewModel.updateMemberModelList()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,12 +102,6 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onStart() {
         super.onStart()
-
-        viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
-        lifecycleScope.launch {
-            viewModel.fetchMemberList()
-        }
-
         (activity as HomeActivityUtil).hideBottomNavigationView()
     }
 

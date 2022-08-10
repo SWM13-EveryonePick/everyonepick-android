@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.common.data.entity.User
+import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetailDto
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadListDto
@@ -22,6 +23,11 @@ class GroupAlbumViewModel @Inject constructor(
 
     // Drawer
     val memberSelectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
+
+    /**
+     * [GroupAlbumReadDetailDto.users]를 [MemberModel]로 변환한 리스트를 [MemberModelList]를 통해 홀드합니다.
+     * groupAlbum를 observe하고, 값이 변경되면 [updateMemberModelList]를 통해 적절한 값을 업데이트 시켜야 합니다.
+     */
     var memberModelList = MutableLiveData(MemberModelList())
     val checked = MutableLiveData(0)
 
@@ -34,9 +40,12 @@ class GroupAlbumViewModel @Inject constructor(
         groupAlbum.value = newGroupAlbum
     }
 
-    suspend fun fetchMemberList() {
-        memberModelList.value?.data = userUseCase.getMemberList(groupAlbum.value?.id?: -1)
-        memberModelList.value = memberModelList.value
+    fun updateMemberModelList() {
+        val newMemberModelList = mutableListOf<MemberModel>()
+        groupAlbum.value?.users?.forEach {
+            newMemberModelList.add(MemberModel(it, isChecked = false, isCheckboxVisible = false))
+        }
+        memberModelList.value = MemberModelList(newMemberModelList)
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
