@@ -30,8 +30,6 @@ import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
 import javax.inject.Inject
 
-private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
-
 @AndroidEntryPoint
 class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListener {
     @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
@@ -62,7 +60,6 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
             viewModel.me = preferencesDataStore.accessToken.first()?.let {
                 userRepository.getUser(it).data
             }
-            viewModel.fetchMemberList()
         }
 
         subscribeUi()
@@ -72,6 +69,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
 
     private fun subscribeUi() {
         viewModel.photoSelectionMode.observe(viewLifecycleOwner) { photoSelectionMode ->
+            // 선택 모드일 때는 TabLayout을 비활성화 합니다.
             setTabLayoutEnabled(
                 enabled = photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
                 binding.viewpager2,
@@ -139,6 +137,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
     }
 
 
+    /** GroupAlbumViewPagerFragmentListener */
     override fun onClickSelectButton() {
         viewModel.photoSelectionMode.value =
             if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE.ordinal
@@ -186,6 +185,11 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
 
     override fun onClickCancelKickButton() {
         viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+    }
+
+
+    companion object {
+        private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
     }
 }
 

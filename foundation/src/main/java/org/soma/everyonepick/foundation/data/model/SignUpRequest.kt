@@ -1,6 +1,4 @@
-package org.soma.everyonepick.common.data.model
-
-import com.google.gson.annotations.SerializedName
+package org.soma.everyonepick.foundation.data.model
 
 // ProviderToken
 data class SignUpRequest(

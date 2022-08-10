@@ -16,7 +16,7 @@ import org.soma.everyonepick.common.data.pref.PreferencesDataStore
 import org.soma.everyonepick.foundation.util.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.common.api.AuthService
-import org.soma.everyonepick.common.data.model.RefreshRequest
+import org.soma.everyonepick.foundation.data.model.RefreshRequest
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.utility.LoginUtil
 import javax.inject.Inject

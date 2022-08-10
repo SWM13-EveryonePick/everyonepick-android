@@ -28,13 +28,13 @@ class PhotoRepository {
             Photo(2, "https://picsum.photos/202"),
             Photo(3, "https://picsum.photos/203"),
         )
-        return convertPhotoListToPhotoItemList(photoList)
+        return photoList.toPhotoItemList()
     }
 
-    fun convertPhotoListToPhotoItemList(photoList: MutableList<Photo>): MutableList<PhotoItem> {
+    private fun MutableList<Photo>.toPhotoItemList(): MutableList<PhotoItem> {
         val photoItemList = mutableListOf<PhotoItem>()
-        for(i in 0 until photoList.size) {
-            photoItemList.add(PhotoItem(photoList[i], isChecked = false, isCheckboxVisible = false))
+        for(i in 0 until size) {
+            photoItemList.add(PhotoItem(get(i), isChecked = false, isCheckboxVisible = false))
         }
         return photoItemList
     }

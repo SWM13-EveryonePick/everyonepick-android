@@ -2,12 +2,8 @@ package org.soma.everyonepick.groupalbum.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.data.model.User
-import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.foundation.data.model.User
 import org.soma.everyonepick.common.data.repository.UserRepository
 import org.soma.everyonepick.groupalbum.data.itemlist.MemberItemList
 import org.soma.everyonepick.groupalbum.data.model.GroupAlbum
@@ -23,11 +19,12 @@ class GroupAlbumViewPagerViewModel @Inject constructor(
     val currentItem: MutableLiveData<Int> = MutableLiveData(0)
     var me: User? = null
 
-    // Drawer 관련
+    // Drawer
     val memberSelectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
     var memberItemList = MutableLiveData(MemberItemList())
     val checked = MutableLiveData(0)
-    // 하위 Fragment들 관련
+
+    // 하위 Fragment
     val photoSelectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
     // TODO: 합성중 / 합성완료 모드
 

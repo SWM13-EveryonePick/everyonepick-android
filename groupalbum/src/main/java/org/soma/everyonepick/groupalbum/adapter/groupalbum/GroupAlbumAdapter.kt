@@ -19,11 +19,9 @@ import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 
 /**
- * 가장 마지막 Item을 CreateGroupAlbumItem으로 설정합니다.
- * 따라서 데이터는 다음과 같이 유지되어야 합니다.
- * ```
- * currentList = (list of GroupAlbumItem) + {Dummy GroupAlbumItem}
- * ```
+ * 가장 마지막 Item을 CreateGroupAlbumItem로 취급합니다.
+ * 따라서 데이터는 [원본 데이터]*N + [더미 데이터] 형태를 유지해야 합니다.
+ * @see GroupAlbumListViewModel
  */
 class GroupAlbumAdapter(
     private val parentViewModel: GroupAlbumListViewModel

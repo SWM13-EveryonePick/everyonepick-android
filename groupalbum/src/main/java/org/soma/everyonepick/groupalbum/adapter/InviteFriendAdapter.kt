@@ -33,7 +33,6 @@ class InviteFriendAdapter(
     }
 
     private fun subscribeUi(binding: ItemInviteFriendBinding, holder: InviteFriendViewHolder) {
-        // 체크박스 터치 영역 확장
         binding.root.setOnClickListener {
             binding.checkbox.performTouch()
         }
@@ -49,8 +48,6 @@ class InviteFriendAdapter(
         val isChecked = binding.checkbox.isChecked
 
         val itemAtFilteredList = filteredList[holder.absoluteAdapterPosition]
-        // 현재 보여지고 있는 리스트는 filteredList이며, 체크를 했을 때 데이터 처리는
-        // inviteFriendItemList에 대해서 수행되어야 합니다.
         val itemAtInviteFriendItemList = inviteFriendItemList.find { it.friend.id == itemAtFilteredList.friend.id }
         itemAtInviteFriendItemList?.isChecked = isChecked
 

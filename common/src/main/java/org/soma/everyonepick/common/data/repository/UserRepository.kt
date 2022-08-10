@@ -3,7 +3,7 @@ package org.soma.everyonepick.common.data.repository
 import org.soma.everyonepick.common.api.RetrofitFactory.Companion.toBearerToken
 import org.soma.everyonepick.common.api.UserService
 import org.soma.everyonepick.common.data.item.MemberItem
-import org.soma.everyonepick.common.data.model.User
+import org.soma.everyonepick.foundation.data.model.User
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -20,13 +20,19 @@ class UserRepository @Inject constructor(
             User(3, "리오넬", "id", "https://picsum.photos/203", false),
             User(4, "크리스티아누", "id", "https://picsum.photos/204", false)
         )
-        return convertMemberListToMemberItemList(memberList)
+        return memberList.toMemberItemList()
     }
 
-    private fun convertMemberListToMemberItemList(memberList: MutableList<User>): MutableList<MemberItem> {
+    private fun MutableList<User>.toMemberItemList(): MutableList<MemberItem> {
         val result = mutableListOf<MemberItem>()
-        memberList.forEach {
-            result.add(MemberItem(it, isChecked = false, isCheckboxVisible = false))
+        forEach {
+            result.add(
+                MemberItem(
+                    it,
+                    isChecked = false,
+                    isCheckboxVisible = false
+                )
+            )
         }
         return result
     }

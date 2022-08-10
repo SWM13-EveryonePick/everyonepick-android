@@ -1,20 +1,18 @@
 package org.soma.everyonepick.groupalbum.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.soma.everyonepick.common.data.item.MemberItem
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.common.data.item.MemberItem
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.ItemMemberBinding
 import org.soma.everyonepick.groupalbum.util.MemberViewType

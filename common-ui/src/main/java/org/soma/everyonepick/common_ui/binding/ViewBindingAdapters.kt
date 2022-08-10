@@ -38,8 +38,8 @@ fun bindImageView(imageView: ImageView, photoUrl: String) {
 }
 
 /**
- * 데이터바인딩으로 스타일을 적용함과 동시에 text 내용에 데이터바인딩 값이 들어갈 경우에는
- * setText() 이후에 spannable이 적용된다는 보장이 없으므로, 이곳에서 텍스트까지 한번에 처리합니다.
+ * 데이터바인딩으로 스타일을 적용함과 동시에 text 내용에 데이터바인딩 값이 들어갈 경우에는 setText() 이후에 spannable이
+ * 적용된다는 보장이 없습니다. 따라서 이곳에서 텍스트까지 한번에 처리함으로써 안전하게 작동하는 것을 보장합니다.
  */
 @BindingAdapter("text", "boldStart", "boldEnd", requireAll = true)
 fun setTextViewBoldWithRange(view: TextView, text: String, boldStart: Int, boldEnd: Int) {

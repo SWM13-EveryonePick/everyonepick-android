@@ -23,6 +23,12 @@ class InviteFriendViewModel @Inject constructor(
     private val friendRepository: FriendRepository
 ): ViewModel() {
     val keyword = MutableStateFlow("")
+
+    /**
+     * inviteFriendItemList는 전체 친구 리스트이자 '실제' 데이터인 반면, filteredList는 검색 필터링이 적용된 결과이며
+     * 보여주기용 '임시' 데이터입니다. 이에 따라 체크박스가 클릭되거나 하여 데이터 변경이 발생할 때 filteredList 대신
+     * inviteFriendItemList에 대해서 적용해야 합니다.
+     */
     val inviteFriendItemList: MutableLiveData<MutableList<InviteFriendItem>> = MutableLiveData()
     val filteredList: MutableLiveData<MutableList<InviteFriendItem>> = MutableLiveData()
 
@@ -41,10 +47,11 @@ class InviteFriendViewModel @Inject constructor(
     private fun fetchInviteFriendItemList() {
         isApiLoading.value = true
         friendRepository.fetchFriends({ isApiLoading.value = false }) { newFriends ->
-            val newInviteFriendItemList = convertFriendsToInviteFriendItemList(newFriends)
+            val newInviteFriendItemList = newFriends.toInviteFriendItemList()
             inviteFriendItemList.value = newInviteFriendItemList
 
-            // 실제로 보여주는 데이터는 filteredList이므로
+            // inviteFriendItemList의 값이 변경되었으나 실제로 보여주는 데이터는 filteredList이므로
+            // filteredList의 뷰 갱신을 유도합니다.
             updateFilteredListByKeyword("")
         }
     }
@@ -57,12 +64,10 @@ class InviteFriendViewModel @Inject constructor(
         filteredList.postValue(newFilteredList)
     }
 
-    private fun convertFriendsToInviteFriendItemList(friends: Friends<Friend>): MutableList<InviteFriendItem> {
+    private fun Friends<Friend>.toInviteFriendItemList(): MutableList<InviteFriendItem> {
         val result = mutableListOf<InviteFriendItem>()
-        friends.elements?.let { friendList ->
-            friendList.forEach {
-                result.add(InviteFriendItem(it, isChecked = false))
-            }
+        elements?.forEach {
+            result.add(InviteFriendItem(it, isChecked = false))
         }
         return result
     }

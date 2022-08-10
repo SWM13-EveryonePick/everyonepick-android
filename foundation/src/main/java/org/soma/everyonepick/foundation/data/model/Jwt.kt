@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common.data.model
+package org.soma.everyonepick.foundation.data.model
 
 data class Jwt(
     val everyonepickAccessToken: String,

@@ -20,12 +20,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.api.RetrofitFactory.Companion.toBearerToken
 import org.soma.everyonepick.common.data.pref.PreferencesDataStore
 import org.soma.everyonepick.foundation.data.model.ProviderName
 import org.soma.everyonepick.common.api.AuthService
-import org.soma.everyonepick.common.api.UserService
-import org.soma.everyonepick.common.data.model.SignUpRequest
+import org.soma.everyonepick.foundation.data.model.SignUpRequest
 import org.soma.everyonepick.common.data.repository.UserRepository
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.LoginUtil

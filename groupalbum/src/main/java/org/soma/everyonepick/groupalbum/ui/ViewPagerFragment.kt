@@ -53,6 +53,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
     private fun subscribeUi() {
         viewModel.selectionMode.observe(viewLifecycleOwner) { selectionMode ->
+            // 선택 모드일 때는 TabLayout을 비활성화 합니다.
             setTabLayoutEnabled(
                 enabled = selectionMode == SelectionMode.NORMAL_MODE.ordinal,
                 binding.viewpager2,
@@ -99,10 +100,12 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     }
 
     private fun setTabLayoutText(textView: TextView, isSelected: Boolean) {
+        // 색상 변경
         textView.setTextColor(
             if (isSelected) Color.WHITE
             else ContextCompat.getColor(requireContext(), org.soma.everyonepick.common_ui.R.color.cloud)
         )
+        // 스타일 변경
         textView.setTypeface(
             Typeface.DEFAULT_BOLD,
             if (isSelected) Typeface.BOLD else Typeface.NORMAL

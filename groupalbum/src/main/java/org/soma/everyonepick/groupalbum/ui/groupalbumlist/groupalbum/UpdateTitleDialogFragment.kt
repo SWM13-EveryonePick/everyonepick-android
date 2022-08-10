@@ -12,6 +12,10 @@ import androidx.fragment.app.DialogFragment
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.databinding.DialogFragmentUpdateTitleDialogBinding
 
+/**
+ * EditText에 새 title을 입력하고 확인 버튼을 누름으로써 단체공유앨범의 title을 변경합니다.
+ * @param onClickConfirmButton 단체공유앨범의 title을 변경하는 코드
+ */
 class UpdateTitleDialogFragment(
     private val onClickConfirmButton: (String) -> Unit
 ): DialogFragment() {
@@ -38,8 +42,8 @@ class UpdateTitleDialogFragment(
 
     override fun onStart() {
         super.onStart()
-        // onResume()에 showKeyboard()를 넣어도 키보드가 올라오지 않는 문제가 있으며, 아주 약간의 딜레이를 넣음으로써
-        // 이를 해결하고자 하였습니다.
+        // onResume()에 showKeyboard()를 넣어도 키보드가 올라오지 않는 문제가 있었고,
+        // 약간의 딜레이를 넣음으로써 이를 해결하였습니다.
         Handler(Looper.getMainLooper()).postDelayed({
             KeyboardUtil.showKeyboard(binding.edittextTitle, requireActivity())
         }, 100)

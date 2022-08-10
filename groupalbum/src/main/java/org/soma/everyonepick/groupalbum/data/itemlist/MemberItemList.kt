@@ -1,8 +1,6 @@
 package org.soma.everyonepick.groupalbum.data.itemlist
 
-import android.util.Log
 import org.soma.everyonepick.common.data.item.MemberItem
-import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 
 /**
  * @see GroupAlbumItemList
@@ -22,11 +20,11 @@ class MemberItemList {
         data = memberItemList
     }
 
-    fun getItemCount() = data.size - 1
+    fun getActualItemCount() = data.size - 1
 
     fun removeCheckedItems() {
         val newData = mutableListOf<MemberItem>()
-        for (i in 0 until getItemCount()) {
+        for (i in 0 until getActualItemCount()) {
             if (!data[i].isChecked) newData.add(data[i])
         }
         data = newData

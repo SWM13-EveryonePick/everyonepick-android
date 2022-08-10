@@ -12,13 +12,13 @@ class GroupAlbumRepository {
             GroupAlbum(2, "title2", 2, 102),
             GroupAlbum(3, "title3", 3, 103)
         )
-        return convertGroupAlbumListToGroupAlbumItemList(groupAlbumList)
+        return groupAlbumList.toGroupAlbumItemList()
     }
 
-    fun convertGroupAlbumListToGroupAlbumItemList(groupAlbumList: MutableList<GroupAlbum>): MutableList<GroupAlbumItem> {
+    private fun MutableList<GroupAlbum>.toGroupAlbumItemList(): MutableList<GroupAlbumItem> {
         val groupAlbumItemList = mutableListOf<GroupAlbumItem>()
-        for(i in 0 until groupAlbumList.size) {
-            groupAlbumItemList.add(GroupAlbumItem(groupAlbumList[i], isChecked = false, isCheckboxVisible = false))
+        for(i in 0 until size) {
+            groupAlbumItemList.add(GroupAlbumItem(get(i), isChecked = false, isCheckboxVisible = false))
         }
         return groupAlbumItemList
     }

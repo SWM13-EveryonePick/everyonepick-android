@@ -1,6 +1,6 @@
 package org.soma.everyonepick.common.api
 
-import org.soma.everyonepick.common.data.model.UserResponse
+import org.soma.everyonepick.foundation.data.model.UserResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
 
