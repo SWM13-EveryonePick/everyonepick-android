@@ -14,7 +14,7 @@ class FriendListViewModel @Inject constructor(
     val friends: MutableLiveData<Friends<Friend>> = MutableLiveData()
     val isApiLoading = MutableLiveData(true)
 
-    fun fetchFriends() {
+    fun readFriends() {
         isApiLoading.value = true
         friendUseCase.readFriends({ isApiLoading.value = false }) { newFriends ->
             friends.postValue(newFriends)

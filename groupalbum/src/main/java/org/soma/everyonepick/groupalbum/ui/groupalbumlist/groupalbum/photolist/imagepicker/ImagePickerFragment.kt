@@ -35,7 +35,7 @@ class ImagePickerFragment : Fragment() {
             }
         }
 
-        viewModel.fetchImageModelList(requireContext())
+        viewModel.readImageModelList(requireContext())
 
         return binding.root
     }

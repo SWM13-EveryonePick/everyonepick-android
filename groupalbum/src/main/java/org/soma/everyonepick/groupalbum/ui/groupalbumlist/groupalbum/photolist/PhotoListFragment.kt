@@ -51,8 +51,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED, viewLifecycleOwner) { _, bundle ->
             bundle.getStringArrayList("uriList")?.let { uriList ->
                 for(uri in uriList) {
-                    // TODO: 업로드 -> 성공 -> viewModel.fetchPhotoModelList(parentViewModel.groupAlbum.value!!.id) 다시 로드
-                    // 또는 1초에 한번씩 viewModel.fetchPhotoModelList(parentViewModel.groupAlbum.value!!.id) 호출 -> 성공 -> ToastMassage
+                    // TODO: 업로드 -> 성공 -> viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 다시 로드
+                    // 또는 1초에 한번씩 viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 호출 -> 성공 -> ToastMassage
                 }
             }
         }
@@ -62,7 +62,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         super.onStart()
 
         parentViewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
-        viewModel.fetchPhotoModelList(parentViewModel.groupAlbum.value!!.id)
+        viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id)
     }
 
     override fun onDestroy() {

@@ -14,7 +14,7 @@ class ImagePickerViewModel: ViewModel() {
     val imageModelList = MutableLiveData<MutableList<ImageModel>>(mutableListOf())
 
     @SuppressLint("Range")
-    fun fetchImageModelList(context: Context) {
+    fun readImageModelList(context: Context) {
         val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
             INDEX_MEDIA_ID,

@@ -31,7 +31,7 @@ class InviteFriendViewModel @Inject constructor(
     val isApiLoading = MutableLiveData(true)
 
     init {
-        fetchInviteFriendModelList()
+        readInviteFriendModelList()
         viewModelScope.launch {
             keyword.collectLatest {
                 updateFilteredListByKeyword(it)
@@ -39,7 +39,7 @@ class InviteFriendViewModel @Inject constructor(
         }
     }
 
-    private fun fetchInviteFriendModelList() {
+    private fun readInviteFriendModelList() {
         isApiLoading.value = true
         friendUseCase.readFriends({ isApiLoading.value = false }) { newFriends ->
             val newInviteFriendModelList = newFriends.toInviteFriendModelList()

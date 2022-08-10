@@ -28,7 +28,7 @@ class GroupAlbumListViewModel @Inject constructor(
     val groupAlbumModelList = MutableLiveData(GroupAlbumModelList())
     val isApiLoading = MutableLiveData(true)
 
-    suspend fun fetchGroupAlbumModelList() {
+    suspend fun readGroupAlbumModelList() {
         isApiLoading.value = true
 
         try {

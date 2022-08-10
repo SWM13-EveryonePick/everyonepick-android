@@ -71,7 +71,7 @@ class FriendListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.fetchFriends()
+        viewModel.readFriends()
     }
 
     override fun onDestroy() {

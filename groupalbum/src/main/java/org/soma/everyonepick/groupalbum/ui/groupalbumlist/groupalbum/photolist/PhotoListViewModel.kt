@@ -14,7 +14,7 @@ class PhotoListViewModel @Inject constructor(
     val photoModelList = MutableLiveData<MutableList<PhotoModel>>()
     val isApiLoading = MutableLiveData(true)
 
-    fun fetchPhotoModelList(groupAlbumId: Long) {
+    fun readPhotoModelList(groupAlbumId: Long) {
         isApiLoading.value = true
 
         val newPhotoModelList = photoUseCase.readPhotoModelList(groupAlbumId)
