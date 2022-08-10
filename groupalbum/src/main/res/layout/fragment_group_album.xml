@@ -123,22 +123,26 @@
 
                     <TextView
                         android:id="@+id/text_drawer_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_drawer"
+                        android:layout_marginStart="@dimen/margin_drawer"
                         android:text="@{viewModel.groupAlbum.title}"
                         android:textSize="24sp"
                         android:textColor="@color/title"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/image_update"
+                        app:layout_constraintHorizontal_bias="0"
                         tools:text="SOMA TEAM"/>
 
                     <ImageButton
+                        android:id="@+id/image_update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_btn_drawer_edit"
                         android:padding="@dimen/margin_drawer"
+                        android:visibility="@{viewModel.me.id == viewModel.groupAlbum.hostUserId? View.VISIBLE: View.GONE}"
                         app:layout_constraintTop_toTopOf="@id/text_drawer_title"
                         app:layout_constraintBottom_toBottomOf="@id/text_drawer_title"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -222,8 +226,8 @@
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:paddingTop="@dimen/margin_drawer_bottom_icon"
                             android:paddingBottom="@dimen/margin_drawer_bottom_icon"
-                            android:paddingLeft="@dimen/margin_half_drawer_bottom_icon"
-                            android:paddingRight="@dimen/margin_drawer_bottom_icon"
+                            android:paddingStart="@dimen/margin_half_drawer_bottom_icon"
+                            android:paddingEnd="@dimen/margin_drawer_bottom_icon"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"/>
