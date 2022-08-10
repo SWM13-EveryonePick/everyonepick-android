@@ -26,7 +26,6 @@ import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

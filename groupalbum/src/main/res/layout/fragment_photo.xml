@@ -11,7 +11,7 @@
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragmentListener" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

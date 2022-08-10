@@ -11,7 +11,7 @@ import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import org.soma.everyonepick.groupalbum.databinding.ItemImageBinding
-import org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerViewModel
 
 class ImageAdapter(
     private val parentViewModel: ImagePickerViewModel
@@ -36,24 +36,24 @@ class ImageAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            parentViewModel.imageItemList.value?.let { imageItemList ->
+            parentViewModel.imageModelList.value?.let { imageModelList ->
                 val position = holder.absoluteAdapterPosition
-                imageItemList[position].isChecked = isChecked
+                imageModelList[position].isChecked = isChecked
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val imageItem = getItem(position)
-        (holder as ImageViewHolder).bind(imageItem)
+        val imageModel = getItem(position)
+        (holder as ImageViewHolder).bind(imageModel)
     }
 
     class ImageViewHolder(
         private val binding: ItemImageBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageItem: ImageModel) {
+        fun bind(imageModel: ImageModel) {
             Glide.with(binding.root)
-                .load(imageItem.uri)
+                .load(imageModel.uri)
                 .into(binding.image)
         }
     }

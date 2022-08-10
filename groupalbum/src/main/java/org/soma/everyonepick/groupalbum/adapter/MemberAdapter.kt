@@ -17,7 +17,7 @@ import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.ItemMemberBinding
 import org.soma.everyonepick.groupalbum.util.MemberViewType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 
 /**
  * @see GroupAlbumAdapter
@@ -59,7 +59,7 @@ class MemberAdapter(
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             val position = holder.absoluteAdapterPosition
-            parentViewModel.memberItemList.value?.data?.get(position)?.isChecked = isChecked
+            parentViewModel.memberModelList.value?.data?.get(position)?.isChecked = isChecked
             parentViewModel.checked.value =
                 if (isChecked) parentViewModel.checked.value?.plus(1)
                 else parentViewModel.checked.value?.minus(1)
@@ -67,9 +67,9 @@ class MemberAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val memberItem = getItem(position)
+        val memberModel = getItem(position)
         (holder as MemberViewHolder).bind(
-            memberItem,
+            memberModel,
             isInviteItem = position == itemCount - 1,
             parentViewModel
         )
@@ -79,7 +79,7 @@ class MemberAdapter(
         private val binding: ItemMemberBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            memberItem: MemberModel,
+            memberModel: MemberModel,
             isInviteItem: Boolean,
             parentViewModel: GroupAlbumViewModel
         ) {
@@ -99,16 +99,16 @@ class MemberAdapter(
                 binding.imageCrown.visibility = View.GONE
             } else {
                 Glide.with(binding.root)
-                    .load(memberItem.user.thumbnailImageUrl)
+                    .load(memberModel.user.thumbnailImageUrl)
                     .into(binding.imageProfile)
 
-                binding.textNickname.text = memberItem.user.nickname
-                binding.checkbox.isChecked = memberItem.isChecked
+                binding.textNickname.text = memberModel.user.nickname
+                binding.checkbox.isChecked = memberModel.isChecked
 
-                val isHostUser = parentViewModel.groupAlbum.value?.hostUserId == memberItem.user.id
+                val isHostUser = parentViewModel.groupAlbum.value?.hostUserId == memberModel.user.id
                 binding.imageCrown.setVisibility(isHostUser)
                 // 방장일 경우 체크박스를 표시하지 않습니다.
-                binding.checkbox.setVisibility(memberItem.isCheckboxVisible && !isHostUser)
+                binding.checkbox.setVisibility(memberModel.isCheckboxVisible && !isHostUser)
             }
         }
     }

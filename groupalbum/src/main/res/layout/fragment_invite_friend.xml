@@ -11,7 +11,7 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendViewModel" />
         <variable
             name="adapter"
             type="org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter" />

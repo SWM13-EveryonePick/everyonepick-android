@@ -12,7 +12,7 @@
            type="org.soma.everyonepick.groupalbum.adapter.MemberAdapter" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel" />
         <import type="android.view.View" />
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
     </data>

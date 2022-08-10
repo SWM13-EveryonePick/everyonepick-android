@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.viewmodel
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,6 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
-import org.soma.everyonepick.groupalbum.viewmodel.modellist.GroupAlbumModelList
 import javax.inject.Inject
 
 /**

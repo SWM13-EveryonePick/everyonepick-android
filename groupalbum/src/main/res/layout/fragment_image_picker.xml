@@ -10,7 +10,7 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerViewModel" />
         <variable
             name="adapter"
             type="org.soma.everyonepick.groupalbum.adapter.ImageAdapter" />

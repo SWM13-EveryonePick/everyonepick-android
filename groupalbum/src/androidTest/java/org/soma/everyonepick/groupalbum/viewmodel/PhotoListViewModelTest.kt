@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.soma.everyonepick.groupalbum.domain.usecase.PhotoUseCase
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListViewModel
 import org.soma.everyonepick.groupalbum.util.testPhotoModel
 import javax.inject.Inject
 

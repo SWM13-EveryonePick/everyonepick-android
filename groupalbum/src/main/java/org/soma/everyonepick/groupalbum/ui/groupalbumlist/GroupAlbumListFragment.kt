@@ -15,8 +15,7 @@ import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
-import org.soma.everyonepick.groupalbum.viewmodel.HomeViewPagerViewModel
+import org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel
 
 @AndroidEntryPoint
 class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {

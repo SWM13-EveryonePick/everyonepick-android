@@ -19,7 +19,6 @@ import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentHomeViewPagerBinding
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.HomeViewPagerViewModel
 
 @AndroidEntryPoint
 class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {

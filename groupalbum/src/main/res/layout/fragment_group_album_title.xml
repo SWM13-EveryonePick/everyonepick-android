@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumTitleViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.GroupAlbumTitleViewModel" />
         <variable
             name="onClickCreateButton"
             type="android.view.View.OnClickListener" />

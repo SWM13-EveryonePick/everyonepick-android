@@ -15,7 +15,7 @@ import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListViewModel
 
 
 /**

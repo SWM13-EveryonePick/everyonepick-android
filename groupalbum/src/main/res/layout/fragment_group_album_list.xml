@@ -11,10 +11,10 @@
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragmentListener"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListViewModel"/>
         <variable
             name="parentViewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.HomeViewPagerViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel"/>
         <variable
             name="adapter"
             type="org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter"/>

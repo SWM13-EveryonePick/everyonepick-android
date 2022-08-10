@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.viewmodel.modellist
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import org.soma.everyonepick.common.domain.model.MemberModel
 
@@ -16,8 +16,8 @@ class MemberModelList {
         data = mutableListOf(MemberModel.dummyData)
     }
 
-    constructor(memberItemList: MutableList<MemberModel>) {
-        data = memberItemList
+    constructor(memberModelList: MutableList<MemberModel>) {
+        data = memberModelList
     }
 
     fun getActualItemCount() = data.size - 1

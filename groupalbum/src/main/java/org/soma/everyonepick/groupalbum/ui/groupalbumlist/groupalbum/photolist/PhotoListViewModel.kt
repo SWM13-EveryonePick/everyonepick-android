@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.viewmodel
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

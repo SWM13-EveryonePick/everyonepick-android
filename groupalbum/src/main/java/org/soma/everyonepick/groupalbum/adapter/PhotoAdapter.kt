@@ -16,7 +16,7 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
-import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListViewModel
 
 class PhotoAdapter(
     private val parentViewModel: PhotoListViewModel
@@ -49,28 +49,28 @@ class PhotoAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            parentViewModel.photoItemList.value?.let { photoItemList ->
+            parentViewModel.photoModelList.value?.let { photoModelList ->
                 val position = holder.absoluteAdapterPosition
-                photoItemList[position].isChecked = isChecked
+                photoModelList[position].isChecked = isChecked
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val photoItem = getItem(position)
-        (holder as PhotoViewHolder).bind(photoItem)
+        val photoModel = getItem(position)
+        (holder as PhotoViewHolder).bind(photoModel)
     }
 
     class PhotoViewHolder(
         private val binding: ItemPhotoBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(photoItem: PhotoModel) {
+        fun bind(photoModel: PhotoModel) {
             Glide.with(binding.root)
-                .load(photoItem.photo.photoUrl)
+                .load(photoModel.photo.photoUrl)
                 .transform(CenterCrop(), RoundedCorners(CORNER_RADIUS))
                 .into(binding.imagePhoto)
-            binding.checkbox.setVisibility(photoItem.isCheckboxVisible)
-            binding.checkbox.isChecked = photoItem.isChecked
+            binding.checkbox.setVisibility(photoModel.isCheckboxVisible)
+            binding.checkbox.isChecked = photoModel.isChecked
         }
 
         companion object {

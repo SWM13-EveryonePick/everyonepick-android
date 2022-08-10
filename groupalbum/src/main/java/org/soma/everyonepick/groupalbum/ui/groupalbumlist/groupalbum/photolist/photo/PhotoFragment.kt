@@ -15,7 +15,6 @@ import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getFileName
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getUriFromBitmap
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.saveBitmapInPictureDirectory
-import org.soma.everyonepick.groupalbum.viewmodel.PhotoViewModel
 
 
 class PhotoFragment : Fragment(), PhotoFragmentListener {

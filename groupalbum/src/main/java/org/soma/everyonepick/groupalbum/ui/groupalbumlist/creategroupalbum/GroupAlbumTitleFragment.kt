@@ -11,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumTitleViewModel
 
 class GroupAlbumTitleFragment : Fragment() {
     private var _binding: FragmentGroupAlbumTitleBinding? = null

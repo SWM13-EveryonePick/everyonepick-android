@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.viewmodel
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,7 +11,7 @@ import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import java.io.File
 
 class ImagePickerViewModel: ViewModel() {
-    val imageItemList = MutableLiveData<MutableList<ImageModel>>(mutableListOf())
+    val imageModelList = MutableLiveData<MutableList<ImageModel>>(mutableListOf())
 
     @SuppressLint("Range")
     fun fetchImageModelList(context: Context) {
@@ -31,8 +31,8 @@ class ImagePickerViewModel: ViewModel() {
         cursor?.let {
             while(cursor.moveToNext()) {
                 val mediaPath = cursor.getString(cursor.getColumnIndex(INDEX_MEDIA_URI))
-                imageItemList.value!!.add(ImageModel(Uri.fromFile(File(mediaPath)), false))
-                imageItemList.postValue(imageItemList.value)
+                imageModelList.value!!.add(ImageModel(Uri.fromFile(File(mediaPath)), false))
+                imageModelList.postValue(imageModelList.value)
             }
         }
 
@@ -42,7 +42,7 @@ class ImagePickerViewModel: ViewModel() {
 
     fun getCheckedImageUriList(): MutableList<String> {
         val checkedImageUriList = mutableListOf<String>()
-        imageItemList.value?.let {
+        imageModelList.value?.let {
             for(imageItem in it) {
                 if (imageItem.isChecked) checkedImageUriList.add(imageItem.uri.toString())
             }

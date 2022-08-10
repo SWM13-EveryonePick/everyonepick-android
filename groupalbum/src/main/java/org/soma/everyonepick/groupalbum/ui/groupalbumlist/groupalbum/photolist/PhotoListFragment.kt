@@ -12,8 +12,7 @@ import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
-import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 
 
 @AndroidEntryPoint

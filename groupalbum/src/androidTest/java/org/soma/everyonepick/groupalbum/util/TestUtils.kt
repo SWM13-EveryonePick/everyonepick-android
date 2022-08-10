@@ -1,7 +1,7 @@
 package org.soma.everyonepick.groupalbum.util
 
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
-import org.soma.everyonepick.groupalbum.viewmodel.modellist.GroupAlbumModelList
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumModelList
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.Photo
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.viewmodel
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,6 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.modellist.MemberModelList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,7 +20,7 @@ class GroupAlbumViewModel @Inject constructor(
 
     // Drawer
     val memberSelectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
-    var memberItemList = MutableLiveData(MemberModelList())
+    var memberModelList = MutableLiveData(MemberModelList())
     val checked = MutableLiveData(0)
 
     // 하위 Fragment
@@ -34,17 +33,17 @@ class GroupAlbumViewModel @Inject constructor(
     }
 
     suspend fun fetchMemberList() {
-        memberItemList.value?.data = userUseCase.getMemberList(groupAlbum.value?.id?: -1)
-        memberItemList.value = memberItemList.value
+        memberModelList.value?.data = userUseCase.getMemberList(groupAlbum.value?.id?: -1)
+        memberModelList.value = memberModelList.value
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        memberItemList.value?.setIsCheckboxVisible(isCheckboxVisible)
-        memberItemList.value = memberItemList.value
+        memberModelList.value?.setIsCheckboxVisible(isCheckboxVisible)
+        memberModelList.value = memberModelList.value
     }
 
     fun removeCheckedItems() {
-        memberItemList.value?.removeCheckedItems()
-        memberItemList.value = memberItemList.value
+        memberModelList.value?.removeCheckedItems()
+        memberModelList.value = memberModelList.value
     }
 }

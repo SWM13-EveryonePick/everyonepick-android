@@ -11,7 +11,7 @@ import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.databinding.ItemInviteFriendBinding
-import org.soma.everyonepick.groupalbum.viewmodel.InviteFriendViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendViewModel
 
 class InviteFriendAdapter(
     private val parentViewModel: InviteFriendViewModel
