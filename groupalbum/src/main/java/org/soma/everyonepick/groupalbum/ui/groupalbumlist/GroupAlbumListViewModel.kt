@@ -8,6 +8,7 @@ import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
+import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
 

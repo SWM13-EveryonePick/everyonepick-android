@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
+package org.soma.everyonepick.groupalbum.domain.modellist
 
 import org.soma.everyonepick.common.domain.model.MemberModel
 

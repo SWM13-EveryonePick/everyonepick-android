@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
 
