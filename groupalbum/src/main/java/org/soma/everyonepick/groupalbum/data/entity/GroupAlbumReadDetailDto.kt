@@ -9,3 +9,7 @@ data class GroupAlbumReadDetailDto(
     val users: List<User?>,
     var photos: List<Photo>
 )
+
+fun GroupAlbumReadDetailDto.toGroupAlbumDto(): GroupAlbumDto {
+    return GroupAlbumDto(title, users)
+}

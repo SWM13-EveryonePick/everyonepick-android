@@ -1,6 +1,6 @@
 package org.soma.everyonepick.groupalbum.domain.usecase
 
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumCreateRequest
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumDto
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetailDto
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
@@ -19,7 +19,11 @@ class GroupAlbumUseCase @Inject constructor(
         return groupAlbumRepository.getGroupAlbum(token, id).data
     }
 
-    suspend fun createGroupAlbum(token: String, groupAlbumCreateRequest: GroupAlbumCreateRequest): GroupAlbumReadDetailDto {
-        return groupAlbumRepository.createGroupAlbum(token, groupAlbumCreateRequest).data
+    suspend fun createGroupAlbum(token: String, groupAlbumDto: GroupAlbumDto): GroupAlbumReadDetailDto {
+        return groupAlbumRepository.createGroupAlbum(token, groupAlbumDto).data
+    }
+
+    suspend fun updateGroupAlbum(token: String, id: Long, groupAlbumDto: GroupAlbumDto): GroupAlbumReadDetailDto {
+        return groupAlbumRepository.updateGroupAlbum(token, id, groupAlbumDto).data
     }
 }

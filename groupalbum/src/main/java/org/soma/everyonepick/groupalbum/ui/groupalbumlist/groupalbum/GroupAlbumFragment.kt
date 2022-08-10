@@ -3,6 +3,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
@@ -21,6 +22,8 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumDto
+import org.soma.everyonepick.groupalbum.data.entity.toGroupAlbumDto
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
@@ -144,9 +147,19 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     override fun onClickUpdateTitleButton() {
-        UpdateTitleDialogFragment {
-            // TODO: API
-            viewModel.updateGroupAlbumTitle(it)
+        UpdateTitleDialogFragment { newTitle ->
+            lifecycleScope.launch {
+                try {
+                    val token = dataStoreUseCase.accessToken.first()!!
+                    val groupAlbumDto = viewModel.groupAlbum.value!!.toGroupAlbumDto().apply {
+                        title = newTitle
+                    }
+                    groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbumDto)
+                    viewModel.updateGroupAlbumTitle(newTitle)
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "단체공유앨범 이름 변경에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }.show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
     }
 

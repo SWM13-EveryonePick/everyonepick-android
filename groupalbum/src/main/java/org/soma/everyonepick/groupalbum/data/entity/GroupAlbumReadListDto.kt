@@ -6,6 +6,6 @@ data class GroupAlbumReadListDto(
     val id: Long,
     var title: String,
     var hostUserId: Long,
-    val users: List<User>,
+    val users: List<User?>,
     var photoCnt: Int,
 )
