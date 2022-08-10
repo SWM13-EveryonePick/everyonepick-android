@@ -1,29 +1,29 @@
 package org.soma.everyonepick.groupalbum.data.itemlist
 
-import org.soma.everyonepick.common.data.item.MemberItem
+import org.soma.everyonepick.common.domain.model.MemberModel
 
 /**
  * @see GroupAlbumItemList
  */
-class MemberItemList {
-    var data: MutableList<MemberItem>
+class MemberModelList {
+    var data: MutableList<MemberModel>
         set(value) {
             field = value
-            field.add(MemberItem.dummyData)
+            field.add(MemberModel.dummyData)
         }
 
     constructor() {
-        data = mutableListOf(MemberItem.dummyData)
+        data = mutableListOf(MemberModel.dummyData)
     }
 
-    constructor(memberItemList: MutableList<MemberItem>) {
+    constructor(memberItemList: MutableList<MemberModel>) {
         data = memberItemList
     }
 
     fun getActualItemCount() = data.size - 1
 
     fun removeCheckedItems() {
-        val newData = mutableListOf<MemberItem>()
+        val newData = mutableListOf<MemberModel>()
         for (i in 0 until getActualItemCount()) {
             if (!data[i].isChecked) newData.add(data[i])
         }
@@ -32,13 +32,13 @@ class MemberItemList {
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         for (i in 0 until data.size) {
-            val newItem = copyMemberItem(data[i])
+            val newItem = copyMemberModel(data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
             newItem.isChecked = false
             data[i] = newItem
         }
     }
 
-    private fun copyMemberItem(memberItem: MemberItem) =
-        MemberItem(memberItem.user.copy(), memberItem.isChecked, memberItem.isCheckboxVisible)
+    private fun copyMemberModel(memberItem: MemberModel) =
+        MemberModel(memberItem.user.copy(), memberItem.isChecked, memberItem.isCheckboxVisible)
 }

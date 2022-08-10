@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
-import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import javax.inject.Inject
 
 
@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
 
     private var valueAnimator: ValueAnimator? = null
 
-    @Inject lateinit var preferencesDataStore: PreferencesDataStore
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
 
     private fun showTutorialAtFirst() {
         lifecycleScope.launch {
-            preferencesDataStore.run {
+            dataStoreUseCase.run {
                 val hasTutorialShown = hasShownTutorial.first()
                 if (hasTutorialShown != true) {
                     binding.layoutTutorial.visibility = View.VISIBLE

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
-import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.itemlist.GroupAlbumItemList
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GroupAlbumListViewModel @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository,
-    private val preferencesDataStore: PreferencesDataStore
+    private val dataStoreUseCase: DataStoreUseCase
 ): ViewModel() {
     val groupAlbumItemList = MutableLiveData(GroupAlbumItemList())
     val isApiLoading = MutableLiveData(true)
@@ -32,7 +32,7 @@ class GroupAlbumListViewModel @Inject constructor(
         isApiLoading.value = true
 
         try {
-            groupAlbumItemList.value?.data = groupAlbumRepository.getGroupAlbumItemList(preferencesDataStore.accessToken.first()!!)
+            groupAlbumItemList.value?.data = groupAlbumRepository.getGroupAlbumItemList(dataStoreUseCase.accessToken.first()!!)
             groupAlbumItemList.value = groupAlbumItemList.value
         } catch (e: Exception) {}
 

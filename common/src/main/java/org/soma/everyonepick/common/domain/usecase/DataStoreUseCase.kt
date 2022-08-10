@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common.data.pref
+package org.soma.everyonepick.common.domain.usecase
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PreferencesDataStore @Inject constructor(
+class DataStoreUseCase @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 

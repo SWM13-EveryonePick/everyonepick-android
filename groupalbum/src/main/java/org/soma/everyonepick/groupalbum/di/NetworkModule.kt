@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.soma.everyonepick.common.api.RetrofitFactory
+import org.soma.everyonepick.common.data.api.RetrofitFactory
 import org.soma.everyonepick.groupalbum.api.GroupAlbumService
 import javax.inject.Singleton
 

@@ -9,18 +9,18 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 class PreferencesDataStoreModule {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = PreferencesDataStore.DATA_STORE_NAME
+        name = DataStoreUseCase.DATA_STORE_NAME
     )
 
     @Singleton
     @Provides
     fun providePreferencesDataStore(@ApplicationContext context: Context) =
-        PreferencesDataStore(context.dataStore)
+        DataStoreUseCase(context.dataStore)
 }

@@ -12,7 +12,7 @@ import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.foundation.util.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.common.api.AuthService
@@ -26,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
 
     @Inject lateinit var authService: AuthService
-    @Inject lateinit var preferencesDataStore: PreferencesDataStore
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +47,11 @@ class SplashActivity : AppCompatActivity() {
      * 조건이 맞지 않을 경우에는 [LoginActivity]로 이동합니다.
      */
     private suspend fun tryToAutoLogin() {
-        val refreshToken = preferencesDataStore.refreshToken.first()
+        val refreshToken = dataStoreUseCase.refreshToken.first()
         if (refreshToken != null) {
             try {
                 val data = authService.refresh(RefreshRequest(refreshToken)).data
-                preferencesDataStore.editAccessToken(data.everyonepickAccessToken)
+                dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
 
                 loginWithKakaoAndStartHomeActivity()
             } catch (e: Exception) {

@@ -1,9 +1,7 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
@@ -18,8 +16,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.data.pref.PreferencesDataStore
+import org.soma.everyonepick.common.data.api.RetrofitFactory.Companion.toBearerToken
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.data.repository.UserRepository
+import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.adapter.MemberAdapter
@@ -33,8 +33,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListener {
     @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
-    @Inject lateinit var preferencesDataStore: PreferencesDataStore
-    @Inject lateinit var userRepository: UserRepository
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+    @Inject lateinit var userUseCase: UserUseCase
 
     private var _binding: FragmentGroupAlbumViewPagerBinding? = null
     private val binding get() = _binding!!
@@ -57,8 +57,8 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
 
         lifecycleScope.launch {
             viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbum(args.groupAlbumId)
-            viewModel.me = preferencesDataStore.accessToken.first()?.let {
-                userRepository.getUser(it).data
+            viewModel.me = dataStoreUseCase.accessToken.first()?.let {
+                userUseCase.getUser(it.toBearerToken()).data
             }
         }
 

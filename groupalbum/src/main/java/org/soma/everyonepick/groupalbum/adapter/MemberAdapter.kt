@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.soma.everyonepick.common.data.item.MemberItem
+import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
@@ -24,7 +24,7 @@ import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
  */
 class MemberAdapter(
     private val parentViewModel: GroupAlbumViewPagerViewModel
-): ListAdapter<MemberItem, RecyclerView.ViewHolder>(MemberDiffCall()) {
+): ListAdapter<MemberModel, RecyclerView.ViewHolder>(MemberDiffCall()) {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == itemCount - 1) MemberViewType.INVITE.ordinal
@@ -79,7 +79,7 @@ class MemberAdapter(
         private val binding: ItemMemberBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            memberItem: MemberItem,
+            memberItem: MemberModel,
             isInviteItem: Boolean,
             parentViewModel: GroupAlbumViewPagerViewModel
         ) {
@@ -114,12 +114,12 @@ class MemberAdapter(
     }
 }
 
-private class MemberDiffCall: DiffUtil.ItemCallback<MemberItem>() {
-    override fun areItemsTheSame(oldItem: MemberItem, newItem: MemberItem): Boolean {
+private class MemberDiffCall: DiffUtil.ItemCallback<MemberModel>() {
+    override fun areItemsTheSame(oldItem: MemberModel, newItem: MemberModel): Boolean {
         return oldItem.user.id == newItem.user.id
     }
 
-    override fun areContentsTheSame(oldItem: MemberItem, newItem: MemberItem): Boolean {
+    override fun areContentsTheSame(oldItem: MemberModel, newItem: MemberModel): Boolean {
         return oldItem == newItem
     }
 }
