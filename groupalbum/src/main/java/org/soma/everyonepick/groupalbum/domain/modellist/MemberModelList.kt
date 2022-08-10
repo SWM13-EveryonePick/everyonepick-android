@@ -13,7 +13,7 @@ class MemberModelList {
         }
 
     constructor() {
-        data = mutableListOf(MemberModel.dummyData)
+        data = mutableListOf()
     }
 
     constructor(memberModelList: MutableList<MemberModel>) {

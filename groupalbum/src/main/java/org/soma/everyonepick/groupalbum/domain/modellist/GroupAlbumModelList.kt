@@ -14,7 +14,7 @@ class GroupAlbumModelList {
         }
 
     constructor() {
-        data = mutableListOf(GroupAlbumModel.dummyData)
+        data = mutableListOf()
     }
 
     constructor(groupAlbumModelList: MutableList<GroupAlbumModel>) {
