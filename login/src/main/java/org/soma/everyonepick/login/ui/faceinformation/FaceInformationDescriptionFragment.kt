@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.common.util.AnimationUtil
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationDescriptionBinding
-import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_DURATION
-import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_Y_OFFSET
+import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_DURATION
+import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_Y_OFFSET
 
 class FaceInformationDescriptionFragment : Fragment() {
     private var _binding: FragmentFaceInformationDescriptionBinding? = null

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.ui.landing
+package org.soma.everyonepick.login.ui.landing.viewpagerfragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import org.soma.everyonepick.common.util.AnimationUtil.Companion.startShowingUpAnimation
 import org.soma.everyonepick.login.databinding.FragmentLanding1Binding
-import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_DURATION
-import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_Y_OFFSET
+import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_DURATION
+import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_Y_OFFSET
 
 class Landing1Fragment : Fragment() {
     private var _binding: FragmentLanding1Binding? = null

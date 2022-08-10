@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.utility
+package org.soma.everyonepick.login.util
 
 import android.app.Activity
 import android.content.Context

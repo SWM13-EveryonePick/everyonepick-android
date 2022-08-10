@@ -1,24 +1,24 @@
-package org.soma.everyonepick.login.ui.landing
+package org.soma.everyonepick.login.ui.landing.viewpagerfragment
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import org.soma.everyonepick.common.util.AnimationUtil.Companion.startShowingUpAnimation
-import org.soma.everyonepick.login.databinding.FragmentLoginBinding
-import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_DURATION
-import org.soma.everyonepick.login.utility.SHOWING_UP_ANIMATION_Y_OFFSET
+import org.soma.everyonepick.login.databinding.FragmentLanding2Binding
+import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_DURATION
+import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_Y_OFFSET
 
-class LoginFragment : Fragment() {
-    private var _binding: FragmentLoginBinding? = null
+class Landing2Fragment : Fragment() {
+    private var _binding: FragmentLanding2Binding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentLanding2Binding.inflate(inflater, container, false)
         return binding.root
     }
 

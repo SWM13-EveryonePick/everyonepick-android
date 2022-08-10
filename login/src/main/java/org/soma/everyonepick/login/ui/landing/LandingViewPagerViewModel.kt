@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.viewmodel
+package org.soma.everyonepick.login.ui.landing
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

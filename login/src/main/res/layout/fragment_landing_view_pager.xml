@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel" />
+            type="org.soma.everyonepick.login.ui.landing.LandingViewPagerViewModel" />
         <variable
             name="listener"
             type="org.soma.everyonepick.login.ui.landing.LandingViewPagerFragmentListener" />

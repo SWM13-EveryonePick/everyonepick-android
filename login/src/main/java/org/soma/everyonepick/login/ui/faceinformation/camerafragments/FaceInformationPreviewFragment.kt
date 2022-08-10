@@ -14,7 +14,7 @@ import androidx.lifecycle.LifecycleOwner
 import org.soma.everyonepick.login.databinding.CameraUiContainerBinding
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationPreviewBinding
 
-import org.soma.everyonepick.login.utility.FROnnxMobileNet
+import org.soma.everyonepick.login.util.FROnnxMobileNet
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs

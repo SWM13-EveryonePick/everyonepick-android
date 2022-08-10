@@ -1,4 +1,4 @@
-package org.soma.everyonepick.login.utility
+package org.soma.everyonepick.login.util
 
 import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
