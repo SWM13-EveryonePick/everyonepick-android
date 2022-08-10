@@ -9,7 +9,7 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel" />
+            type="org.soma.everyonepick.groupalbum.viewmodel.HomeViewPagerViewModel" />
         <import type="android.view.View" />
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode" />
     </data>

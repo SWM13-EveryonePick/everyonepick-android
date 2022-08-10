@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_group_album"
-    app:startDestination="@id/viewPagerFragment">
+    app:startDestination="@id/homeViewPagerFragment">
 
     <fragment
-        android:id="@+id/viewPagerFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.ViewPagerFragment"
-        tools:layout="@layout/fragment_view_pager">
+        android:id="@+id/homeViewPagerFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragment"
+        tools:layout="@layout/fragment_home_view_pager">
         <action
             android:id="@+id/to_groupAlbumViewPagerFragment"
             app:enterAnim="@anim/slide_in_bottom"
@@ -90,7 +90,7 @@
             app:argType="com.kakao.sdk.talk.model.Friend[]"/>
         <action
             android:id="@+id/to_createGroupAlbumCompleteFragment"
-            app:popUpTo="@id/viewPagerFragment"
+            app:popUpTo="@id/homeViewPagerFragment"
             app:destination="@id/createGroupAlbumCompleteFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/stay_out"
@@ -105,8 +105,8 @@
             android:name="title"
             app:argType="string"/>
         <action
-            android:id="@+id/to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment"
+            android:id="@+id/to_homeViewPagerFragment"
+            app:destination="@id/homeViewPagerFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/stay_out"
             app:popEnterAnim="@anim/stay_in"

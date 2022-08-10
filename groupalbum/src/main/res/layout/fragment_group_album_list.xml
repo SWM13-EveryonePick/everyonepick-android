@@ -14,7 +14,7 @@
             type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
         <variable
             name="parentViewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel"/>
+            type="org.soma.everyonepick.groupalbum.viewmodel.HomeViewPagerViewModel"/>
         <variable
             name="adapter"
             type="org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter"/>

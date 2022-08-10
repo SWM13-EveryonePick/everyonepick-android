@@ -17,16 +17,16 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
-import org.soma.everyonepick.groupalbum.databinding.FragmentViewPagerBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentHomeViewPagerBinding
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.HomeViewPagerViewModel
 
 @AndroidEntryPoint
-class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
-    private var _binding: FragmentViewPagerBinding? = null
+class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
+    private var _binding: FragmentHomeViewPagerBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ViewPagerViewModel by viewModels()
+    private val viewModel: HomeViewPagerViewModel by viewModels()
 
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
@@ -34,7 +34,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentViewPagerBinding.inflate(inflater, container, false).also {
+        _binding = FragmentHomeViewPagerBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickSelectButtonListener = View.OnClickListener {
@@ -66,7 +66,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewpager2.let {
-            it.adapter = ViewPagerAdapter(this)
+            it.adapter = HomeViewPagerAdapter(this)
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)

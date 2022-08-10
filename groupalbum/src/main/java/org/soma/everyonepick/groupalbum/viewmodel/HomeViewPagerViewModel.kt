@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 
-class ViewPagerViewModel: ViewModel() {
+class HomeViewPagerViewModel: ViewModel() {
     /**
      * 현재 item index에 따라 우측 상단 버튼의 visibility가 달라집니다.
      * 예를 들어 index가 1(즉, 친구 목록)일 경우에는 '선택' 버튼이 사라집니다.

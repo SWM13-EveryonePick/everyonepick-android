@@ -13,7 +13,7 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
-import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
@@ -59,7 +59,7 @@ class GroupAlbumAdapter(
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val directions = ViewPagerFragmentDirections.toInvitationFragment()
+                val directions = HomeViewPagerFragmentDirections.toInvitationFragment()
                 binding.root.findNavController().navigate(directions)
             }
         }
@@ -70,7 +70,7 @@ class GroupAlbumAdapter(
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val directions = ViewPagerFragmentDirections.toGroupAlbumViewPagerFragment(item.groupAlbum.id)
+                val directions = HomeViewPagerFragmentDirections.toGroupAlbumViewPagerFragment(item.groupAlbum.id)
                 binding.root.findNavController().navigate(directions)
             } else {
                 binding.checkbox.performTouch()
