@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.common.util.performTouch
+import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
@@ -83,8 +84,26 @@ class GroupAlbumAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val groupAlbumModel = getItem(position)
-        (holder as ParentGroupAlbumViewHolder).bind(groupAlbumModel)
+        if (holder is GroupAlbumViewHolder) {
+            val groupAlbumModel = getItem(position)
+            holder.bind(groupAlbumModel)
+        }
+    }
+
+
+    class CreateGroupAlbumViewHolder(
+        binding: ItemCreateGroupAlbumBinding
+    ): RecyclerView.ViewHolder(binding.root)
+
+    class GroupAlbumViewHolder(
+        private val binding: ItemGroupAlbumBinding
+    ): RecyclerView.ViewHolder(binding.root) {
+        fun bind(groupAlbumModel: GroupAlbumModel) {
+            binding.textTitle.text = groupAlbumModel.groupAlbum.title
+            binding.textPhotocount.text = "사진 ${groupAlbumModel.groupAlbum.photoCnt}장"
+            binding.checkbox.setVisibility(groupAlbumModel.isCheckboxVisible)
+            binding.checkbox.isChecked = groupAlbumModel.isChecked
+        }
     }
 }
 
