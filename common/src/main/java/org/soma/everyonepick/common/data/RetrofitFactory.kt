@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common.data.api
+package org.soma.everyonepick.common.data
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

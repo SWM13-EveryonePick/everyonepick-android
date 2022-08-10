@@ -22,10 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.foundation.data.model.ProviderName
-import org.soma.everyonepick.common.api.AuthService
-import org.soma.everyonepick.common.data.api.RetrofitFactory.Companion.toBearerToken
+import org.soma.everyonepick.common.data.repository.AuthRepository
+import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
 import org.soma.everyonepick.foundation.data.model.SignUpRequest
-import org.soma.everyonepick.common.data.repository.UserRepository
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.LoginUtil
@@ -39,7 +38,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
-    @Inject lateinit var authService: AuthService
+    @Inject lateinit var authRepository: AuthRepository
     @Inject lateinit var userUseCase: UserUseCase
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
@@ -117,7 +116,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     /**
      * 1. 카카오톡으로 로그인
-     * 2. 카카오 토큰을 기반으로 [AuthService.signUp] 호출
+     * 2. 카카오 토큰을 기반으로 [AuthRepository.signUp] 호출
      * 3. 얼굴정보 등록 여부에 따라서, HomeActivity 혹은 FaceInformation 페이지로 이동
      */
     override fun onClickLoginButton() {
@@ -136,7 +135,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private suspend fun signUpAndNavigate(token: OAuthToken?) {
         try {
-            val data = authService.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
+            val data = authRepository.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
             dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
             dataStoreUseCase.editRefreshToken(data.everyonepickRefreshToken)
 

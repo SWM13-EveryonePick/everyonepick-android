@@ -1,6 +1,6 @@
 package org.soma.everyonepick.groupalbum.data.repository
 
-import org.soma.everyonepick.common.data.api.RetrofitFactory.Companion.toBearerToken
+import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
 import org.soma.everyonepick.groupalbum.api.GroupAlbumService
 import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.data.model.GroupAlbum

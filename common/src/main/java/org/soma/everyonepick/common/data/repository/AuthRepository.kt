@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common.api
+package org.soma.everyonepick.common.data.repository
 
 import org.soma.everyonepick.foundation.data.model.SignUpRequest
 import org.soma.everyonepick.foundation.data.model.JwtResponse
@@ -6,7 +6,7 @@ import org.soma.everyonepick.foundation.data.model.RefreshRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface AuthService {
+interface AuthRepository {
     @POST("api/auth/signup")
     suspend fun signUp(@Body signUpRequest: SignUpRequest): JwtResponse
 

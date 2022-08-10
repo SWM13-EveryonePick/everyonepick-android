@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.foundation.util.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
-import org.soma.everyonepick.common.api.AuthService
+import org.soma.everyonepick.common.data.repository.AuthRepository
 import org.soma.everyonepick.foundation.data.model.RefreshRequest
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.utility.LoginUtil
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
 
-    @Inject lateinit var authService: AuthService
+    @Inject lateinit var authRepository: AuthRepository
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
         val refreshToken = dataStoreUseCase.refreshToken.first()
         if (refreshToken != null) {
             try {
-                val data = authService.refresh(RefreshRequest(refreshToken)).data
+                val data = authRepository.refresh(RefreshRequest(refreshToken)).data
                 dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
 
                 loginWithKakaoAndStartHomeActivity()
