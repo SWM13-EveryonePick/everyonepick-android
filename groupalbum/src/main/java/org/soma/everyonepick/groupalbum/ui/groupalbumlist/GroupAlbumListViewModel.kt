@@ -32,7 +32,7 @@ class GroupAlbumListViewModel @Inject constructor(
         isApiLoading.value = true
 
         try {
-            groupAlbumModelList.value?.data = groupAlbumUseCase.getGroupAlbumModelList(dataStoreUseCase.accessToken.first()!!)
+            groupAlbumModelList.value?.data = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.accessToken.first()!!)
             groupAlbumModelList.value = groupAlbumModelList.value
         } catch (e: Exception) {}
 

@@ -6,5 +6,5 @@ import retrofit2.http.Header
 
 interface UserRepository {
     @GET("api/user/me")
-    suspend fun getUser(@Header("Authorization") token: String): UserResponse
+    suspend fun readUser(@Header("Authorization") token: String): UserResponse
 }

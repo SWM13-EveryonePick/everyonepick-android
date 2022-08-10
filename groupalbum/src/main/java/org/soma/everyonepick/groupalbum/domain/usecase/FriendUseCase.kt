@@ -11,12 +11,12 @@ import org.soma.everyonepick.common.util.KakaoUtil
  * 각 호출 함수의 인자에 콜백이 들어가는 것이 불가피합니다.
  */
 class FriendUseCase {
-    fun fetchFriends(
+    fun readFriends(
         onAlways: () -> Unit,
         onSuccess: (Friends<Friend>) -> Unit
-    ) { fetchFriends(onAlways, {}, onSuccess) }
+    ) { readFriends(onAlways, {}, onSuccess) }
 
-    fun fetchFriends(
+    fun readFriends(
         onAlways: () -> Unit,
         onFailure: (Throwable?) -> Unit,
         onSuccess: (Friends<Friend>) -> Unit

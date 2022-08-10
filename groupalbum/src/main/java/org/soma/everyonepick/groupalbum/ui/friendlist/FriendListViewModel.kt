@@ -16,7 +16,7 @@ class FriendListViewModel @Inject constructor(
 
     fun fetchFriends() {
         isApiLoading.value = true
-        friendUseCase.fetchFriends({ isApiLoading.value = false }) { newFriends ->
+        friendUseCase.readFriends({ isApiLoading.value = false }) { newFriends ->
             friends.postValue(newFriends)
         }
     }

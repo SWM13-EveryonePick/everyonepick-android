@@ -41,7 +41,7 @@ class InviteFriendViewModel @Inject constructor(
 
     private fun fetchInviteFriendModelList() {
         isApiLoading.value = true
-        friendUseCase.fetchFriends({ isApiLoading.value = false }) { newFriends ->
+        friendUseCase.readFriends({ isApiLoading.value = false }) { newFriends ->
             val newInviteFriendModelList = newFriends.toInviteFriendModelList()
             inviteFriendItemList.value = newInviteFriendModelList
 

@@ -7,7 +7,7 @@ import retrofit2.http.*
 
 interface GroupAlbumRepository {
     @GET("api/album")
-    suspend fun getGroupAlbumList(@Header("Authorization") token: String): GroupAlbumListResponse
+    suspend fun readGroupAlbumList(@Header("Authorization") token: String): GroupAlbumListResponse
 
     @POST("api/album")
     suspend fun createGroupAlbum(
@@ -16,7 +16,7 @@ interface GroupAlbumRepository {
     ): GroupAlbumResponse
 
     @GET("api/album/{groupAlbumId}")
-    suspend fun getGroupAlbum(
+    suspend fun readGroupAlbum(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long
     ): GroupAlbumResponse

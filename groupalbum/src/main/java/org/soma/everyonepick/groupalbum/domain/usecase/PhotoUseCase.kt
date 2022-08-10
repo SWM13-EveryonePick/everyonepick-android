@@ -3,12 +3,13 @@ package org.soma.everyonepick.groupalbum.domain.usecase
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.data.entity.Photo
 import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
+import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
 import javax.inject.Inject
 
 class PhotoUseCase @Inject constructor(
     private val photoRepository: PhotoRepository
 ) {
-    fun getPhotoModelList(groupAlbumId: Long): MutableList<PhotoModel> {
+    fun readPhotoModelList(groupAlbumId: Long): MutableList<PhotoModel> {
         // TODO: photoRepository
         val photoList = mutableListOf(
             Photo(0, "https://picsum.photos/200"),
@@ -33,13 +34,5 @@ class PhotoUseCase @Inject constructor(
             Photo(3, "https://picsum.photos/203"),
         )
         return photoList.toPhotoModelList()
-    }
-
-    private fun MutableList<Photo>.toPhotoModelList(): MutableList<PhotoModel> {
-        val photoModelList = mutableListOf<PhotoModel>()
-        for(i in 0 until size) {
-            photoModelList.add(PhotoModel(get(i), isChecked = false, isCheckboxVisible = false))
-        }
-        return photoModelList
     }
 }

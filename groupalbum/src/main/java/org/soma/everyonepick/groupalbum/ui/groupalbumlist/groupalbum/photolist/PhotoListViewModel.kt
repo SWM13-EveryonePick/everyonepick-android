@@ -17,7 +17,7 @@ class PhotoListViewModel @Inject constructor(
     fun fetchPhotoModelList(groupAlbumId: Long) {
         isApiLoading.value = true
 
-        val newPhotoModelList = photoUseCase.getPhotoModelList(groupAlbumId)
+        val newPhotoModelList = photoUseCase.readPhotoModelList(groupAlbumId)
         photoModelList.value = newPhotoModelList
 
         isApiLoading.value = false

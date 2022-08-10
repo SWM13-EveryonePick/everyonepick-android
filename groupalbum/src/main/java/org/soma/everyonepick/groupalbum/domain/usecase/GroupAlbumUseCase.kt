@@ -10,13 +10,13 @@ import javax.inject.Inject
 class GroupAlbumUseCase @Inject constructor(
     private val groupAlbumRepository: GroupAlbumRepository
 ) {
-    suspend fun getGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
-        val groupAlbumList = groupAlbumRepository.getGroupAlbumList(token).data.toMutableList()
+    suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
+        val groupAlbumList = groupAlbumRepository.readGroupAlbumList(token).data.toMutableList()
         return groupAlbumList.toGroupAlbumModelList()
     }
 
-    suspend fun getGroupAlbum(token: String, id: Long): GroupAlbumReadDetailDto {
-        return groupAlbumRepository.getGroupAlbum(token, id).data
+    suspend fun readGroupAlbum(token: String, id: Long): GroupAlbumReadDetailDto {
+        return groupAlbumRepository.readGroupAlbum(token, id).data
     }
 
     suspend fun createGroupAlbum(token: String, groupAlbumDto: GroupAlbumDto): GroupAlbumReadDetailDto {
