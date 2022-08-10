@@ -1,6 +1,5 @@
 package org.soma.everyonepick.groupalbum.data.item
-
-import org.soma.everyonepick.groupalbum.data.model.Photo
+import org.soma.everyonepick.groupalbum.data.entity.Photo
 
 data class PhotoItem(
     val photo: Photo,

@@ -3,12 +3,11 @@ package org.soma.everyonepick.groupalbum.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.soma.everyonepick.foundation.data.model.User
-import org.soma.everyonepick.common.data.repository.UserRepository
+import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
-import org.soma.everyonepick.groupalbum.data.itemlist.MemberModelList
-import org.soma.everyonepick.groupalbum.data.model.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.util.SelectionMode
+import org.soma.everyonepick.groupalbum.viewmodel.modellist.MemberModelList
 import javax.inject.Inject
 
 @HiltViewModel

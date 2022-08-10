@@ -3,10 +3,7 @@ package org.soma.everyonepick.common.domain.usecase
 import org.soma.everyonepick.common.data.repository.UserRepository
 import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.common.domain.translator.UserTranslator.Companion.toMemberModelList
-import org.soma.everyonepick.foundation.data.model.User
-import org.soma.everyonepick.foundation.data.model.UserResponse
-import retrofit2.http.GET
-import retrofit2.http.Header
+import org.soma.everyonepick.common.data.entity.User
 import javax.inject.Inject
 
 class UserUseCase @Inject constructor(

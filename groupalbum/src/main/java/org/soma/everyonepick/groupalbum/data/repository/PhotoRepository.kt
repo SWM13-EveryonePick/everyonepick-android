@@ -1,7 +1,7 @@
 package org.soma.everyonepick.groupalbum.data.repository
 
 import org.soma.everyonepick.groupalbum.data.item.PhotoItem
-import org.soma.everyonepick.groupalbum.data.model.Photo
+import org.soma.everyonepick.groupalbum.data.entity.Photo
 import javax.inject.Singleton
 
 class PhotoRepository {

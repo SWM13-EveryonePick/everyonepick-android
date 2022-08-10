@@ -1,6 +1,6 @@
 package org.soma.everyonepick.common.domain.model
 
-import org.soma.everyonepick.foundation.data.model.User
+import org.soma.everyonepick.common.data.entity.User
 
 /**
  * 단체공유앨범에 속하는 [User]를 지칭합니다.

@@ -1,8 +1,8 @@
 package org.soma.everyonepick.common.data.repository
 
-import org.soma.everyonepick.foundation.data.model.SignUpRequest
-import org.soma.everyonepick.foundation.data.model.JwtResponse
-import org.soma.everyonepick.foundation.data.model.RefreshRequest
+import org.soma.everyonepick.common.data.entity.SignUpRequest
+import org.soma.everyonepick.common.data.entity.JwtResponse
+import org.soma.everyonepick.common.data.entity.RefreshRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 

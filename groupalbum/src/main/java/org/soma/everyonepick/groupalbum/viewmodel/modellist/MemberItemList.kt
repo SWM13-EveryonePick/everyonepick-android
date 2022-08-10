@@ -1,9 +1,9 @@
-package org.soma.everyonepick.groupalbum.data.itemlist
+package org.soma.everyonepick.groupalbum.viewmodel.modellist
 
 import org.soma.everyonepick.common.domain.model.MemberModel
 
 /**
- * @see GroupAlbumItemList
+ * @see GroupAlbumModelList
  */
 class MemberModelList {
     var data: MutableList<MemberModel>

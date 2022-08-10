@@ -1,6 +1,6 @@
-package org.soma.everyonepick.groupalbum.data.model
+package org.soma.everyonepick.groupalbum.data.entity
 
-import org.soma.everyonepick.foundation.data.model.User
+import org.soma.everyonepick.common.data.entity.User
 
 data class GroupAlbum(
     val id: Long,

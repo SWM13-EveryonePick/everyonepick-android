@@ -1,7 +1,7 @@
 package org.soma.everyonepick.common.domain.translator
 
 import org.soma.everyonepick.common.domain.model.MemberModel
-import org.soma.everyonepick.foundation.data.model.User
+import org.soma.everyonepick.common.data.entity.User
 
 class UserTranslator {
     companion object {

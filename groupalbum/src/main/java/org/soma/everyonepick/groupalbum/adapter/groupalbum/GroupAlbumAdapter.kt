@@ -10,22 +10,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
+import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
 
 
 /**
- * 가장 마지막 Item을 CreateGroupAlbumItem로 취급합니다.
+ * 가장 마지막 Item을 CreateGroupAlbumModel로 취급합니다.
  * 따라서 데이터는 [원본 데이터]*N + [더미 데이터] 형태를 유지해야 합니다.
  * @see GroupAlbumListViewModel
  */
 class GroupAlbumAdapter(
     private val parentViewModel: GroupAlbumListViewModel
-): ListAdapter<GroupAlbumItem, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
+): ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
@@ -37,14 +37,14 @@ class GroupAlbumAdapter(
             GroupAlbumViewType.CREATE.ordinal -> {
                 val binding = getViewDataBinding<ItemCreateGroupAlbumBinding>(parent, R.layout.item_create_group_album)
                 val holder = CreateGroupAlbumViewHolder(binding)
-                subscribeCreateGroupAlbumItemUi(binding, holder)
+                subscribeCreateGroupAlbumModelUi(binding, holder)
 
                 holder
             }
             else -> {
                 val binding = getViewDataBinding<ItemGroupAlbumBinding>(parent, R.layout.item_group_album)
                 val holder = GroupAlbumViewHolder(binding)
-                subscribeGroupAlbumItemUi(binding, holder)
+                subscribeGroupAlbumModelUi(binding, holder)
 
                 holder
             }
@@ -54,7 +54,7 @@ class GroupAlbumAdapter(
     private fun <T: ViewDataBinding> getViewDataBinding(parent: ViewGroup, layoutRes: Int): T =
         DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutRes, parent, false)
 
-    private fun subscribeCreateGroupAlbumItemUi(binding: ItemCreateGroupAlbumBinding, holder: CreateGroupAlbumViewHolder) {
+    private fun subscribeCreateGroupAlbumModelUi(binding: ItemCreateGroupAlbumBinding, holder: CreateGroupAlbumViewHolder) {
         binding.cardview.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
@@ -65,7 +65,7 @@ class GroupAlbumAdapter(
         }
     }
 
-    private fun subscribeGroupAlbumItemUi(binding: ItemGroupAlbumBinding, holder: GroupAlbumViewHolder) {
+    private fun subscribeGroupAlbumModelUi(binding: ItemGroupAlbumBinding, holder: GroupAlbumViewHolder) {
         binding.root.setOnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
@@ -79,22 +79,22 @@ class GroupAlbumAdapter(
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             val position = holder.absoluteAdapterPosition
-            parentViewModel.groupAlbumItemList.value?.data?.get(position)?.isChecked = isChecked
+            parentViewModel.groupAlbumModelList.value?.data?.get(position)?.isChecked = isChecked
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val groupAlbumItem = getItem(position)
-        (holder as ParentGroupAlbumViewHolder).bind(groupAlbumItem)
+        val groupAlbumModel = getItem(position)
+        (holder as ParentGroupAlbumViewHolder).bind(groupAlbumModel)
     }
 }
 
-private class GroupAlbumDiffCallback: DiffUtil.ItemCallback<GroupAlbumItem>() {
-    override fun areItemsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
+private class GroupAlbumDiffCallback: DiffUtil.ItemCallback<GroupAlbumModel>() {
+    override fun areItemsTheSame(oldItem: GroupAlbumModel, newItem: GroupAlbumModel): Boolean {
         return oldItem.groupAlbum.id == newItem.groupAlbum.id
     }
 
-    override fun areContentsTheSame(oldItem: GroupAlbumItem, newItem: GroupAlbumItem): Boolean {
+    override fun areContentsTheSame(oldItem: GroupAlbumModel, newItem: GroupAlbumModel): Boolean {
         return oldItem == newItem
     }
 }

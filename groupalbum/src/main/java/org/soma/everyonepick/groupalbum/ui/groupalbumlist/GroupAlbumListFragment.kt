@@ -74,7 +74,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
 
         parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
         lifecycleScope.launch {
-            viewModel.fetchGroupAlbumItemList()
+            viewModel.fetchGroupAlbumModelList()
         }
     }
 

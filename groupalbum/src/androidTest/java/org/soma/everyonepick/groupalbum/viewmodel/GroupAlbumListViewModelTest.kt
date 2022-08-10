@@ -9,9 +9,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
-import org.soma.everyonepick.groupalbum.util.testGroupAlbumItem
-import org.soma.everyonepick.groupalbum.util.testGroupAlbumItemList
+import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
+import org.soma.everyonepick.groupalbum.util.testGroupAlbumModel
+import org.soma.everyonepick.groupalbum.util.testGroupAlbumModelList
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -25,21 +27,22 @@ class GroupAlbumListViewModelTest {
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
 
-    @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
+    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        viewModel = GroupAlbumListViewModel(groupAlbumRepository)
-        viewModel.groupAlbumItemList.value = testGroupAlbumItemList
+        viewModel = GroupAlbumListViewModel(groupAlbumUseCase, dataStoreUseCase)
+        viewModel.groupAlbumModelList.value = testGroupAlbumModelList
     }
 
     @Test
     fun testSetIsCheckboxVisible() {
         runBlocking {
-            viewModel.groupAlbumItemList.value!!.data[0].isCheckboxVisible = false
+            viewModel.groupAlbumModelList.value!!.data[0].isCheckboxVisible = false
             viewModel.setIsCheckboxVisible(true)
-            assertTrue(viewModel.groupAlbumItemList.value!!.data[0].isCheckboxVisible)
+            assertTrue(viewModel.groupAlbumModelList.value!!.data[0].isCheckboxVisible)
         }
     }
 }

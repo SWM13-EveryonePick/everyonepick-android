@@ -21,10 +21,10 @@ import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.foundation.data.model.ProviderName
+import org.soma.everyonepick.common.data.entity.ProviderName
 import org.soma.everyonepick.common.data.repository.AuthRepository
 import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
-import org.soma.everyonepick.foundation.data.model.SignUpRequest
+import org.soma.everyonepick.common.data.entity.SignUpRequest
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.utility.LoginUtil

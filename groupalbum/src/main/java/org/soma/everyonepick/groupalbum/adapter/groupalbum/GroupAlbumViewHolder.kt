@@ -1,16 +1,16 @@
 package org.soma.everyonepick.groupalbum.adapter.groupalbum
 
 import org.soma.everyonepick.common.util.setVisibility
-import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
+import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 
 class GroupAlbumViewHolder(
     private val binding: ItemGroupAlbumBinding
 ): ParentGroupAlbumViewHolder(binding) {
-    override fun bind(groupAlbumItem: GroupAlbumItem) {
-        binding.textTitle.text = groupAlbumItem.groupAlbum.title
-        binding.textPhotocount.text = "사진 ${groupAlbumItem.groupAlbum.photoCnt}장"
-        binding.checkbox.setVisibility(groupAlbumItem.isCheckboxVisible)
-        binding.checkbox.isChecked = groupAlbumItem.isChecked
+    override fun bind(groupAlbumModel: GroupAlbumModel) {
+        binding.textTitle.text = groupAlbumModel.groupAlbum.title
+        binding.textPhotocount.text = "사진 ${groupAlbumModel.groupAlbum.photoCnt}장"
+        binding.checkbox.setVisibility(groupAlbumModel.isCheckboxVisible)
+        binding.checkbox.isChecked = groupAlbumModel.isChecked
     }
 }

@@ -24,6 +24,7 @@ import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.adapter.MemberAdapter
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
+import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
@@ -31,7 +32,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListener {
-    @Inject lateinit var groupAlbumRepository: GroupAlbumRepository
+    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
     @Inject lateinit var userUseCase: UserUseCase
 
@@ -55,7 +56,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
         }
 
         lifecycleScope.launch {
-            viewModel.groupAlbum.value = groupAlbumRepository.getGroupAlbum(args.groupAlbumId)
+            viewModel.groupAlbum.value = groupAlbumUseCase.getGroupAlbum(args.groupAlbumId)
             viewModel.me = dataStoreUseCase.accessToken.first()?.let {
                 userUseCase.getUser(it.toBearerToken()).data
             }

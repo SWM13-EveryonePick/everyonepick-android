@@ -1,4 +1,4 @@
-package org.soma.everyonepick.foundation.data.model
+package org.soma.everyonepick.common.data.entity
 
 // RefreshDto
 data class RefreshRequest(

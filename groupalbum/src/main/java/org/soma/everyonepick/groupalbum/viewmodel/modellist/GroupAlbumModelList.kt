@@ -1,23 +1,24 @@
-package org.soma.everyonepick.groupalbum.data.itemlist
+package org.soma.everyonepick.groupalbum.viewmodel.modellist
 
-import org.soma.everyonepick.groupalbum.data.item.GroupAlbumItem
+import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
+
 
 /**
- * data의 마지막 아이템에 항상 [GroupAlbumItem.dummyData]가 위치하는 것을 보장하는 클래스입니다.
+ * data의 마지막 아이템에 항상 [GroupAlbumModel.dummyData]가 위치하는 것을 보장하는 클래스입니다.
  */
-class GroupAlbumItemList {
-    var data: MutableList<GroupAlbumItem>
+class GroupAlbumModelList {
+    var data: MutableList<GroupAlbumModel>
         set(value) {
             field = value
-            field.add(GroupAlbumItem.dummyData)
+            field.add(GroupAlbumModel.dummyData)
         }
 
     constructor() {
-        data = mutableListOf(GroupAlbumItem.dummyData)
+        data = mutableListOf(GroupAlbumModel.dummyData)
     }
 
-    constructor(groupAlbumItemList: MutableList<GroupAlbumItem>) {
-        data = groupAlbumItemList
+    constructor(groupAlbumModelList: MutableList<GroupAlbumModel>) {
+        data = groupAlbumModelList
     }
 
     fun getActualItemCount() = data.size - 1
@@ -32,7 +33,7 @@ class GroupAlbumItemList {
     }
 
     fun removeCheckedItems() {
-        val newData = mutableListOf<GroupAlbumItem>()
+        val newData = mutableListOf<GroupAlbumModel>()
         for (i in 0 until getActualItemCount()) {
             if (!data[i].isChecked) newData.add(data[i])
         }
@@ -41,7 +42,7 @@ class GroupAlbumItemList {
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         for (i in 0 until data.size) {
-            val newItem = copyGroupAlbumItem(data[i])
+            val newItem = copyGroupAlbumModel(data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
             newItem.isChecked = false
             data[i] = newItem
@@ -51,12 +52,12 @@ class GroupAlbumItemList {
     fun checkAll() {
         val isAllChecked = data.subList(0, getActualItemCount()).all { it.isChecked }
         for (i in 0 until data.size) {
-            val newItem = copyGroupAlbumItem(data[i])
+            val newItem = copyGroupAlbumModel(data[i])
             newItem.isChecked = !isAllChecked
             data[i] = newItem
         }
     }
 
-    private fun copyGroupAlbumItem(groupAlbumItem: GroupAlbumItem) =
-        GroupAlbumItem(groupAlbumItem.groupAlbum.copy(), groupAlbumItem.isChecked, groupAlbumItem.isCheckboxVisible)
+    private fun copyGroupAlbumModel(groupAlbumModel: GroupAlbumModel) =
+        GroupAlbumModel(groupAlbumModel.groupAlbum.copy(), groupAlbumModel.isChecked, groupAlbumModel.isCheckboxVisible)
 }

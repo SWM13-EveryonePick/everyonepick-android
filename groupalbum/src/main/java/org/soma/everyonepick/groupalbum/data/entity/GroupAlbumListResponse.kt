@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.data.model
+package org.soma.everyonepick.groupalbum.data.entity
 
 data class GroupAlbumListResponse(
     val message: String,
