@@ -36,10 +36,10 @@ class PhotoUseCase @Inject constructor(
     }
 
     private fun MutableList<Photo>.toPhotoModelList(): MutableList<PhotoModel> {
-        val photoItemList = mutableListOf<PhotoModel>()
+        val photoModelList = mutableListOf<PhotoModel>()
         for(i in 0 until size) {
-            photoItemList.add(PhotoModel(get(i), isChecked = false, isCheckboxVisible = false))
+            photoModelList.add(PhotoModel(get(i), isChecked = false, isCheckboxVisible = false))
         }
-        return photoItemList
+        return photoModelList
     }
 }

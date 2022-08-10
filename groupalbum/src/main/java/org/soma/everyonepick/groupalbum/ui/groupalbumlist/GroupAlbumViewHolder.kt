@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter.groupalbum
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding

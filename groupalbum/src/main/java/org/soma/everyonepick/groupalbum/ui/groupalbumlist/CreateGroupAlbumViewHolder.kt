@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter.groupalbum
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel

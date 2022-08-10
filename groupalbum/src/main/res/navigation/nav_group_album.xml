@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/invitationFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment"
         tools:layout="@layout/fragment_invite_friend" >
         <action
             android:id="@+id/to_groupAlbumTitleFragment"
@@ -83,7 +83,7 @@
 
     <fragment
         android:id="@+id/groupAlbumTitleFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.GroupAlbumTitleFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.groupalbumtitle.GroupAlbumTitleFragment"
         tools:layout="@layout/fragment_group_album_title">
         <argument
             android:name="inviteFriends"
@@ -100,7 +100,7 @@
 
     <fragment
         android:id="@+id/createGroupAlbumCompleteFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.CreateGroupAlbumCompleteFragment">
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.creategroupalbumcomplete.CreateGroupAlbumCompleteFragment">
         <argument
             android:name="title"
             app:argType="string"/>

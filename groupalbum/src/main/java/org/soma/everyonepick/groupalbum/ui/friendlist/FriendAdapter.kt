@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter
+package org.soma.everyonepick.groupalbum.ui.friendlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

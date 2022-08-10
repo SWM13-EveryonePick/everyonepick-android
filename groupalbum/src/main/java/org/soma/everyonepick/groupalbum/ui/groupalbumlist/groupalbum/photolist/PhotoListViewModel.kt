@@ -11,44 +11,44 @@ import javax.inject.Inject
 class PhotoListViewModel @Inject constructor(
     private val photoUseCase: PhotoUseCase
 ): ViewModel() {
-    val photoItemList = MutableLiveData<MutableList<PhotoModel>>()
+    val photoModelList = MutableLiveData<MutableList<PhotoModel>>()
     val isApiLoading = MutableLiveData(true)
 
     fun fetchPhotoModelList(groupAlbumId: Long) {
         isApiLoading.value = true
 
         val newPhotoModelList = photoUseCase.getPhotoModelList(groupAlbumId)
-        photoItemList.value = newPhotoModelList
+        photoModelList.value = newPhotoModelList
 
         isApiLoading.value = false
     }
 
     fun addPhotoModel(photoItem: PhotoModel) {
-        photoItemList.value?.add(photoItem)
-        photoItemList.value = photoItemList.value
+        photoModelList.value?.add(photoItem)
+        photoModelList.value = photoModelList.value
     }
 
     fun deleteCheckedItems() {
-        if (photoItemList.value == null) return
+        if (photoModelList.value == null) return
 
         val newPhotoModelList = mutableListOf<PhotoModel>()
-        for(i in 0 until photoItemList.value!!.size) {
-            if (!photoItemList.value!![i].isChecked)
-                newPhotoModelList.add(photoItemList.value!![i])
+        for(i in 0 until photoModelList.value!!.size) {
+            if (!photoModelList.value!![i].isChecked)
+                newPhotoModelList.add(photoModelList.value!![i])
         }
-        photoItemList.value = newPhotoModelList
+        photoModelList.value = newPhotoModelList
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        if (photoItemList.value == null) return
+        if (photoModelList.value == null) return
 
-        for(i in 0 until photoItemList.value!!.size) {
-            val newItem = copyPhotoModel(photoItemList.value!![i])
+        for(i in 0 until photoModelList.value!!.size) {
+            val newItem = copyPhotoModel(photoModelList.value!![i])
             newItem.isCheckboxVisible = isCheckboxVisible
             newItem.isChecked = false
-            photoItemList.value!![i] = newItem
+            photoModelList.value!![i] = newItem
         }
-        photoItemList.value = photoItemList.value
+        photoModelList.value = photoModelList.value
     }
 
     private fun copyPhotoModel(photoItem: PhotoModel) =

@@ -9,7 +9,7 @@
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentListener" />
        <variable
            name="adapter"
-           type="org.soma.everyonepick.groupalbum.adapter.MemberAdapter" />
+           type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.MemberAdapter" />
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel" />
@@ -148,7 +148,7 @@
                         android:id="@+id/text_membercount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.memberSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? @string/member_count(viewModel.memberItemList.getActualItemCount()): @string/select_member_to_kick}"
+                        android:text="@{viewModel.memberSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? @string/member_count(viewModel.memberModelList.getActualItemCount()): @string/select_member_to_kick}"
                         android:layout_marginTop="32dp"
                         android:layout_marginLeft="@dimen/margin_drawer"
                         app:layout_constraintTop_toBottomOf="@id/text_drawer_title"
@@ -169,7 +169,7 @@
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:listitem="@layout/item_member"
                             adapter="@{adapter}"
-                            submitList="@{viewModel.memberItemList.data}"
+                            submitList="@{viewModel.memberModelList.data}"
                             />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

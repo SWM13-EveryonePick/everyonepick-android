@@ -31,15 +31,15 @@ class PhotoListViewModelTest {
     fun setUp() {
         hiltRule.inject()
         viewModel = PhotoListViewModel(photoUseCase)
-        viewModel.photoItemList.value = mutableListOf(testPhotoModel)
+        viewModel.photoModelList.value = mutableListOf(testPhotoModel)
     }
 
     @Test
     fun testSetIsCheckboxVisible() {
         runBlocking {
-            viewModel.photoItemList.value!![0].isCheckboxVisible = false
+            viewModel.photoModelList.value!![0].isCheckboxVisible = false
             viewModel.setIsCheckboxVisible(true)
-            assertTrue(viewModel.photoItemList.value!![0].isCheckboxVisible)
+            assertTrue(viewModel.photoModelList.value!![0].isCheckboxVisible)
         }
     }
 }

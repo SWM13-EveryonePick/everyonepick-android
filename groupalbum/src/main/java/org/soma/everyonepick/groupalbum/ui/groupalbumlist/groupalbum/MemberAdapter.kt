@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +13,10 @@ import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.ItemMemberBinding
 import org.soma.everyonepick.groupalbum.util.MemberViewType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 
 /**
  * @see GroupAlbumAdapter

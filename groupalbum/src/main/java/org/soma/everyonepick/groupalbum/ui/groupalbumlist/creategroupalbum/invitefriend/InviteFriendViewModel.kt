@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

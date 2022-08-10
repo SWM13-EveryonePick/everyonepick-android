@@ -13,7 +13,7 @@
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerViewModel" />
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.adapter.ImageAdapter" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImageAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +48,7 @@
                     app:spanCount="3"
                     tools:listitem="@layout/item_image"
                     adapter="@{adapter}"
-                    submitList="@{viewModel.imageItemList}"/>
+                    submitList="@{viewModel.imageModelList}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty_images_in_gallery"
-            android:visibility="@{viewModel.imageItemList.size() == 0? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.imageModelList.size() == 0? View.VISIBLE: View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

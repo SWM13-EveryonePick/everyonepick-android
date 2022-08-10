@@ -13,7 +13,6 @@ import com.kakao.sdk.template.model.DefaultTemplate
 import com.kakao.sdk.template.model.Link
 import com.kakao.sdk.template.model.TextTemplate
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.adapter.FriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentFriendListBinding
 
 @AndroidEntryPoint

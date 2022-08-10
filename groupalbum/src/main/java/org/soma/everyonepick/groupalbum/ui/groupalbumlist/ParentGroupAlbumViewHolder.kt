@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter.groupalbum
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

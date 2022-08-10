@@ -11,17 +11,17 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendViewModel" />
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.groupalbumlist.creategroupalbum.InviteFriendFragment">
+        tools:context=".ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment">
 
         <org.soma.everyonepick.common_ui.CustomActionBar
             android:id="@+id/customactionbar"

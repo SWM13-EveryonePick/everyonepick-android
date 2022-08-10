@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.KeyboardUtil
-import org.soma.everyonepick.groupalbum.adapter.InviteFriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
 
 @AndroidEntryPoint

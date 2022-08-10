@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.adapter
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,7 +16,6 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListViewModel
 
 class PhotoAdapter(
     private val parentViewModel: PhotoListViewModel
