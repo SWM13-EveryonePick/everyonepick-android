@@ -11,7 +11,7 @@ import org.soma.everyonepick.groupalbum.viewmodel.modellist.MemberModelList
 import javax.inject.Inject
 
 @HiltViewModel
-class GroupAlbumViewPagerViewModel @Inject constructor(
+class GroupAlbumViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ): ViewModel() {
     // Fragment가 args를 통해 group album id를 가지고 있으므로, Fragment단에서 초기화를 진행합니다.

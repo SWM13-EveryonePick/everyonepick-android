@@ -15,7 +15,7 @@ import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
 class PhotoAdapter(
@@ -41,7 +41,7 @@ class PhotoAdapter(
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
                 val photoUrl = item.photo.photoUrl
-                val directions = GroupAlbumViewPagerFragmentDirections.toPhotoFragment(photoUrl)
+                val directions = GroupAlbumFragmentDirections.toPhotoFragment(photoUrl)
                 binding.root.findNavController().navigate(directions)
             } else {
                 binding.checkbox.performTouch()

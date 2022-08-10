@@ -10,9 +10,9 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
 import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
 
 
@@ -22,7 +22,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     private val binding get() = _binding!!
 
     private val viewModel: PhotoListViewModel by viewModels()
-    private val parentViewModel: GroupAlbumViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val parentViewModel: GroupAlbumViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,7 +75,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
     /** PhotoListFragmentListener */
     override fun onClickUploadPhotoButton() {
-        val directions = GroupAlbumViewPagerFragmentDirections.toParentPermissionFragment()
+        val directions = GroupAlbumFragmentDirections.toParentPermissionFragment()
         findNavController().navigate(directions)
     }
 

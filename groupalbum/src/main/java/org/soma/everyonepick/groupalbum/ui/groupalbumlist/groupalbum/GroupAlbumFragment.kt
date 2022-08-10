@@ -22,25 +22,24 @@ import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.adapter.MemberAdapter
-import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
-import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumViewPagerBinding
+import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListener {
+class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
     @Inject lateinit var userUseCase: UserUseCase
 
-    private var _binding: FragmentGroupAlbumViewPagerBinding? = null
+    private var _binding: FragmentGroupAlbumBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: GroupAlbumViewPagerViewModel by viewModels()
-    private val args: GroupAlbumViewPagerFragmentArgs by navArgs()
+    private val viewModel: GroupAlbumViewModel by viewModels()
+    private val args: GroupAlbumFragmentArgs by navArgs()
 
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
@@ -48,7 +47,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGroupAlbumViewPagerBinding.inflate(inflater, container, false).also {
+        _binding = FragmentGroupAlbumBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.adapter = MemberAdapter(viewModel)
             it.viewModel = viewModel
@@ -137,7 +136,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
     }
 
 
-    /** GroupAlbumViewPagerFragmentListener */
+    /** GroupAlbumFragmentListener */
     override fun onClickSelectButton() {
         viewModel.photoSelectionMode.value =
             if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE.ordinal
@@ -193,7 +192,7 @@ class GroupAlbumViewPagerFragment: Fragment(), GroupAlbumViewPagerFragmentListen
     }
 }
 
-interface GroupAlbumViewPagerFragmentListener {
+interface GroupAlbumFragmentListener {
     fun onClickSelectButton()
     fun onClickDrawerButton()
     fun onClickUpdateTitleButton()

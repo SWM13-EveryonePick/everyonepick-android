@@ -25,7 +25,7 @@ class CreateGroupAlbumCompleteFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             title = args.title
             onClickConfirmButton = View.OnClickListener {
-                val directions = CreateGroupAlbumCompleteFragmentDirections.toViewPagerFragment()
+                val directions = CreateGroupAlbumCompleteFragmentDirections.toHomeViewPagerFragment()
                 findNavController().navigate(directions)
             }
         }

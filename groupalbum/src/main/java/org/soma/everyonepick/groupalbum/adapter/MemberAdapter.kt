@@ -17,13 +17,13 @@ import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.ItemMemberBinding
 import org.soma.everyonepick.groupalbum.util.MemberViewType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
+import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel
 
 /**
  * @see GroupAlbumAdapter
  */
 class MemberAdapter(
-    private val parentViewModel: GroupAlbumViewPagerViewModel
+    private val parentViewModel: GroupAlbumViewModel
 ): ListAdapter<MemberModel, RecyclerView.ViewHolder>(MemberDiffCall()) {
 
     override fun getItemViewType(position: Int): Int {
@@ -81,7 +81,7 @@ class MemberAdapter(
         fun bind(
             memberItem: MemberModel,
             isInviteItem: Boolean,
-            parentViewModel: GroupAlbumViewPagerViewModel
+            parentViewModel: GroupAlbumViewModel
         ) {
             if (isInviteItem) {
                 binding.root.setVisibility(parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal)

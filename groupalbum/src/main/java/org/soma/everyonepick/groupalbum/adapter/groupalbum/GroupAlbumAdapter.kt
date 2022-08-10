@@ -70,7 +70,7 @@ class GroupAlbumAdapter(
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val directions = HomeViewPagerFragmentDirections.toGroupAlbumViewPagerFragment(item.groupAlbum.id)
+                val directions = HomeViewPagerFragmentDirections.toGroupAlbumFragment(item.groupAlbum.id)
                 binding.root.findNavController().navigate(directions)
             } else {
                 binding.checkbox.performTouch()

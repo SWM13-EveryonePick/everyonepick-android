@@ -6,13 +6,13 @@
     <data>
         <variable
             name="listener"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentListener" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentListener" />
        <variable
            name="adapter"
            type="org.soma.everyonepick.groupalbum.adapter.MemberAdapter" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel" />
+            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewModel" />
         <import type="android.view.View" />
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
     </data>
