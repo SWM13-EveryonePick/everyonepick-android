@@ -20,16 +20,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.api.RetrofitFactory.Companion.toBearerToken
-import org.soma.everyonepick.common.data.pref.PreferencesDataStore
-import org.soma.everyonepick.foundation.data.model.ProviderName
-import org.soma.everyonepick.common.api.AuthService
-import org.soma.everyonepick.common.api.UserService
-import org.soma.everyonepick.common.data.model.SignUpRequest
-import org.soma.everyonepick.common.data.repository.UserRepository
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.data.entity.ProviderName
+import org.soma.everyonepick.common.data.repository.AuthRepository
+import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
+import org.soma.everyonepick.common.data.entity.SignUpRequest
+import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
-import org.soma.everyonepick.login.utility.LoginUtil
-import org.soma.everyonepick.login.viewmodel.LandingViewPagerViewModel
+import org.soma.everyonepick.login.util.LoginUtil
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,9 +37,9 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
-    @Inject lateinit var authService: AuthService
-    @Inject lateinit var userRepository: UserRepository
-    @Inject lateinit var preferencesDataStore: PreferencesDataStore
+    @Inject lateinit var authRepository: AuthRepository
+    @Inject lateinit var userUseCase: UserUseCase
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -117,7 +115,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     /**
      * 1. 카카오톡으로 로그인
-     * 2. 카카오 토큰을 기반으로 [AuthService.signUp] 호출
+     * 2. 카카오 토큰을 기반으로 [AuthRepository.signUp] 호출
      * 3. 얼굴정보 등록 여부에 따라서, HomeActivity 혹은 FaceInformation 페이지로 이동
      */
     override fun onClickLoginButton() {
@@ -136,9 +134,9 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private suspend fun signUpAndNavigate(token: OAuthToken?) {
         try {
-            val data = authService.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
-            preferencesDataStore.editAccessToken(data.everyonepickAccessToken)
-            preferencesDataStore.editRefreshToken(data.everyonepickRefreshToken)
+            val data = authRepository.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
+            dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
+            dataStoreUseCase.editRefreshToken(data.everyonepickRefreshToken)
 
             navigateToNextPageByFaceInformation(data.everyonepickAccessToken)
         } catch (e: Exception) {
@@ -149,7 +147,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private suspend fun navigateToNextPageByFaceInformation(accessToken: String) {
         try {
-            val data = userRepository.getUser(accessToken).data
+            val data = userUseCase.readUser(accessToken).data
 
             // 얼굴 정보가 등록되어 있는가?
             // TODO: if (data.faceInformation != null)

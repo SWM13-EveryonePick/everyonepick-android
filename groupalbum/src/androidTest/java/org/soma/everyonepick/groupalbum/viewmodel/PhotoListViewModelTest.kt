@@ -9,8 +9,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
-import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
-import org.soma.everyonepick.groupalbum.util.testPhotoItem
+import org.soma.everyonepick.groupalbum.domain.usecase.PhotoUseCase
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListViewModel
+import org.soma.everyonepick.groupalbum.util.testPhotoModel
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -24,21 +25,21 @@ class PhotoListViewModelTest {
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
 
-    @Inject lateinit var photoRepository: PhotoRepository
+    @Inject lateinit var photoUseCase: PhotoUseCase
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        viewModel = PhotoListViewModel(photoRepository)
-        viewModel.photoItemList.value = mutableListOf(testPhotoItem)
+        viewModel = PhotoListViewModel(photoUseCase)
+        viewModel.photoModelList.value = mutableListOf(testPhotoModel)
     }
 
     @Test
     fun testSetIsCheckboxVisible() {
         runBlocking {
-            viewModel.photoItemList.value!![0].isCheckboxVisible = false
+            viewModel.photoModelList.value!![0].isCheckboxVisible = false
             viewModel.setIsCheckboxVisible(true)
-            assertTrue(viewModel.photoItemList.value!![0].isCheckboxVisible)
+            assertTrue(viewModel.photoModelList.value!![0].isCheckboxVisible)
         }
     }
 }

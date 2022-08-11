@@ -3,4 +3,9 @@
     <style name="Theme.WhiteStatusBar.NoActionBar" parent="Theme.AppCompat.Light">
         <item name="android:statusBarColor">@color/primary_blue</item>
     </style>
+    <style name="ActionBarTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:layout_marginLeft">8dp</item>
+    </style>
 </resources>

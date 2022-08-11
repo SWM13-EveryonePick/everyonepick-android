@@ -11,13 +11,13 @@
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragmentListener"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListViewModel"/>
         <variable
             name="parentViewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel"/>
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.adapter.PhotoAdapter"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,7 @@
                     app:spanCount="3"
                     tools:listitem="@layout/item_photo"
                     adapter="@{adapter}"
-                    submitList="@{viewModel.photoItemList}"
+                    submitList="@{viewModel.photoModelList}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -56,7 +56,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.photoItemList.size() == 0? View.GONE: View.VISIBLE}"
+            android:visibility="@{viewModel.photoModelList.size() == 0? View.GONE: View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -103,7 +103,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.photoItemList.size() == 0? View.VISIBLE: View.GONE}">
+            android:visibility="@{viewModel.photoModelList.size() == 0? View.VISIBLE: View.GONE}">
 
             <ImageView
                 android:layout_width="wrap_content"

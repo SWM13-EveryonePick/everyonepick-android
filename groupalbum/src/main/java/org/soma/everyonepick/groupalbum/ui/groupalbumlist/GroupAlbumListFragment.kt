@@ -1,22 +1,21 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import android.os.Bundle
-import android.text.Selection
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
-import org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
-import org.soma.everyonepick.groupalbum.ui.ViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel
-import org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel
+import org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel
 
 @AndroidEntryPoint
 class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
@@ -24,7 +23,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     private val binding get() = _binding!!
 
     private val viewModel: GroupAlbumListViewModel by viewModels()
-    private val parentViewModel: ViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val parentViewModel: HomeViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +70,9 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
         super.onStart()
 
         parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
-        viewModel.fetchGroupAlbumItemList()
+        lifecycleScope.launch {
+            viewModel.readGroupAlbumModelList()
+        }
     }
 
     override fun onDestroy() {
@@ -91,7 +92,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     }
 
     override fun onClickCreateGroupAlbumButton() {
-        val directions = ViewPagerFragmentDirections.toInvitationFragment()
+        val directions = HomeViewPagerFragmentDirections.toInvitationFragment()
         findNavController().navigate(directions)
     }
 

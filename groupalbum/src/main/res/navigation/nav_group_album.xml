@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_group_album"
-    app:startDestination="@id/viewPagerFragment">
+    app:startDestination="@id/homeViewPagerFragment">
 
     <fragment
-        android:id="@+id/viewPagerFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.ViewPagerFragment"
-        tools:layout="@layout/fragment_view_pager">
+        android:id="@+id/homeViewPagerFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragment"
+        tools:layout="@layout/fragment_home_view_pager">
         <action
-            android:id="@+id/to_groupAlbumViewPagerFragment"
+            android:id="@+id/to_groupAlbumFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/stay_out"
             app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"
-            app:destination="@id/groupAlbumViewPagerFragment"/>
+            app:destination="@id/groupAlbumFragment"/>
         <action
             android:id="@+id/to_invitationFragment"
             app:destination="@id/invitationFragment"
@@ -26,9 +26,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/groupAlbumViewPagerFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment"
-        tools:layout="@layout/fragment_group_album_view_pager">
+        android:id="@+id/groupAlbumFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment"
+        tools:layout="@layout/fragment_group_album">
         <argument
             android:name="groupAlbumId"
             app:argType="long" />
@@ -51,7 +51,7 @@
         <action
             android:id="@+id/to_imagePickerFragment"
             app:destination="@id/imagePickerFragment"
-            app:popUpTo="@id/groupAlbumViewPagerFragment"/>
+            app:popUpTo="@id/groupAlbumFragment"/>
     </fragment>
 
     <fragment
@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/invitationFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.InviteFriendFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment"
         tools:layout="@layout/fragment_invite_friend" >
         <action
             android:id="@+id/to_groupAlbumTitleFragment"
@@ -83,14 +83,14 @@
 
     <fragment
         android:id="@+id/groupAlbumTitleFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.GroupAlbumTitleFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.groupalbumtitle.GroupAlbumTitleFragment"
         tools:layout="@layout/fragment_group_album_title">
         <argument
             android:name="inviteFriends"
             app:argType="com.kakao.sdk.talk.model.Friend[]"/>
         <action
             android:id="@+id/to_createGroupAlbumCompleteFragment"
-            app:popUpTo="@id/viewPagerFragment"
+            app:popUpTo="@id/homeViewPagerFragment"
             app:destination="@id/createGroupAlbumCompleteFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/stay_out"
@@ -100,13 +100,13 @@
 
     <fragment
         android:id="@+id/createGroupAlbumCompleteFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.CreateGroupAlbumCompleteFragment">
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.creategroupalbumcomplete.CreateGroupAlbumCompleteFragment">
         <argument
             android:name="title"
             app:argType="string"/>
         <action
-            android:id="@+id/to_viewPagerFragment"
-            app:destination="@id/viewPagerFragment"
+            android:id="@+id/to_homeViewPagerFragment"
+            app:destination="@id/homeViewPagerFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/stay_out"
             app:popEnterAnim="@anim/stay_in"

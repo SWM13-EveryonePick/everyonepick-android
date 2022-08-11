@@ -7,10 +7,10 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.FriendListViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.friendlist.FriendListViewModel"/>
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.adapter.FriendAdapter"/>
+            type="org.soma.everyonepick.groupalbum.ui.friendlist.FriendAdapter"/>
         <variable
             name="onClickKakaoButton"
             type="android.view.View.OnClickListener" />

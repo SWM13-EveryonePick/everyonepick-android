@@ -8,16 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.share.ShareClient
-import com.kakao.sdk.share.WebSharerClient
 import com.kakao.sdk.template.model.DefaultTemplate
 import com.kakao.sdk.template.model.Link
 import com.kakao.sdk.template.model.TextTemplate
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.adapter.FriendAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentFriendListBinding
-import org.soma.everyonepick.groupalbum.viewmodel.FriendListViewModel
 
 @AndroidEntryPoint
 class FriendListFragment : Fragment() {
@@ -75,7 +71,7 @@ class FriendListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.fetchFriends()
+        viewModel.readFriends()
     }
 
     override fun onDestroy() {

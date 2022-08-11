@@ -9,10 +9,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.foundation.util.HomeActivityUtil
-import org.soma.everyonepick.groupalbum.adapter.ImageAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentImagePickerBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment.Companion.URI_LIST_CHECKED
-import org.soma.everyonepick.groupalbum.viewmodel.ImagePickerViewModel
 
 class ImagePickerFragment : Fragment() {
     private var _binding: FragmentImagePickerBinding? = null
@@ -37,7 +35,7 @@ class ImagePickerFragment : Fragment() {
             }
         }
 
-        viewModel.fetchImageItemList(requireContext())
+        viewModel.readImageModelList(requireContext())
 
         return binding.root
     }

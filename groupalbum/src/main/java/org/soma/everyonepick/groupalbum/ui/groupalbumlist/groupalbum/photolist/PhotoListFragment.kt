@@ -8,12 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.groupalbum.adapter.PhotoAdapter
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumViewPagerViewModel
-import org.soma.everyonepick.groupalbum.viewmodel.PhotoListViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 
 
 @AndroidEntryPoint
@@ -22,7 +20,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     private val binding get() = _binding!!
 
     private val viewModel: PhotoListViewModel by viewModels()
-    private val parentViewModel: GroupAlbumViewPagerViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val parentViewModel: GroupAlbumViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,8 +51,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED, viewLifecycleOwner) { _, bundle ->
             bundle.getStringArrayList("uriList")?.let { uriList ->
                 for(uri in uriList) {
-                    // TODO: 업로드 -> 성공 -> viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id) 다시 로드
-                    // 또는 1초에 한번씩 viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id) 호출 -> 성공 -> ToastMassage
+                    // TODO: 업로드 -> 성공 -> viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 다시 로드
+                    // 또는 1초에 한번씩 viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 호출 -> 성공 -> ToastMassage
                 }
             }
         }
@@ -64,7 +62,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         super.onStart()
 
         parentViewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
-        viewModel.fetchPhotoItemList(parentViewModel.groupAlbum.value!!.id)
+        viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id)
     }
 
     override fun onDestroy() {
@@ -75,7 +73,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
     /** PhotoListFragmentListener */
     override fun onClickUploadPhotoButton() {
-        val directions = GroupAlbumViewPagerFragmentDirections.toParentPermissionFragment()
+        val directions = GroupAlbumFragmentDirections.toParentPermissionFragment()
         findNavController().navigate(directions)
     }
 

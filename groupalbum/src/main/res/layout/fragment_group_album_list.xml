@@ -11,13 +11,13 @@
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragmentListener"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.GroupAlbumListViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListViewModel"/>
         <variable
             name="parentViewModel"
-            type="org.soma.everyonepick.groupalbum.viewmodel.ViewPagerViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel"/>
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.adapter.groupalbum.GroupAlbumAdapter"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,14 +37,14 @@
                     android:id="@+id/recyclerview_groupalbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.groupAlbumItemList.getItemCount() > 0? View.VISIBLE: View.GONE}"
+                    android:visibility="@{viewModel.groupAlbumModelList.getActualItemCount() > 0? View.VISIBLE: View.GONE}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"
                     adapter="@{adapter}"
-                    submitList="@{viewModel.groupAlbumItemList.data}"
+                    submitList="@{viewModel.groupAlbumModelList.data}"
                     tools:listitem="@layout/item_group_album"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -77,7 +77,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_empty_card_view"
-            android:visibility="@{viewModel.groupAlbumItemList.getItemCount() == 0? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.groupAlbumModelList.getActualItemCount() == 0 &amp;&amp; !viewModel.isApiLoading? View.VISIBLE: View.GONE}"
             style="@style/ListCardView"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -91,7 +91,6 @@
                     android:layout_height="@dimen/size_empty_image"
                     android:src="@drawable/ic_ico_empty"
                     android:layout_marginBottom="@dimen/margin_top_empty_text_in_card_view"
-                    android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                     app:layout_constraintBottom_toTopOf="@id/text_emptygroupalbums"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
@@ -100,7 +99,6 @@
                     android:id="@+id/text_emptygroupalbums"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                     style="@style/EmptyText"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +110,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_bottom_empty_text_in_card_view"
-                    android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                     android:onClick="@{() -> listener.onClickCreateGroupAlbumButton()}"
                     style="@style/EmptyButton"
                     app:layout_constraintTop_toBottomOf="@id/text_emptygroupalbums"
@@ -127,18 +124,18 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isApiLoading &amp;&amp; viewModel.groupAlbumModelList.getActualItemCount() == 0? View.VISIBLE: View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.groupalbumlist.creategroupalbum.CreateGroupAlbumCompleteFragment">
+        tools:context=".ui.groupalbumlist.creategroupalbum.creategroupalbumcomplete.CreateGroupAlbumCompleteFragment">
 
         <org.soma.everyonepick.common_ui.CustomActionBar
             android:layout_width="match_parent"
