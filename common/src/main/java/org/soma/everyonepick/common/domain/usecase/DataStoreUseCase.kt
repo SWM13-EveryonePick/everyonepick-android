@@ -27,31 +27,31 @@ class DataStoreUseCase @Inject constructor(
         dataStore.data.map { preferences -> preferences[hasTutorialShownKey] }
 
     suspend fun editAccessToken(accessToken: String?) {
-        dataStore.edit { preferences ->
-            if (accessToken == null) preferences.remove(accessTokenKey)
-            else preferences[accessTokenKey] = accessToken
+        dataStore.edit {
+            if (accessToken == null) it.remove(accessTokenKey)
+            else it[accessTokenKey] = accessToken
         }
     }
 
     suspend fun editRefreshToken(refreshToken: String?) {
-        dataStore.edit { preferences ->
-            if (refreshToken == null) preferences.remove(refreshTokenKey)
-            else preferences[refreshTokenKey] = refreshToken
+        dataStore.edit {
+            if (refreshToken == null) it.remove(refreshTokenKey)
+            else it[refreshTokenKey] = refreshToken
         }
     }
 
     suspend fun editHasShownTutorial(hasShownTutorial: Boolean) {
-        dataStore.edit { preferences ->
-            preferences[hasTutorialShownKey] = hasShownTutorial
+        dataStore.edit {
+            it[hasTutorialShownKey] = hasShownTutorial
         }
     }
-
 
     companion object {
         const val DATA_STORE_NAME = "app"
 
         private val accessTokenKey = stringPreferencesKey("access_token")
         private val refreshTokenKey = stringPreferencesKey("refresh_token")
+
         private val hasTutorialShownKey = booleanPreferencesKey("has_tutorial_shown")
     }
 }

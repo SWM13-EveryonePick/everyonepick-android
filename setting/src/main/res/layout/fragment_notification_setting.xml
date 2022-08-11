@@ -18,7 +18,7 @@
             app:titleSize="@dimen/size_setting_title"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_invitenotification"
+            android:id="@+id/layout_invitegroupalbumnotification"
             android:layout_width="match_parent"
             style="@style/SettingItemLayout"
             android:layout_marginTop="@dimen/margin_top_action_bar"
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/SettingItemTextWithOutIcon"
-                android:text="@string/invite_notification"
+                android:text="@string/invite_group_album_notification"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -45,15 +45,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_uploadnotification"
+            android:id="@+id/layout_uploadphotonotification"
             android:layout_width="match_parent"
             style="@style/SettingItemLayout"
-            app:layout_constraintTop_toBottomOf="@id/layout_invitenotification">
+            app:layout_constraintTop_toBottomOf="@id/layout_invitegroupalbumnotification">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/upload_notification"
+                android:text="@string/upload_photo_notification"
                 style="@style/SettingItemText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +73,7 @@
             android:id="@+id/layout_startsynthesisnotification"
             android:layout_width="match_parent"
             style="@style/SettingItemLayout"
-            app:layout_constraintTop_toBottomOf="@id/layout_uploadnotification">
+            app:layout_constraintTop_toBottomOf="@id/layout_uploadphotonotification">
 
             <TextView
                 android:layout_width="wrap_content"
