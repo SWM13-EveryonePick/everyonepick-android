@@ -3,6 +3,7 @@ package org.soma.everyonepick.app.ui
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -20,11 +21,15 @@ import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.login.ui.LoginActivity
 import javax.inject.Inject
 
 
 private const val ANIMATION_DURATION = 150L
 
+/**
+ * 하위 모듈들이 접근할 수 없는 코드를 [HomeActivityUtil]을 통해 하위 모듈에 제공합니다.
+ */
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HomeActivityUtil {
     private lateinit var binding: ActivityHomeBinding
@@ -134,5 +139,12 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
                 dialog.cancel()
             }
             .create().show()
+    }
+
+    override fun startLoginActivity() {
+        val intent = Intent(baseContext, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivity(intent)
     }
 }

@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.data.entity.ProviderName
@@ -138,16 +139,17 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
             dataStoreUseCase.editRefreshToken(data.everyonepickRefreshToken)
 
-            navigateToNextPageByFaceInformation(data.everyonepickAccessToken)
+            navigateToNextPageByFaceInformation()
         } catch (e: Exception) {
             Toast.makeText(context, "회원가입에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             viewModel.isApiLoading.value = false
         }
     }
 
-    private suspend fun navigateToNextPageByFaceInformation(accessToken: String) {
+    private suspend fun navigateToNextPageByFaceInformation() {
         try {
-            val data = userUseCase.readUser(accessToken)
+            val token = dataStoreUseCase.bearerAccessToken.first()!!
+            val data = userUseCase.readUser(token)
 
             // 얼굴 정보가 등록되어 있는가?
             // TODO: if (data.faceInformation != null)
