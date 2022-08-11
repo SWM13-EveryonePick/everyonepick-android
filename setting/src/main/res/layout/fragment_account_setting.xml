@@ -27,6 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_logout"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_top_action_bar"
             style="@style/SettingItemLayout"
             android:onClick="@{() -> listener.onClickLogoutButton()}"
             app:layout_constraintTop_toBottomOf="@id/customactionbar">

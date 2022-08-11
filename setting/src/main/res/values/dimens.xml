@@ -2,4 +2,5 @@
 <resources>
     <dimen name="size_setting_title">16sp</dimen>
     <dimen name="margin_side_half">10dp</dimen>
+    <dimen name="margin_top_action_bar">20dp</dimen>
 </resources>

@@ -6,13 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.soma.everyonepick.setting.R
+import org.soma.everyonepick.setting.databinding.FragmentNotificationSettingBinding
 
 class NotificationSettingFragment : Fragment() {
+    private var _binding: FragmentNotificationSettingBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification_setting, container, false)
+        _binding = FragmentNotificationSettingBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = this
+        }
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
