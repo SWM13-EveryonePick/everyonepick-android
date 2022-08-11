@@ -14,4 +14,8 @@
         <item name="android:textColor">@color/title</item>
         <item name="android:layout_marginLeft">@dimen/margin_side_half</item>
     </style>
+    <style name="SettingItemTextWithOutIcon" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/title</item>
+    </style>
 </resources>
