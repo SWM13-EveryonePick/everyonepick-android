@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_border"
             app:layout_constraintTop_toTopOf="parent"
+            app:hasBackButton="true"
             app:title="@string/account_setting"
             app:titleSize="@dimen/size_setting_title"
             />
