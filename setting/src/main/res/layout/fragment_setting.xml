@@ -24,46 +24,154 @@
             app:titleSize="@dimen/size_setting_title"
             />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_profile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="50dp"
-            app:layout_constraintTop_toBottomOf="@id/customactionbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            photoUrl="@{viewModel.me.thumbnailImageUrl}"
-            />
-
-        <TextView
-            android:id="@+id/text_nickname"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_account"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@{viewModel.me.nickname}"
-            android:textColor="@color/title"
-            android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@id/image_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="장원영"
-            />
+            android:layout_marginLeft="@dimen/margin_side_half"
+            android:layout_marginRight="@dimen/margin_side_half"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
+            android:background="@drawable/bottom_border"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_profile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                photoUrl="@{viewModel.me.thumbnailImageUrl}"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="@drawable/border_with_small_radius_blue"
-            android:layout_marginTop="10dp"
-            android:text="@string/account_setting_without_blank"
-            android:textSize="12sp"
-            android:textColor="@color/primary_blue"
-            app:layout_constraintTop_toBottomOf="@id/text_nickname"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/text_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@{viewModel.me.nickname}"
+                android:textColor="@color/title"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/image_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="장원영"
+                />
+
+            <TextView
+                android:id="@+id/text_account_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:background="@drawable/border_with_small_radius_blue"
+                android:layout_marginTop="10dp"
+                android:text="@string/account_setting_without_blank"
+                android:textSize="12sp"
+                android:textColor="@color/primary_blue"
+                app:layout_constraintTop_toBottomOf="@id/text_nickname"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_account_setting"
+            android:layout_width="match_parent"
+            style="@style/SettingItemLayout"
+            app:layout_constraintTop_toBottomOf="@id/layout_account">
+
+            <ImageView
+                android:id="@+id/image_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ico_alarm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_setting"
+                style="@style/SettingItemText"
+                app:layout_constraintStart_toEndOf="@id/image_notification"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_btn_depth"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_terms"
+            android:layout_width="match_parent"
+            style="@style/SettingItemLayout"
+            app:layout_constraintTop_toBottomOf="@id/layout_account_setting"
+            >
+            <ImageView
+                android:id="@+id/image_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ico_setting2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_setting"
+                style="@style/SettingItemText"
+                app:layout_constraintStart_toEndOf="@id/image_terms"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_btn_depth"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            style="@style/SettingItemLayout"
+            app:layout_constraintTop_toBottomOf="@id/layout_terms"
+            >
+
+            <ImageView
+                android:id="@+id/image_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ico_setting3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/do_contact"
+                style="@style/SettingItemText"
+                app:layout_constraintStart_toEndOf="@id/image_contact"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

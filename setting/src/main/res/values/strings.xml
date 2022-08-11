@@ -1,8 +1,11 @@
 <resources>
     <string name="account_setting_without_blank">계정설정</string>
     <string name="account_setting">계정 설정</string>
+    <string name="logout">로그아웃</string>
+    <string name="leave">회원탈퇴</string>
     <string name="notification_setting">알림 설정</string>
     <string name="terms_setting">이용약관</string>
     <string name="terms_of_service_setting">서비스 이용약관</string>
     <string name="privacy_policy_setting">개인정보 처리방침</string>
+    <string name="do_contact">문의하기</string>
 </resources>
