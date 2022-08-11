@@ -27,6 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_termsofservice"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_top_action_bar"
             style="@style/SettingItemLayout"
             android:onClick="@{() -> listener.onClickTermsOfServiceButton()}"
             app:layout_constraintTop_toBottomOf="@id/customactionbar"
