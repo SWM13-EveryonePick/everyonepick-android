@@ -70,9 +70,9 @@ dependencies {
     implementation "androidx.camera:camera-view:$rootProject.cameraXVersion"
 
     // Retrofit2
-    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit2Version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit2Version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2Version"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"

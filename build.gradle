@@ -6,18 +6,18 @@ buildscript {
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
     }
     ext {
-        ktxVersion = '1.7.0'
+        ktxVersion = '1.8.0'
         appCompatVersion = '1.4.2'
         materialVersion = '1.6.1'
         constraintLayoutVersion = '2.1.4'
         hiltVersion = '2.42'
         recyclerViewVersion = '1.2.1'
         lifecycleVersion = '2.4.1'
-        navigationVersion = '2.5.0'
-        symbolProcessingApiVersion = '1.6.10-1.0.4'
-        roomVersion = '2.4.2'
+        navigationVersion = '2.5.1'
+        symbolProcessingApiVersion = '1.7.0-1.0.6'
+        roomVersion = '2.4.3'
         dataStorePreferencesVersion = '1.0.0'
-        cameraXVersion = '1.2.0-alpha02'
+        cameraXVersion = '1.2.0-alpha04'
 
         jUnitVersion = '4.13.2'
         coreTestingVersion = '2.1.0'
@@ -31,7 +31,7 @@ buildscript {
         circleImageViewVersion = '3.1.0'
     }
     dependencies {
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.4.2"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.1"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
 }
