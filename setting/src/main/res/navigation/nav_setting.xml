@@ -11,13 +11,25 @@
         tools:layout="@layout/fragment_setting">
         <action
             android:id="@+id/to_accountSettingFragment"
-            app:destination="@id/accountSettingFragment" />
+            app:destination="@id/accountSettingFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/to_notificationSettingFragment"
-            app:destination="@id/notificationSettingFragment" />
+            app:destination="@id/notificationSettingFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/to_termsFragment"
-            app:destination="@id/termsFragment" />
+            app:destination="@id/termsFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom" />
     </fragment>
 
     <fragment
@@ -25,11 +37,13 @@
         android:name="org.soma.everyonepick.setting.ui.account.AccountSettingFragment"
         android:label="fragment_account_setting"
         tools:layout="@layout/fragment_account_setting" />
+
     <fragment
         android:id="@+id/notificationSettingFragment"
         android:name="org.soma.everyonepick.setting.ui.notification.NotificationSettingFragment"
         android:label="fragment_notification_setting"
         tools:layout="@layout/fragment_notification_setting" />
+
     <fragment
         android:id="@+id/termsFragment"
         android:name="org.soma.everyonepick.setting.ui.terms.TermsFragment"
@@ -37,10 +51,18 @@
         tools:layout="@layout/fragment_terms" >
         <action
             android:id="@+id/to_termsOfServiceFragment"
-            app:destination="@id/termsOfServiceFragment" />
+            app:destination="@id/termsOfServiceFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/to_privacyPolicyFragment"
-            app:destination="@id/privacyPolicyFragment" />
+            app:destination="@id/privacyPolicyFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom" />
     </fragment>
     <fragment
         android:id="@+id/termsOfServiceFragment"
