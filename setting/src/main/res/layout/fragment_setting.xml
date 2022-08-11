@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="org.soma.everyonepick.setting.ui.SettingViewModel" />
+        <variable
+            name="listener"
+            type="org.soma.everyonepick.setting.ui.SettingFragmentListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,6 +76,7 @@
                 android:text="@string/account_setting_without_blank"
                 android:textSize="12sp"
                 android:textColor="@color/primary_blue"
+                android:onClick="@{() -> listener.onClickAccountSettingButton()}"
                 app:layout_constraintTop_toBottomOf="@id/text_nickname"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -82,6 +86,7 @@
             android:id="@+id/layout_account_setting"
             android:layout_width="match_parent"
             style="@style/SettingItemLayout"
+            android:onClick="@{() -> listener.onClickNotificationSettingButton()}"
             app:layout_constraintTop_toBottomOf="@id/layout_account">
 
             <ImageView
@@ -117,6 +122,7 @@
             android:id="@+id/layout_terms"
             android:layout_width="match_parent"
             style="@style/SettingItemLayout"
+            android:onClick="@{() -> listener.onClickTermsButton()}"
             app:layout_constraintTop_toBottomOf="@id/layout_account_setting"
             >
             <ImageView
@@ -150,6 +156,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             style="@style/SettingItemLayout"
+            android:onClick="@{() -> listener.onClickContactButton()}"
             app:layout_constraintTop_toBottomOf="@id/layout_terms"
             >
 
