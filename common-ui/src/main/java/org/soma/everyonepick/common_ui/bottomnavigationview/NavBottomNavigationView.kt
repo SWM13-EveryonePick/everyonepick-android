@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MenuItem
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -30,7 +31,11 @@ class NavBottomNavigationView @JvmOverloads constructor(
         }
 
         setOnItemReselectedListener { item ->
-            navController.navigate(item.itemId) // 내비게이션의 초기 상태(startDestination)로 돌아갑니다.
+            // 내비게이션의 초기 상태(startDestination)로 돌아갑니다.
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(item.itemId, inclusive = true)
+                .build()
+            navController.navigate(item.itemId, null, navOptions)
         }
 
         navController.addOnDestinationChangedListener { _, _, _ ->
