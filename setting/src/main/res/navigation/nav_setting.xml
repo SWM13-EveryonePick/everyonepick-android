@@ -1,11 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_setting"
     app:startDestination="@id/settingFragment">
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="org.soma.everyonepick.setting.ui.SettingFragment"/>
+        android:name="org.soma.everyonepick.setting.ui.SettingFragment"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/to_accountSettingFragment"
+            app:destination="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/to_notificationSettingFragment"
+            app:destination="@id/notificationSettingFragment" />
+        <action
+            android:id="@+id/to_termsFragment"
+            app:destination="@id/termsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountSettingFragment"
+        android:name="org.soma.everyonepick.setting.ui.account.AccountSettingFragment"
+        android:label="fragment_account_setting"
+        tools:layout="@layout/fragment_account_setting" />
+    <fragment
+        android:id="@+id/notificationSettingFragment"
+        android:name="org.soma.everyonepick.setting.ui.notification.NotificationSettingFragment"
+        android:label="fragment_notification_setting"
+        tools:layout="@layout/fragment_notification_setting" />
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="org.soma.everyonepick.setting.ui.terms.TermsFragment"
+        android:label="fragment_terms"
+        tools:layout="@layout/fragment_terms" >
+        <action
+            android:id="@+id/to_termsOfServiceFragment"
+            app:destination="@id/termsOfServiceFragment" />
+        <action
+            android:id="@+id/to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/termsOfServiceFragment"
+        android:name="org.soma.everyonepick.setting.ui.terms.termsofservice.TermsOfServiceFragment"
+        android:label="fragment_terms_of_service"
+        tools:layout="@layout/fragment_terms_of_service" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="org.soma.everyonepick.setting.ui.terms.privacypolicy.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
 
 </navigation>
