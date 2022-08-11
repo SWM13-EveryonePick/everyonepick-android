@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -14,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.foundation.util.NATIVE_APP_KEY
+import org.soma.everyonepick.common.util.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.common.data.repository.AuthRepository
 import org.soma.everyonepick.common.data.entity.RefreshRequest

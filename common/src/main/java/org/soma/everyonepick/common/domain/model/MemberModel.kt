@@ -12,7 +12,7 @@ class MemberModel(
 ) {
     companion object {
         val dummyData = MemberModel(
-            User(-1, "TEST", "", "", isPushActive = false),
+            User.dummyData,
             isChecked = false,
             isCheckboxVisible = false
         )

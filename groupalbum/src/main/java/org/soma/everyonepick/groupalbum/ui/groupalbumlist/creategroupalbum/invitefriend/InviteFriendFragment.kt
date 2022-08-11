@@ -11,7 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import org.soma.everyonepick.foundation.util.HomeActivityUtil
+import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
 

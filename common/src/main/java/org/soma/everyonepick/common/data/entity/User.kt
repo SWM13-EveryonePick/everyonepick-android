@@ -6,4 +6,8 @@ data class User(
     val clientId: String?,
     val thumbnailImageUrl: String?,
     val isPushActive: Boolean?
-)
+) {
+    companion object {
+        val dummyData = User(-1, "", "", "", false)
+    }
+}

@@ -6,5 +6,5 @@ import javax.inject.Inject
 class UserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend fun readUser(token: String) = userRepository.readUser(token)
+    suspend fun readUser(token: String) = userRepository.readUser(token).data
 }

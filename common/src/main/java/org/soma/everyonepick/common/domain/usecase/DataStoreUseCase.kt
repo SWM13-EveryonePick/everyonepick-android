@@ -16,7 +16,7 @@ class DataStoreUseCase @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 
-    val accessToken: Flow<String?> =
+    val bearerAccessToken: Flow<String?> =
         dataStore.data.map { preferences -> preferences[accessTokenKey]?.toBearerToken() }
 
     val refreshToken: Flow<String?> =

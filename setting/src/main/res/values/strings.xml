@@ -1,4 +1,8 @@
 <resources>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_setting_without_blank">계정설정</string>
+    <string name="account_setting">계정 설정</string>
+    <string name="notification_setting">알림 설정</string>
+    <string name="terms_setting">이용약관</string>
+    <string name="terms_of_service_setting">서비스 이용약관</string>
+    <string name="privacy_policy_setting">개인정보 처리방침</string>
 </resources>

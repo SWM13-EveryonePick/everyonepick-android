@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
-import org.soma.everyonepick.foundation.util.HomeActivityUtil
+import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import javax.inject.Inject
 
