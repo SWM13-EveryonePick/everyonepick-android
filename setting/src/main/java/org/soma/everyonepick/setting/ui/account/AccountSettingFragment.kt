@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import org.soma.everyonepick.setting.R
 import org.soma.everyonepick.setting.databinding.FragmentAccountSettingBinding
 
-class AccountSettingFragment : Fragment() {
+class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
     private var _binding: FragmentAccountSettingBinding? = null
     private val binding get() = _binding!!
 
@@ -16,7 +16,10 @@ class AccountSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAccountSettingBinding.inflate(inflater, container, false)
+        _binding = FragmentAccountSettingBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = this
+            it.listener = this
+        }
         return binding.root
     }
 
@@ -24,4 +27,18 @@ class AccountSettingFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+
+    /** AccountSettingFragmentListener */
+    override fun onClickLogoutButton() {
+        // TODO: 로그아웃
+    }
+    override fun onClickLeaveButton() {
+        // TODO: 탈퇴
+    }
+}
+
+interface AccountSettingFragmentListener {
+    fun onClickLogoutButton()
+    fun onClickLeaveButton()
 }
