@@ -1,5 +1,6 @@
 package org.soma.everyonepick.setting.ui.account
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,10 +32,24 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
 
     /** AccountSettingFragmentListener */
     override fun onClickLogoutButton() {
-        // TODO: 로그아웃
+        AlertDialog.Builder(context).setMessage("로그아웃 하시겠습니까?")
+            .setPositiveButton("로그아웃") { _, _ ->
+                // TODO: 로그아웃
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.cancel()
+            }
+            .create().show()
     }
     override fun onClickLeaveButton() {
-        // TODO: 탈퇴
+        AlertDialog.Builder(context).setMessage("정말 회원탈퇴를 하시겠습니까?")
+            .setPositiveButton("회원탈퇴") { _, _ ->
+                // TODO: 회원탈퇴
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.cancel()
+            }
+            .create().show()
     }
 }
 

@@ -59,8 +59,8 @@ class InviteFriendFragment : Fragment() {
             override fun handleOnBackPressed() {
                 if (viewModel.checked.value == 0) findNavController().navigateUp()
                 else {
-                    AlertDialog.Builder(context).setMessage("단체공유앨범 생성을 취소합니다.")
-                        .setPositiveButton("확인") { _, _ -> findNavController().navigateUp() }
+                    AlertDialog.Builder(context).setMessage("단체공유앨범 생성을 그만둡니다.")
+                        .setPositiveButton("그만두기") { _, _ -> findNavController().navigateUp() }
                         .setNegativeButton("취소") { dialog, _ -> dialog.cancel() }
                         .create().show()
                 }

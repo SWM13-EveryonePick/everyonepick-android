@@ -163,7 +163,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onClickExitButton() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
-            .setPositiveButton("확인") { _, _ ->
+            .setPositiveButton("나가기") { _, _ ->
                 // TODO: API
                 activity?.supportFragmentManager?.setFragmentResult(
                     GROUP_ALBUM_REMOVED,

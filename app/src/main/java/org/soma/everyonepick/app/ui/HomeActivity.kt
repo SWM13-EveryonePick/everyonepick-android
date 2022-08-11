@@ -127,7 +127,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
 
     override fun showAreYouSureDialog() {
         AlertDialog.Builder(this).setMessage("${baseContext.getString(org.soma.everyonepick.common.R.string.app_name)}을 종료합니다.")
-            .setPositiveButton("확인") { _, _ ->
+            .setPositiveButton("종료") { _, _ ->
                 finish()
             }
             .setNegativeButton("취소") { dialog, _ ->
