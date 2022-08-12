@@ -16,7 +16,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.NATIVE_APP_KEY
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.common.data.repository.AuthRepository
-import org.soma.everyonepick.common.data.entity.RefreshRequest
+import org.soma.everyonepick.common.data.dto.RefreshRequest
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.util.LoginUtil
 import javax.inject.Inject

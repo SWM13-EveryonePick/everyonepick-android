@@ -1,14 +1,14 @@
 package org.soma.everyonepick.groupalbum.domain.model
 
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadListDto
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadList
 
 class GroupAlbumModel(
-    val groupAlbum: GroupAlbumReadListDto,
+    val groupAlbum: GroupAlbumReadList,
     var isChecked: Boolean,
     var isCheckboxVisible: Boolean
 ) {
     companion object {
-        val dummyData = GroupAlbumModel(GroupAlbumReadListDto(-1, "", 0, listOf(), 0), isChecked = false, isCheckboxVisible = false)
+        val dummyData = GroupAlbumModel(GroupAlbumReadList(-1, "", 0, listOf(), 0), isChecked = false, isCheckboxVisible = false)
     }
 
     // DiffCall의 areContentsTheSame()에서의 오류를 해결하기 위함

@@ -17,7 +17,7 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.common.util.HomeActivityUtil
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumDto
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -45,11 +45,11 @@ class GroupAlbumTitleFragment : Fragment() {
                 lifecycleScope.launch {
                     try {
                         val token = dataStoreUseCase.bearerAccessToken.first()!!
-                        val groupAlbumDto = GroupAlbumDto(
+                        val groupAlbum = GroupAlbum(
                             viewModel.title.value!!,
                             getUserListToCreateGroupAlbum()
                         )
-                        groupAlbumUseCase.createGroupAlbum(token, groupAlbumDto)
+                        groupAlbumUseCase.createGroupAlbum(token, groupAlbum)
 
                         KeyboardUtil.hideKeyboard(requireActivity())
 
