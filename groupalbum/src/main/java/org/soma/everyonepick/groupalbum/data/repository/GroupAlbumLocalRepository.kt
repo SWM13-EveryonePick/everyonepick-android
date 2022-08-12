@@ -18,7 +18,7 @@ class GroupAlbumLocalRepository @Inject constructor(
         }
 
         // 저장되어 있는 아이템들이 새 리스트 내부에 없다면 삭제합니다.
-        val prev = getGroupAlbumLocalList().first()
+        val prev = getGroupAlbumLocalList()
         prev.forEach { prevItem ->
             if (!groupAlbumLocalList.any { it.id == prevItem.id }) {
                 groupAlbumLocalDao.deleteGroupAlbumLocal(prevItem)

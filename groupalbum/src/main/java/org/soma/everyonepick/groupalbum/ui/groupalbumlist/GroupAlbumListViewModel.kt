@@ -40,7 +40,7 @@ class GroupAlbumListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             CoroutineScope(Dispatchers.IO).launch {
-                val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList().first()
+                val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList()
                 val newGroupAlbumModelList = groupAlbumLocalList.groupAlbumLocalListToGroupAlbumModelList()
                 if (groupAlbumModelList.value?.getActualItemCount() == 0) {
                     groupAlbumModelList.value?.data = newGroupAlbumModelList

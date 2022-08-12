@@ -10,7 +10,7 @@ import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumLocal
 @Dao
 interface GroupAlbumLocalDao {
     @Query("SELECT * FROM group_album ORDER BY group_album.`index`")
-    fun getGroupAlbumLocalList(): Flow<List<GroupAlbumLocal>>
+    fun getGroupAlbumLocalList(): List<GroupAlbumLocal>
 
     @Delete
     fun deleteGroupAlbumLocal(groupAlbumLocal: GroupAlbumLocal)
