@@ -14,7 +14,6 @@ buildscript {
         recyclerViewVersion = '1.2.1'
         lifecycleVersion = '2.4.1'
         navigationVersion = '2.5.1'
-        symbolProcessingApiVersion = '1.7.0-1.0.6'
         roomVersion = '2.4.3'
         dataStorePreferencesVersion = '1.0.0'
         cameraXVersion = '1.2.0-alpha04'
