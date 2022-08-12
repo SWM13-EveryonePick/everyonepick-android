@@ -8,8 +8,8 @@ data class GroupAlbumReadDetail(
     var hostUserId: Long,
     val users: List<User?>,
     var photos: List<Photo>
-)
-
-fun GroupAlbumReadDetail.toGroupAlbum(): GroupAlbum {
-    return GroupAlbum(title, users)
+) {
+    fun toGroupAlbum(): GroupAlbum {
+        return GroupAlbum(title, users)
+    }
 }

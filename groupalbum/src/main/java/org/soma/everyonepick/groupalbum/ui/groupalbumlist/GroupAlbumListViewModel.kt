@@ -1,13 +1,21 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.groupalbum.data.AppDatabase
+import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumLocalRepository
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumLocalListToGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumModelListToGroupAlbumLocalList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
 
@@ -23,10 +31,24 @@ import javax.inject.Inject
 @HiltViewModel
 class GroupAlbumListViewModel @Inject constructor(
     private val groupAlbumUseCase: GroupAlbumUseCase,
-    private val dataStoreUseCase: DataStoreUseCase
+    private val dataStoreUseCase: DataStoreUseCase,
+    private val groupAlbumLocalRepository: GroupAlbumLocalRepository,
 ): ViewModel() {
     val groupAlbumModelList = MutableLiveData(GroupAlbumModelList())
     val isApiLoading = MutableLiveData(true)
+
+    init {
+        viewModelScope.launch {
+            CoroutineScope(Dispatchers.IO).launch {
+                val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList().first()
+                val newGroupAlbumModelList = groupAlbumLocalList.groupAlbumLocalListToGroupAlbumModelList()
+                if (groupAlbumModelList.value?.getActualItemCount() == 0) {
+                    groupAlbumModelList.value?.data = newGroupAlbumModelList
+                    groupAlbumModelList.postValue(groupAlbumModelList.value)
+                }
+            }
+        }
+    }
 
     suspend fun readGroupAlbumModelList() {
         isApiLoading.value = true
@@ -34,6 +56,11 @@ class GroupAlbumListViewModel @Inject constructor(
         try {
             groupAlbumModelList.value?.data = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.bearerAccessToken.first()!!)
             groupAlbumModelList.value = groupAlbumModelList.value
+
+            // 로컬 캐시
+            groupAlbumModelList.value?.let {
+                groupAlbumLocalRepository.resetGroupAlbumLocalList(it.data.subList(0, it.getActualItemCount()).groupAlbumModelListToGroupAlbumLocalList())
+            }
         } catch (e: Exception) {}
 
         isApiLoading.value = false

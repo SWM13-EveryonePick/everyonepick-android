@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class RepositoryModule {
+class NetworkModule {
     @Singleton
     @Provides
     fun provideFriendUseCase(): FriendUseCase {

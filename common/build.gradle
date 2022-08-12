@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.devtools.ksp' version '1.7.0-1.0.6'
 }
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
@@ -37,20 +36,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation project(path: ':foundation')
-
-    // Room
-    implementation("com.google.devtools.ksp:symbol-processing-api:$rootProject.symbolProcessingApiVersion")
-
-    implementation("androidx.room:room-runtime:$rootProject.roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$rootProject.roomVersion")
-    // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$rootProject.roomVersion")
-    // To use Kotlin Symbolic Processing (KSP)
-    ksp("androidx.room:room-compiler:$rootProject.roomVersion")
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:$rootProject.roomVersion")
-    // optional - Test helpers
-    testImplementation("androidx.room:room-testing:$rootProject.roomVersion")
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:$rootProject.dataStorePreferencesVersion")
