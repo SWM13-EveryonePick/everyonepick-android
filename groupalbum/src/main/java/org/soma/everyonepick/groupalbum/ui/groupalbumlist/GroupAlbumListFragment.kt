@@ -59,9 +59,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
         super.onStart()
 
         parentViewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
-        lifecycleScope.launch {
-            viewModel.readGroupAlbumModelList()
-        }
+        viewModel.readGroupAlbumModelList()
     }
 
     override fun onDestroy() {
