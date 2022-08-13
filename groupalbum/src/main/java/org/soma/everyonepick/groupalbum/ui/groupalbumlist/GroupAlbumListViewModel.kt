@@ -40,15 +40,13 @@ class GroupAlbumListViewModel @Inject constructor(
     val isApiLoading = MutableLiveData(true)
 
     init {
-        viewModelScope.launch {
-            // Offline cache 데이터 불러오기
-            CoroutineScope(Dispatchers.IO).launch {
-                val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList()
-                val newGroupAlbumModelList = groupAlbumLocalList.groupAlbumLocalListToGroupAlbumModelList()
-                if (groupAlbumModelList.value?.getActualItemCount() == 0) {
-                    groupAlbumModelList.value?.data = newGroupAlbumModelList
-                    groupAlbumModelList.postValue(groupAlbumModelList.value)
-                }
+        // Offline cache 데이터 불러오기
+        viewModelScope.launch(Dispatchers.IO) {
+            val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList()
+            val newGroupAlbumModelList = groupAlbumLocalList.groupAlbumLocalListToGroupAlbumModelList()
+            if (groupAlbumModelList.value?.getActualItemCount() == 0) {
+                groupAlbumModelList.value?.data = newGroupAlbumModelList
+                groupAlbumModelList.postValue(groupAlbumModelList.value)
             }
         }
     }
