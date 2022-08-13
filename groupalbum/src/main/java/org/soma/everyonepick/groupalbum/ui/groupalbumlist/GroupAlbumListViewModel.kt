@@ -20,11 +20,13 @@ import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
 
 /**
- * groupAlbumModelList의 값을 수정하더라도 MutableLiveData의 특성으로 인해
- * 주소값이 변하여야 observer가 작동하므로, 데이터를 변경할 때 이를 감안하여야 합니다.
- *
  * [GroupAlbumAdapter]의 설계상, 가장 마지막 아이템을 '생성 버튼'으로 취급하게 되므로 마지막 아이템에는
  * [GroupAlbumModel.dummyData]가 위치하는 것을 보장해야 하며, 이 책임은 [GroupAlbumModelList]가 지고 있습니다.
+ *
+ * 사용자 경험을 위해 Offline Cache를 사용하며, [groupAlbumModelList]의 값은 아래 순서를 따라 변경됩니다.
+ *
+ * empty -> data by Room -> data by Retrofit2
+ *
  * @see GroupAlbumAdapter
  */
 
@@ -39,6 +41,7 @@ class GroupAlbumListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            // Offline cache 데이터 불러오기
             CoroutineScope(Dispatchers.IO).launch {
                 val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList()
                 val newGroupAlbumModelList = groupAlbumLocalList.groupAlbumLocalListToGroupAlbumModelList()
@@ -57,7 +60,7 @@ class GroupAlbumListViewModel @Inject constructor(
             groupAlbumModelList.value?.data = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.bearerAccessToken.first()!!)
             groupAlbumModelList.value = groupAlbumModelList.value
 
-            // 로컬 캐시
+            // Offline cache를 위해 데이터 저장
             groupAlbumModelList.value?.let {
                 groupAlbumLocalRepository.resetGroupAlbumLocalList(it.data.subList(0, it.getActualItemCount()).groupAlbumModelListToGroupAlbumLocalList())
             }
