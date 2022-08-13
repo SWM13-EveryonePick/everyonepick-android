@@ -23,7 +23,6 @@ import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
 
@@ -164,10 +163,6 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButton("나가기") { _, _ ->
                 // TODO: API
-                activity?.supportFragmentManager?.setFragmentResult(
-                    GROUP_ALBUM_REMOVED,
-                    bundleOf("id" to args.groupAlbumId)
-                )
                 findNavController().navigateUp()
             }
             .setNegativeButton("취소") { dialog, _ ->

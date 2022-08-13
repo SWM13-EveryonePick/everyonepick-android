@@ -57,12 +57,15 @@ class GroupAlbumListViewModel @Inject constructor(
         isApiLoading.value = true
 
         try {
-            groupAlbumModelList.value?.data = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.bearerAccessToken.first()!!)
-            groupAlbumModelList.value = groupAlbumModelList.value
+            val newGroupAlbumModelList = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.bearerAccessToken.first()!!)
+            if (groupAlbumModelList.value?.data != newGroupAlbumModelList) {
+                groupAlbumModelList.value?.data = newGroupAlbumModelList
+                groupAlbumModelList.value = groupAlbumModelList.value
 
-            // Offline cache를 위해 데이터 저장
-            groupAlbumModelList.value?.let {
-                groupAlbumLocalRepository.resetGroupAlbumLocalList(it.data.subList(0, it.getActualItemCount()).groupAlbumModelListToGroupAlbumLocalList())
+                // Offline cache를 위해 데이터 저장
+                groupAlbumModelList.value?.let {
+                    groupAlbumLocalRepository.resetGroupAlbumLocalList(it.data.subList(0, it.getActualItemCount()).groupAlbumModelListToGroupAlbumLocalList())
+                }
             }
         } catch (e: Exception) {}
 
