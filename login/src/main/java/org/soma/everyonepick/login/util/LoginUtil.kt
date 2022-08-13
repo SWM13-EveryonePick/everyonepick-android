@@ -7,16 +7,14 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import org.soma.everyonepick.foundation.util.HOME_ACTIVITY_CLASS
+import org.soma.everyonepick.common.util.HOME_ACTIVITY_CLASS
 
 class LoginUtil {
     companion object {
         fun startHomeActivity(activity: Activity) {
-            val intent = Intent(
-                activity,
-                Class.forName(HOME_ACTIVITY_CLASS)
-            )
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            val intent = Intent(activity, Class.forName(HOME_ACTIVITY_CLASS)).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
             activity.startActivity(intent)
             activity.overridePendingTransition(org.soma.everyonepick.common_ui.R.anim.slide_in_bottom, org.soma.everyonepick.common_ui.R.anim.stay_out);
         }

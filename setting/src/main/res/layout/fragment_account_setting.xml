@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="listener"
+            type="org.soma.everyonepick.setting.ui.account.AccountSettingFragmentListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.account.AccountSettingFragment">
+
+        <org.soma.everyonepick.common_ui.CustomActionBar
+            android:id="@+id/customactionbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_border"
+            app:layout_constraintTop_toTopOf="parent"
+            app:hasBackButton="true"
+            app:title="@string/account_setting"
+            app:titleSize="@dimen/size_setting_title"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_logout"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_top_action_bar"
+            style="@style/SettingItemLayout"
+            android:onClick="@{() -> listener.onClickLogoutButton()}"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                style="@style/SettingItemTextWithoutIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            style="@style/SettingItemLayout"
+            android:onClick="@{() -> listener.onClickLeaveButton()}"
+            app:layout_constraintTop_toBottomOf="@id/layout_logout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/leave"
+                style="@style/SettingItemTextWithoutIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

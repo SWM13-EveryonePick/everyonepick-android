@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.KeyboardUtil
-import org.soma.everyonepick.foundation.util.HomeActivityUtil
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumDto
+import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -44,12 +44,12 @@ class GroupAlbumTitleFragment : Fragment() {
             it.onClickCreateButton = View.OnClickListener {
                 lifecycleScope.launch {
                     try {
-                        val token = dataStoreUseCase.accessToken.first()!!
-                        val groupAlbumDto = GroupAlbumDto(
+                        val token = dataStoreUseCase.bearerAccessToken.first()!!
+                        val groupAlbum = GroupAlbum(
                             viewModel.title.value!!,
                             getUserListToCreateGroupAlbum()
                         )
-                        groupAlbumUseCase.createGroupAlbum(token, groupAlbumDto)
+                        groupAlbumUseCase.createGroupAlbum(token, groupAlbum)
 
                         KeyboardUtil.hideKeyboard(requireActivity())
 

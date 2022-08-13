@@ -1,8 +1,8 @@
 package org.soma.everyonepick.groupalbum.data.repository
 
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumDto
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumListResponse
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumResponse
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumListResponse
+import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumResponse
 import retrofit2.http.*
 
 interface GroupAlbumRepository {
@@ -12,7 +12,7 @@ interface GroupAlbumRepository {
     @POST("api/album")
     suspend fun createGroupAlbum(
         @Header("Authorization") token: String,
-        @Body groupAlbumDto: GroupAlbumDto
+        @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
     @GET("api/album/{groupAlbumId}")
@@ -25,6 +25,6 @@ interface GroupAlbumRepository {
     suspend fun updateGroupAlbum(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long,
-        @Body groupAlbumDto: GroupAlbumDto
+        @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 }

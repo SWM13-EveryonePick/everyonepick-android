@@ -8,6 +8,10 @@
 
     <color name="primary_blue">#3182f6</color>
 
+    <color name="main_point_color_start">#3698D9</color>
+    <color name="main_point_color_mid">#3F72D5</color>
+    <color name="main_point_color_end">#484DD1</color>
+
     <color name="black">#FF000000</color>
     <color name="gray">#777777</color>
     <color name="light_gray">#b9b9b9</color>

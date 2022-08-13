@@ -17,16 +17,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
-import org.soma.everyonepick.foundation.util.HomeActivityUtil
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumDto
-import org.soma.everyonepick.groupalbum.data.entity.toGroupAlbumDto
+import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListFragment.Companion.GROUP_ALBUM_REMOVED
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
 
@@ -56,8 +52,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         }
 
         lifecycleScope.launch {
-            dataStoreUseCase.accessToken.first()?.let {
-                viewModel.me = userUseCase.readUser(it).data
+            dataStoreUseCase.bearerAccessToken.first()?.let {
+                viewModel.me = userUseCase.readUser(it)
                 viewModel.groupAlbum.value = groupAlbumUseCase.readGroupAlbum(it, args.groupAlbumId)
             }
         }
@@ -150,11 +146,11 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         UpdateTitleDialogFragment { newTitle ->
             lifecycleScope.launch {
                 try {
-                    val token = dataStoreUseCase.accessToken.first()!!
-                    val groupAlbumDto = viewModel.groupAlbum.value!!.toGroupAlbumDto().apply {
+                    val token = dataStoreUseCase.bearerAccessToken.first()!!
+                    val groupAlbum = viewModel.groupAlbum.value!!.toGroupAlbum().apply {
                         title = newTitle
                     }
-                    groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbumDto)
+                    groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbum)
                     viewModel.updateGroupAlbumTitle(newTitle)
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "단체공유앨범 이름 변경에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -165,12 +161,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onClickExitButton() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
-            .setPositiveButton("확인") { _, _ ->
+            .setPositiveButton("나가기") { _, _ ->
                 // TODO: API
-                activity?.supportFragmentManager?.setFragmentResult(
-                    GROUP_ALBUM_REMOVED,
-                    bundleOf("id" to args.groupAlbumId)
-                )
                 findNavController().navigateUp()
             }
             .setNegativeButton("취소") { dialog, _ ->

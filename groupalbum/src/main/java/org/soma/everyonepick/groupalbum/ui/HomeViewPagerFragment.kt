@@ -3,6 +3,8 @@ package org.soma.everyonepick.groupalbum.ui
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +18,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
-import org.soma.everyonepick.foundation.util.HomeActivityUtil
+import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common_ui.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentHomeViewPagerBinding
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 
@@ -102,7 +105,7 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         // 색상 변경
         textView.setTextColor(
             if (isSelected) Color.WHITE
-            else ContextCompat.getColor(requireContext(), org.soma.everyonepick.common_ui.R.color.cloud)
+            else ContextCompat.getColor(requireContext(), R.color.cloud)
         )
         // 스타일 변경
         textView.setTypeface(
@@ -113,7 +116,6 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
     override fun onStart() {
         super.onStart()
-
         // (해당 프래그먼트에서만) status bar를 투명화하고 뷰를 확장합니다.
         activity?.window?.let {
             it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

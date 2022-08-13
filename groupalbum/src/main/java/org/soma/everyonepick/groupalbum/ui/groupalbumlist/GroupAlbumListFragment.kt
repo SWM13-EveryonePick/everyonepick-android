@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.foundation.util.HomeActivityUtil
+import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -38,7 +37,6 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
         }
 
         subscribeUi()
-        setFragmentResultListeners()
 
         return binding.root
     }
@@ -54,15 +52,6 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
 
         parentViewModel.checkAllTrigger.observe(viewLifecycleOwner) {
             viewModel.checkAll()
-        }
-    }
-
-    // 내부 뎁스에서의 변경 사항을 받아와서 API call 없이 바로 적용합니다.
-    // TODO: onResume() 또는 onStart()에서 자동 업데이트 -> 불필요한 로직이 되기 때문에 제거할 것
-    private fun setFragmentResultListeners() {
-        activity?.supportFragmentManager?.setFragmentResultListener(GROUP_ALBUM_REMOVED, viewLifecycleOwner) { _, bundle ->
-            val id = bundle.getLong("id")
-            viewModel.deleteGroupAlbum(id)
         }
     }
 
@@ -94,12 +83,6 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     override fun onClickCreateGroupAlbumButton() {
         val directions = HomeViewPagerFragmentDirections.toInvitationFragment()
         findNavController().navigate(directions)
-    }
-
-
-    companion object {
-        // Request keys for FragmentResultListener
-        const val GROUP_ALBUM_REMOVED = "group_album_removed"
     }
 }
 

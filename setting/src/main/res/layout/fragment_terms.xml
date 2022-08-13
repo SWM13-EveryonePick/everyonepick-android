@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="listener"
+            type="org.soma.everyonepick.setting.ui.terms.TermsFragmentListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.terms.TermsFragment">
+
+        <org.soma.everyonepick.common_ui.CustomActionBar
+            android:id="@+id/customactionbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/terms_setting"
+            app:titleSize="@dimen/size_setting_title"
+            app:hasBackButton="true"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_termsofservice"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_top_action_bar"
+            style="@style/SettingItemLayout"
+            android:onClick="@{() -> listener.onClickTermsOfServiceButton()}"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_of_service_setting"
+                style="@style/SettingItemText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            style="@style/SettingItemLayout"
+            android:onClick="@{() -> listener.onClickPrivacyPolicyButton()}"
+            app:layout_constraintTop_toBottomOf="@id/layout_termsofservice"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_policy_setting"
+                style="@style/SettingItemText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -2,11 +2,11 @@ package org.soma.everyonepick.groupalbum.util
 
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadListDto
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadList
 import org.soma.everyonepick.groupalbum.data.entity.Photo
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 
-val testGroupAlbum = GroupAlbumReadListDto(0, "test", 0, listOf(), 100)
+val testGroupAlbum = GroupAlbumReadList(0, "test", 0, listOf(), 100)
 val testGroupAlbumModel = GroupAlbumModel(testGroupAlbum, false, false)
 val testGroupAlbumModelList = GroupAlbumModelList(mutableListOf(testGroupAlbumModel))
 

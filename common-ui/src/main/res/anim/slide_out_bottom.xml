@@ -4,8 +4,8 @@
     <translate
         android:fromXDelta="0%" android:toXDelta="0%"
         android:fromYDelta="0%" android:toYDelta="30%p"
-        android:duration="300" />
+        android:duration="@integer/animation_duration" />
     <alpha
         android:fromAlpha="1" android:toAlpha="0"
-        android:duration="300"/>
+        android:duration="@integer/animation_duration"/>
 </set>

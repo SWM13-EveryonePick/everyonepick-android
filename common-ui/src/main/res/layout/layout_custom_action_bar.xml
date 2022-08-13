@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:src="@drawable/ic_btn_gnb_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             app:onBackPressed="@{true}"

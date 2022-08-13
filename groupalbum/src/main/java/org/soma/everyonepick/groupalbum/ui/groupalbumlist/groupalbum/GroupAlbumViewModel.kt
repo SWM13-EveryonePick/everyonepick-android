@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetailDto
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadListDto
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetail
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class GroupAlbumViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ): ViewModel() {
     // Fragment가 args를 통해 group album id를 가지고 있으므로, Fragment단에서 초기화를 진행합니다.
-    val groupAlbum = MutableLiveData(GroupAlbumReadDetailDto(-1, "Loading", -1, listOf(), listOf()))
+    val groupAlbum = MutableLiveData(GroupAlbumReadDetail(-1, "Loading", -1, listOf(), listOf()))
     val currentItem: MutableLiveData<Int> = MutableLiveData(0)
     var me: User? = null
 
@@ -25,7 +25,7 @@ class GroupAlbumViewModel @Inject constructor(
     val memberSelectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
 
     /**
-     * [GroupAlbumReadDetailDto.users]를 [MemberModel]로 변환한 리스트를 [MemberModelList]를 통해 홀드합니다.
+     * [GroupAlbumReadDetail.users]를 [MemberModel]로 변환한 리스트를 [MemberModelList]를 통해 홀드합니다.
      * groupAlbum를 observe하고, 값이 변경되면 [updateMemberModelList]를 통해 적절한 값을 업데이트 시켜야 합니다.
      */
     var memberModelList = MutableLiveData(MemberModelList())

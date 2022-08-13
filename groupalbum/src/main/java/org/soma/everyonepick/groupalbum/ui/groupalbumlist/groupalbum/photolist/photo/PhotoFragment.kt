@@ -55,7 +55,7 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
 
     override fun onClickDeleteButton() {
         AlertDialog.Builder(context).setMessage("사진을 삭제합니다.")
-            .setPositiveButton("확인") { _, _ ->
+            .setPositiveButton("삭제") { _, _ ->
                 // TODO: API Call
                 findNavController().navigateUp()
             }
