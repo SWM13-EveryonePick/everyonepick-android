@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -62,7 +63,11 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         super.onStart()
 
         parentViewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
-        viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id)
+        try {
+            viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id)
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroy() {

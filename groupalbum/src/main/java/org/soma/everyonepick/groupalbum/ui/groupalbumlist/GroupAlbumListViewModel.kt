@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
@@ -39,6 +40,8 @@ class GroupAlbumListViewModel @Inject constructor(
     val groupAlbumModelList = MutableLiveData(GroupAlbumModelList())
     val isApiLoading = MutableLiveData(true)
 
+    var readJob: Job? = null
+
     init {
         // Offline cache 데이터 불러오기
         viewModelScope.launch(Dispatchers.IO) {
@@ -52,9 +55,10 @@ class GroupAlbumListViewModel @Inject constructor(
     }
 
     fun readGroupAlbumModelList() {
-        viewModelScope.launch {
-            isApiLoading.value = true
+        readJob?.cancel()
 
+        readJob = viewModelScope.launch {
+            isApiLoading.value = true
             try {
                 val newGroupAlbumModelList = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.bearerAccessToken.first()!!)
                 if (groupAlbumModelList.value?.data != newGroupAlbumModelList) {
