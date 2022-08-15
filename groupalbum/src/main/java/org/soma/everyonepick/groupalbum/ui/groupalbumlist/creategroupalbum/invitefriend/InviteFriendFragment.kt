@@ -2,6 +2,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invi
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,11 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
@@ -45,7 +48,8 @@ class InviteFriendFragment: Fragment() {
                 if (viewModel.checked.value!! <= 9) {
                     // InviteFriendFragmentType에 따라 분기합니다.
                     if (args.inviteFriendFragmentType == InviteFriendFragmentType.TO_CREATE) {
-                        val directions = InviteFriendFragmentDirections.toGroupAlbumTitleFragment(viewModel.getCheckedFriendList().toTypedArray())
+                        val directions = InviteFriendFragmentDirections
+                            .toGroupAlbumTitleFragment(viewModel.getCheckedFriendList().toTypedArray())
                         findNavController().navigate(directions)
                     } else {
                         // GroupAlbumFragment에 데이터를 전달합니다.
@@ -59,6 +63,10 @@ class InviteFriendFragment: Fragment() {
                     Toast.makeText(context, "선택 인원을 초과했어요! 초대 인원은 최대 9명까지입니다.", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+
+        args.existingUserClientIdList?.let {
+            viewModel.existingUserClientIdList.value = it.toList()
         }
 
         return binding.root

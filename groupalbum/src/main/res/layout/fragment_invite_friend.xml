@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/scrollview"
             app:layout_constraintBottom_toBottomOf="@id/scrollview"
-            android:visibility="@{viewModel.inviteFriendItemList.size() == 0? View.VISIBLE: View.GONE}">
+            android:visibility="@{viewModel.inviteFriendModelList.size() == 0? View.VISIBLE: View.GONE}">
 
             <TextView
                 android:layout_width="wrap_content"

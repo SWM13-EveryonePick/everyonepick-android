@@ -79,9 +79,16 @@
         android:id="@+id/InviteFriendFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment"
         tools:layout="@layout/fragment_invite_friend" >
+
         <argument
             android:name="inviteFriendFragmentType"
             app:argType="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType"/>
+        <argument
+            android:name="existingUserClientIdList"
+            android:defaultValue="@null"
+            app:argType="string[]"
+            app:nullable="true"/>
+
         <action
             android:id="@+id/to_groupAlbumTitleFragment"
             app:destination="@id/groupAlbumTitleFragment"

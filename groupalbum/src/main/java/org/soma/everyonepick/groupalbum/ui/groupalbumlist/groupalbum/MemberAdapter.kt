@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
@@ -50,7 +51,12 @@ class MemberAdapter(
         binding.root.setOnClickListener {
             val isInviteItem = holder.absoluteAdapterPosition == itemCount - 1
             if (isInviteItem) {
-                val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(InviteFriendFragmentType.TO_INVITE)
+                val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(
+                    InviteFriendFragmentType.TO_INVITE,
+                    parentViewModel.memberModelList.value?.data?.map {
+                        it.user.withoutKakaoPrefix().clientId?: ""
+                    }?.toTypedArray()
+                )
                 binding.root.findNavController().navigate(directions)
             } else {
                 if (binding.checkbox.visibility == View.VISIBLE) {
