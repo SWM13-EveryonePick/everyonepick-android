@@ -67,18 +67,15 @@ class GroupAlbumListViewModel @Inject constructor(
 
                     // Offline cache를 위해 데이터 저장
                     groupAlbumModelList.value?.let {
-                        groupAlbumLocalRepository.resetGroupAlbumLocalList(it.data.subList(0, it.getActualItemCount()).groupAlbumModelListToGroupAlbumLocalList())
+                        val groupAlbumLocalList = it.data.subList(0, it.getActualItemCount())
+                            .groupAlbumModelListToGroupAlbumLocalList()
+                        groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                     }
                 }
             } catch (e: Exception) {}
 
             isApiLoading.value = false
         }
-    }
-
-    fun deleteGroupAlbum(id: Long) {
-        groupAlbumModelList.value?.removeById(id)
-        groupAlbumModelList.value = groupAlbumModelList.value
     }
 
     fun deleteCheckedItems() {

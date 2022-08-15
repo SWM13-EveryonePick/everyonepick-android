@@ -27,13 +27,13 @@ class FriendUseCase {
                 onFailure.invoke(error)
             } else if (newFriends != null) {
                 Log.i(TAG, "카카오톡 친구 목록 가져오기 성공")
-                // onSuccess.invoke(newFriends)
+                onSuccess.invoke(newFriends)
 
                 // TEST - Empty Friends:
                 // onSuccess.invoke(KakaoUtil.emptyFriends)
 
                 // TEST - Many Friends:
-                onSuccess.invoke(KakaoUtil.manyFriends)
+                // onSuccess.invoke(KakaoUtil.manyFriends)
             }
             onAlways.invoke()
         }
