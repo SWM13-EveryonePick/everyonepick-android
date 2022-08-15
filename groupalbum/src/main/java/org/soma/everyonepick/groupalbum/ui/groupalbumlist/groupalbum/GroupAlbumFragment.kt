@@ -2,6 +2,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,15 +15,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
 
@@ -59,6 +64,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         }
 
         subscribeUi()
+        setFragmentResultListener()
 
         return binding.root
     }
@@ -79,6 +85,30 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
         viewModel.groupAlbum.observe(viewLifecycleOwner) {
             viewModel.updateMemberModelList()
+        }
+    }
+
+    /**
+     * [InviteFriendFragment]에서 선택한 Friend 리스트를 받습니다.
+     */
+    private fun setFragmentResultListener() {
+        activity?.supportFragmentManager?.setFragmentResultListener(
+            FRIEND_LIST_TO_INVITE_REQUEST_KEY, viewLifecycleOwner
+        ) { _, bundle ->
+            bundle.get(FRIEND_LIST_TO_INVITE_KEY)?.let { friendList ->
+                friendList as MutableList<Friend>
+                lifecycleScope.launch {
+                    try {
+                        val token = dataStoreUseCase.bearerAccessToken.first()!!
+                        val data = groupAlbumUseCase
+                            .inviteUsersToGroupAlbum(token, viewModel.groupAlbum.value!!.id, friendList)
+
+                        viewModel.groupAlbum.value = data
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "단체공유앨범 초대에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 
@@ -150,8 +180,9 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                     val groupAlbum = viewModel.groupAlbum.value!!.toGroupAlbum().apply {
                         title = newTitle
                     }
-                    groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbum)
-                    viewModel.updateGroupAlbumTitle(newTitle)
+                    val data = groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbum)
+
+                    viewModel.groupAlbum.value = data
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "단체공유앨범 이름 변경에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
@@ -162,8 +193,16 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     override fun onClickExitButton() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButton("나가기") { _, _ ->
-                // TODO: API
-                findNavController().navigateUp()
+                lifecycleScope.launch {
+                    try {
+                        val token = dataStoreUseCase.bearerAccessToken.first()!!
+                        groupAlbumUseCase.leaveGroupAlbum(token, viewModel.groupAlbum.value!!.id)
+
+                        findNavController().navigateUp()
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "단체공유앨범에서 나가는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
             .setNegativeButton("취소") { dialog, _ ->
                 dialog.cancel()
@@ -178,9 +217,19 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     override fun onClickKickButton() {
         if (viewModel.checked.value == null || viewModel.checked.value == 0) return
 
-        // TODO: API
-        viewModel.removeCheckedItems()
-        viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+        lifecycleScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val groupAlbumId = viewModel.groupAlbum.value!!.id
+                val userListToKick = viewModel.getCheckedUserList()
+                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbumId, userListToKick)
+
+                viewModel.groupAlbum.value = data
+                viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "사용자를 강퇴하는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onClickCancelKickButton() {
@@ -190,6 +239,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     companion object {
         private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
+        const val FRIEND_LIST_TO_INVITE_REQUEST_KEY = "friend_list_to_invite_request_key"
+        const val FRIEND_LIST_TO_INVITE_KEY = "friend_list_to_invite_key"
     }
 }
 

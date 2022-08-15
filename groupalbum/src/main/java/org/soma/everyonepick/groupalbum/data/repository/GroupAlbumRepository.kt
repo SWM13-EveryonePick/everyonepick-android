@@ -27,4 +27,28 @@ interface GroupAlbumRepository {
         @Path("groupAlbumId") groupAlbumId: Long,
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
+
+
+    // 초대
+    @POST ("api/album/{groupAlbumId}/user")
+    suspend fun inviteUsersToGroupAlbum(
+        @Header("Authorization") token: String,
+        @Path("groupAlbumId") groupAlbumId: Long,
+        @Body groupAlbum: GroupAlbum
+    ): GroupAlbumResponse
+
+    // 강퇴
+    @PATCH("api/album/{groupAlbumId}/user")
+    suspend fun kickUsersOutOfGroupAlbum(
+        @Header("Authorization") token: String,
+        @Path("groupAlbumId") groupAlbumId: Long,
+        @Body groupAlbum: GroupAlbum
+    ): GroupAlbumResponse
+
+    // 나가기
+    @DELETE("api/album/{groupAlbumId}")
+    suspend fun leaveGroupAlbum(
+        @Header("Authorization") token: String,
+        @Path("groupAlbumId") groupAlbumId: Long
+    ): GroupAlbumResponse
 }

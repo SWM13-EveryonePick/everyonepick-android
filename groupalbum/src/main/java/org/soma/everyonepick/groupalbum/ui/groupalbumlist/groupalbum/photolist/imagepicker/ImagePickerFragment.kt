@@ -10,7 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentImagePickerBinding
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment.Companion.URI_LIST_CHECKED
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment.Companion.URI_LIST_CHECKED_KEY
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment.Companion.URI_LIST_CHECKED_REQUEST_KEY
 
 class ImagePickerFragment : Fragment() {
     private var _binding: FragmentImagePickerBinding? = null
@@ -28,8 +29,8 @@ class ImagePickerFragment : Fragment() {
             it.adapter = ImageAdapter(viewModel)
             it.onClickUploadButtonListener = View.OnClickListener {
                 activity?.supportFragmentManager?.setFragmentResult(
-                    URI_LIST_CHECKED,
-                    bundleOf("uriList" to viewModel.getCheckedImageUriList())
+                    URI_LIST_CHECKED_REQUEST_KEY,
+                    bundleOf(URI_LIST_CHECKED_KEY to viewModel.getCheckedImageUriList())
                 )
                 findNavController().navigateUp()
             }

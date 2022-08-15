@@ -17,8 +17,8 @@
             app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/groupAlbumFragment"/>
         <action
-            android:id="@+id/to_invitationFragment"
-            app:destination="@id/invitationFragment"
+            android:id="@+id/to_InviteFriendFragment"
+            app:destination="@id/InviteFriendFragment"
             app:enterAnim="@anim/slide_in_bottom"
             app:exitAnim="@anim/stay_out"
             app:popEnterAnim="@anim/stay_in"
@@ -42,6 +42,13 @@
         <action
             android:id="@+id/to_parentPermissionFragment"
             app:destination="@id/parentPermissionFragment"/>
+        <action
+            android:id="@+id/to_InviteFriendFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:destination="@id/InviteFriendFragment" />
     </fragment>
 
     <fragment
@@ -69,9 +76,19 @@
     </fragment>
 
     <fragment
-        android:id="@+id/invitationFragment"
+        android:id="@+id/InviteFriendFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment"
         tools:layout="@layout/fragment_invite_friend" >
+
+        <argument
+            android:name="inviteFriendFragmentType"
+            app:argType="org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType"/>
+        <argument
+            android:name="existingUserClientIdList"
+            android:defaultValue="@null"
+            app:argType="string[]"
+            app:nullable="true"/>
+
         <action
             android:id="@+id/to_groupAlbumTitleFragment"
             app:destination="@id/groupAlbumTitleFragment"

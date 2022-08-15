@@ -16,6 +16,7 @@ import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBindin
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType
 
 @AndroidEntryPoint
 class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
@@ -84,7 +85,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     }
 
     override fun onClickCreateGroupAlbumButton() {
-        val directions = HomeViewPagerFragmentDirections.toInvitationFragment()
+        val directions = HomeViewPagerFragmentDirections.toInviteFriendFragment(InviteFriendFragmentType.TO_CREATE)
         findNavController().navigate(directions)
     }
 }

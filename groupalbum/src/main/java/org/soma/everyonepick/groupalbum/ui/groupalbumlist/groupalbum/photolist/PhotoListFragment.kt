@@ -13,6 +13,7 @@ import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment
 
 
 @AndroidEntryPoint
@@ -36,7 +37,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         }
 
         subscribeUi()
-        setFragmentResultListeners()
+        setFragmentResultListener()
 
         return binding.root
     }
@@ -47,11 +48,13 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         }
     }
 
-    private fun setFragmentResultListeners() {
-        // ImagePicker에서 선택한 사진들의 Uri 리스트를 받습니다.
-        activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED, viewLifecycleOwner) { _, bundle ->
-            bundle.getStringArrayList("uriList")?.let { uriList ->
-                for(uri in uriList) {
+    /**
+     * [ImagePickerFragment]에서 선택한 사진들의 Uri 리스트를 받습니다.
+     */
+    private fun setFragmentResultListener() {
+        activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED_REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
+            bundle.getStringArrayList(URI_LIST_CHECKED_KEY)?.let { uriList ->
+                for (uri in uriList) {
                     // TODO: 업로드 -> 성공 -> viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 다시 로드
                     // 또는 1초에 한번씩 viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 호출 -> 성공 -> ToastMassage
                 }
@@ -97,7 +100,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
 
     companion object {
-        const val URI_LIST_CHECKED = "uri_list_checked"
+        const val URI_LIST_CHECKED_REQUEST_KEY = "uri_list_checked_request_key"
+        const val URI_LIST_CHECKED_KEY = "uri_list_checked_key"
     }
 }
 

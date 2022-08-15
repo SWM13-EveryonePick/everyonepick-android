@@ -17,6 +17,7 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientId
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
@@ -65,15 +66,9 @@ class GroupAlbumTitleFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * 서버 설계상, 단체공유앨범 생성을 위한 유저 리스트에서는 [User.clientId] 내용만 포함되면 됩니다.
-     */
     private fun getUserListToCreateGroupAlbum(): List<User> {
-        val userList = mutableListOf<User>()
-        args.inviteFriends.forEach {
-            userList.add(User(null, null, it.id.toString(), null, null))
-        }
-        return userList
+        // 서버 설계상, 단체공유앨범 생성을 위한 유저 리스트에서는 [User.clientId] 내용만 포함되면 됩니다.
+        return args.inviteFriends.map { it.toUserWithClientId() }
     }
 
     override fun onStart() {
