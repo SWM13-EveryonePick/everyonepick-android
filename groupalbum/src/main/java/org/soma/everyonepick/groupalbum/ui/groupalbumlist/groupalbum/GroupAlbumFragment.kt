@@ -162,8 +162,16 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     override fun onClickExitButton() {
         AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButton("나가기") { _, _ ->
-                // TODO: API
-                findNavController().navigateUp()
+                lifecycleScope.launch {
+                    try {
+                        val token = dataStoreUseCase.bearerAccessToken.first()!!
+                        groupAlbumUseCase.leaveGroupAlbum(token, viewModel.groupAlbum.value!!.id)
+
+                        findNavController().navigateUp()
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "단체공유앨범에서 나가는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
             .setNegativeButton("취소") { dialog, _ ->
                 dialog.cancel()

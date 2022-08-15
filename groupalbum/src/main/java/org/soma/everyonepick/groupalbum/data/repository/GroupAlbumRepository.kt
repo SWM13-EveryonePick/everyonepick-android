@@ -27,4 +27,10 @@ interface GroupAlbumRepository {
         @Path("groupAlbumId") groupAlbumId: Long,
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
+
+    @DELETE("api/album/{groupAlbumId}")
+    suspend fun leaveGroupAlbum(
+        @Header("Authorization") token: String,
+        @Path("groupAlbumId") groupAlbumId: Long
+    ): GroupAlbumResponse
 }
