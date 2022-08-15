@@ -34,6 +34,11 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        (activity as HomeActivityUtil).hideBottomNavigationView()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

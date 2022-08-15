@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.setting.R
 import org.soma.everyonepick.setting.databinding.FragmentTermsBinding
 
@@ -22,6 +23,11 @@ class TermsFragment : Fragment(), TermsFragmentListener {
             it.listener = this
         }
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as HomeActivityUtil).hideBottomNavigationView()
     }
 
     override fun onDestroy() {
