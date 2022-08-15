@@ -1,10 +1,12 @@
 package org.soma.everyonepick.groupalbum.domain.usecase
 
+import com.kakao.sdk.talk.model.Friend
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetail
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumReadListToGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
 
 class GroupAlbumUseCase @Inject constructor(
@@ -25,6 +27,14 @@ class GroupAlbumUseCase @Inject constructor(
 
     suspend fun updateGroupAlbum(token: String, id: Long, groupAlbum: GroupAlbum): GroupAlbumReadDetail {
         return groupAlbumRepository.updateGroupAlbum(token, id, groupAlbum).data
+    }
+
+    suspend fun inviteUsersToGroupAlbum(
+        token: String, id: Long, friendListToInvite: MutableList<Friend>
+    ): GroupAlbumReadDetail {
+        return groupAlbumRepository.inviteUsersToGroupAlbum(
+            token, id, GroupAlbum("", friendListToInvite.toUserListWithClientId())
+        ).data
     }
 
     suspend fun kickUsersOutOfGroupAlbum(token: String, id: Long, groupAlbum: GroupAlbum): GroupAlbumReadDetail {

@@ -97,7 +97,17 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         ) { _, bundle ->
             bundle.get(FRIEND_LIST_TO_INVITE_KEY)?.let { friendList ->
                 friendList as MutableList<Friend>
-                // TODO: API
+                lifecycleScope.launch {
+                    try {
+                        val token = dataStoreUseCase.bearerAccessToken.first()!!
+                        val data = groupAlbumUseCase
+                            .inviteUsersToGroupAlbum(token, viewModel.groupAlbum.value!!.id, friendList)
+
+                        viewModel.groupAlbum.value = data
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "단체공유앨범 초대에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
@@ -210,9 +220,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 // 서버에서 "kakao_" prefix를 제거한 내용을 요구하므로 제거해야 합니다.
-                val userListToKick = viewModel.getCheckedUserList().map {
-                    it.copy(clientId = it.clientId?.removePrefix("kakao_"))
-                }
+                val userListToKick = viewModel.getCheckedUserList().map { it.withoutKakaoPrefix() }
                 groupAlbumUseCase.kickUsersOutOfGroupAlbum(
                     token,
                     viewModel.groupAlbum.value!!.id,

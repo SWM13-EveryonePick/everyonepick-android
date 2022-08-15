@@ -28,6 +28,15 @@ interface GroupAlbumRepository {
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
+
+    // 초대
+    @POST ("api/album/{groupAlbumId}/user")
+    suspend fun inviteUsersToGroupAlbum(
+        @Header("Authorization") token: String,
+        @Path("groupAlbumId") groupAlbumId: Long,
+        @Body groupAlbum: GroupAlbum
+    ): GroupAlbumResponse
+
     // 강퇴
     @PATCH("api/album/{groupAlbumId}/user")
     suspend fun kickUsersOutOfGroupAlbum(

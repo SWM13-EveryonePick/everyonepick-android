@@ -10,4 +10,6 @@ data class User(
     companion object {
         val dummyData = User(-1, "", "", "", false)
     }
+
+    fun withoutKakaoPrefix() = copy(clientId = clientId?.removePrefix("kakao_"))
 }
