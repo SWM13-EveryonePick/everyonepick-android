@@ -111,7 +111,7 @@
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -130,7 +130,7 @@
                     submitList="@{viewModel.filteredList}"
                     tools:listitem="@layout/item_invite_friend"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"
