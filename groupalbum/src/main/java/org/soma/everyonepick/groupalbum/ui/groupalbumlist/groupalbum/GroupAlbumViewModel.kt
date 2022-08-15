@@ -59,4 +59,14 @@ class GroupAlbumViewModel @Inject constructor(
         memberModelList.value?.removeCheckedItems()
         memberModelList.value = memberModelList.value
     }
+
+    fun getCheckedUserList(): MutableList<User> {
+        val checkedUserList = mutableListOf<User>()
+        memberModelList.value?.let {
+            for (i in 0 until it.getActualItemCount()) {
+                if (it.data[i].isChecked) checkedUserList.add(it.data[i].user)
+            }
+        }
+        return checkedUserList
+    }
 }

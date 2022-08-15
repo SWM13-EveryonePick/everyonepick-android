@@ -27,6 +27,10 @@ class GroupAlbumUseCase @Inject constructor(
         return groupAlbumRepository.updateGroupAlbum(token, id, groupAlbum).data
     }
 
+    suspend fun kickUsersOutOfGroupAlbum(token: String, id: Long, groupAlbum: GroupAlbum): GroupAlbumReadDetail {
+        return groupAlbumRepository.kickUsersOutOfGroupAlbum(token, id, groupAlbum).data
+    }
+
     suspend fun leaveGroupAlbum(token: String, id: Long): GroupAlbumReadDetail {
         return groupAlbumRepository.leaveGroupAlbum(token, id).data
     }

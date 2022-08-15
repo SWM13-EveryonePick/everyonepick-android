@@ -17,10 +17,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -186,9 +188,25 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     override fun onClickKickButton() {
         if (viewModel.checked.value == null || viewModel.checked.value == 0) return
 
-        // TODO: API
-        viewModel.removeCheckedItems()
-        viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+        lifecycleScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                // 서버에서 "kakao_" prefix를 제거한 내용을 요구하므로 제거해야 합니다.
+                val userListToKick = viewModel.getCheckedUserList().map {
+                    it.copy(clientId = it.clientId?.removePrefix("kakao_"))
+                }
+                groupAlbumUseCase.kickUsersOutOfGroupAlbum(
+                    token,
+                    viewModel.groupAlbum.value!!.id,
+                    GroupAlbum("", userListToKick)
+                )
+
+                viewModel.removeCheckedItems()
+                viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "사용자를 강퇴하는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onClickCancelKickButton() {
