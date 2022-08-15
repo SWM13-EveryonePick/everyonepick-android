@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.ItemMemberBinding
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType
 import org.soma.everyonepick.groupalbum.util.MemberViewType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 
@@ -48,7 +50,8 @@ class MemberAdapter(
         binding.root.setOnClickListener {
             val isInviteItem = holder.absoluteAdapterPosition == itemCount - 1
             if (isInviteItem) {
-                // TODO: 초대하기
+                val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(InviteFriendFragmentType.TO_INVITE)
+                binding.root.findNavController().navigate(directions)
             } else {
                 if (binding.checkbox.visibility == View.VISIBLE) {
                     binding.checkbox.performTouch()

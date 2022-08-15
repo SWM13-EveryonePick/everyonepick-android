@@ -15,6 +15,7 @@ import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType
 import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
 
 
@@ -59,7 +60,7 @@ class GroupAlbumAdapter(
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val directions = HomeViewPagerFragmentDirections.toInvitationFragment()
+                val directions = HomeViewPagerFragmentDirections.toInviteFriendFragment(InviteFriendFragmentType.TO_CREATE)
                 binding.root.findNavController().navigate(directions)
             }
         }

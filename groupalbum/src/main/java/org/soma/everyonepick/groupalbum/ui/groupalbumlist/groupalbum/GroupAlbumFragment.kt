@@ -2,6 +2,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -25,6 +27,7 @@ import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
 
@@ -61,6 +64,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         }
 
         subscribeUi()
+        setFragmentResultListener()
 
         return binding.root
     }
@@ -81,6 +85,20 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
         viewModel.groupAlbum.observe(viewLifecycleOwner) {
             viewModel.updateMemberModelList()
+        }
+    }
+
+    /**
+     * [InviteFriendFragment]에서 선택한 Friend 리스트를 받습니다.
+     */
+    private fun setFragmentResultListener() {
+        activity?.supportFragmentManager?.setFragmentResultListener(
+            FRIEND_LIST_TO_INVITE_REQUEST_KEY, viewLifecycleOwner
+        ) { _, bundle ->
+            bundle.get(FRIEND_LIST_TO_INVITE_KEY)?.let { friendList ->
+                friendList as MutableList<Friend>
+                // TODO: API
+            }
         }
     }
 
@@ -216,6 +234,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     companion object {
         private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
+        const val FRIEND_LIST_TO_INVITE_REQUEST_KEY = "friend_list_to_invite_request_key"
+        const val FRIEND_LIST_TO_INVITE_KEY = "friend_list_to_invite_key"
     }
 }
 
