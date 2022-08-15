@@ -35,11 +35,6 @@ class GroupAlbumViewModel @Inject constructor(
     val photoSelectionMode = MutableLiveData(SelectionMode.NORMAL_MODE.ordinal)
     // TODO: 합성중 / 합성완료 모드
 
-    fun updateGroupAlbumTitle(newTitle: String) {
-        val newGroupAlbum = groupAlbum.value?.copy(title = newTitle)
-        groupAlbum.value = newGroupAlbum
-    }
-
     fun updateMemberModelList() {
         val newMemberModelList = mutableListOf<MemberModel>()
         groupAlbum.value?.users?.forEach {
@@ -52,11 +47,6 @@ class GroupAlbumViewModel @Inject constructor(
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         memberModelList.value?.setIsCheckboxVisible(isCheckboxVisible)
-        memberModelList.value = memberModelList.value
-    }
-
-    fun removeCheckedItems() {
-        memberModelList.value?.removeCheckedItems()
         memberModelList.value = memberModelList.value
     }
 

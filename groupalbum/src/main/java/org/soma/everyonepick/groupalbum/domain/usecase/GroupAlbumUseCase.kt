@@ -1,6 +1,7 @@
 package org.soma.everyonepick.groupalbum.domain.usecase
 
 import com.kakao.sdk.talk.model.Friend
+import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetail
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
@@ -37,8 +38,12 @@ class GroupAlbumUseCase @Inject constructor(
         ).data
     }
 
-    suspend fun kickUsersOutOfGroupAlbum(token: String, id: Long, groupAlbum: GroupAlbum): GroupAlbumReadDetail {
-        return groupAlbumRepository.kickUsersOutOfGroupAlbum(token, id, groupAlbum).data
+    suspend fun kickUsersOutOfGroupAlbum(token: String, id: Long, userListToKick: MutableList<User>): GroupAlbumReadDetail {
+        // 서버에서 "kakao_" prefix를 제거한 내용을 요구하므로 이를 제거해야 합니다.
+        val userListToKickWithoutKakaoPrefix = userListToKick.map { it.withoutKakaoPrefix() }
+        return groupAlbumRepository.kickUsersOutOfGroupAlbum(
+            token, id, GroupAlbum("", userListToKickWithoutKakaoPrefix)
+        ).data
     }
 
     suspend fun leaveGroupAlbum(token: String, id: Long): GroupAlbumReadDetail {

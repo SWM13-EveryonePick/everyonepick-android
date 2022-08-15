@@ -180,8 +180,9 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                     val groupAlbum = viewModel.groupAlbum.value!!.toGroupAlbum().apply {
                         title = newTitle
                     }
-                    groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbum)
-                    viewModel.updateGroupAlbumTitle(newTitle)
+                    val data = groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbum)
+
+                    viewModel.groupAlbum.value = data
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "단체공유앨범 이름 변경에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
@@ -219,15 +220,11 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         lifecycleScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                // 서버에서 "kakao_" prefix를 제거한 내용을 요구하므로 제거해야 합니다.
-                val userListToKick = viewModel.getCheckedUserList().map { it.withoutKakaoPrefix() }
-                groupAlbumUseCase.kickUsersOutOfGroupAlbum(
-                    token,
-                    viewModel.groupAlbum.value!!.id,
-                    GroupAlbum("", userListToKick)
-                )
+                val groupAlbumId = viewModel.groupAlbum.value!!.id
+                val userListToKick = viewModel.getCheckedUserList()
+                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbumId, userListToKick)
 
-                viewModel.removeCheckedItems()
+                viewModel.groupAlbum.value = data
                 viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "사용자를 강퇴하는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
