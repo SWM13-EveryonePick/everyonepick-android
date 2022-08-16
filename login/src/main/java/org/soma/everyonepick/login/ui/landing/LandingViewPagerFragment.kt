@@ -1,5 +1,6 @@
 package org.soma.everyonepick.login.ui.landing
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -26,6 +27,9 @@ import org.soma.everyonepick.common.data.entity.ProviderName
 import org.soma.everyonepick.common.data.repository.AuthRepository
 import org.soma.everyonepick.common.data.dto.SignUpRequest
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import org.soma.everyonepick.common_ui.FullTextActivity
+import org.soma.everyonepick.common_ui.FullTextActivity.Companion.putFullTextActivityExtras
+import org.soma.everyonepick.common_ui.R
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.util.LoginUtil
 import javax.inject.Inject
@@ -78,8 +82,9 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
                 setSpan(
                     object: ClickableSpan() {
                         override fun onClick(widget: View) {
-                            // TODO: 서비스 이용약관
-                            Log.d(TAG, "서비스 이용약관")
+                            val intent = Intent(requireContext(), FullTextActivity::class.java)
+                                .putFullTextActivityExtras(getString(R.string.terms_of_service_title), getString(R.string.terms_of_service_contents))
+                            startActivity(intent)
                         }
                         override fun updateDrawState(ds: TextPaint) {
                             super.updateDrawState(ds)
@@ -90,8 +95,9 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
                 setSpan(
                     object: ClickableSpan() {
                         override fun onClick(widget: View) {
-                            // TODO: 개인정보 취급방침
-                            Log.d(TAG, "개인정보 취급방침")
+                            val intent = Intent(requireContext(), FullTextActivity::class.java)
+                                .putFullTextActivityExtras(getString(R.string.privacy_policy_title), getString(R.string.privacy_policy_contents))
+                            startActivity(intent)
                         }
                         override fun updateDrawState(ds: TextPaint) {
                             super.updateDrawState(ds)

@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="org.soma.everyonepick.common_ui"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.soma.everyonepick.common_ui">
+
+    <application>
+        <activity
+            android:name=".FullTextActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

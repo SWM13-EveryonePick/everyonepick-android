@@ -48,31 +48,5 @@
         android:id="@+id/termsFragment"
         android:name="org.soma.everyonepick.setting.ui.terms.TermsFragment"
         android:label="fragment_terms"
-        tools:layout="@layout/fragment_terms" >
-        <action
-            android:id="@+id/to_termsOfServiceFragment"
-            app:destination="@id/termsOfServiceFragment"
-            app:enterAnim="@anim/slide_in_bottom"
-            app:exitAnim="@anim/stay_out"
-            app:popEnterAnim="@anim/stay_in"
-            app:popExitAnim="@anim/slide_out_bottom" />
-        <action
-            android:id="@+id/to_privacyPolicyFragment"
-            app:destination="@id/privacyPolicyFragment"
-            app:enterAnim="@anim/slide_in_bottom"
-            app:exitAnim="@anim/stay_out"
-            app:popEnterAnim="@anim/stay_in"
-            app:popExitAnim="@anim/slide_out_bottom" />
-    </fragment>
-    <fragment
-        android:id="@+id/termsOfServiceFragment"
-        android:name="org.soma.everyonepick.setting.ui.terms.termsofservice.TermsOfServiceFragment"
-        android:label="fragment_terms_of_service"
-        tools:layout="@layout/fragment_terms_of_service" />
-    <fragment
-        android:id="@+id/privacyPolicyFragment"
-        android:name="org.soma.everyonepick.setting.ui.terms.privacypolicy.PrivacyPolicyFragment"
-        android:label="fragment_privacy_policy"
-        tools:layout="@layout/fragment_privacy_policy" />
-
+        tools:layout="@layout/fragment_terms"/>
 </navigation>
