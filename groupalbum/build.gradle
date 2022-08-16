@@ -77,6 +77,9 @@ dependencies {
     // Kakao
     implementation "com.kakao.sdk:v2-all:$rootProject.kakaoVersion" // 전체 모듈 설치, 2.11.0 버전부터 지원
 
+    // Lottie
+    implementation "com.airbnb.android:lottie:$rootProject.lottieVersion"
+
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitVersion"

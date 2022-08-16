@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.soma.everyonepick.common.util.AnimationUtil.Companion.startShowingUpAnimation
 import org.soma.everyonepick.login.databinding.FragmentLoginBinding
-import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_DURATION
-import org.soma.everyonepick.login.util.SHOWING_UP_ANIMATION_Y_OFFSET
+import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_DURATION
+import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_Y_OFFSET
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
