@@ -40,6 +40,7 @@ class InviteFriendViewModel @Inject constructor(
     val inviteFriendModelList: MutableLiveData<MutableList<InviteFriendModel>> = MutableLiveData()
     val filteredList: MutableLiveData<MutableList<InviteFriendModel>> = MutableLiveData()
 
+    var maxInviteCount = MutableLiveData(9)
     val checked = MutableLiveData(0)
     val isApiLoading = MutableLiveData(true)
 

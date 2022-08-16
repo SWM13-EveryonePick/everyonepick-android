@@ -13,7 +13,6 @@
     <string name="description_fragment_invite_friend">최대 %s명까지 초대할 수 있어요!</string>
     <string name="hint_search_bar">이름으로 검색하세요</string>
     <string name="suffix_count">/%s)</string>
-    <string name="max_checked">9</string>
 
     <string name="title_fragment_group_album_title">생성할 단체공유앨범의\n이름을 알려주세요</string>
     <string name="description_fragment_group_album_title">최대 %s글자까지 입력할 수 있어요.</string>

@@ -46,7 +46,7 @@ class InviteFriendFragment: Fragment() {
             it.adapter = InviteFriendAdapter(viewModel)
             it.viewModel = viewModel
             it.onClickNextButtonListener = View.OnClickListener {
-                if (viewModel.checked.value!! <= 9) {
+                if (viewModel.checked.value!! <= viewModel.maxInviteCount.value!!) {
                     // InviteFriendFragmentType에 따라 분기합니다.
                     if (args.inviteFriendFragmentType == InviteFriendFragmentType.TO_CREATE) {
                         val directions = InviteFriendFragmentDirections
@@ -61,14 +61,14 @@ class InviteFriendFragment: Fragment() {
                         findNavController().navigateUp()
                     }
                 } else {
-                    Toast.makeText(context, "선택 인원을 초과했어요! 초대 인원은 최대 9명까지입니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "선택 인원을 초과했어요! 초대 인원은 최대 ${viewModel.maxInviteCount.value}명까지입니다.", Toast.LENGTH_LONG).show()
                 }
             }
         }
 
         args.existingUserClientIdList?.let {
             viewModel.existingUserClientIdList.value = it.toList()
-            viewModel.checked.value = viewModel.checked.value?.plus(it.count())
+            viewModel.maxInviteCount.value = viewModel.maxInviteCount.value?.minus(it.count())
         }
 
         return binding.root
