@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,10 +13,7 @@ import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import javax.inject.Inject
 
-@HiltViewModel
-class GroupAlbumViewModel @Inject constructor(
-    private val userUseCase: UserUseCase
-): ViewModel() {
+class GroupAlbumViewModel: ViewModel() {
     // Fragment가 args를 통해 group album id를 가지고 있으므로, Fragment단에서 초기화를 진행합니다.
     val groupAlbum = MutableLiveData(GroupAlbumReadDetail(-1, "Loading", -1, listOf(), listOf()))
     val currentItem: MutableLiveData<Int> = MutableLiveData(0)
@@ -36,12 +34,9 @@ class GroupAlbumViewModel @Inject constructor(
     // TODO: 합성중 / 합성완료 모드
 
     fun updateMemberModelList() {
-        val newMemberModelList = mutableListOf<MemberModel>()
-        groupAlbum.value?.users?.forEach {
-            it?.let {
-                newMemberModelList.add(MemberModel(it, isChecked = false, isCheckboxVisible = false))
-            }
-        }
+        val newMemberModelList = groupAlbum.value?.users?.map { user ->
+            user?.let { MemberModel(it, isChecked = false, isCheckboxVisible = false) }
+        }?.toMutableList() as MutableList<MemberModel>
         memberModelList.value = MemberModelList(newMemberModelList)
     }
 

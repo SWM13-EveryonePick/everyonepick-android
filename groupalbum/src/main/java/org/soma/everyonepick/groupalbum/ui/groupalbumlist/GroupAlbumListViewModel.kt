@@ -67,8 +67,7 @@ class GroupAlbumListViewModel @Inject constructor(
 
                     // Offline cache를 위해 데이터 저장
                     groupAlbumModelList.value?.let {
-                        val groupAlbumLocalList = it.data.subList(0, it.getActualItemCount())
-                            .groupAlbumModelListToGroupAlbumLocalList()
+                        val groupAlbumLocalList = it.getActualData().groupAlbumModelListToGroupAlbumLocalList()
                         groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                     }
                 }

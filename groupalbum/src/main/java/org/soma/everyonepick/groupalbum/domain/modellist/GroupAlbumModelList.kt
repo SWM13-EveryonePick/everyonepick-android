@@ -23,14 +23,7 @@ class GroupAlbumModelList {
 
     fun getActualItemCount() = data.size - 1
 
-    fun removeById(id: Long) {
-        for (i in 0 until getActualItemCount()) {
-            if (data[i].groupAlbum.id == id) {
-                data.removeAt(i)
-                break
-            }
-        }
-    }
+    fun getActualData() = data.subList(0, getActualItemCount())
 
     fun removeCheckedItems() {
         val newData = mutableListOf<GroupAlbumModel>()
@@ -50,7 +43,7 @@ class GroupAlbumModelList {
     }
 
     fun checkAll() {
-        val isAllChecked = data.subList(0, getActualItemCount()).all { it.isChecked }
+        val isAllChecked = getActualData().all { it.isChecked }
         for (i in 0 until data.size) {
             val newItem = copyGroupAlbumModel(data[i])
             newItem.isChecked = !isAllChecked

@@ -22,13 +22,7 @@ class MemberModelList {
 
     fun getActualItemCount() = data.size - 1
 
-    fun removeCheckedItems() {
-        val newData = mutableListOf<MemberModel>()
-        for (i in 0 until getActualItemCount()) {
-            if (!data[i].isChecked) newData.add(data[i])
-        }
-        data = newData
-    }
+    fun getActualData() = data.subList(0, getActualItemCount())
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         for (i in 0 until data.size) {

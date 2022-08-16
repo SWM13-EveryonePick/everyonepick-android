@@ -68,6 +68,7 @@ class InviteFriendFragment: Fragment() {
 
         args.existingUserClientIdList?.let {
             viewModel.existingUserClientIdList.value = it.toList()
+            viewModel.checked.value = viewModel.checked.value?.plus(it.count())
         }
 
         return binding.root

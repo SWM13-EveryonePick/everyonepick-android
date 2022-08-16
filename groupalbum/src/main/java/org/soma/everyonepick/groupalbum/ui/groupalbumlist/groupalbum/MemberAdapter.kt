@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,9 +54,10 @@ class MemberAdapter(
             if (isInviteItem) {
                 val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(
                     InviteFriendFragmentType.TO_INVITE,
-                    parentViewModel.memberModelList.value?.data?.map {
-                        it.user.withoutKakaoPrefix().clientId?: ""
-                    }?.toTypedArray()
+                    parentViewModel.memberModelList.value?.getActualData()
+                        ?.filter { it.user.id != parentViewModel.me?.id }
+                        ?.map { it.user.withoutKakaoPrefix().clientId?: "" }
+                        ?.toTypedArray()
                 )
                 binding.root.findNavController().navigate(directions)
             } else {
