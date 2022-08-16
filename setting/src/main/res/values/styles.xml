@@ -7,7 +7,7 @@
         <item name="android:paddingLeft">@dimen/margin_side_half</item>
         <item name="android:paddingRight">@dimen/margin_side_half</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">@drawable/bottom_border_with_ripple</item>
+        <item name="android:background">@drawable/border_bottom_with_ripple</item>
     </style>
     <style name="SettingItemLayoutWithoutRipple">
         <item name="android:layout_height">70dp</item>
@@ -16,7 +16,7 @@
         <item name="android:paddingLeft">@dimen/margin_side_half</item>
         <item name="android:paddingRight">@dimen/margin_side_half</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">@drawable/bottom_border</item>
+        <item name="android:background">@drawable/border_bottom</item>
     </style>
     <style name="SettingItemText" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>

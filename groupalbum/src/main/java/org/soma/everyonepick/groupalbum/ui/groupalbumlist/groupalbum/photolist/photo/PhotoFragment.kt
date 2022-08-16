@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getFileName
 import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getUriFromBitmap
@@ -54,15 +55,14 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
     }
 
     override fun onClickDeleteButton() {
-        AlertDialog.Builder(context).setMessage("사진을 삭제합니다.")
-            .setPositiveButton("삭제") { _, _ ->
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage("사진을 삭제합니다.")
+            .setPositiveButtonText("삭제")
+            .setOnClickPositiveButton {
                 // TODO: API Call
                 findNavController().navigateUp()
             }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+            .build().show()
     }
 
     override fun onClickShareButton() {

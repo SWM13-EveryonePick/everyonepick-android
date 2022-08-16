@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.KeyboardUtil
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment.Companion.FRIEND_LIST_TO_INVITE_KEY
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment.Companion.FRIEND_LIST_TO_INVITE_REQUEST_KEY
@@ -85,10 +86,11 @@ class InviteFriendFragment: Fragment() {
             override fun handleOnBackPressed() {
                 if (viewModel.checked.value == 0) findNavController().navigateUp()
                 else {
-                    AlertDialog.Builder(context).setMessage("초대 인원 선택을 그만둡니다.")
-                        .setPositiveButton("그만두기") { _, _ -> findNavController().navigateUp() }
-                        .setNegativeButton("취소") { dialog, _ -> dialog.cancel() }
-                        .create().show()
+                    DialogWithTwoButton.Builder(requireContext())
+                        .setMessage("초대 인원 선택을 그만둡니다.")
+                        .setPositiveButtonText("그만두기")
+                        .setOnClickPositiveButton { findNavController().navigateUp() }
+                        .build().show()
                 }
             }
         }

@@ -24,6 +24,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
@@ -191,8 +192,10 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     override fun onClickExitButton() {
-        AlertDialog.Builder(context).setMessage("단체공유앨범에서 나갑니다.")
-            .setPositiveButton("나가기") { _, _ ->
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage("단체공유앨범에서 나갑니다.")
+            .setPositiveButtonText("나가기")
+            .setOnClickPositiveButton {
                 lifecycleScope.launch {
                     try {
                         val token = dataStoreUseCase.bearerAccessToken.first()!!
@@ -204,10 +207,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                     }
                 }
             }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+            .build().show()
     }
 
     override fun onClickKickIcon() {

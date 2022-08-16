@@ -21,6 +21,7 @@ import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
 import javax.inject.Inject
 
@@ -131,14 +132,11 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
     }
 
     override fun showAreYouSureDialog() {
-        AlertDialog.Builder(this).setMessage("${baseContext.getString(org.soma.everyonepick.common.R.string.app_name)}을 종료합니다.")
-            .setPositiveButton("종료") { _, _ ->
-                finish()
-            }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+        DialogWithTwoButton.Builder(this)
+            .setMessage("${baseContext.getString(org.soma.everyonepick.common.R.string.app_name)}을 종료합니다.")
+            .setPositiveButtonText("종료")
+            .setOnClickPositiveButton { finish() }
+            .build().show()
     }
 
     override fun startLoginActivity() {

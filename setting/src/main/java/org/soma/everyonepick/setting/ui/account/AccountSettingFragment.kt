@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.setting.R
 import org.soma.everyonepick.setting.databinding.FragmentAccountSettingBinding
 import javax.inject.Inject
@@ -47,28 +48,26 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
 
     /** AccountSettingFragmentListener */
     override fun onClickLogoutButton() {
-        AlertDialog.Builder(context).setMessage("로그아웃 하시겠습니까?")
-            .setPositiveButton("로그아웃") { _, _ ->
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage("로그아웃 하시겠습니까?")
+            .setPositiveButtonText("로그아웃")
+            .setOnClickPositiveButton {
                 lifecycleScope.launch {
                     dataStoreUseCase.editAccessToken(null)
                     dataStoreUseCase.editRefreshToken(null)
                 }
                 (activity as HomeActivityUtil).startLoginActivity()
             }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+            .build().show()
     }
     override fun onClickLeaveButton() {
-        AlertDialog.Builder(context).setMessage("정말 회원탈퇴를 하시겠습니까?")
-            .setPositiveButton("회원탈퇴") { _, _ ->
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage("정말 회원탈퇴를 하시겠습니까?")
+            .setPositiveButtonText("회원탈퇴")
+            .setOnClickPositiveButton {
                 // TODO: 회원탈퇴
             }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.cancel()
-            }
-            .create().show()
+            .build().show()
     }
 }
 

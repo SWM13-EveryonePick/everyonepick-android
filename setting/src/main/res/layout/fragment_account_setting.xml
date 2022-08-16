@@ -18,7 +18,7 @@
             android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottom_border"
+            android:background="@drawable/border_bottom"
             app:layout_constraintTop_toTopOf="parent"
             app:hasBackButton="true"
             app:title="@string/account_setting"

@@ -8,6 +8,7 @@
     <dimen name="margin_side_bottom_button">32dp</dimen>
     <dimen name="margin_side">20dp</dimen>
     <dimen name="size_checkbox">24dp</dimen>
+    <dimen name="width_dialog">300dp</dimen>
 
     <dimen name="radius_small">15dp</dimen>
     <dimen name="radius_medium">20dp</dimen>

@@ -21,7 +21,7 @@
             android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottom_border"
+            android:background="@drawable/border_bottom"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/setting_menu_item"
             app:titleSize="@dimen/size_setting_title"
@@ -35,7 +35,7 @@
             android:layout_marginRight="@dimen/margin_side_half"
             android:paddingTop="50dp"
             android:paddingBottom="50dp"
-            android:background="@drawable/bottom_border"
+            android:background="@drawable/border_bottom"
             app:layout_constraintTop_toBottomOf="@id/customactionbar"
             >
             <de.hdodenhof.circleimageview.CircleImageView
