@@ -94,7 +94,9 @@ class MemberAdapter(
             parentViewModel: GroupAlbumViewModel
         ) {
             if (isInviteItem) {
-                binding.root.setVisibility(parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal)
+                val amIHost = parentViewModel.groupAlbum.value?.hostUserId == parentViewModel.me?.id
+                val isModeNormal = parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal
+                binding.root.setVisibility(amIHost && isModeNormal)
 
                 Glide.with(binding.root)
                     .load(R.drawable.ic_btn_drawer_add)

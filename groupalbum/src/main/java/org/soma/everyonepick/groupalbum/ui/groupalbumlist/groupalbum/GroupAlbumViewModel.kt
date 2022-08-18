@@ -38,6 +38,7 @@ class GroupAlbumViewModel: ViewModel() {
             user?.let { MemberModel(it, isChecked = false, isCheckboxVisible = false) }
         }?.toMutableList() as MutableList<MemberModel>
         memberModelList.value = MemberModelList(newMemberModelList)
+        memberModelList.value = memberModelList.value
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {

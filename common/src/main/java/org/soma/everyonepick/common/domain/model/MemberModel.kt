@@ -11,11 +11,7 @@ class MemberModel(
     var isCheckboxVisible: Boolean
 ) {
     companion object {
-        val dummyData = MemberModel(
-            User.dummyData,
-            isChecked = false,
-            isCheckboxVisible = false
-        )
+        fun createDummyData() = MemberModel(User.dummyData, isChecked = false, isCheckboxVisible = false)
     }
 
     // DiffCall의 areContentsTheSame()에서의 오류를 해결하기 위함

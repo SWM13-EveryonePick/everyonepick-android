@@ -9,7 +9,7 @@ class MemberModelList {
     var data: MutableList<MemberModel>
         set(value) {
             field = value
-            field.add(MemberModel.dummyData)
+            field.add(MemberModel.createDummyData())
         }
 
     constructor() {
