@@ -6,12 +6,19 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
+import org.soma.everyonepick.common.data.repository.AuthRepository
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivityLoginBinding
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+
+    @Inject lateinit var authRepository: AuthRepository
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)

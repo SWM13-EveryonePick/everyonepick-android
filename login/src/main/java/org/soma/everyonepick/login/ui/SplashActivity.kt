@@ -1,11 +1,14 @@
 package org.soma.everyonepick.login.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.kakao.sdk.common.KakaoSdk
@@ -29,6 +32,11 @@ class SplashActivity : AppCompatActivity() {
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val splashScreen = installSplashScreen()
+            splashScreen.setKeepOnScreenCondition { true }
+        }
+
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         supportActionBar?.hide()
