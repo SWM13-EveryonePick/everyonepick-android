@@ -42,11 +42,12 @@ class SplashActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        // SDK가 S 이하인 경우에는 setContentView()로 그려지는 뷰를 스플래시 화면으로서 보여줍니다.
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
-        supportActionBar?.hide()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            // SDK가 S 미만인 경우에는 setContentView()로 그려지는 뷰를 스플래시 화면으로서 보여줍니다.
+            binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+            supportActionBar?.hide()
+        }
 
-        KakaoSdk.init(this, NATIVE_APP_KEY)
         tryToAutoLogin()
     }
 
@@ -97,6 +98,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loginWithKakao() {
+        KakaoSdk.init(this, NATIVE_APP_KEY)
         LoginUtil.loginWithKakao(this, { _, _ ->
             viewModel.success.value = viewModel.success.value?.plus(1)
         }, { _, _ ->
