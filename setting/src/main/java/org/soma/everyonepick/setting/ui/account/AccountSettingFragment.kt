@@ -53,8 +53,8 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
             .setPositiveButtonText("로그아웃")
             .setOnClickPositiveButton {
                 lifecycleScope.launch {
-                    dataStoreUseCase.editAccessToken(null)
-                    dataStoreUseCase.editRefreshToken(null)
+                    dataStoreUseCase.removeAccessToken()
+                    dataStoreUseCase.removeRefreshToken()
                 }
                 (activity as HomeActivityUtil).startLoginActivity()
             }

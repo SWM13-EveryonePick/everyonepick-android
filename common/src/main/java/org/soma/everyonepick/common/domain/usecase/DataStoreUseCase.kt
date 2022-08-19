@@ -26,23 +26,33 @@ class DataStoreUseCase @Inject constructor(
     val hasShownTutorial: Flow<Boolean?> =
         dataStore.data.map { preferences -> preferences[hasTutorialShownKey] }
 
-    suspend fun editAccessToken(accessToken: String?) {
+    suspend fun editAccessToken(accessToken: String) {
         dataStore.edit {
-            if (accessToken == null) it.remove(accessTokenKey)
-            else it[accessTokenKey] = accessToken
+            it[accessTokenKey] = accessToken
         }
     }
 
-    suspend fun editRefreshToken(refreshToken: String?) {
+    suspend fun editRefreshToken(refreshToken: String) {
         dataStore.edit {
-            if (refreshToken == null) it.remove(refreshTokenKey)
-            else it[refreshTokenKey] = refreshToken
+            it[refreshTokenKey] = refreshToken
         }
     }
 
     suspend fun editHasShownTutorial(hasShownTutorial: Boolean) {
         dataStore.edit {
             it[hasTutorialShownKey] = hasShownTutorial
+        }
+    }
+
+    suspend fun removeAccessToken() {
+        dataStore.edit {
+            it.remove(accessTokenKey)
+        }
+    }
+
+    suspend fun removeRefreshToken() {
+        dataStore.edit {
+            it.remove(refreshTokenKey)
         }
     }
 
