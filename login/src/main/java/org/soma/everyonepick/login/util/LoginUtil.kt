@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import org.soma.everyonepick.common.util.HOME_ACTIVITY_CLASS
+import org.soma.everyonepick.common.util.NATIVE_APP_KEY
 
 class LoginUtil {
     companion object {

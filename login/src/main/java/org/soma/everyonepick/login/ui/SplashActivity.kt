@@ -51,6 +51,7 @@ class SplashActivity : AppCompatActivity() {
             supportActionBar?.hide()
         }
 
+        KakaoSdk.init(this, NATIVE_APP_KEY)
         tryToAutoLogin()
     }
 
@@ -107,7 +108,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loginWithKakao() {
-        KakaoSdk.init(this, NATIVE_APP_KEY)
         LoginUtil.loginWithKakao(this, { _, _ ->
             viewModel.addSuccess()
         }, { _, _ ->

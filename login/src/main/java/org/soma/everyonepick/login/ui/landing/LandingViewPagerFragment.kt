@@ -66,7 +66,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    viewModel.currentPosition.value = it.currentItem
+                    viewModel.setCurrentPosition(it.currentItem)
                 }
             })
             binding.customindicator.setupViewPager2(it, it.currentItem)
@@ -114,6 +114,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
         _binding = null
     }
 
+
     /** LandingViewPagerFragmentListener */
     override fun onClickNextButton() {
         binding.viewpager2.currentItem += 1
@@ -125,15 +126,15 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
      * 3. 얼굴정보 등록 여부에 따라서, HomeActivity 혹은 FaceInformation 페이지로 이동
      */
     override fun onClickLoginButton() {
-        if (viewModel.isApiLoading.value == true) return
+        if (viewModel.isApiLoading.value) return
 
-        viewModel.isApiLoading.value = true
+        viewModel.setIsApiLoading(true)
         LoginUtil.loginWithKakao(requireContext(), { token, _ ->
             lifecycleScope.launch {
                 signUpAndNavigate(token)
             }
         }, { _, _ ->
-            viewModel.isApiLoading.value = false
+            viewModel.setIsApiLoading(false)
             Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
         })
     }
@@ -147,10 +148,13 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             navigateToNextPageByFaceInformation()
         } catch (e: Exception) {
             Toast.makeText(context, "회원가입에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            viewModel.isApiLoading.value = false
+            viewModel.setIsApiLoading(false)
         }
     }
 
+    /**
+     * 얼굴정보가 등록되어 이미 등록되어 있으면 HomeActivity, 등록되어 있지 않다면 FaceInformation으로 이동합니다.
+     */
     private suspend fun navigateToNextPageByFaceInformation() {
         try {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
@@ -166,7 +170,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             }
         } catch (e: Exception) {
             Toast.makeText(context, "회원정보를 불러오는 데 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            viewModel.isApiLoading.value = false
+            viewModel.setIsApiLoading(false)
         }
     }
 
