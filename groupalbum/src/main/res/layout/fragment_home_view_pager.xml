@@ -73,7 +73,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:paddingLeft="30dp"
-                android:visibility="@{viewModel.currentItem == 0? View.VISIBLE: View.GONE}"
+                android:visibility="@{viewModel.viewPagerPosition == 0? View.VISIBLE: View.GONE}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:onClick="@{onClickSelectButtonListener}"

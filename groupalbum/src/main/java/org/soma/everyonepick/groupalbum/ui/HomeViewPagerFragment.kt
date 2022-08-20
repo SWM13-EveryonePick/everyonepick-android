@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +14,15 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common_ui.R
@@ -41,9 +47,9 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             it.viewModel = viewModel
             it.onClickSelectButtonListener = View.OnClickListener {
                 if (viewModel.selectionMode.value == SelectionMode.NORMAL_MODE.ordinal) {
-                    viewModel.selectionMode.value = SelectionMode.SELECTION_MODE.ordinal
+                    viewModel.setSelectionMode(SelectionMode.SELECTION_MODE)
                 } else {
-                    viewModel.checkAllTrigger.value = viewModel.checkAllTrigger.value?.plus(1)
+                    viewModel.triggerCheckAll()
                 }
             }
         }
@@ -54,13 +60,17 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     }
 
     private fun subscribeUi() {
-        viewModel.selectionMode.observe(viewLifecycleOwner) { selectionMode ->
-            // 선택 모드일 때는 TabLayout을 비활성화 합니다.
-            setTabLayoutEnabled(
-                enabled = selectionMode == SelectionMode.NORMAL_MODE.ordinal,
-                binding.viewpager2,
-                binding.tablayout
-            )
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.selectionMode.collectLatest { selectionMode ->
+                    // 선택 모드일 때는 TabLayout을 비활성화 합니다.
+                    setTabLayoutEnabled(
+                        enabled = selectionMode == SelectionMode.NORMAL_MODE.ordinal,
+                        binding.viewpager2,
+                        binding.tablayout
+                    )
+                }
+            }
         }
     }
 
@@ -72,7 +82,7 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    viewModel.currentItem.value = binding.viewpager2.currentItem
+                    viewModel.setViewPagerPosition(binding.viewpager2.currentItem)
                 }
             })
         }
@@ -102,12 +112,10 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     }
 
     private fun setTabLayoutText(textView: TextView, isSelected: Boolean) {
-        // 색상 변경
         textView.setTextColor(
             if (isSelected) Color.WHITE
             else ContextCompat.getColor(requireContext(), R.color.cloud)
         )
-        // 스타일 변경
         textView.setTypeface(
             Typeface.DEFAULT_BOLD,
             if (isSelected) Typeface.BOLD else Typeface.NORMAL
@@ -131,7 +139,7 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
             override fun handleOnBackPressed() {
                 when(viewModel.selectionMode.value) {
                     SelectionMode.NORMAL_MODE.ordinal -> (activity as HomeActivityUtil).showAreYouSureDialog()
-                    else -> viewModel.selectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+                    else -> viewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
                 }
             }
         }
