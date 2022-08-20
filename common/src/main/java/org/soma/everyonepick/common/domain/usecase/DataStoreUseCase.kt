@@ -21,7 +21,6 @@ class DataStoreUseCase @Inject constructor(
 
     val refreshToken: Flow<String?> =
         dataStore.data.map { preferences -> preferences[refreshTokenKey] }
-        // dataStore.data.map { preferences -> "자동로그인 해제" }
 
     val hasShownTutorial: Flow<Boolean?> =
         dataStore.data.map { preferences -> preferences[hasTutorialShownKey] }

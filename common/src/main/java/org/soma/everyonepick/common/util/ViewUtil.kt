@@ -26,9 +26,8 @@ class ViewUtil {
 }
 
 fun View.setVisibility(flag: Boolean) {
-    visibility = getVisibility(flag)
+    visibility = if (flag) View.VISIBLE else View.GONE
 }
-fun View.getVisibility(flag: Boolean) = if (flag) View.VISIBLE else View.GONE
 
 fun View.performTouch() {
     val time = SystemClock.uptimeMillis()
