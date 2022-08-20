@@ -17,12 +17,12 @@ class FriendListViewModel @Inject constructor(
     private val _friends: MutableStateFlow<Friends<Friend>> = MutableStateFlow(KakaoUtil.emptyFriends)
     val friends: StateFlow<Friends<Friend>> = _friends
 
-    private val _isApiLoading = MutableLiveData(true)
-    val isApiLoading = _isApiLoading
+    private val _isApiLoading = MutableStateFlow(true)
+    val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
     fun readFriends() {
-        isApiLoading.value = true
-        friendUseCase.readFriends({ isApiLoading.value = false }) { newFriends ->
+        _isApiLoading.value = true
+        friendUseCase.readFriends({ _isApiLoading.value = false }) { newFriends ->
             _friends.value = newFriends
         }
     }
