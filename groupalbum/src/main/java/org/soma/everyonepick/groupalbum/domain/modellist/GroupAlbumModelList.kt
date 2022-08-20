@@ -4,50 +4,58 @@ import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 
 
 /**
- * data의 마지막 아이템에 항상 [GroupAlbumModel.dummyData]가 위치하는 것을 보장하는 클래스입니다.
+ * [data]의 마지막 아이템에 항상 [GroupAlbumModel.dummyData]가 위치하는 것을 보장하는 클래스입니다. [data]와는 달리,
+ * 'Actual data'는 dummyData를 포함하지 않는 실제 데이터를 의미합니다.
  */
 class GroupAlbumModelList {
-    var data: MutableList<GroupAlbumModel>
+    private var _data: MutableList<GroupAlbumModel>
         set(value) {
             field = value
             field.add(GroupAlbumModel.dummyData)
         }
 
+    val data: List<GroupAlbumModel>
+        get() = _data
+
     constructor() {
-        data = mutableListOf()
+        _data = mutableListOf()
     }
 
-    constructor(groupAlbumModelList: MutableList<GroupAlbumModel>) {
-        data = groupAlbumModelList
+    constructor(actualData: MutableList<GroupAlbumModel>) {
+        _data = actualData
     }
 
     fun getActualItemCount() = data.size - 1
 
-    fun getActualData() = data.subList(0, getActualItemCount())
+    fun getActualData() = data.subList(0, getActualItemCount()).toMutableList()
+
+    fun setActualData(actualData: MutableList<GroupAlbumModel>) {
+        _data = actualData
+    }
 
     fun removeCheckedItems() {
         val newData = mutableListOf<GroupAlbumModel>()
         for (i in 0 until getActualItemCount()) {
             if (!data[i].isChecked) newData.add(data[i])
         }
-        data = newData
+        _data = newData
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        for (i in 0 until data.size) {
+        for (i in data.indices) {
             val newItem = copyGroupAlbumModel(data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
             newItem.isChecked = false
-            data[i] = newItem
+            _data[i] = newItem
         }
     }
 
     fun checkAll() {
         val isAllChecked = getActualData().all { it.isChecked }
-        for (i in 0 until data.size) {
+        for (i in data.indices) {
             val newItem = copyGroupAlbumModel(data[i])
             newItem.isChecked = !isAllChecked
-            data[i] = newItem
+            _data[i] = newItem
         }
     }
 

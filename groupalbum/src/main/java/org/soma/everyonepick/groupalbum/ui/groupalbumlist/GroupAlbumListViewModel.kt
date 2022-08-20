@@ -40,7 +40,7 @@ class GroupAlbumListViewModel @Inject constructor(
     val groupAlbumModelList = MutableLiveData(GroupAlbumModelList())
     val isApiLoading = MutableLiveData(true)
 
-    var readJob: Job? = null
+    private var readJob: Job? = null
 
     init {
         // Offline cache 데이터 불러오기
@@ -48,7 +48,7 @@ class GroupAlbumListViewModel @Inject constructor(
             val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList()
             val newGroupAlbumModelList = groupAlbumLocalList.groupAlbumLocalListToGroupAlbumModelList()
             if (groupAlbumModelList.value?.getActualItemCount() == 0) {
-                groupAlbumModelList.value?.data = newGroupAlbumModelList
+                groupAlbumModelList.value?.setActualData(newGroupAlbumModelList)
                 groupAlbumModelList.postValue(groupAlbumModelList.value)
             }
         }
@@ -62,7 +62,7 @@ class GroupAlbumListViewModel @Inject constructor(
             try {
                 val newGroupAlbumModelList = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.bearerAccessToken.first()!!)
                 if (groupAlbumModelList.value?.data != newGroupAlbumModelList) {
-                    groupAlbumModelList.value?.data = newGroupAlbumModelList
+                    groupAlbumModelList.value?.setActualData(newGroupAlbumModelList)
                     groupAlbumModelList.value = groupAlbumModelList.value
 
                     // Offline cache를 위해 데이터 저장

@@ -13,11 +13,11 @@ import java.util.*
 
 class FileUtil {
     companion object {
-        fun Calendar.toFileString() = "${get(Calendar.YEAR)}${get(Calendar.MONTH)}${get(Calendar.DAY_OF_MONTH)}" +
+        fun getFileName(appName: String) = "${appName}_${Calendar.getInstance().toFileString()}"
+
+        private fun Calendar.toFileString() = "${get(Calendar.YEAR)}${get(Calendar.MONTH)}${get(Calendar.DAY_OF_MONTH)}" +
                 "_${get(Calendar.HOUR_OF_DAY)}${get(Calendar.MINUTE)}${get(Calendar.SECOND)}" +
                 "_${get(Calendar.MILLISECOND)}"
-
-        fun getFileName(appName: String) = "${appName}_${Calendar.getInstance().toFileString()}"
 
         fun saveBitmapInPictureDirectory(context: Context, fileName: String, folderName: String, bitmap: Bitmap) {
             try {
