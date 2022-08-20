@@ -37,7 +37,7 @@ class GroupAlbumViewModel: ViewModel() {
         val newMemberModelList = groupAlbum.value?.users?.map { user ->
             user?.let { MemberModel(it, isChecked = false, isCheckboxVisible = false) }
         }?.toMutableList() as MutableList<MemberModel>
-        memberModelList.value = MemberModelList(newMemberModelList)
+        memberModelList.value?.setActualData(newMemberModelList)
         memberModelList.value = memberModelList.value
     }
 
