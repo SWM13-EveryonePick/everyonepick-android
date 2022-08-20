@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.HomeActivityUtil
@@ -61,22 +62,20 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
                 }
 
                 launch {
-                    parentViewModel.checkAllTrigger.collect {
+                    parentViewModel.checkAllTrigger.collectLatest {
                         viewModel.checkAll()
                     }
                 }
+
+                launch {
+                    parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
+                    try {
+                        viewModel.readGroupAlbumModelList()
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
-        try {
-            viewModel.readGroupAlbumModelList()
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
 

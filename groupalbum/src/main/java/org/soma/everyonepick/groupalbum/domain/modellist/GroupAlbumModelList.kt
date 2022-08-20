@@ -59,10 +59,8 @@ class GroupAlbumModelList {
         }
     }
 
+    fun getNewInstance() = GroupAlbumModelList(getActualData())
+
     private fun copyGroupAlbumModel(groupAlbumModel: GroupAlbumModel) =
         GroupAlbumModel(groupAlbumModel.groupAlbum.copy(), groupAlbumModel.isChecked, groupAlbumModel.isCheckboxVisible)
-
-    override fun equals(other: Any?): Boolean {
-        return other is GroupAlbumModelList && other.data == data
-    }
 }

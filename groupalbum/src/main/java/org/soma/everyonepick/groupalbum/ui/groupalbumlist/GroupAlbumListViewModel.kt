@@ -8,6 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
@@ -37,19 +40,21 @@ class GroupAlbumListViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase,
     private val groupAlbumLocalRepository: GroupAlbumLocalRepository,
 ): ViewModel() {
-    val groupAlbumModelList = MutableLiveData(GroupAlbumModelList())
-    val isApiLoading = MutableLiveData(true)
+    private val _groupAlbumModelList = MutableStateFlow(GroupAlbumModelList())
+    val groupAlbumModelList: StateFlow<GroupAlbumModelList> = _groupAlbumModelList
+
+    private val _isApiLoading = MutableStateFlow(true)
+    val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
     private var readJob: Job? = null
 
     init {
         // Offline cache 데이터 불러오기
         viewModelScope.launch(Dispatchers.IO) {
-            val groupAlbumLocalList = groupAlbumLocalRepository.getGroupAlbumLocalList()
-            val newGroupAlbumModelList = groupAlbumLocalList.groupAlbumLocalListToGroupAlbumModelList()
-            if (groupAlbumModelList.value?.getActualItemCount() == 0) {
-                groupAlbumModelList.value?.setActualData(newGroupAlbumModelList)
-                groupAlbumModelList.postValue(groupAlbumModelList.value)
+            if (_groupAlbumModelList.value.getActualItemCount() == 0) {
+                val newGroupAlbumModelList = groupAlbumLocalRepository.getGroupAlbumLocalList()
+                    .groupAlbumLocalListToGroupAlbumModelList()
+                _groupAlbumModelList.value = GroupAlbumModelList(newGroupAlbumModelList)
             }
         }
     }
@@ -58,37 +63,34 @@ class GroupAlbumListViewModel @Inject constructor(
         readJob?.cancel()
 
         readJob = viewModelScope.launch {
-            isApiLoading.value = true
+            _isApiLoading.value = true
             try {
                 val newGroupAlbumModelList = groupAlbumUseCase.readGroupAlbumModelList(dataStoreUseCase.bearerAccessToken.first()!!)
-                if (groupAlbumModelList.value?.data != newGroupAlbumModelList) {
-                    groupAlbumModelList.value?.setActualData(newGroupAlbumModelList)
-                    groupAlbumModelList.value = groupAlbumModelList.value
+                if (_groupAlbumModelList.value.data != newGroupAlbumModelList) {
+                    _groupAlbumModelList.value = GroupAlbumModelList(newGroupAlbumModelList)
 
                     // Offline cache를 위해 데이터 저장
-                    groupAlbumModelList.value?.let {
-                        val groupAlbumLocalList = it.getActualData().groupAlbumModelListToGroupAlbumLocalList()
-                        groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
-                    }
+                    val groupAlbumLocalList = _groupAlbumModelList.value.getActualData()
+                        .groupAlbumModelListToGroupAlbumLocalList()
+                    groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                 }
             } catch (e: Exception) {}
 
-            isApiLoading.value = false
+            _isApiLoading.value = false
         }
     }
 
     fun deleteCheckedItems() {
-        groupAlbumModelList.value?.removeCheckedItems()
-        groupAlbumModelList.value = groupAlbumModelList.value
+        _groupAlbumModelList.value.removeCheckedItems()
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        groupAlbumModelList.value?.setIsCheckboxVisible(isCheckboxVisible)
-        groupAlbumModelList.value = groupAlbumModelList.value
+        _groupAlbumModelList.value.setIsCheckboxVisible(isCheckboxVisible)
+        _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
     }
 
     fun checkAll() {
-        groupAlbumModelList.value?.checkAll()
-        groupAlbumModelList.value = groupAlbumModelList.value
+        _groupAlbumModelList.value.checkAll()
+        _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
     }
 }
