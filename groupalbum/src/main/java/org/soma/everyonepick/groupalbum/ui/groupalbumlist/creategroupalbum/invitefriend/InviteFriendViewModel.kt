@@ -95,12 +95,14 @@ class InviteFriendViewModel @Inject constructor(
     /**
      * 체크박스 상태가 변경되었을 때의 데이터 처리를 합니다.
      */
-    fun onClickCheckbox(friendId: Long?, isChecked: Boolean) {
+    fun onClickCheckbox(clickedItem: InviteFriendModel, isChecked: Boolean) {
         // inviteFriendModelList의 isChecked 처리
-        val clickedItem = _inviteFriendModelList.value.find { it.friend.id == friendId }
-        clickedItem?.isChecked = isChecked
+        val clickedItemAtInviteFriendModelList = _inviteFriendModelList.value.find {
+            it.friend.id == clickedItem.friend.id
+        }
+        clickedItemAtInviteFriendModelList?.isChecked = isChecked
 
-        // checked 카운트 업데이트
+        // checked 업데이트
         if (isChecked) _checked.value += 1
         else _checked.value -= 1
     }

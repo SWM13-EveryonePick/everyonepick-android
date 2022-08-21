@@ -34,14 +34,10 @@ class InviteFriendAdapter(
         }
 
         binding.checkbox.setOnClickListener {
-            onClickCheckbox(binding, holder)
+            val clickedItem = parentViewModel.filteredList.value[holder.absoluteAdapterPosition]
+            val isChecked = binding.checkbox.isChecked
+            parentViewModel.onClickCheckbox(clickedItem, isChecked)
         }
-    }
-
-    private fun onClickCheckbox(binding: ItemInviteFriendBinding, holder: InviteFriendViewHolder) {
-        val clickedItem = parentViewModel.filteredList.value[holder.absoluteAdapterPosition]
-        val isChecked = binding.checkbox.isChecked
-        parentViewModel.onClickCheckbox(clickedItem.friend.id, isChecked)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

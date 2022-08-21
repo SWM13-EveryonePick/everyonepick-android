@@ -70,7 +70,7 @@ class InviteFriendFragment: Fragment() {
 
         args.existingUserClientIdList?.let {
             viewModel.setExistingUserClientIdList(it.toList())
-            viewModel.setMaxInviteCount(viewModel.maxInviteCount.value.minus(it.count()))
+            viewModel.setMaxInviteCount(viewModel.maxInviteCount.value - it.count())
         }
 
         return binding.root
