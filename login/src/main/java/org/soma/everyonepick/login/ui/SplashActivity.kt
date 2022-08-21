@@ -52,7 +52,6 @@ class SplashActivity : AppCompatActivity() {
             supportActionBar?.hide()
         }
 
-        KakaoSdk.init(this, NATIVE_APP_KEY)
         tryToAutoLogin()
     }
 

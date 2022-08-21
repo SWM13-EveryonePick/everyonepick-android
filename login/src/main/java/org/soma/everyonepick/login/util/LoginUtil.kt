@@ -26,6 +26,8 @@ class LoginUtil {
             onLoginSuccess: (OAuthToken?, Throwable?) -> Unit,
             onLoginFailure: (OAuthToken?, Throwable?) -> Unit
         ) {
+            KakaoSdk.init(context, NATIVE_APP_KEY)
+
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) onLoginFailure(token, error)
                 else if (token != null) onLoginSuccess(token, error)
