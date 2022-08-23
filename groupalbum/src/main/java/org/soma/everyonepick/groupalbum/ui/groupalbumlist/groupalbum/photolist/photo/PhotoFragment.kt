@@ -23,7 +23,6 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
     private val binding get() = _binding!!
 
     private val viewModel: PhotoViewModel by viewModels()
-    private val args: PhotoFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +33,6 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
             it.viewModel = viewModel
             it.listener = this
         }
-
-        viewModel.photoUrl.value = args.photoUrl
 
         return binding.root
     }
