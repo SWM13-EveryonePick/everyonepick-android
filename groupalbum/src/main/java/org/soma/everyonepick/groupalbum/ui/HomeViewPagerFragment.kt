@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentHomeViewPagerBinding
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -79,12 +80,7 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
         binding.viewpager2.let {
             it.adapter = HomeViewPagerAdapter(this)
-            it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    viewModel.setViewPagerPosition(binding.viewpager2.currentItem)
-                }
-            })
+            it.setOnPageSelectedListener { position -> viewModel.setViewPagerPosition(position) }
         }
 
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->

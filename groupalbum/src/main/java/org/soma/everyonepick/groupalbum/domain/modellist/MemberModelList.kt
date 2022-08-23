@@ -25,7 +25,7 @@ class MemberModelList {
 
     fun getActualItemCount() = data.size - 1
 
-    fun getActualData() = data.subList(0, getActualItemCount())
+    fun getActualData() = data.subList(0, getActualItemCount()).toMutableList()
 
     fun setActualData(actualData: MutableList<MemberModel>) {
         _data = actualData
@@ -42,4 +42,6 @@ class MemberModelList {
 
     private fun copyMemberModel(memberItem: MemberModel) =
         MemberModel(memberItem.user.copy(), memberItem.isChecked, memberItem.isCheckboxVisible)
+
+    fun getNewInstance() = MemberModelList(getActualData())
 }

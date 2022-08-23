@@ -48,7 +48,7 @@ class PhotoAdapter(
         }
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            parentViewModel.photoModelList.value?.let { photoModelList ->
+            parentViewModel.photoModelList.value.let { photoModelList ->
                 val position = holder.absoluteAdapterPosition
                 photoModelList[position].isChecked = isChecked
             }

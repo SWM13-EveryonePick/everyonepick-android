@@ -13,7 +13,7 @@ class SettingViewModel @Inject constructor(
     dataStoreUseCase: DataStoreUseCase,
     private val userUseCase: UserUseCase
 ) : ViewModel() {
-    private var bearerAccessToken = dataStoreUseCase.bearerAccessToken
+    private val bearerAccessToken = dataStoreUseCase.bearerAccessToken
 
     var me: StateFlow<User> = bearerAccessToken.transformLatest {
         if (it != null) emit(userUseCase.readUser(it))

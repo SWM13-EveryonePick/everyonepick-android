@@ -27,7 +27,7 @@
             android:clipToPadding="false"
             android:onClick="@{() -> listener.onClickNextButton()}"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:visibility="@{viewModel.currentPosition == 2? View.INVISIBLE: View.VISIBLE}"
+            android:visibility="@{viewModel.viewPagerPosition == 2? View.INVISIBLE: View.VISIBLE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:visibility="@{viewModel.currentPosition == 2? View.VISIBLE: View.INVISIBLE}"
+            android:visibility="@{viewModel.viewPagerPosition == 2? View.VISIBLE: View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageButton

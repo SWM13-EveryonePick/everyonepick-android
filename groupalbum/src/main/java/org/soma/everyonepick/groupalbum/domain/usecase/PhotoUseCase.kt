@@ -9,7 +9,7 @@ import javax.inject.Inject
 class PhotoUseCase @Inject constructor(
     private val photoRepository: PhotoRepository
 ) {
-    fun readPhotoModelList(groupAlbumId: Long): MutableList<PhotoModel> {
+    suspend fun readPhotoModelList(groupAlbumId: Long): MutableList<PhotoModel> {
         // TODO: photoRepository
         val photoList = mutableListOf(
             Photo(0, "https://picsum.photos/200"),

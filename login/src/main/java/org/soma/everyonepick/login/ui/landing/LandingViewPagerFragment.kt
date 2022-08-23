@@ -27,6 +27,7 @@ import org.soma.everyonepick.common.data.entity.ProviderName
 import org.soma.everyonepick.common.data.repository.AuthRepository
 import org.soma.everyonepick.common.data.dto.SignUpRequest
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.FullTextActivity
 import org.soma.everyonepick.common_ui.FullTextActivity.Companion.putFullTextActivityExtras
 import org.soma.everyonepick.common_ui.R
@@ -63,12 +64,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
         binding.viewpager2.let {
             it.adapter = LandingViewPagerAdapter(this)
-            it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    viewModel.setCurrentPosition(it.currentItem)
-                }
-            })
+            it.setOnPageSelectedListener { position -> viewModel.setViewPagerPosition(position) }
             binding.customindicator.setupViewPager2(it, it.currentItem)
         }
     }

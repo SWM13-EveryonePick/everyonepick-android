@@ -52,12 +52,13 @@ class MemberAdapter(
         binding.root.setOnClickListener {
             val isInviteItem = holder.absoluteAdapterPosition == itemCount - 1
             if (isInviteItem) {
+                val existingUserClientIdList = parentViewModel.memberModelList.value.getActualData()
+                    .filter { it.user.id != parentViewModel.me.value.id }
+                    .map { it.user.withoutKakaoPrefix().clientId?: "" }
+                    .toTypedArray()
                 val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(
                     InviteFriendFragmentType.TO_INVITE,
-                    parentViewModel.memberModelList.value?.getActualData()
-                        ?.filter { it.user.id != parentViewModel.me?.id }
-                        ?.map { it.user.withoutKakaoPrefix().clientId?: "" }
-                        ?.toTypedArray()
+                    existingUserClientIdList
                 )
                 binding.root.findNavController().navigate(directions)
             } else {
@@ -69,10 +70,7 @@ class MemberAdapter(
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             val position = holder.absoluteAdapterPosition
-            parentViewModel.memberModelList.value?.data?.get(position)?.isChecked = isChecked
-            parentViewModel.checked.value =
-                if (isChecked) parentViewModel.checked.value?.plus(1)
-                else parentViewModel.checked.value?.minus(1)
+            parentViewModel.onClickCheckbox(position, isChecked)
         }
     }
 
@@ -94,7 +92,7 @@ class MemberAdapter(
             parentViewModel: GroupAlbumViewModel
         ) {
             if (isInviteItem) {
-                val amIHost = parentViewModel.groupAlbum.value?.hostUserId == parentViewModel.me?.id
+                val amIHost = parentViewModel.groupAlbum.value.hostUserId == parentViewModel.me.value.id
                 val isModeNormal = parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal
                 binding.root.setVisibility(amIHost && isModeNormal)
 
@@ -117,7 +115,7 @@ class MemberAdapter(
                 binding.textNickname.text = memberModel.user.nickname
                 binding.checkbox.isChecked = memberModel.isChecked
 
-                val isHostUser = parentViewModel.groupAlbum.value?.hostUserId == memberModel.user.id
+                val isHostUser = parentViewModel.groupAlbum.value.hostUserId == memberModel.user.id
                 binding.imageCrown.setVisibility(isHostUser)
                 // 방장일 경우 체크박스를 표시하지 않습니다.
                 binding.checkbox.setVisibility(memberModel.isCheckboxVisible && !isHostUser)

@@ -59,8 +59,8 @@ class GroupAlbumModelList {
         }
     }
 
-    fun getNewInstance() = GroupAlbumModelList(getActualData())
-
     private fun copyGroupAlbumModel(groupAlbumModel: GroupAlbumModel) =
         GroupAlbumModel(groupAlbumModel.groupAlbum.copy(), groupAlbumModel.isChecked, groupAlbumModel.isCheckboxVisible)
+
+    fun getNewInstance() = GroupAlbumModelList(getActualData())
 }

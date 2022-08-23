@@ -5,8 +5,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.children
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.flow.StateFlow
 
 class ViewUtil {
     companion object {
@@ -21,6 +23,15 @@ class ViewUtil {
             viewPager2.isUserInputEnabled = enabled
             val layout = tabLayout.getChildAt(0) as LinearLayout
             for(child in layout.children) child.isClickable = enabled
+        }
+
+        fun ViewPager2.setOnPageSelectedListener(callback: (Int) -> Unit) {
+            registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    callback.invoke(position)
+                }
+            })
         }
     }
 }
