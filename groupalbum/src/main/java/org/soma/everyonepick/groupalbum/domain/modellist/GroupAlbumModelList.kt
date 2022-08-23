@@ -1,6 +1,8 @@
 package org.soma.everyonepick.groupalbum.domain.modellist
 
+import android.util.Log
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
+import java.lang.Integer.max
 
 
 /**
@@ -9,29 +11,22 @@ import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
  */
 class GroupAlbumModelList {
     private var _data: MutableList<GroupAlbumModel>
-        set(value) {
-            field = value
-            field.add(GroupAlbumModel.dummyData)
-        }
-
     val data: List<GroupAlbumModel>
         get() = _data
 
-    constructor() {
+    constructor(withDummyData: Boolean = true) {
         _data = mutableListOf()
+        if (withDummyData) _data.add(GroupAlbumModel.createDummyData())
     }
 
-    constructor(actualData: MutableList<GroupAlbumModel>) {
+    constructor(actualData: MutableList<GroupAlbumModel>, withDummyData: Boolean = true) {
         _data = actualData
+        if (withDummyData) _data.add(GroupAlbumModel.createDummyData())
     }
 
-    fun getActualItemCount() = data.size - 1
+    fun getActualItemCount() = max(data.size - 1, 0)
 
     fun getActualData() = data.subList(0, getActualItemCount()).toMutableList()
-
-    fun setActualData(actualData: MutableList<GroupAlbumModel>) {
-        _data = actualData
-    }
 
     fun removeCheckedItems() {
         val newData = mutableListOf<GroupAlbumModel>()
@@ -62,5 +57,5 @@ class GroupAlbumModelList {
     private fun copyGroupAlbumModel(groupAlbumModel: GroupAlbumModel) =
         GroupAlbumModel(groupAlbumModel.groupAlbum.copy(), groupAlbumModel.isChecked, groupAlbumModel.isCheckboxVisible)
 
-    fun getNewInstance() = GroupAlbumModelList(getActualData())
+    fun getNewInstance() = GroupAlbumModelList(_data, withDummyData = false)
 }

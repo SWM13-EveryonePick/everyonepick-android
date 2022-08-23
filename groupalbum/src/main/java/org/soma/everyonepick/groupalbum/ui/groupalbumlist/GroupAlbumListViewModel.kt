@@ -40,7 +40,7 @@ class GroupAlbumListViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase,
     private val groupAlbumLocalRepository: GroupAlbumLocalRepository,
 ): ViewModel() {
-    private val _groupAlbumModelList = MutableStateFlow(GroupAlbumModelList())
+    private val _groupAlbumModelList = MutableStateFlow(GroupAlbumModelList(withDummyData = false))
     val groupAlbumModelList: StateFlow<GroupAlbumModelList> = _groupAlbumModelList
 
     private val _isApiLoading = MutableStateFlow(true)
@@ -49,13 +49,11 @@ class GroupAlbumListViewModel @Inject constructor(
     private var readJob: Job? = null
 
     init {
-        // Offline cache 데이터 불러오기
         viewModelScope.launch(Dispatchers.IO) {
-            if (_groupAlbumModelList.value.getActualItemCount() == 0) {
-                val newGroupAlbumModelList = groupAlbumLocalRepository.getGroupAlbumLocalList()
-                    .groupAlbumLocalListToGroupAlbumModelList()
-                _groupAlbumModelList.value = GroupAlbumModelList(newGroupAlbumModelList)
-            }
+            // Offline cache 데이터 불러오기
+            val newGroupAlbumModelList = groupAlbumLocalRepository.getGroupAlbumLocalList()
+                .groupAlbumLocalListToGroupAlbumModelList()
+            _groupAlbumModelList.value = GroupAlbumModelList(newGroupAlbumModelList)
         }
     }
 
