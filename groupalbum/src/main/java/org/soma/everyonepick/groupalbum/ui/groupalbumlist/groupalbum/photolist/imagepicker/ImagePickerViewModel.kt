@@ -7,11 +7,14 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import java.io.File
 
 class ImagePickerViewModel: ViewModel() {
-    val imageModelList = MutableLiveData<MutableList<ImageModel>>(mutableListOf())
+    private val _imageModelList = MutableStateFlow<MutableList<ImageModel>>(mutableListOf())
+    val imageModelList: StateFlow<MutableList<ImageModel>> = _imageModelList
 
     @SuppressLint("Range")
     fun readImageModelList(context: Context) {
@@ -31,8 +34,8 @@ class ImagePickerViewModel: ViewModel() {
         cursor?.let {
             while(cursor.moveToNext()) {
                 val mediaPath = cursor.getString(cursor.getColumnIndex(INDEX_MEDIA_URI))
-                imageModelList.value!!.add(ImageModel(Uri.fromFile(File(mediaPath)), false))
-                imageModelList.postValue(imageModelList.value)
+                _imageModelList.value.add(ImageModel(Uri.fromFile(File(mediaPath)), false))
+                _imageModelList.value = _imageModelList.value
             }
         }
 
@@ -40,15 +43,10 @@ class ImagePickerViewModel: ViewModel() {
     }
 
 
-    fun getCheckedImageUriList(): MutableList<String> {
-        val checkedImageUriList = mutableListOf<String>()
-        imageModelList.value?.let {
-            for(imageItem in it) {
-                if (imageItem.isChecked) checkedImageUriList.add(imageItem.uri.toString())
-            }
-        }
-        return checkedImageUriList
-    }
+    fun getCheckedImageUriList() = _imageModelList.value
+        .filter { it.isChecked }
+        .map { it.uri.toString() }
+        .toMutableList()
 
     companion object {
         private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID
