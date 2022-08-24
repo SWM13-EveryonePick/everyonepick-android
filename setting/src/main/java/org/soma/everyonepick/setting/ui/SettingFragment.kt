@@ -38,17 +38,6 @@ class SettingFragment : Fragment(), SettingFragmentListener {
             it.listener = this
         }
 
-        lifecycleScope.launch {
-            viewModel.isApiLoading.value = true
-            try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                viewModel.me.value = userUseCase.readUser(token)
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "회원 정보를 불러오는 데 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            }
-            viewModel.isApiLoading.value = true
-        }
-
         return binding.root
     }
 

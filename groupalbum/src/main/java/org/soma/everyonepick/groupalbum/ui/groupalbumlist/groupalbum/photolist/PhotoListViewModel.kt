@@ -1,8 +1,13 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.PhotoUseCase
 import javax.inject.Inject
@@ -11,46 +16,27 @@ import javax.inject.Inject
 class PhotoListViewModel @Inject constructor(
     private val photoUseCase: PhotoUseCase
 ): ViewModel() {
-    val photoModelList = MutableLiveData<MutableList<PhotoModel>>()
-    val isApiLoading = MutableLiveData(true)
+    private val _photoModelList = MutableStateFlow<MutableList<PhotoModel>>(mutableListOf())
+    val photoModelList: StateFlow<MutableList<PhotoModel>> = _photoModelList
+
+    private val _isApiLoading = MutableStateFlow(true)
+    val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
     fun readPhotoModelList(groupAlbumId: Long) {
-        isApiLoading.value = true
-
-        val newPhotoModelList = photoUseCase.readPhotoModelList(groupAlbumId)
-        photoModelList.value = newPhotoModelList
-
-        isApiLoading.value = false
-    }
-
-    fun addPhotoModel(photoItem: PhotoModel) {
-        photoModelList.value?.add(photoItem)
-        photoModelList.value = photoModelList.value
+        viewModelScope.launch {
+            _isApiLoading.value = true
+            _photoModelList.value = photoUseCase.readPhotoModelList(groupAlbumId)
+            _isApiLoading.value = false
+        }
     }
 
     fun deleteCheckedItems() {
-        if (photoModelList.value == null) return
-
-        val newPhotoModelList = mutableListOf<PhotoModel>()
-        for(i in 0 until photoModelList.value!!.size) {
-            if (!photoModelList.value!![i].isChecked)
-                newPhotoModelList.add(photoModelList.value!![i])
-        }
-        photoModelList.value = newPhotoModelList
+        _photoModelList.value = _photoModelList.value.filter { !it.isChecked }.toMutableList()
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        if (photoModelList.value == null) return
-
-        for(i in 0 until photoModelList.value!!.size) {
-            val newItem = copyPhotoModel(photoModelList.value!![i])
-            newItem.isCheckboxVisible = isCheckboxVisible
-            newItem.isChecked = false
-            photoModelList.value!![i] = newItem
-        }
-        photoModelList.value = photoModelList.value
+        _photoModelList.value = _photoModelList.value.map {
+            PhotoModel(it.photo, isChecked = false, isCheckboxVisible = isCheckboxVisible)
+        }.toMutableList()
     }
-
-    private fun copyPhotoModel(photoItem: PhotoModel) =
-        PhotoModel(photoItem.photo.copy(), photoItem.isChecked, photoItem.isCheckboxVisible)
 }

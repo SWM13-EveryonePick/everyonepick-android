@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.kakao.sdk.share.ShareClient
 import com.kakao.sdk.template.model.DefaultTemplate
 import com.kakao.sdk.template.model.Link
 import com.kakao.sdk.template.model.TextTemplate
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.groupalbum.databinding.FragmentFriendListBinding
 
 @AndroidEntryPoint

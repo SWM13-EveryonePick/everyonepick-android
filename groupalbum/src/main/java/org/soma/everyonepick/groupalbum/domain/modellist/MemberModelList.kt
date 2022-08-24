@@ -6,33 +6,42 @@ import org.soma.everyonepick.common.domain.model.MemberModel
  * @see GroupAlbumModelList
  */
 class MemberModelList {
-    var data: MutableList<MemberModel>
+    private var _data: MutableList<MemberModel>
         set(value) {
             field = value
             field.add(MemberModel.createDummyData())
         }
 
+    val data: List<MemberModel>
+        get() = _data
+
     constructor() {
-        data = mutableListOf()
+        _data = mutableListOf()
     }
 
-    constructor(memberModelList: MutableList<MemberModel>) {
-        data = memberModelList
+    constructor(actualData: MutableList<MemberModel>) {
+        _data = actualData
     }
 
-    fun getActualItemCount() = data.size - 1
+    fun getActualItemCount() = _data.size - 1
 
-    fun getActualData() = data.subList(0, getActualItemCount())
+    fun getActualData() = _data.subList(0, getActualItemCount()).toMutableList()
+
+    fun setActualData(actualData: MutableList<MemberModel>) {
+        _data = actualData
+    }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        for (i in 0 until data.size) {
-            val newItem = copyMemberModel(data[i])
+        for (i in _data.indices) {
+            val newItem = copyMemberModel(_data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
             newItem.isChecked = false
-            data[i] = newItem
+            _data[i] = newItem
         }
     }
 
     private fun copyMemberModel(memberItem: MemberModel) =
         MemberModel(memberItem.user.copy(), memberItem.isChecked, memberItem.isCheckboxVisible)
+
+    fun getNewInstance() = MemberModelList(getActualData())
 }

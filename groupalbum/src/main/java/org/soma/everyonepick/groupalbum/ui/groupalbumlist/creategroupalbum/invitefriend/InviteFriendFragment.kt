@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +48,7 @@ class InviteFriendFragment: Fragment() {
             it.adapter = InviteFriendAdapter(viewModel)
             it.viewModel = viewModel
             it.onClickNextButtonListener = View.OnClickListener {
-                if (viewModel.checked.value!! <= viewModel.maxInviteCount.value!!) {
+                if (viewModel.checked.value <= viewModel.maxInviteCount.value) {
                     // InviteFriendFragmentType에 따라 분기합니다.
                     if (args.inviteFriendFragmentType == InviteFriendFragmentType.TO_CREATE) {
                         val directions = InviteFriendFragmentDirections
@@ -67,8 +69,8 @@ class InviteFriendFragment: Fragment() {
         }
 
         args.existingUserClientIdList?.let {
-            viewModel.existingUserClientIdList.value = it.toList()
-            viewModel.maxInviteCount.value = viewModel.maxInviteCount.value?.minus(it.count())
+            viewModel.setExistingUserClientIdList(it.toList())
+            viewModel.setMaxInviteCount(viewModel.maxInviteCount.value - it.count())
         }
 
         return binding.root

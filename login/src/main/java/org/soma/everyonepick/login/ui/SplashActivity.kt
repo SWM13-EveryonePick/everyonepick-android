@@ -11,15 +11,19 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import org.soma.everyonepick.common.data.dto.RefreshRequest
 import org.soma.everyonepick.common.data.repository.AuthRepository
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.NATIVE_APP_KEY
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.util.LoginUtil
@@ -67,16 +71,22 @@ class SplashActivity : AppCompatActivity() {
                     async { loginWithKakao() }
                 )
 
-                // 모두 성공했을 경우
-                viewModel.success.observe(activity) {
-                    if (it == 2) LoginUtil.startHomeActivity(activity)
-                }
+                lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    launch {
+                        // 하나라도 실패했을 경우
+                        viewModel.failure.collect {
+                            if (it >= 1) {
+                                cancel()
+                                startLoginActivityAndFinish()
+                            }
+                        }
+                    }
 
-                // 하나라도 실패했을 경우
-                viewModel.failure.observe(activity) {
-                    if (it >= 1) {
-                        cancel()
-                        startLoginActivityAndFinish()
+                    launch {
+                        // 모두 성공했을 경우
+                        viewModel.success.collect {
+                            if (it == 2) LoginUtil.startHomeActivity(activity)
+                        }
                     }
                 }
             } else {
@@ -90,20 +100,19 @@ class SplashActivity : AppCompatActivity() {
             val data = authRepository.refresh(RefreshRequest(refreshToken)).data
             dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
 
-            viewModel.success.value = viewModel.success.value?.plus(1)
+            viewModel.addSuccess()
         } catch (e: Exception) {
             Toast.makeText(baseContext, "Refresh Token이 유효하지 않습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
-            viewModel.failure.value = viewModel.failure.value?.plus(1)
+            viewModel.addFailure()
         }
     }
 
     private fun loginWithKakao() {
-        KakaoSdk.init(this, NATIVE_APP_KEY)
         LoginUtil.loginWithKakao(this, { _, _ ->
-            viewModel.success.value = viewModel.success.value?.plus(1)
+            viewModel.addSuccess()
         }, { _, _ ->
             Toast.makeText(baseContext, "카카오톡 로그인에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            viewModel.failure.value = viewModel.failure.value?.plus(1)
+            viewModel.addFailure()
         })
     }
 

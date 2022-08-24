@@ -1,23 +1,29 @@
 package org.soma.everyonepick.groupalbum.viewmodel
 
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 import org.soma.everyonepick.groupalbum.util.testGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.util.testGroupAlbumReadDetail
 import javax.inject.Inject
 
 @HiltAndroidTest
-class GroupAlbumListViewModelTest {
-    private lateinit var viewModel: GroupAlbumListViewModel
+class GroupAlbumViewModelTest {
+    private lateinit var viewModel: GroupAlbumViewModel
     private val hiltRule = HiltAndroidRule(this)
     private val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -26,22 +32,28 @@ class GroupAlbumListViewModelTest {
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
 
-    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+    @Inject lateinit var userUseCase: UserUseCase
+    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        viewModel = GroupAlbumListViewModel(groupAlbumUseCase, dataStoreUseCase)
-        viewModel.groupAlbumModelList.value = testGroupAlbumModelList
+        viewModel = GroupAlbumViewModel(
+            SavedStateHandle(),
+            dataStoreUseCase,
+            userUseCase,
+            groupAlbumUseCase
+        )
+        viewModel.setGroupAlbum(testGroupAlbumReadDetail)
     }
 
     @Test
-    fun testSetIsCheckboxVisible() {
+    fun testOnClickCheckbox() {
         runBlocking {
-            viewModel.groupAlbumModelList.value!!.data[0].isCheckboxVisible = false
-            viewModel.setIsCheckboxVisible(true)
-            assertTrue(viewModel.groupAlbumModelList.value!!.data[0].isCheckboxVisible)
+            viewModel.onClickCheckbox(0, true)
+            assertEquals(viewModel.checked.value, 1)
+            assertTrue(viewModel.memberModelList.value.data[0].isChecked)
         }
     }
 }

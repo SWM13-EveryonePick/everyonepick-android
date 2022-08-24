@@ -10,13 +10,16 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.entity.User
@@ -24,6 +27,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
@@ -36,13 +40,11 @@ import javax.inject.Inject
 class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
-    @Inject lateinit var userUseCase: UserUseCase
 
     private var _binding: FragmentGroupAlbumBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: GroupAlbumViewModel by viewModels()
-    private val args: GroupAlbumFragmentArgs by navArgs()
 
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
@@ -57,13 +59,6 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             it.listener = this
         }
 
-        lifecycleScope.launch {
-            dataStoreUseCase.bearerAccessToken.first()?.let {
-                viewModel.me = userUseCase.readUser(it)
-                viewModel.groupAlbum.value = groupAlbumUseCase.readGroupAlbum(it, args.groupAlbumId)
-            }
-        }
-
         subscribeUi()
         setFragmentResultListener()
 
@@ -71,21 +66,25 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     private fun subscribeUi() {
-        viewModel.photoSelectionMode.observe(viewLifecycleOwner) { photoSelectionMode ->
-            // 선택 모드일 때는 TabLayout을 비활성화 합니다.
-            setTabLayoutEnabled(
-                enabled = photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
-                binding.viewpager2,
-                binding.tablayout
-            )
-        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.photoSelectionMode.collectLatest { photoSelectionMode ->
+                        // 선택 모드일 때는 TabLayout을 비활성화 합니다.
+                        setTabLayoutEnabled(
+                            enabled = photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
+                            binding.viewpager2,
+                            binding.tablayout
+                        )
+                    }
+                }
 
-        viewModel.memberSelectionMode.observe(viewLifecycleOwner) { memberSelectionMode ->
-            viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
-        }
-
-        viewModel.groupAlbum.observe(viewLifecycleOwner) {
-            viewModel.updateMemberModelList()
+                launch {
+                    viewModel.memberSelectionMode.collectLatest { memberSelectionMode ->
+                        viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
+                    }
+                }
+            }
         }
     }
 
@@ -102,9 +101,9 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                     try {
                         val token = dataStoreUseCase.bearerAccessToken.first()!!
                         val data = groupAlbumUseCase
-                            .inviteUsersToGroupAlbum(token, viewModel.groupAlbum.value!!.id, friendList)
+                            .inviteUsersToGroupAlbum(token, viewModel.groupAlbum.value.id, friendList)
 
-                        viewModel.groupAlbum.value = data
+                        viewModel.setGroupAlbum(data)
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), "단체공유앨범 초대에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     }
@@ -118,12 +117,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
         binding.viewpager2.let {
             it.adapter = GroupAlbumViewPagerAdapter(this)
-            it.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    viewModel.currentItem.value = it.currentItem
-                }
-            })
+            it.setOnPageSelectedListener { position -> viewModel.setViewPagerPosition(position) }
         }
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
             tab.text = TAB_ITEMS[position]
@@ -139,10 +133,13 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         super.onResume()
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                // Drawer가 열려있는 경우
                 if (binding.drawerlayout.isDrawerOpen(GravityCompat.END)) {
                     binding.drawerlayout.closeDrawer(GravityCompat.END)
-                } else if (viewModel.photoSelectionMode.value == SelectionMode.SELECTION_MODE.ordinal) {
-                    viewModel.photoSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+                }
+                // 선택 모드인 경우
+                else if (viewModel.photoSelectionMode.value == SelectionMode.SELECTION_MODE.ordinal) {
+                    viewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
                 } else {
                     findNavController().navigateUp()
                 }
@@ -164,9 +161,10 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     /** GroupAlbumFragmentListener */
     override fun onClickSelectButton() {
-        viewModel.photoSelectionMode.value =
-            if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE.ordinal
-            else SelectionMode.NORMAL_MODE.ordinal
+        viewModel.setPhotoSelectionMode(
+            if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE
+            else SelectionMode.NORMAL_MODE
+        )
     }
 
     override fun onClickDrawerButton() {
@@ -178,12 +176,10 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             lifecycleScope.launch {
                 try {
                     val token = dataStoreUseCase.bearerAccessToken.first()!!
-                    val groupAlbum = viewModel.groupAlbum.value!!.toGroupAlbum().apply {
-                        title = newTitle
-                    }
-                    val data = groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value!!.id, groupAlbum)
+                    val groupAlbum = viewModel.groupAlbum.value.toGroupAlbum().apply { title = newTitle }
 
-                    viewModel.groupAlbum.value = data
+                    val data = groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value.id, groupAlbum)
+                    viewModel.setGroupAlbum(data)
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "단체공유앨범 이름 변경에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
@@ -199,7 +195,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                 lifecycleScope.launch {
                     try {
                         val token = dataStoreUseCase.bearerAccessToken.first()!!
-                        groupAlbumUseCase.leaveGroupAlbum(token, viewModel.groupAlbum.value!!.id)
+                        groupAlbumUseCase.leaveGroupAlbum(token, viewModel.groupAlbum.value.id)
 
                         findNavController().navigateUp()
                     } catch (e: Exception) {
@@ -211,21 +207,22 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     override fun onClickKickIcon() {
-        viewModel.memberSelectionMode.value = SelectionMode.SELECTION_MODE.ordinal
+        viewModel.setMemberSelectionMode(SelectionMode.SELECTION_MODE)
     }
 
     override fun onClickKickButton() {
-        if (viewModel.checked.value == null || viewModel.checked.value == 0) return
+        if (viewModel.checked.value == 0) return
 
         lifecycleScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val groupAlbumId = viewModel.groupAlbum.value!!.id
+                val groupAlbumId = viewModel.groupAlbum.value.id
                 val userListToKick = viewModel.getCheckedUserList()
-                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbumId, userListToKick)
 
-                viewModel.groupAlbum.value = data
-                viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbumId, userListToKick)
+                viewModel.setGroupAlbum(data)
+
+                viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "사용자를 강퇴하는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -233,7 +230,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     override fun onClickCancelKickButton() {
-        viewModel.memberSelectionMode.value = SelectionMode.NORMAL_MODE.ordinal
+        viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
     }
 
 

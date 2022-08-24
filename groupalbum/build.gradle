@@ -13,7 +13,7 @@ android {
         minSdk 21
         targetSdk 32
 
-        testInstrumentationRunner "org.soma.everyonepick.groupalbum.utility.MainTestRunner"
+        testInstrumentationRunner "org.soma.everyonepick.groupalbum.util.MainTestRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 

@@ -5,8 +5,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.children
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.flow.StateFlow
 
 class ViewUtil {
     companion object {
@@ -22,13 +24,21 @@ class ViewUtil {
             val layout = tabLayout.getChildAt(0) as LinearLayout
             for(child in layout.children) child.isClickable = enabled
         }
+
+        fun ViewPager2.setOnPageSelectedListener(callback: (Int) -> Unit) {
+            registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    callback.invoke(position)
+                }
+            })
+        }
     }
 }
 
 fun View.setVisibility(flag: Boolean) {
-    visibility = getVisibility(flag)
+    visibility = if (flag) View.VISIBLE else View.GONE
 }
-fun View.getVisibility(flag: Boolean) = if (flag) View.VISIBLE else View.GONE
 
 fun View.performTouch() {
     val time = SystemClock.uptimeMillis()

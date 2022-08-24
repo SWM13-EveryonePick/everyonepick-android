@@ -8,6 +8,10 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import org.soma.everyonepick.common_ui.databinding.ActivityFullTextBinding
 
+/**
+ * 스크롤 가능한 TextView로 화면을 채우는 액티비티입니다. [CustomActionBar] 또한 포함되어 있고 [TITLE_KEY]를 통해 얻은
+ * String으로 [CustomActionBar.setTitle]를 호출합니다. 또한 [TEXT_KEY]로 얻은 String으로 TextView를 채웁니다.
+ */
 class FullTextActivity: AppCompatActivity() {
     private lateinit var binding: ActivityFullTextBinding
 
