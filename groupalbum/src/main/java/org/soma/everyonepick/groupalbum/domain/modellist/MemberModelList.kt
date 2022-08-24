@@ -23,17 +23,17 @@ class MemberModelList {
         _data = actualData
     }
 
-    fun getActualItemCount() = data.size - 1
+    fun getActualItemCount() = _data.size - 1
 
-    fun getActualData() = data.subList(0, getActualItemCount()).toMutableList()
+    fun getActualData() = _data.subList(0, getActualItemCount()).toMutableList()
 
     fun setActualData(actualData: MutableList<MemberModel>) {
         _data = actualData
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        for (i in data.indices) {
-            val newItem = copyMemberModel(data[i])
+        for (i in _data.indices) {
+            val newItem = copyMemberModel(_data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
             newItem.isChecked = false
             _data[i] = newItem
