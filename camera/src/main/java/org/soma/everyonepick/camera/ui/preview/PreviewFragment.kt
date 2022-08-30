@@ -1,4 +1,4 @@
-package org.soma.everyonepick.camera.ui.camerafragments
+package org.soma.everyonepick.camera.ui.preview
 
 import android.os.Build
 import android.os.Bundle
@@ -10,18 +10,24 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
+import org.soma.everyonepick.camera.domain.usecase.PosePackUseCase
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-
+@AndroidEntryPoint
 class PreviewFragment : Fragment() {
     private var _binding: FragmentPreviewBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: PreviewViewModel by viewModels()
 
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
@@ -34,13 +40,19 @@ class PreviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPreviewBinding.inflate(inflater, container, false)
+        _binding = FragmentPreviewBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.posePackAdapter = PosePackAdapter()
+        }
 
         binding.imagebuttonShutter.setOnClickListener {
             imageCapture?.let { imageCapture ->
                 // TODO: imageCapture.takePicture
             }
         }
+
+        viewModel.readPosePackModelList()
 
         return binding.root
     }

@@ -1,4 +1,4 @@
-package org.soma.everyonepick.camera.ui.camerafragments
+package org.soma.everyonepick.camera.ui
 
 import android.Manifest
 import android.os.Bundle
