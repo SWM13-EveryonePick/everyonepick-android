@@ -55,6 +55,8 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$rootProject.cameraXVersion"
     implementation "androidx.camera:camera-view:$rootProject.cameraXVersion"
 
+    implementation "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
+
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitVersion"

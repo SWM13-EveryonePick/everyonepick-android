@@ -5,14 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/imagebutton_shutter"
-        android:layout_width="@dimen/shutter_button"
-        android:layout_height="@dimen/shutter_button"
-        android:layout_marginBottom="@dimen/shutter_button_margin"
-        android:background="@drawable/ic_baseline_brightness_1_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_camera_button_layout"
+        android:paddingTop="@dimen/top_margin_camera_button_layout"
+        android:paddingLeft="@dimen/side_margin_camera_button_layout"
+        android:paddingRight="@dimen/side_margin_camera_button_layout"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/size_camera_side_button"
+            android:layout_height="@dimen/size_camera_side_button"
+            android:src="@color/primary_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imagebutton_shutter"
+            app:layout_constraintBottom_toBottomOf="@id/imagebutton_shutter"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagebutton_shutter"
+            android:layout_width="@dimen/size_shutter_button"
+            android:layout_height="@dimen/size_shutter_button"
+            android:src="@drawable/ic_baseline_brightness_1_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:civ_border_color="@color/primary_blue"
+            app:civ_border_width="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:layout_width="@dimen/size_camera_side_button"
+            android:layout_height="@dimen/size_camera_side_button"
+            android:src="@drawable/ic_btn_pose"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imagebutton_shutter"
+            app:layout_constraintBottom_toBottomOf="@id/imagebutton_shutter"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
