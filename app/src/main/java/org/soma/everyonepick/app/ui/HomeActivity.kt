@@ -72,36 +72,11 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
             setupWithNavController(navController)
             addOnItemSelectedListener(navController) { item ->
                 val isCamera = item.itemId == R.id.nav_camera
-                setFullScreenMode(isCamera)
                 binding.layoutCameranavigation.setVisibility(isCamera)
 
                 if (isCamera) hideBottomNavigationView()
                 else showBottomNavigationView()
             }
-        }
-    }
-
-    @SuppressLint("RestrictedApi")
-    private fun setFullScreenMode(flag: Boolean) {
-        supportActionBar?.setShowHideAnimationEnabled(false)
-
-        if (flag) hideStatusBar()
-        else showStatusBar()
-    }
-
-    private fun hideStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-        }
-    }
-
-    private fun showStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.show(WindowInsets.Type.statusBars())
-        } else {
-            window.decorView.systemUiVisibility = View.VISIBLE
         }
     }
 
@@ -134,7 +109,6 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
         val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
         animateBottomMargin(binding.bottomnavigationview, params.bottomMargin, 0)
     }
-
 
     override fun showAreYouSureDialog() {
         DialogWithTwoButton.Builder(this)
