@@ -10,6 +10,9 @@
         <variable
             name="posePackAdapter"
             type="org.soma.everyonepick.camera.ui.preview.PosePackAdapter" />
+        <variable
+            name="listener"
+            type="org.soma.everyonepick.camera.ui.preview.PreviewFragmentListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +25,7 @@
             android:id="@+id/previewview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:onClick="@{() -> listener.onClickPreview()}"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -78,6 +82,7 @@
                 android:layout_width="@dimen/size_camera_side_button"
                 android:layout_height="@dimen/size_camera_side_button"
                 android:src="@color/primary_blue"
+                android:onClick="@{() -> listener.onClickGalleryButton()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/imagebutton_shutter"
                 app:layout_constraintBottom_toBottomOf="@id/imagebutton_shutter"/>
@@ -89,6 +94,7 @@
                 android:src="@drawable/ic_baseline_brightness_1_24"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:onClick="@{() -> listener.onClickShutterButton()}"
                 app:civ_border_color="@color/primary_blue"
                 app:civ_border_width="5dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +107,7 @@
                 android:src="@drawable/ic_btn_pose"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:onClick="@{() -> listener.onClickPosePackButton()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/imagebutton_shutter"
                 app:layout_constraintBottom_toBottomOf="@id/imagebutton_shutter"/>
@@ -108,9 +115,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_posepack"
             android:layout_width="match_parent"
             android:layout_height="350dp"
+            android:layout_marginBottom="-350dp"
             android:background="@color/dark_gray"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView

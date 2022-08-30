@@ -7,6 +7,9 @@ package org.soma.everyonepick.common.util
 interface HomeActivityUtil {
     fun hideBottomNavigationView()
     fun showBottomNavigationView()
+    fun hideCameraNavigation()
+    fun showCameraNavigation()
     fun showAreYouSureDialog()
     fun startLoginActivity()
+    fun navigateToGroupAlbum()
 }

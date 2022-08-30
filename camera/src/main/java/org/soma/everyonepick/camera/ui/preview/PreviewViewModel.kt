@@ -21,10 +21,17 @@ class PreviewViewModel @Inject constructor(
     private val _posePackModelList = MutableStateFlow(mutableListOf<PosePackModel>())
     val posePackModelList: StateFlow<MutableList<PosePackModel>> = _posePackModelList
 
+    private val _isPosePackShown = MutableStateFlow(false)
+    val isPosePackShown: StateFlow<Boolean> = _isPosePackShown
+
     fun readPosePackModelList() {
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
             _posePackModelList.value = posePackUseCase.readPosePackList(token)
         }
+    }
+
+    fun switchIsPosePackShown() {
+        _isPosePackShown.value = !_isPosePackShown.value
     }
 }

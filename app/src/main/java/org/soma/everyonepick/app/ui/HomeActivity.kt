@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
@@ -27,8 +28,6 @@ import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
 import javax.inject.Inject
 
-
-private const val ANIMATION_DURATION = 150L
 
 /**
  * 하위 모듈들이 접근할 수 없는 코드를 [HomeActivityUtil]을 통해 하위 모듈에 제공합니다.
@@ -110,6 +109,17 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
         animateBottomMargin(binding.bottomnavigationview, params.bottomMargin, 0)
     }
 
+    override fun hideCameraNavigation() {
+        val params = binding.layoutCameranavigation.layoutParams as ConstraintLayout.LayoutParams
+        val height = binding.layoutCameranavigation.height
+        animateBottomMargin(binding.layoutCameranavigation, params.bottomMargin, -height)
+    }
+
+    override fun showCameraNavigation() {
+        val params = binding.layoutCameranavigation.layoutParams as ConstraintLayout.LayoutParams
+        animateBottomMargin(binding.layoutCameranavigation, params.bottomMargin, 0)
+    }
+
     override fun showAreYouSureDialog() {
         DialogWithTwoButton.Builder(this)
             .setMessage("${baseContext.getString(org.soma.everyonepick.common.R.string.app_name)}을 종료합니다.")
@@ -125,6 +135,10 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
         startActivity(intent)
     }
 
+    override fun navigateToGroupAlbum() {
+        binding.bottomnavigationview.selectedItemId = R.id.nav_group_album
+    }
+
 
     /** [HomeActivityListener] */
     override fun onClickTutorialListener() {
@@ -137,6 +151,10 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
 
     override fun onClickSettingText() {
         binding.bottomnavigationview.selectedItemId = R.id.nav_setting
+    }
+
+    companion object {
+        private const val ANIMATION_DURATION = 150L
     }
 }
 
