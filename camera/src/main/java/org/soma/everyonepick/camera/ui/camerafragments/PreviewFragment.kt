@@ -11,7 +11,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import org.soma.everyonepick.camera.databinding.CameraUiContainerBinding
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -23,8 +22,6 @@ import kotlin.math.min
 class PreviewFragment : Fragment() {
     private var _binding: FragmentPreviewBinding? = null
     private val binding get() = _binding!!
-
-    private var cameraUiContainerBinding: CameraUiContainerBinding? = null
 
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
@@ -38,6 +35,13 @@ class PreviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPreviewBinding.inflate(inflater, container, false)
+
+        binding.imagebuttonShutter.setOnClickListener {
+            imageCapture?.let { imageCapture ->
+                // TODO: imageCapture.takePicture
+            }
+        }
+
         return binding.root
     }
 
@@ -47,26 +51,7 @@ class PreviewFragment : Fragment() {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         binding.previewview.post {
-            updateCameraUi()
             setUpCamera()
-        }
-    }
-
-    private fun updateCameraUi() {
-        cameraUiContainerBinding?.root?.let {
-            binding.layoutRoot.removeView(it)
-        }
-
-        cameraUiContainerBinding = CameraUiContainerBinding.inflate(
-            LayoutInflater.from(requireContext()),
-            binding.layoutRoot,
-            true
-        )
-
-        cameraUiContainerBinding?.imagebuttonShutter?.setOnClickListener {
-            imageCapture?.let { imageCapture ->
-                // TODO: imageCapture.takePicture
-            }
         }
     }
 
