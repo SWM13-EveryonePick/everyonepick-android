@@ -11,7 +11,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import org.soma.everyonepick.camera.databinding.CameraUiContainer2Binding
+import org.soma.everyonepick.camera.databinding.CameraUiContainerBinding
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -24,7 +24,7 @@ class PreviewFragment : Fragment() {
     private var _binding: FragmentPreviewBinding? = null
     private val binding get() = _binding!!
 
-    private var cameraUiContainerBinding: CameraUiContainer2Binding? = null
+    private var cameraUiContainerBinding: CameraUiContainerBinding? = null
 
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
@@ -57,7 +57,7 @@ class PreviewFragment : Fragment() {
             binding.layoutRoot.removeView(it)
         }
 
-        cameraUiContainerBinding = CameraUiContainer2Binding.inflate(
+        cameraUiContainerBinding = CameraUiContainerBinding.inflate(
             LayoutInflater.from(requireContext()),
             binding.layoutRoot,
             true
