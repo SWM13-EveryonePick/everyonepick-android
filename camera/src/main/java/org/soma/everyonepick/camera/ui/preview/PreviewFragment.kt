@@ -60,7 +60,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         _binding = FragmentPreviewBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
-            it.posePackAdapter = PosePackAdapter()
+            it.posePackAdapter = PosePackAdapter(viewModel)
             it.listener = this
         }
 

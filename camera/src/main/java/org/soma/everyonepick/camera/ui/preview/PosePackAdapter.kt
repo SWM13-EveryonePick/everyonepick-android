@@ -1,5 +1,6 @@
 package org.soma.everyonepick.camera.ui.preview
 
+import android.graphics.Color
 import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +13,9 @@ import org.soma.everyonepick.camera.data.entity.PosePack
 import org.soma.everyonepick.camera.databinding.ItemPosePackBinding
 import org.soma.everyonepick.camera.domain.model.PosePackModel
 
-class PosePackAdapter: ListAdapter<PosePackModel, RecyclerView.ViewHolder>(PosePackDiffCallback()) {
+class PosePackAdapter(
+    private val parentViewModel: PreviewViewModel
+): ListAdapter<PosePackModel, RecyclerView.ViewHolder>(PosePackDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DataBindingUtil.inflate<ItemPosePackBinding>(
             LayoutInflater.from(parent.context),
@@ -20,7 +23,11 @@ class PosePackAdapter: ListAdapter<PosePackModel, RecyclerView.ViewHolder>(PoseP
             parent,
             false
         )
-        return PosePackViewHolder(binding)
+        val holder = PosePackViewHolder(binding)
+        binding.textName.setOnClickListener {
+            parentViewModel.setSelectedPosePackIndex(holder.absoluteAdapterPosition)
+        }
+        return holder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -33,6 +40,9 @@ class PosePackAdapter: ListAdapter<PosePackModel, RecyclerView.ViewHolder>(PoseP
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(posePackModel: PosePackModel) {
             binding.textName.text = posePackModel.name
+
+            val color = if (posePackModel.isSelected) Color.WHITE else Color.GRAY
+            binding.textName.setTextColor(color)
         }
     }
 }
