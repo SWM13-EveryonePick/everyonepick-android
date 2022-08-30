@@ -63,6 +63,10 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$rootProject.cameraXVersion"
     implementation "androidx.camera:camera-view:$rootProject.cameraXVersion"
 
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+
     implementation "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
 
     testImplementation "junit:junit:$rootProject.jUnitVersion"

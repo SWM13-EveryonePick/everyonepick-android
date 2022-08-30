@@ -72,4 +72,10 @@ class PreviewViewModel @Inject constructor(
     fun setSelectedPosePackIndex(position: Int) {
         _selectedPosePackIndex.value = position
     }
+
+    fun onSelectPoseModel(selectedIndex: Int) {
+        _poseModelList.value = _poseModelList.value.mapIndexed { index, item ->
+            PoseModel(item.id, item.url, index == selectedIndex)
+        }.toMutableList()
+    }
 }

@@ -11,6 +11,9 @@
             name="posePackAdapter"
             type="org.soma.everyonepick.camera.ui.preview.PosePackAdapter" />
         <variable
+            name="poseAdapter"
+            type="org.soma.everyonepick.camera.ui.preview.PoseAdapter" />
+        <variable
             name="listener"
             type="org.soma.everyonepick.camera.ui.preview.PreviewFragmentListener" />
     </data>
@@ -124,6 +127,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_posepack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -132,6 +136,20 @@
                 adapter="@{posePackAdapter}"
                 submitList="@{viewModel.posePackModelList}"
                 tools:listitem="@layout/item_pose_pack"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerview_posepack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="4"
+                adapter="@{poseAdapter}"
+                submitList="@{viewModel.poseModelList}"
+                tools:listitem="@layout/item_pose"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

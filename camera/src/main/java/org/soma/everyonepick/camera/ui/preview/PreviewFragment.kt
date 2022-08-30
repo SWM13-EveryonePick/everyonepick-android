@@ -61,6 +61,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.posePackAdapter = PosePackAdapter(viewModel)
+            it.poseAdapter = PoseAdapter(viewModel)
             it.listener = this
         }
 
