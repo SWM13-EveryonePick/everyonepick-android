@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +22,7 @@ import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
 import javax.inject.Inject
@@ -32,7 +34,7 @@ private const val ANIMATION_DURATION = 150L
  * 하위 모듈들이 접근할 수 없는 코드를 [HomeActivityUtil]을 통해 하위 모듈에 제공합니다.
  */
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), HomeActivityUtil {
+class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener {
     private lateinit var binding: ActivityHomeBinding
 
     private var valueAnimator: ValueAnimator? = null
@@ -42,9 +44,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<ActivityHomeBinding?>(this, R.layout.activity_home).apply {
-            onClickTutorialListener = View.OnClickListener {
-                layoutTutorial.visibility = View.GONE
-            }
+            listener = this@HomeActivity
         }
 
         showTutorialAtFirst()
@@ -71,8 +71,12 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
         binding.bottomnavigationview.run {
             setupWithNavController(navController)
             addOnItemSelectedListener(navController) { item ->
-                // Camera Fragment에서 풀스크린을 사용합니다.
-                setFullScreenMode(item.itemId == R.id.nav_camera)
+                val isCamera = item.itemId == R.id.nav_camera
+                setFullScreenMode(isCamera)
+                binding.layoutCameranavigation.setVisibility(isCamera)
+
+                if (isCamera) hideBottomNavigationView()
+                else showBottomNavigationView()
             }
         }
     }
@@ -102,15 +106,15 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
     }
 
 
-    /** HomeActivityUtility */
+    /** [HomeActivityUtil] */
     override fun hideBottomNavigationView() {
         val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
         val height = binding.bottomnavigationview.height
-        animateBottomNavigationViewBottomMargin(params.bottomMargin, -height)
+        animateBottomMargin(binding.bottomnavigationview, params.bottomMargin, -height)
     }
 
-    private fun animateBottomNavigationViewBottomMargin(start: Int, end: Int) {
-        val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
+    private fun animateBottomMargin(view: View, start: Int, end: Int) {
+        val params = view.layoutParams as ConstraintLayout.LayoutParams
         if (params.bottomMargin == end) return
 
         valueAnimator?.cancel()
@@ -118,7 +122,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
         valueAnimator = ValueAnimator.ofInt(start, end).apply {
             addUpdateListener { valueAnimator ->
                 params.bottomMargin = valueAnimator.animatedValue as Int
-                binding.bottomnavigationview.layoutParams = params
+                view.layoutParams = params
             }
             duration = ANIMATION_DURATION
 
@@ -128,8 +132,9 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
 
     override fun showBottomNavigationView() {
         val params = binding.bottomnavigationview.layoutParams as ConstraintLayout.LayoutParams
-        animateBottomNavigationViewBottomMargin(params.bottomMargin, 0)
+        animateBottomMargin(binding.bottomnavigationview, params.bottomMargin, 0)
     }
+
 
     override fun showAreYouSureDialog() {
         DialogWithTwoButton.Builder(this)
@@ -145,4 +150,24 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil {
         }
         startActivity(intent)
     }
+
+
+    /** [HomeActivityListener] */
+    override fun onClickTutorialListener() {
+        binding.layoutTutorial.visibility = View.GONE
+    }
+
+    override fun onClickGroupAlbumText() {
+        binding.bottomnavigationview.selectedItemId = R.id.nav_group_album
+    }
+
+    override fun onClickSettingText() {
+        binding.bottomnavigationview.selectedItemId = R.id.nav_setting
+    }
+}
+
+interface HomeActivityListener {
+    fun onClickTutorialListener()
+    fun onClickGroupAlbumText()
+    fun onClickSettingText()
 }
