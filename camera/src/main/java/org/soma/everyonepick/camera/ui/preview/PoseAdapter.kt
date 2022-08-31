@@ -1,6 +1,8 @@
 package org.soma.everyonepick.camera.ui.preview
 
+import android.animation.ValueAnimator
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -14,8 +16,10 @@ import org.soma.everyonepick.common.util.setVisibility
 
 class PoseAdapter(
     private val parentViewModel: PreviewViewModel
-): ListAdapter<PoseModel, RecyclerView.ViewHolder>(PoseDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+): ListAdapter<PoseModel, PoseAdapter.PoseViewHolder>(PoseDiffCallback()) {
+    private var prevBinding: ItemPoseBinding? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PoseViewHolder {
         val binding = DataBindingUtil.inflate<ItemPoseBinding>(
             LayoutInflater.from(parent.context),
             R.layout.item_pose,
@@ -23,14 +27,23 @@ class PoseAdapter(
             false
         )
         val holder = PoseViewHolder(binding)
-        binding.image.setOnClickListener {
-            parentViewModel.onSelectPoseModel(holder.absoluteAdapterPosition)
+        binding.onClickImage = View.OnClickListener {
+            if (binding == prevBinding) {
+                binding.layoutSelected.animate().alpha(0.0f)
+                prevBinding = null
+                parentViewModel.setSelectedPoseIndex(null)
+            } else {
+                binding.layoutSelected.animate().alpha(0.5f)
+                prevBinding?.layoutSelected?.animate()?.alpha(0.0f)
+                prevBinding = binding
+                parentViewModel.setSelectedPoseIndex(holder.absoluteAdapterPosition)
+            }
         }
+
         return holder
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder as PoseViewHolder
+    override fun onBindViewHolder(holder: PoseViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
@@ -38,10 +51,8 @@ class PoseAdapter(
         private val binding: ItemPoseBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(poseModel: PoseModel) {
-            Glide.with(binding.root)
-                .load(poseModel.url)
-                .into(binding.image)
-            binding.layoutSelected.setVisibility(poseModel.isSelected)
+            binding.poseModel = poseModel
+            binding.executePendingBindings()
         }
     }
 }

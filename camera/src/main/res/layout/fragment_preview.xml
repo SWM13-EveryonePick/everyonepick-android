@@ -33,6 +33,7 @@
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_top"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="@color/white"
@@ -71,7 +72,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            poseModelList="@{viewModel.poseModelList}"
+            selectedPoseIndex="@{viewModel.selectedPoseIndex}"
+            app:layout_constraintTop_toBottomOf="@id/layout_top"
+            app:layout_constraintBottom_toTopOf="@id/layout_bottom"
+            />
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/top_margin_camera_button_layout"

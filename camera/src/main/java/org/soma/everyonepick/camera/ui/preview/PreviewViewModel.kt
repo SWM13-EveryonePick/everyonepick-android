@@ -29,6 +29,9 @@ class PreviewViewModel @Inject constructor(
     private val _poseModelList = MutableStateFlow(mutableListOf<PoseModel>())
     val poseModelList: StateFlow<MutableList<PoseModel>> = _poseModelList
 
+    private val _selectedPoseIndex = MutableStateFlow<Int?>(null)
+    val selectedPoseIndex: StateFlow<Int?> = _selectedPoseIndex
+
     private val _isPosePackShown = MutableStateFlow(false)
     val isPosePackShown: StateFlow<Boolean> = _isPosePackShown
 
@@ -73,9 +76,7 @@ class PreviewViewModel @Inject constructor(
         _selectedPosePackIndex.value = position
     }
 
-    fun onSelectPoseModel(selectedIndex: Int) {
-        _poseModelList.value = _poseModelList.value.mapIndexed { index, item ->
-            PoseModel(item.id, item.url, index == selectedIndex)
-        }.toMutableList()
+    fun setSelectedPoseIndex(index: Int?) {
+        _selectedPoseIndex.value = index
     }
 }
