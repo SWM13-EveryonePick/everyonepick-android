@@ -95,8 +95,11 @@
             <ImageView
                 android:layout_width="@dimen/size_camera_side_button"
                 android:layout_height="@dimen/size_camera_side_button"
-                android:src="@color/primary_blue"
                 android:onClick="@{() -> listener.onClickGalleryButton()}"
+                android:scaleType="centerCrop"
+                android:background="@drawable/gallery_background"
+                android:clipToOutline="true"
+                bitmap="@{viewModel.latestImage}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/imagebutton_shutter"
                 app:layout_constraintBottom_toBottomOf="@id/imagebutton_shutter"/>

@@ -1,5 +1,6 @@
 package org.soma.everyonepick.camera.ui.preview
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,6 +37,9 @@ class PreviewViewModel @Inject constructor(
 
     private val _isPosePackShown = MutableStateFlow(false)
     val isPosePackShown: StateFlow<Boolean> = _isPosePackShown
+
+    private val _latestImage = MutableStateFlow<Bitmap?>(null)
+    val latestImage: StateFlow<Bitmap?> = _latestImage
 
 
     init {
@@ -78,5 +82,9 @@ class PreviewViewModel @Inject constructor(
 
     fun setSelectedPoseIndex(index: Int?) {
         _selectedPoseIndex.value = index
+    }
+
+    fun setLatestImage(bitmap: Bitmap) {
+        _latestImage.value = bitmap
     }
 }

@@ -1,8 +1,14 @@
 package org.soma.everyonepick.camera.ui.preview
 
+import android.R
 import android.animation.ValueAnimator
+import android.content.Intent
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,21 +25,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
-import org.soma.everyonepick.camera.domain.usecase.PosePackUseCase
 import org.soma.everyonepick.common.util.HomeActivityUtil
-import org.soma.everyonepick.common.util.setVisibility
+import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+
 
 @AndroidEntryPoint
 class PreviewFragment : Fragment(), PreviewFragmentListener {
@@ -65,9 +68,30 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             it.listener = this
         }
 
+        queryAndSetLatestImage()
         subscribeUi()
 
         return binding.root
+    }
+
+    /**
+     * 가장 최근의 사진을 불러온 뒤 [PreviewViewModel.setLatestImage]로 정보를 저장합니다.
+     */
+    private fun queryAndSetLatestImage() {
+        val projection = arrayOf(
+            MediaStore.Images.ImageColumns.DATA,
+            MediaStore.Images.ImageColumns.DATE_TAKEN
+        )
+        val cursor = requireContext().contentResolver
+            .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
+                null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC")
+        if (cursor != null && cursor.moveToFirst()) {
+            val imageLocation = cursor.getString(0)
+            if (File(imageLocation).exists()) {
+                val bitmap = BitmapFactory.decodeFile(imageLocation)
+                viewModel.setLatestImage(bitmap)
+            }
+        }
     }
 
     private fun subscribeUi() {
@@ -110,26 +134,48 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         if (params.bottomMargin == end) return
 
         valueAnimator?.cancel()
-
         valueAnimator = ValueAnimator.ofInt(start, end).apply {
             addUpdateListener { valueAnimator ->
                 params.bottomMargin = valueAnimator.animatedValue as Int
                 view.layoutParams = params
             }
             duration = ANIMATION_DURATION
-
             start()
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.isPosePackShown.value) viewModel.switchIsPosePackShown()
+                else (activity as HomeActivityUtil).navigateToGroupAlbum()
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onBackPressedCallback.remove()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        _binding = null
+        cameraExecutor.shutdown()
+    }
+
+
+    /** 카메라 관련 */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-
-        binding.previewview.post {
-            setUpCamera()
-        }
+        binding.previewview.post { setUpCamera() }
     }
 
     private fun setUpCamera() {
@@ -192,33 +238,15 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (viewModel.isPosePackShown.value) viewModel.switchIsPosePackShown()
-                else (activity as HomeActivityUtil).navigateToGroupAlbum()
-            }
-        }
-        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        onBackPressedCallback.remove()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        _binding = null
-        cameraExecutor.shutdown()
-    }
-
 
     /** [PreviewFragmentListener] */
     override fun onClickGalleryButton() {
-        // TODO
+        val intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            type = "image/*"
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
     }
 
     override fun onClickShutterButton() {

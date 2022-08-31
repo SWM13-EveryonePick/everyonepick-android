@@ -1,6 +1,7 @@
 package org.soma.everyonepick.common_ui.binding
 
 import android.content.ContextWrapper
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
@@ -35,6 +36,11 @@ fun bindImageView(imageView: ImageView, photoUrl: String) {
     Glide.with(imageView.context)
         .load(photoUrl)
         .into(imageView)
+}
+
+@BindingAdapter("bitmap")
+fun bindImageView(imageView: ImageView, bitmap: Bitmap?) {
+    imageView.setImageBitmap(bitmap)
 }
 
 /**
