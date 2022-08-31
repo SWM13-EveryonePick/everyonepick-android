@@ -78,7 +78,9 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                         (activity as HomeActivityUtil).hideCameraNavigation()
                         showPosePackLayout()
 
-                        viewModel.readPosePackModelList()
+                        if (viewModel.posePackModelList.value.isEmpty()) {
+                            viewModel.readPosePackModelList()
+                        }
                     } else {
                         (activity as HomeActivityUtil).showCameraNavigation()
                         hidePosePackLayout()
@@ -208,8 +210,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
 
+        _binding = null
         cameraExecutor.shutdown()
     }
 

@@ -26,38 +26,38 @@ class PreviewViewModel @Inject constructor(
     private val _selectedPosePackIndex = MutableStateFlow(0)
     val selectedPosePackIndex: StateFlow<Int> = _selectedPosePackIndex
 
+
     private val _poseModelList = MutableStateFlow(mutableListOf<PoseModel>())
     val poseModelList: StateFlow<MutableList<PoseModel>> = _poseModelList
 
     private val _selectedPoseIndex = MutableStateFlow<Int?>(null)
     val selectedPoseIndex: StateFlow<Int?> = _selectedPoseIndex
 
+
     private val _isPosePackShown = MutableStateFlow(false)
     val isPosePackShown: StateFlow<Boolean> = _isPosePackShown
+
 
     init {
         viewModelScope.launch {
             _selectedPosePackIndex.collect {
-                onSelectPosePackModel(it)
+                readPoseModelList()
+            }
+        }
+
+        viewModelScope.launch {
+            _posePackModelList.collect {
+                readPoseModelList()
             }
         }
     }
+
 
     fun readPosePackModelList() {
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
             _posePackModelList.value = posePackUseCase.readPosePackList(token)
-
-            onSelectPosePackModel(_selectedPosePackIndex.value)
         }
-    }
-
-    private fun onSelectPosePackModel(selectedIndex: Int) {
-        _posePackModelList.value = _posePackModelList.value.mapIndexed { index, item ->
-            PosePackModel(item.id, item.name, index == selectedIndex)
-        }.toMutableList()
-
-        readPoseModelList()
     }
 
     private fun readPoseModelList() {

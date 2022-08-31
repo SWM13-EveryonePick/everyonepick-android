@@ -17,6 +17,10 @@ import org.soma.everyonepick.common.util.setVisibility
 class PoseAdapter(
     private val parentViewModel: PreviewViewModel
 ): ListAdapter<PoseModel, PoseAdapter.PoseViewHolder>(PoseDiffCallback()) {
+    /**
+     * 최근에 선택되었던 뷰 바인딩입니다. 특정 아이템을 클릭했을 때 해당 아이템을 클릭 처리하고 여기에 저장된 뷰 바인딩을 통해
+     * 클릭 해제 처리를 합니다.
+     */
     private var prevBinding: ItemPoseBinding? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PoseViewHolder {
@@ -28,13 +32,16 @@ class PoseAdapter(
         )
         val holder = PoseViewHolder(binding)
         binding.onClickImage = View.OnClickListener {
+            // 이미 선택된 것을 또다시 클릭한 경우
             if (binding == prevBinding) {
                 binding.layoutSelected.animate().alpha(0.0f)
+
                 prevBinding = null
                 parentViewModel.setSelectedPoseIndex(null)
             } else {
                 binding.layoutSelected.animate().alpha(0.5f)
                 prevBinding?.layoutSelected?.animate()?.alpha(0.0f)
+
                 prevBinding = binding
                 parentViewModel.setSelectedPoseIndex(holder.absoluteAdapterPosition)
             }
