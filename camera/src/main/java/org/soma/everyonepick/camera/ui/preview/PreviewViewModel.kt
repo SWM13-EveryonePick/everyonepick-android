@@ -47,9 +47,11 @@ class PreviewViewModel @Inject constructor(
     private val _latestImage = MutableStateFlow<Bitmap?>(null)
     val latestImage: StateFlow<Bitmap?> = _latestImage
 
-
     private val _lensFacing = MutableStateFlow(CameraSelector.LENS_FACING_BACK)
     val lensFacing: StateFlow<Int> = _lensFacing
+
+    private val _isTakingPicture = MutableStateFlow(false)
+    val isTakingPicture: StateFlow<Boolean> = _isTakingPicture
 
 
     init {
@@ -123,5 +125,9 @@ class PreviewViewModel @Inject constructor(
         _lensFacing.value =
             if (_lensFacing.value == CameraSelector.LENS_FACING_BACK) CameraSelector.LENS_FACING_FRONT
             else CameraSelector.LENS_FACING_BACK
+    }
+
+    fun setIsTakingPicture(flag: Boolean) {
+        _isTakingPicture.value = flag
     }
 }

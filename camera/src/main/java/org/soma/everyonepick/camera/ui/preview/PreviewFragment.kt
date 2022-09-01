@@ -1,23 +1,27 @@
 package org.soma.everyonepick.camera.ui.preview
 
-import android.R
+import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.*
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.camera.core.*
 import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,13 +32,9 @@ import org.soma.everyonepick.common.util.CameraUtil.Companion.rotate
 import org.soma.everyonepick.common.util.CameraUtil.Companion.toBitmap
 import org.soma.everyonepick.common.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common.util.HomeActivityUtil
-import java.io.ByteArrayOutputStream
-import java.io.File
+
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 
 
 @AndroidEntryPoint
@@ -149,22 +149,19 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
             processCameraProvider = cameraProviderFuture.get()
-            bindCameraUseCases()
+            bindCameraUseCase()
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun bindCameraUseCases() {
+    private fun bindCameraUseCase() {
         val cameraProvider = processCameraProvider
             ?: throw IllegalStateException("Camera initialization failed.")
-
         val screenAspectRatio = AspectRatio.RATIO_4_3
 
-        // Preview
         preview = Preview.Builder()
             .setTargetAspectRatio(screenAspectRatio)
             .build()
 
-        // ImageCapture
         imageCapture = ImageCapture.Builder()
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
             .setTargetAspectRatio(screenAspectRatio)
@@ -179,19 +176,12 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 .build()
 
             preview?.setSurfaceProvider(binding.previewview.surfaceProvider)
-            camera = cameraProvider.bindToLifecycle(
-                this as LifecycleOwner, cameraSelector, preview, imageCapture
-            )
+            camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageCapture)
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
         }
     }
 
-
-    override fun onStart() {
-        super.onStart()
-        orientationEventListener.enable()
-    }
 
     override fun onResume() {
         super.onResume()
@@ -202,15 +192,13 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             }
         }
         activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
+
+        orientationEventListener.enable()
     }
 
     override fun onPause() {
         super.onPause()
         onBackPressedCallback.remove()
-    }
-
-    override fun onStop() {
-        super.onStop()
         orientationEventListener.disable()
     }
 
@@ -234,7 +222,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
     override fun onClickShutterButton() {
         imageCapture?.let { imageCapture ->
-            val callback = object: ImageCapture.OnImageCapturedCallback() {
+            viewModel.setIsTakingPicture(true)
+            imageCapture.takePicture(cameraExecutor, object: ImageCapture.OnImageCapturedCallback() {
                 @SuppressLint("UnsafeOptInUsageError")
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
@@ -243,9 +232,29 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                         viewModel.setLatestImage(it) // 최근 사진을 업데이트합니다.
                     }
                     image.close()
+
+                    viewModel.setIsTakingPicture(false)
                 }
+            })
+
+            // 사진 저장에 시간이 약간 소요되므로 애니메이션 또한 지연하여 시작합니다.
+            Handler(Looper.getMainLooper()).postDelayed({
+                startShutterEffect()
+            }, 500L)
+        }
+    }
+
+    private fun startShutterEffect() {
+        ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 0f, 1f).apply {
+            interpolator = AccelerateInterpolator()
+            duration = SHUTTER_EFFECT_DURATION / 2
+            start()
+        }.doOnEnd {
+            ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 1f, 0f).apply {
+                interpolator = DecelerateInterpolator()
+                duration = SHUTTER_EFFECT_DURATION / 2
+                start()
             }
-            imageCapture.takePicture(cameraExecutor, callback)
         }
     }
 
@@ -264,6 +273,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     companion object {
         private const val TAG = "PreviewFragment"
         private const val ANIMATION_DURATION = 300L
+        private const val SHUTTER_EFFECT_DURATION = 400L
     }
 }
 

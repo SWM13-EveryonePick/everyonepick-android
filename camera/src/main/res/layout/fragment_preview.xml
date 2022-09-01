@@ -117,7 +117,7 @@
                 android:layout_height="@dimen/size_shutter_button"
                 android:src="@drawable/ic_baseline_brightness_1_24"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
+                android:clickable="@{!viewModel.isTakingPicture}"
                 android:onClick="@{() -> listener.onClickShutterButton()}"
                 app:civ_border_color="@color/primary_blue"
                 app:civ_border_width="5dp"
@@ -173,6 +173,14 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_shuttereffect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:alpha="0"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
