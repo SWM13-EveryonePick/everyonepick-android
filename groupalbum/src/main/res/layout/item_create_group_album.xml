@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="onClickCardView"
+            type="android.view.View.OnClickListener" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/width_group_album"
         android:layout_height="@dimen/height_group_album">
@@ -13,6 +19,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:clickable="true"
+            android:onClick="@{onClickCardView}"
             app:cardCornerRadius="@dimen/radius_large"
             app:strokeColor="@color/primary_blue"
             app:strokeWidth="1dp"

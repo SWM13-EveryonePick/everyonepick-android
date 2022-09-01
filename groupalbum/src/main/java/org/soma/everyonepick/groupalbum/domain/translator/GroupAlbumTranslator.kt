@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.domain.translator
 
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumLocal
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadList
@@ -10,7 +11,7 @@ class GroupAlbumTranslator {
         fun MutableList<GroupAlbumReadList>.groupAlbumReadListToGroupAlbumModelList(): MutableList<GroupAlbumModel> {
             val groupAlbumModelList = mutableListOf<GroupAlbumModel>()
             for (i in 0 until size) {
-                groupAlbumModelList.add(GroupAlbumModel(get(i), isChecked = false, isCheckboxVisible = false))
+                groupAlbumModelList.add(GroupAlbumModel(get(i), isChecked = MutableStateFlow(false), isCheckboxVisible = false))
             }
             return groupAlbumModelList
         }
@@ -21,7 +22,7 @@ class GroupAlbumTranslator {
                 val item = get(i)
                 groupAlbumModelList.add(GroupAlbumModel(
                     GroupAlbumReadList(item.id, item.title, item.hostUserId, item.users, item.photoCnt),
-                    isChecked = false, isCheckboxVisible = false
+                    isChecked = MutableStateFlow(false), isCheckboxVisible = false
                 ))
             }
             return groupAlbumModelList

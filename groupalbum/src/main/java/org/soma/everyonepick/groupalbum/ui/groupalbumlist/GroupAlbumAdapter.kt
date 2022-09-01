@@ -1,13 +1,16 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
@@ -24,9 +27,7 @@ import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
  * 따라서 데이터는 [원본 데이터]*N + [더미 데이터] 형태를 유지해야 합니다.
  * @see GroupAlbumListViewModel
  */
-class GroupAlbumAdapter(
-    private val parentViewModel: GroupAlbumListViewModel
-): ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
+class GroupAlbumAdapter: ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
@@ -38,49 +39,35 @@ class GroupAlbumAdapter(
             GroupAlbumViewType.CREATE.ordinal -> {
                 val binding = getViewDataBinding<ItemCreateGroupAlbumBinding>(parent, R.layout.item_create_group_album)
                 val holder = CreateGroupAlbumViewHolder(binding)
-                subscribeCreateGroupAlbumModelUi(binding, holder)
+
+                binding.onClickCardView = View.OnClickListener {
+                    val item = getItem(holder.absoluteAdapterPosition)
+                    // 일반 모드일 때
+                    if (!item.isCheckboxVisible) {
+                        val directions = HomeViewPagerFragmentDirections.toInviteFriendFragment(InviteFriendFragmentType.TO_CREATE)
+                        binding.root.findNavController().navigate(directions)
+                    }
+                }
 
                 holder
             }
             else -> {
                 val binding = getViewDataBinding<ItemGroupAlbumBinding>(parent, R.layout.item_group_album)
                 val holder = GroupAlbumViewHolder(binding)
-                subscribeGroupAlbumModelUi(binding, holder)
+
+                binding.onClickRoot = View.OnClickListener {
+                    val item = getItem(holder.absoluteAdapterPosition)
+                    // 일반 모드일 때
+                    if (!item.isCheckboxVisible) {
+                        val directions = HomeViewPagerFragmentDirections.toGroupAlbumFragment(item.groupAlbum.id)
+                        binding.root.findNavController().navigate(directions)
+                    } else {
+                        binding.checkbox.performTouch()
+                    }
+                }
 
                 holder
             }
-        }
-    }
-
-    private fun <T: ViewDataBinding> getViewDataBinding(parent: ViewGroup, layoutRes: Int): T =
-        DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutRes, parent, false)
-
-    private fun subscribeCreateGroupAlbumModelUi(binding: ItemCreateGroupAlbumBinding, holder: CreateGroupAlbumViewHolder) {
-        binding.cardview.setOnClickListener {
-            val item = getItem(holder.absoluteAdapterPosition)
-            // 일반 모드일 때
-            if (!item.isCheckboxVisible) {
-                val directions = HomeViewPagerFragmentDirections.toInviteFriendFragment(InviteFriendFragmentType.TO_CREATE)
-                binding.root.findNavController().navigate(directions)
-            }
-        }
-    }
-
-    private fun subscribeGroupAlbumModelUi(binding: ItemGroupAlbumBinding, holder: GroupAlbumViewHolder) {
-        binding.root.setOnClickListener {
-            val item = getItem(holder.absoluteAdapterPosition)
-            // 일반 모드일 때
-            if (!item.isCheckboxVisible) {
-                val directions = HomeViewPagerFragmentDirections.toGroupAlbumFragment(item.groupAlbum.id)
-                binding.root.findNavController().navigate(directions)
-            } else {
-                binding.checkbox.performTouch()
-            }
-        }
-
-        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            val position = holder.absoluteAdapterPosition
-            parentViewModel.groupAlbumModelList.value?.data?.get(position)?.isChecked = isChecked
         }
     }
 
@@ -91,19 +78,14 @@ class GroupAlbumAdapter(
         }
     }
 
-
-    class CreateGroupAlbumViewHolder(
-        binding: ItemCreateGroupAlbumBinding
-    ): RecyclerView.ViewHolder(binding.root)
+    class CreateGroupAlbumViewHolder(binding: ItemCreateGroupAlbumBinding): RecyclerView.ViewHolder(binding.root)
 
     class GroupAlbumViewHolder(
         private val binding: ItemGroupAlbumBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(groupAlbumModel: GroupAlbumModel) {
-            binding.textTitle.text = groupAlbumModel.groupAlbum.title
-            binding.textPhotocount.text = "사진 ${groupAlbumModel.groupAlbum.photoCnt}장"
-            binding.checkbox.setVisibility(groupAlbumModel.isCheckboxVisible)
-            binding.checkbox.isChecked = groupAlbumModel.isChecked
+            binding.groupAlbumModel = groupAlbumModel
+            binding.executePendingBindings()
         }
     }
 }
