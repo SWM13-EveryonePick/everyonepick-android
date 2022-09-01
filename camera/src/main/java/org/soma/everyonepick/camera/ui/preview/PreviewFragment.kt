@@ -175,7 +175,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     }
 
     private fun bindCameraUseCases() {
-        val screenAspectRatio = calculateAspectRatio()
+        val screenAspectRatio = AspectRatio.RATIO_4_3
         val cameraProvider = processCameraProvider
             ?: throw IllegalStateException("Camera initialization failed.")
         // TODO: 화면 전환
@@ -204,25 +204,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             )
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
-        }
-    }
-
-    private fun calculateAspectRatio(): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val metrics = requireActivity().windowManager.currentWindowMetrics.bounds
-            aspectRatio(metrics.width(), metrics.height())
-        } else {
-            val metrics = resources.displayMetrics
-            aspectRatio(metrics.widthPixels, metrics.heightPixels)
-        }
-    }
-
-    private fun aspectRatio(width: Int, height: Int): Int {
-        val previewRatio = max(width, height).toDouble() / min(width, height)
-        return if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
-            AspectRatio.RATIO_4_3
-        } else {
-            AspectRatio.RATIO_16_9
         }
     }
 
@@ -263,8 +244,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
     companion object {
         private const val TAG = "PreviewFragment"
-        private const val RATIO_4_3_VALUE = 4.0 / 3.0
-        private const val RATIO_16_9_VALUE = 16.0 / 9.0
         private const val ANIMATION_DURATION = 300L
     }
 }

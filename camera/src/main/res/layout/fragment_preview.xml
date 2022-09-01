@@ -22,14 +22,17 @@
         android:id="@+id/layout_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".PreviewFragment">
 
         <androidx.camera.view.PreviewView
             android:id="@+id/previewview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="3:4"
             android:onClick="@{() -> listener.onClickPreview()}"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_top"
+            app:layout_constraintBottom_toTopOf="@id/layout_bottom"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,6 +42,7 @@
             android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- TODO: ... 버튼과 비율 버튼 visibility gone 해제 및 기능 구현 -->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,6 +50,7 @@
                 android:src="@drawable/ic_btn_camera_more"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
@@ -56,6 +61,7 @@
                 android:src="@drawable/ic_btn_camera_rate"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
