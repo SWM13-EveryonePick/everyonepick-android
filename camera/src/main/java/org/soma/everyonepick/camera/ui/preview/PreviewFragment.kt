@@ -4,18 +4,9 @@ import android.R
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.*
-import android.media.Image
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.camera.core.*
 import androidx.camera.core.Camera
@@ -33,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
+import org.soma.everyonepick.common.util.CameraUtil.Companion.rotate
 import org.soma.everyonepick.common.util.CameraUtil.Companion.toBitmap
 import org.soma.everyonepick.common.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common.util.HomeActivityUtil
@@ -60,8 +52,19 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private var preview: Preview? = null
     private var imageCapture: ImageCapture? = null
     private var camera: Camera? = null
-
     private lateinit var cameraExecutor: ExecutorService
+    private val orientationEventListener by lazy {
+        object : OrientationEventListener(requireContext()) {
+            override fun onOrientationChanged(orientation : Int) {
+                imageCapture?.targetRotation = when (orientation) {
+                    in 45..134 -> Surface.ROTATION_270
+                    in 135..224 -> Surface.ROTATION_180
+                    in 225..314 -> Surface.ROTATION_90
+                    else -> Surface.ROTATION_0
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -133,31 +136,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (viewModel.isPosePackShown.value) viewModel.switchIsPosePackShown()
-                else (activity as HomeActivityUtil).navigateToGroupAlbum()
-            }
-        }
-        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        onBackPressedCallback.remove()
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        _binding = null
-        cameraExecutor.shutdown()
-    }
-
-
     /** 카메라 관련 */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -175,13 +153,10 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     }
 
     private fun bindCameraUseCases() {
-        val screenAspectRatio = AspectRatio.RATIO_4_3
         val cameraProvider = processCameraProvider
             ?: throw IllegalStateException("Camera initialization failed.")
-        // TODO: 화면 전환
-        val cameraSelector = CameraSelector.Builder()
-            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-            .build()
+
+        val screenAspectRatio = AspectRatio.RATIO_4_3
 
         // Preview
         preview = Preview.Builder()
@@ -198,6 +173,10 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         cameraProvider.unbindAll()
 
         try {
+            val cameraSelector = CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build()
+
             preview?.setSurfaceProvider(binding.previewview.surfaceProvider)
             camera = cameraProvider.bindToLifecycle(
                 this as LifecycleOwner, cameraSelector, preview, imageCapture
@@ -205,6 +184,40 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
         }
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        orientationEventListener.enable()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.isPosePackShown.value) viewModel.switchIsPosePackShown()
+                else (activity as HomeActivityUtil).navigateToGroupAlbum()
+            }
+        }
+        activity?.onBackPressedDispatcher?.addCallback(onBackPressedCallback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onBackPressedCallback.remove()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        orientationEventListener.disable()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        _binding = null
+        cameraExecutor.shutdown()
     }
 
 
@@ -224,10 +237,11 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 @SuppressLint("UnsafeOptInUsageError")
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
-                    image.image?.toBitmap()?.let {
+                    image.image?.toBitmap()?.rotate(image.imageInfo.rotationDegrees)?.let {
                         saveBitmapInPictureDirectory(it, requireContext(), lifecycleScope)
                         viewModel.setLatestImage(it) // 최근 사진을 업데이트합니다.
                     }
+                    image.close()
                 }
             }
             imageCapture.takePicture(cameraExecutor, callback)
