@@ -3,6 +3,7 @@ package org.soma.everyonepick.camera.ui.preview
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -92,16 +93,16 @@ class PreviewViewModel @Inject constructor(
      * 가장 최근 사진을 불러온 뒤 [latestImage]에 저장합니다.
      */
     fun readLatestImage(context: Context) {
-        val projection = arrayOf(
-            MediaStore.Images.ImageColumns.DATA,
-            MediaStore.Images.ImageColumns.DATE_TAKEN
-        )
-        val cursor = context.contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
-            null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
-        )
-        if (cursor != null && cursor.moveToFirst()) {
-            val imageLocation = cursor.getString(0)
+        val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(MediaStore.Images.ImageColumns.DATA)
+        val selection =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) MediaStore.Images.Media.SIZE + " > 0"
+            else null
+        val sortOrder = MediaStore.Images.ImageColumns.DATE_ADDED + " DESC"
+        val cursor = context.contentResolver.query(uri, projection, selection, null, sortOrder)
+        cursor?.let {
+            it.moveToFirst()
+            val imageLocation = it.getString(0)
             if (File(imageLocation).exists()) {
                 val bitmap = BitmapFactory.decodeFile(imageLocation)
                 setLatestImage(bitmap)
