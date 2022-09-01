@@ -215,7 +215,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         val intent = Intent().apply {
             action = Intent.ACTION_VIEW
             type = "image/*"
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
     }

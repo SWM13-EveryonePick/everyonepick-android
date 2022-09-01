@@ -107,9 +107,8 @@ class PreviewViewModel @Inject constructor(
             else null
         val sortOrder = MediaStore.Images.ImageColumns.DATE_ADDED + " DESC"
         val cursor = context.contentResolver.query(uri, projection, selection, null, sortOrder)
-        cursor?.let {
-            it.moveToFirst()
-            val imageLocation = it.getString(0)
+        if (cursor != null && cursor.moveToFirst()) {
+            val imageLocation = cursor.getString(0)
             if (File(imageLocation).exists()) {
                 val bitmap = BitmapFactory.decodeFile(imageLocation)
                 setLatestImage(bitmap)
