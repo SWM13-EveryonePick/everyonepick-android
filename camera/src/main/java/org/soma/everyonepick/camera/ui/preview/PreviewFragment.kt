@@ -2,19 +2,23 @@ package org.soma.everyonepick.camera.ui.preview
 
 import android.R
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.*
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.camera.core.*
+import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -29,7 +33,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
+import org.soma.everyonepick.common.util.CameraUtil.Companion.toBitmap
+import org.soma.everyonepick.common.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -68,31 +75,12 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             it.listener = this
         }
 
-        queryAndSetLatestImage()
         subscribeUi()
+        viewModel.readLatestImage(requireContext())
 
         return binding.root
     }
 
-    /**
-     * 가장 최근의 사진을 불러온 뒤 [PreviewViewModel.setLatestImage]로 정보를 저장합니다.
-     */
-    private fun queryAndSetLatestImage() {
-        val projection = arrayOf(
-            MediaStore.Images.ImageColumns.DATA,
-            MediaStore.Images.ImageColumns.DATE_TAKEN
-        )
-        val cursor = requireContext().contentResolver
-            .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
-                null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC")
-        if (cursor != null && cursor.moveToFirst()) {
-            val imageLocation = cursor.getString(0)
-            if (File(imageLocation).exists()) {
-                val bitmap = BitmapFactory.decodeFile(imageLocation)
-                viewModel.setLatestImage(bitmap)
-            }
-        }
-    }
 
     private fun subscribeUi() {
         lifecycleScope.launch {
@@ -251,7 +239,17 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
     override fun onClickShutterButton() {
         imageCapture?.let { imageCapture ->
-            // TODO: imageCapture.takePicture
+            val callback = object: ImageCapture.OnImageCapturedCallback() {
+                @SuppressLint("UnsafeOptInUsageError")
+                override fun onCaptureSuccess(image: ImageProxy) {
+                    super.onCaptureSuccess(image)
+                    image.image?.toBitmap()?.let {
+                        saveBitmapInPictureDirectory(it, requireContext(), lifecycleScope)
+                        viewModel.setLatestImage(it) // 최근 사진을 업데이트합니다.
+                    }
+                }
+            }
+            imageCapture.takePicture(cameraExecutor, callback)
         }
     }
 

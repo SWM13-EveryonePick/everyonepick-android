@@ -1,6 +1,9 @@
 package org.soma.everyonepick.camera.ui.preview
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +16,7 @@ import org.soma.everyonepick.camera.domain.model.PosePackModel
 import org.soma.everyonepick.camera.domain.usecase.PosePackUseCase
 import org.soma.everyonepick.camera.domain.usecase.PoseUseCase
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -82,6 +86,27 @@ class PreviewViewModel @Inject constructor(
 
     fun setSelectedPoseIndex(index: Int?) {
         _selectedPoseIndex.value = index
+    }
+
+    /**
+     * 가장 최근 사진을 불러온 뒤 [latestImage]에 저장합니다.
+     */
+    fun readLatestImage(context: Context) {
+        val projection = arrayOf(
+            MediaStore.Images.ImageColumns.DATA,
+            MediaStore.Images.ImageColumns.DATE_TAKEN
+        )
+        val cursor = context.contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null,
+            null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
+        )
+        if (cursor != null && cursor.moveToFirst()) {
+            val imageLocation = cursor.getString(0)
+            if (File(imageLocation).exists()) {
+                val bitmap = BitmapFactory.decodeFile(imageLocation)
+                setLatestImage(bitmap)
+            }
+        }
     }
 
     fun setLatestImage(bitmap: Bitmap) {

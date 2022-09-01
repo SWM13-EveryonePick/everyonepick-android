@@ -6,17 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.soma.everyonepick.common.util.FileUtil.Companion.getUriFromBitmap
+import org.soma.everyonepick.common.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
-import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getFileName
-import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.getUriFromBitmap
-import org.soma.everyonepick.groupalbum.util.FileUtil.Companion.saveBitmapInPictureDirectory
-
 
 class PhotoFragment : Fragment(), PhotoFragmentListener {
     private var _binding: FragmentPhotoBinding? = null
@@ -45,10 +45,8 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
 
     /** PhotoFragmentListener */
     override fun onClickSaveButton() {
-        val appName = getString(org.soma.everyonepick.common.R.string.app_name)
-        val fileName = getFileName(appName)
         val bitmap = binding.imagePhoto.drawable.toBitmap()
-        saveBitmapInPictureDirectory(requireContext(), fileName, appName, bitmap)
+        saveBitmapInPictureDirectory(bitmap, requireContext(), lifecycleScope, showsToast = true)
     }
 
     override fun onClickDeleteButton() {
