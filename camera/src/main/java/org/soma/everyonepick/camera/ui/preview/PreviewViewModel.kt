@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import androidx.camera.core.CameraSelector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,6 +46,10 @@ class PreviewViewModel @Inject constructor(
 
     private val _latestImage = MutableStateFlow<Bitmap?>(null)
     val latestImage: StateFlow<Bitmap?> = _latestImage
+
+
+    private val _lensFacing = MutableStateFlow(CameraSelector.LENS_FACING_BACK)
+    val lensFacing: StateFlow<Int> = _lensFacing
 
 
     init {
@@ -112,5 +117,11 @@ class PreviewViewModel @Inject constructor(
 
     fun setLatestImage(bitmap: Bitmap) {
         _latestImage.value = bitmap
+    }
+
+    fun switchLensFacing() {
+        _lensFacing.value =
+            if (_lensFacing.value == CameraSelector.LENS_FACING_BACK) CameraSelector.LENS_FACING_FRONT
+            else CameraSelector.LENS_FACING_BACK
     }
 }

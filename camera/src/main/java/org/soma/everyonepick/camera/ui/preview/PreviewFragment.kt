@@ -88,17 +88,26 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private fun subscribeUi() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isPosePackShown.collectLatest {
-                    if (it) {
-                        (activity as HomeActivityUtil).hideCameraNavigation()
-                        showPosePackLayout()
+                launch {
+                    viewModel.isPosePackShown.collectLatest {
+                        if (it) {
+                            (activity as HomeActivityUtil).hideCameraNavigation()
+                            showPosePackLayout()
 
-                        if (viewModel.posePackModelList.value.isEmpty()) {
-                            viewModel.readPosePackModelList()
+                            if (viewModel.posePackModelList.value.isEmpty()) {
+                                viewModel.readPosePackModelList()
+                            }
+                        } else {
+                            (activity as HomeActivityUtil).showCameraNavigation()
+                            hidePosePackLayout()
                         }
-                    } else {
-                        (activity as HomeActivityUtil).showCameraNavigation()
-                        hidePosePackLayout()
+                    }
+                }
+
+                launch {
+                    viewModel.lensFacing.collectLatest {
+                        cameraExecutor = Executors.newSingleThreadExecutor()
+                        binding.previewview.post { setUpCamera() }
                     }
                 }
             }
@@ -135,15 +144,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         }
     }
 
-
-    /** 카메라 관련 */
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        cameraExecutor = Executors.newSingleThreadExecutor()
-        binding.previewview.post { setUpCamera() }
-    }
-
+    /** [CameraX] 관련 함수 */
     private fun setUpCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
@@ -174,7 +175,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
         try {
             val cameraSelector = CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .requireLensFacing(viewModel.lensFacing.value)
                 .build()
 
             preview?.setSurfaceProvider(binding.previewview.surfaceProvider)
@@ -256,6 +257,10 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         if (viewModel.isPosePackShown.value) viewModel.switchIsPosePackShown()
     }
 
+    override fun onClickSwitchLensFacing() {
+        viewModel.switchLensFacing()
+    }
+
     companion object {
         private const val TAG = "PreviewFragment"
         private const val ANIMATION_DURATION = 300L
@@ -267,4 +272,5 @@ interface PreviewFragmentListener {
     fun onClickShutterButton()
     fun onClickPosePackButton()
     fun onClickPreview()
+    fun onClickSwitchLensFacing()
 }

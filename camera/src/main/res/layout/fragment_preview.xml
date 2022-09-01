@@ -73,6 +73,7 @@
                 android:src="@drawable/ic_btn_camera_change"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:onClick="@{() -> listener.onClickSwitchLensFacing()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
