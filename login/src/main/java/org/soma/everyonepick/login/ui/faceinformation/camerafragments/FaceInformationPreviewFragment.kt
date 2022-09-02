@@ -38,7 +38,9 @@ class FaceInformationPreviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFaceInformationPreviewBinding.inflate(inflater, container, false)
+        _binding = FragmentFaceInformationPreviewBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
         return binding.root
     }
 

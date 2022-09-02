@@ -55,6 +55,8 @@ class PreviewViewModel @Inject constructor(
 
 
     init {
+        readPosePackModelList()
+
         viewModelScope.launch {
             _selectedPosePackIndex.collect {
                 readPoseModelList()
@@ -69,7 +71,7 @@ class PreviewViewModel @Inject constructor(
     }
 
 
-    fun readPosePackModelList() {
+    private fun readPosePackModelList() {
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
             _posePackModelList.value = posePackUseCase.readPosePackList(token)

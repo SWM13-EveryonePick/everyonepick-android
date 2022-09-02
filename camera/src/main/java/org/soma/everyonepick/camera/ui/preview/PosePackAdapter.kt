@@ -21,8 +21,7 @@ class PosePackAdapter(
     private val parentViewModel: PreviewViewModel
 ): ListAdapter<PosePackModel, PosePackAdapter.PosePackViewHolder>(PosePackDiffCallback()) {
     /**
-     * 최근에 선택되었던 뷰 바인딩입니다. 특정 아이템을 클릭했을 때 해당 아이템을 클릭 처리하고 여기에 저장된 뷰 바인딩을 통해
-     * 클릭 해제 처리를 합니다.
+     * 최근에 선택한 뷰 바인딩입니다. 아이템을 클릭할 때 기존에 선택된 아이템을 선택 해제 처리해야 하는데, 이를 위해 사용됩니다.
      */
     private var prevBinding: ItemPosePackBinding? = null
 
@@ -41,7 +40,7 @@ class PosePackAdapter(
     }
 
     override fun onBindViewHolder(holder: PosePackViewHolder, position: Int) {
-        // 최초에 디폴트로 지정된 인덱스 클릭 처리
+        // 기본으로 선택되어 있어야 할 아이템 클릭 처리
         if (holder.absoluteAdapterPosition == parentViewModel.selectedPosePackIndex.value) {
             holder.getBinding().textName.performTouch()
         }

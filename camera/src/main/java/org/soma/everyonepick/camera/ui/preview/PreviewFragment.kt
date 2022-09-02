@@ -52,7 +52,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private var preview: Preview? = null
     private var imageCapture: ImageCapture? = null
     private var camera: Camera? = null
-    private lateinit var cameraExecutor: ExecutorService
+    private var cameraExecutor = Executors.newSingleThreadExecutor()
+
     private val orientationEventListener by lazy {
         object : OrientationEventListener(requireContext()) {
             override fun onOrientationChanged(orientation : Int) {
@@ -93,10 +94,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                         if (it) {
                             (activity as HomeActivityUtil).hideCameraNavigation()
                             showPosePackLayout()
-
-                            if (viewModel.posePackModelList.value.isEmpty()) {
-                                viewModel.readPosePackModelList()
-                            }
                         } else {
                             (activity as HomeActivityUtil).showCameraNavigation()
                             hidePosePackLayout()
@@ -106,7 +103,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
                 launch {
                     viewModel.lensFacing.collectLatest {
-                        cameraExecutor = Executors.newSingleThreadExecutor()
                         binding.previewview.post { setUpCamera() }
                     }
                 }
