@@ -32,10 +32,8 @@ class FriendAdapter: ListAdapter<Friend, RecyclerView.ViewHolder>(FriendDiffCall
         private val binding: ItemFriendBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: Friend) {
-            Glide.with(binding.root)
-                .load(friend.profileThumbnailImage)
-                .into(binding.imageProfile)
-            binding.textNickname.text = friend.profileNickname
+            binding.friend = friend
+            binding.executePendingBindings()
         }
     }
 }
