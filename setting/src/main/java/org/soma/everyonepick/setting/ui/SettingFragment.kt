@@ -1,5 +1,7 @@
 package org.soma.everyonepick.setting.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -69,7 +71,12 @@ class SettingFragment : Fragment(), SettingFragmentListener {
     }
 
     override fun onClickContactButton() {
-        // TODO: mail action?
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("everyonepickofficial@gmail.com"))
+            putExtra(Intent.EXTRA_SUBJECT, "[모두의 PICK] 서비스 문의")
+        }
+        startActivity(Intent.createChooser(intent, "이메일 전송 수단을 선택하세요."))
     }
 }
 
