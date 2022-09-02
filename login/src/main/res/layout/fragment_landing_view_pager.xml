@@ -45,7 +45,7 @@
                 android:text="@string/next"
                 android:textColor="@color/primary_blue"
                 android:textSize="18sp"
-                android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"
                 app:layout_constraintTop_toTopOf="@id/image_next"
                 app:layout_constraintBottom_toBottomOf="@id/image_next"
                 app:layout_constraintEnd_toStartOf="@id/image_next"/>

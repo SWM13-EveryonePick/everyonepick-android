@@ -3,17 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+
+    <data>
+        <variable
+            name="inviteFriendModel"
+            type="org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel" />
+        <variable
+            name="onClickRoot"
+            type="android.view.View.OnClickListener" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_invite_friend_item"
         android:paddingLeft="@dimen/margin_invite_friend_item"
         android:paddingRight="@dimen/margin_invite_friend_item"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{onClickRoot}">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_profile"
             android:layout_width="@dimen/size_invite_friend_profile"
             android:layout_height="@dimen/size_invite_friend_profile"
+            photoUrl="@{inviteFriendModel.friend.profileThumbnailImage}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +37,8 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textSize="16sp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@{inviteFriendModel.friend.profileNickname}"
             app:layout_constraintStart_toEndOf="@id/image_profile"
             app:layout_constraintEnd_toStartOf="@id/checkbox"
             tools:text="서달미"
@@ -37,6 +50,7 @@
             android:layout_height="@dimen/size_checkbox"
             android:button="@null"
             android:background="@drawable/checkbox"
+            android:checked="@={inviteFriendModel.isChecked}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

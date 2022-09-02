@@ -45,7 +45,7 @@ class InviteFriendFragment: Fragment() {
     ): View {
         _binding = FragmentInviteFriendBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
-            it.adapter = InviteFriendAdapter(viewModel)
+            it.adapter = InviteFriendAdapter()
             it.viewModel = viewModel
             it.onClickNextButtonListener = View.OnClickListener {
                 if (viewModel.checked.value <= viewModel.maxInviteCount.value) {

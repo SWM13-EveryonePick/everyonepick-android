@@ -2,8 +2,8 @@
 <resources>
     <style name="SettingItemLayout">
         <item name="android:layout_height">70dp</item>
-        <item name="android:layout_marginLeft">@dimen/margin_side_half</item>
-        <item name="android:layout_marginRight">@dimen/margin_side_half</item>
+        <item name="android:layout_marginStart">@dimen/margin_side_half</item>
+        <item name="android:layout_marginEnd">@dimen/margin_side_half</item>
         <item name="android:paddingLeft">@dimen/margin_side_half</item>
         <item name="android:paddingRight">@dimen/margin_side_half</item>
         <item name="android:clickable">true</item>
@@ -11,8 +11,8 @@
     </style>
     <style name="SettingItemLayoutWithoutRipple">
         <item name="android:layout_height">70dp</item>
-        <item name="android:layout_marginLeft">@dimen/margin_side_half</item>
-        <item name="android:layout_marginRight">@dimen/margin_side_half</item>
+        <item name="android:layout_marginStart">@dimen/margin_side_half</item>
+        <item name="android:layout_marginEnd">@dimen/margin_side_half</item>
         <item name="android:paddingLeft">@dimen/margin_side_half</item>
         <item name="android:paddingRight">@dimen/margin_side_half</item>
         <item name="android:clickable">true</item>
@@ -21,7 +21,7 @@
     <style name="SettingItemText" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/title</item>
-        <item name="android:layout_marginLeft">@dimen/margin_side_half</item>
+        <item name="android:layout_marginStart">@dimen/margin_side_half</item>
     </style>
     <style name="SettingItemTextWithoutIcon" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">16sp</item>

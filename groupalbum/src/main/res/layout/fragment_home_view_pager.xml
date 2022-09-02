@@ -35,8 +35,8 @@
             android:id="@+id/layout_actionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
-            android:layout_marginRight="26dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="26dp"
             android:layout_marginTop="36dp"
             app:layout_constraintTop_toTopOf="parent">
 

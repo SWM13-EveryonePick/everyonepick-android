@@ -15,6 +15,7 @@ import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientId
 import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientIdWithoutKakaoPrefix
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
+import java.lang.Integer.max
 import javax.inject.Inject
 
 @HiltViewModel
@@ -62,8 +63,19 @@ class InviteFriendViewModel @Inject constructor(
         readInviteFriendModelList()
 
         viewModelScope.launch {
-            _inviteFriendModelList.collectLatest {
+            _inviteFriendModelList.collectLatest { inviteFriendModelList ->
                 updateFilteredList()
+
+                inviteFriendModelList.forEach {
+                    viewModelScope.launch {
+                        it.isChecked.collectLatest { isChecked ->
+                            if (isChecked) _checked.value += 1
+                            // 초기에 체크박스가 체크 해제된 채로 있는데, 이때 checked를 감소시키면 음수값이 나오며,
+                            // 이를 방지하는 코드이다.
+                            else _checked.value = max(0, _checked.value - 1)
+                        }
+                    }
+                }
             }
         }
 
@@ -75,7 +87,7 @@ class InviteFriendViewModel @Inject constructor(
     }
 
     fun getCheckedFriendList() = _inviteFriendModelList.value
-        .filter { it.isChecked }
+        .filter { it.isChecked.value}
         .map { it.friend }
         .toMutableList()
 
@@ -87,22 +99,6 @@ class InviteFriendViewModel @Inject constructor(
         _maxInviteCount.value = value
     }
 
-    /**
-     * 체크박스 상태가 변경되었을 때의 데이터 처리를 합니다.
-     */
-    fun onClickCheckbox(clickedItem: InviteFriendModel, isChecked: Boolean) {
-        // inviteFriendModelList의 isChecked 처리
-        val clickedItemAtInviteFriendModelList = _inviteFriendModelList.value.find {
-            it.friend.id == clickedItem.friend.id
-        }
-        clickedItemAtInviteFriendModelList?.isChecked = isChecked
-
-        // checked 업데이트
-        if (isChecked) _checked.value += 1
-        else _checked.value -= 1
-    }
-
-
     private fun readInviteFriendModelList() {
         _isApiLoading.value = true
         friendUseCase.readFriends({ _isApiLoading.value = false }) { newFriends ->
@@ -111,7 +107,7 @@ class InviteFriendViewModel @Inject constructor(
     }
 
     private fun List<Friend>?.getInviteFriendModelList() = this?.map {
-        InviteFriendModel(it, isChecked = false)
+        InviteFriendModel(it, MutableStateFlow(false))
     }?.toMutableList() ?: mutableListOf()
 
     private fun updateFilteredList() {
