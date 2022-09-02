@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import org.soma.everyonepick.camera.R
 import org.soma.everyonepick.camera.databinding.ItemPoseBinding
 import org.soma.everyonepick.camera.domain.model.PoseModel
+import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.common.util.setVisibility
 
 class PoseAdapter(
@@ -24,12 +25,7 @@ class PoseAdapter(
     private var prevBinding: ItemPoseBinding? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PoseViewHolder {
-        val binding = DataBindingUtil.inflate<ItemPoseBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_pose,
-            parent,
-            false
-        )
+        val binding = getViewDataBinding<ItemPoseBinding>(parent, R.layout.item_pose)
         val holder = PoseViewHolder(binding)
         binding.onClickImage = View.OnClickListener {
             // 이미 선택된 것을 또다시 클릭한 경우
@@ -54,9 +50,7 @@ class PoseAdapter(
         holder.bind(getItem(position))
     }
 
-    class PoseViewHolder(
-        private val binding: ItemPoseBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class PoseViewHolder(private val binding: ItemPoseBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(poseModel: PoseModel) {
             binding.poseModel = poseModel
             binding.executePendingBindings()

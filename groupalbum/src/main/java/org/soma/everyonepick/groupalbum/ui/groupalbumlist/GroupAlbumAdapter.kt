@@ -80,9 +80,7 @@ class GroupAlbumAdapter: ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(G
 
     class CreateGroupAlbumViewHolder(binding: ItemCreateGroupAlbumBinding): RecyclerView.ViewHolder(binding.root)
 
-    class GroupAlbumViewHolder(
-        private val binding: ItemGroupAlbumBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class GroupAlbumViewHolder(private val binding: ItemGroupAlbumBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(groupAlbumModel: GroupAlbumModel) {
             binding.groupAlbumModel = groupAlbumModel
             binding.executePendingBindings()

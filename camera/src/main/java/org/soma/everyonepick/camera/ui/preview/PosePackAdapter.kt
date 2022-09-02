@@ -14,6 +14,7 @@ import org.soma.everyonepick.camera.data.entity.PosePack
 import org.soma.everyonepick.camera.databinding.ItemPoseBinding
 import org.soma.everyonepick.camera.databinding.ItemPosePackBinding
 import org.soma.everyonepick.camera.domain.model.PosePackModel
+import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.common.util.performTouch
 
 class PosePackAdapter(
@@ -26,12 +27,7 @@ class PosePackAdapter(
     private var prevBinding: ItemPosePackBinding? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PosePackViewHolder {
-        val binding = DataBindingUtil.inflate<ItemPosePackBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_pose_pack,
-            parent,
-            false
-        )
+        val binding = getViewDataBinding<ItemPosePackBinding>(parent, R.layout.item_pose_pack)
         val holder = PosePackViewHolder(binding)
         binding.onClickText = View.OnClickListener {
             prevBinding?.textName?.setTextColor(Color.GRAY)
@@ -53,9 +49,7 @@ class PosePackAdapter(
         holder.bind(getItem(position))
     }
 
-    class PosePackViewHolder(
-        private val binding: ItemPosePackBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class PosePackViewHolder(private val binding: ItemPosePackBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(posePackModel: PosePackModel) {
             binding.posePackModel = posePackModel
             binding.executePendingBindings()

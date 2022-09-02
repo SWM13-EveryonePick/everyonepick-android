@@ -38,7 +38,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         _binding = FragmentPhotoListBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
-            it.adapter = PhotoAdapter(viewModel)
+            it.adapter = PhotoAdapter()
             it.parentViewModel = parentViewModel
             it.listener = this
         }

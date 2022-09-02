@@ -31,12 +31,12 @@ class PhotoListViewModel @Inject constructor(
     }
 
     fun deleteCheckedItems() {
-        _photoModelList.value = _photoModelList.value.filter { !it.isChecked }.toMutableList()
+        _photoModelList.value = _photoModelList.value.filter { !it.isChecked.value }.toMutableList()
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         _photoModelList.value = _photoModelList.value.map {
-            PhotoModel(it.photo, isChecked = false, isCheckboxVisible = isCheckboxVisible)
+            PhotoModel(it.photo, MutableStateFlow(false), isCheckboxVisible = isCheckboxVisible)
         }.toMutableList()
     }
 }

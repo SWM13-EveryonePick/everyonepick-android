@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
@@ -15,12 +16,7 @@ import org.soma.everyonepick.groupalbum.databinding.ItemInviteFriendBinding
 
 class InviteFriendAdapter: ListAdapter<InviteFriendModel, RecyclerView.ViewHolder>(InviteFriendDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = DataBindingUtil.inflate<ItemInviteFriendBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_invite_friend,
-            parent,
-            false
-        ).apply {
+        val binding = getViewDataBinding<ItemInviteFriendBinding>(parent, R.layout.item_invite_friend).apply {
             onClickRoot = View.OnClickListener {
                 checkbox.performTouch()
             }
@@ -34,9 +30,7 @@ class InviteFriendAdapter: ListAdapter<InviteFriendModel, RecyclerView.ViewHolde
         (holder as InviteFriendViewHolder).bind(friend)
     }
 
-    class InviteFriendViewHolder(
-        private val binding: ItemInviteFriendBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class InviteFriendViewHolder(private val binding: ItemInviteFriendBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(inviteFriendItem: InviteFriendModel) {
             binding.inviteFriendModel = inviteFriendItem
             binding.executePendingBindings()

@@ -15,6 +15,8 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
 @BindingAdapter("setVisibility")
@@ -40,6 +42,14 @@ fun bindBackButton(view: View, onBackPressed: Boolean) {
 fun bindImageView(imageView: ImageView, photoUrl: String) {
     Glide.with(imageView.context)
         .load(photoUrl)
+        .into(imageView)
+}
+
+@BindingAdapter("photoUrl", "roundingRadius", requireAll = true)
+fun bindImageView(imageView: ImageView, photoUrl: String, roundingRadius: Int) {
+    Glide.with(imageView.context)
+        .load(photoUrl)
+        .transform(CenterCrop(), RoundedCorners(roundingRadius))
         .into(imageView)
 }
 

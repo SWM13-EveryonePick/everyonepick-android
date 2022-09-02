@@ -28,9 +28,7 @@ class FriendAdapter: ListAdapter<Friend, RecyclerView.ViewHolder>(FriendDiffCall
         (holder as FriendViewHolder).bind(friend)
     }
 
-    class FriendViewHolder(
-        private val binding: ItemFriendBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class FriendViewHolder(private val binding: ItemFriendBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: Friend) {
             binding.friend = friend
             binding.executePendingBindings()

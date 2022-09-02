@@ -78,9 +78,7 @@ class MemberAdapter(
         }
     }
 
-    class MemberViewHolder(
-        private val binding: ItemMemberBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class MemberViewHolder(private val binding: ItemMemberBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(
             memberModel: MemberModel,
             parentViewModel: GroupAlbumViewModel
@@ -91,9 +89,7 @@ class MemberAdapter(
         }
     }
 
-    class InviteMemberViewHolder(
-        private val binding: ItemInviteMemberBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class InviteMemberViewHolder(private val binding: ItemInviteMemberBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(
             memberModel: MemberModel,
             parentViewModel: GroupAlbumViewModel
