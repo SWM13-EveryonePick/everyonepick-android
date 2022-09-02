@@ -26,8 +26,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * 새로운 환경에서 개발을 할 때마다 아래 함수를 실행하여 해시를 얻고,
-     * Kakao Developers 계정주가 해당 해시를 등록해야 합니다.
+     * 새로운 환경에서 개발을 할 때마다 Kakao Developers 계정주가 새로운 해시를 등록해야 합니다. 이 함수를 통해 해시값을
+     * 얻고 계정주에게 해시 등록을 요청해야 합니다.
      */
     private fun printAppKeyHash() {
         var keyHash = Utility.getKeyHash(this)
