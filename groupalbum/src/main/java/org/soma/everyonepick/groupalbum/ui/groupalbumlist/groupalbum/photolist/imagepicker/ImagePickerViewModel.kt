@@ -34,7 +34,7 @@ class ImagePickerViewModel: ViewModel() {
         cursor?.let {
             while (cursor.moveToNext()) {
                 val mediaPath = cursor.getString(cursor.getColumnIndex(INDEX_MEDIA_URI))
-                _imageModelList.value.add(ImageModel(Uri.fromFile(File(mediaPath)), false))
+                _imageModelList.value.add(ImageModel(Uri.fromFile(File(mediaPath)), MutableStateFlow(false)))
                 _imageModelList.value = _imageModelList.value
             }
             it.close()
@@ -43,7 +43,7 @@ class ImagePickerViewModel: ViewModel() {
 
 
     fun getCheckedImageUriList() = _imageModelList.value
-        .filter { it.isChecked }
+        .filter { it.isChecked.value }
         .map { it.uri.toString() }
         .toMutableList()
 

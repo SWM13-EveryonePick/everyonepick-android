@@ -3,6 +3,7 @@ package org.soma.everyonepick.common_ui.binding
 import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.Typeface
+import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -35,6 +36,13 @@ fun bindBackButton(view: View, onBackPressed: Boolean) {
 fun bindImageView(imageView: ImageView, photoUrl: String) {
     Glide.with(imageView.context)
         .load(photoUrl)
+        .into(imageView)
+}
+
+@BindingAdapter("uri")
+fun bindImageView(imageView: ImageView, uri: Uri) {
+    Glide.with(imageView.context)
+        .load(uri)
         .into(imageView)
 }
 
