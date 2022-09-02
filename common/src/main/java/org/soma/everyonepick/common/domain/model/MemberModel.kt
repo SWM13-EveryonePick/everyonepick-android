@@ -1,5 +1,6 @@
 package org.soma.everyonepick.common.domain.model
 
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.common.data.entity.User
 
 /**
@@ -7,11 +8,11 @@ import org.soma.everyonepick.common.data.entity.User
  */
 class MemberModel(
     val user: User,
-    var isChecked: Boolean,
+    var isChecked: MutableStateFlow<Boolean>,
     var isCheckboxVisible: Boolean
 ) {
     companion object {
-        fun createDummyData() = MemberModel(User.dummyData, isChecked = false, isCheckboxVisible = false)
+        fun createDummyData() = MemberModel(User.dummyData, MutableStateFlow(false), isCheckboxVisible = false)
     }
 
     // DiffCall의 areContentsTheSame()에서의 오류를 해결하기 위함

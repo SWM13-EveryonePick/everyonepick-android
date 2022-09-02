@@ -35,7 +35,7 @@ class GroupAlbumAdapter: ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(G
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             GroupAlbumViewType.CREATE.ordinal -> {
                 val binding = getViewDataBinding<ItemCreateGroupAlbumBinding>(parent, R.layout.item_create_group_album)
                 val holder = CreateGroupAlbumViewHolder(binding)

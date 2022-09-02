@@ -33,6 +33,7 @@
     <string name="update_group_album_title">단체공유앨범 이름 변경</string>
     <string name="member_count">단체인원(%s)</string>
     <string name="select_member_to_kick">내보낼 인원을 선택하세요.</string>
+    <string name="do_invite">초대하기</string>
 
     <!--사진-->
     <string name="empty_photos">사진이 없습니다 :/</string>

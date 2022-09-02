@@ -18,10 +18,11 @@ import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.util.SelectionMode
+import java.lang.Integer.max
 import javax.inject.Inject
 
 /**
- * [bearerAccessToken] -> [me] & [groupAlbum] -> [memberModelList] 순서의 의존성이 있음에 유의합니다.
+ * [bearerAccessToken] -> [me] & [groupAlbum] -> [memberModelList] 순서의 의존성이 있음을 유의해야 합니다.
  */
 @HiltViewModel
 class GroupAlbumViewModel @Inject constructor(
@@ -71,6 +72,19 @@ class GroupAlbumViewModel @Inject constructor(
                 _memberModelList.value = it.toMemberModelList()
             }
         }
+
+        viewModelScope.launch {
+            _memberModelList.collectLatest { memberModelList ->
+                memberModelList.data.forEach {
+                    viewModelScope.launch {
+                        it.isChecked.collectLatest { isChecked ->
+                            if (isChecked) _checked.value += 1
+                            else _checked.value = max(0, _checked.value - 1)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun setViewPagerPosition(position: Int) {
@@ -83,7 +97,7 @@ class GroupAlbumViewModel @Inject constructor(
     }
 
     fun getCheckedUserList() = _memberModelList.value.getActualData()
-        .filter { it.isChecked }
+        .filter { it.isChecked.value }
         .map { it.user }
         .toMutableList()
 
@@ -93,12 +107,6 @@ class GroupAlbumViewModel @Inject constructor(
 
     fun setMemberSelectionMode(selectionMode: SelectionMode) {
         _memberSelectionMode.value = selectionMode.ordinal
-    }
-
-    fun onClickCheckbox(position: Int, isChecked: Boolean) {
-        _memberModelList.value.data[position].isChecked = isChecked
-        if (isChecked) _checked.value += 1
-        else _checked.value -= 1
     }
 
     fun setGroupAlbum(groupAlbumReadDetail: GroupAlbumReadDetail) {

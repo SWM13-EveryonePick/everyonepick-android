@@ -17,6 +17,10 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
+@BindingAdapter("setVisibility")
+fun setVisibility(view: View, flag: Boolean) {
+    view.visibility = if (flag) View.VISIBLE else View.GONE
+}
 
 @BindingAdapter("onBackPressed")
 fun bindBackButton(view: View, onBackPressed: Boolean) {

@@ -9,7 +9,7 @@
             name="memberModel"
             type="org.soma.everyonepick.common.domain.model.MemberModel" />
         <variable
-            name="isMemberHostUser"
+            name="visibility"
             type="Boolean" />
         <variable
             name="onClickRoot"
@@ -22,28 +22,17 @@
         android:paddingLeft="@dimen/margin_drawer"
         android:paddingRight="@dimen/margin_drawer"
         android:background="?attr/selectableItemBackground"
+        setVisibility="@{visibility}"
         android:onClick="@{onClickRoot}">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_profile"
             android:layout_width="@dimen/size_member_profile"
             android:layout_height="@dimen/size_member_profile"
-            photoUrl="@{memberModel.user.thumbnailImageUrl}"
+            android:src="@drawable/ic_btn_drawer_add"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-        <ImageView
-            android:id="@+id/image_crown"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="-3dp"
-            android:layout_marginBottom="-3dp"
-            android:src="@drawable/ic_ico_crown"
-            setVisibility="@{isMemberHostUser}"
-            app:layout_constraintBottom_toBottomOf="@id/image_profile"
-            app:layout_constraintEnd_toEndOf="@id/image_profile"
             />
 
         <TextView
@@ -52,24 +41,10 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textSize="15sp"
-            android:textColor="@color/title"
+            android:textColor="@color/primary_blue"
             android:layout_marginStart="16dp"
-            android:text="@{memberModel.user.nickname}"
+            android:text="@string/do_invite"
             app:layout_constraintStart_toEndOf="@id/image_profile"
-            app:layout_constraintEnd_toStartOf="@id/checkbox"
-            tools:text="서달미"
-            />
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="@dimen/size_checkbox"
-            android:layout_height="@dimen/size_checkbox"
-            android:button="@null"
-            android:background="@drawable/checkbox"
-            android:checked="@={memberModel.isChecked}"
-            setVisibility="@{memberModel.isCheckboxVisible &amp;&amp; !isMemberHostUser}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
