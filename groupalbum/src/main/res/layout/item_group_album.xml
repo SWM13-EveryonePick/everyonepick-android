@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
         <variable
             name="groupAlbumModel"
             type="org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel" />
@@ -27,7 +26,7 @@
             android:button="@null"
             android:background="@drawable/checkbox"
             android:elevation="3dp"
-            android:visibility="@{groupAlbumModel.checkboxVisible? View.VISIBLE: View.GONE}"
+            visibleWhen="@{groupAlbumModel.checkboxVisible}"
             android:checked="@={groupAlbumModel.isChecked}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

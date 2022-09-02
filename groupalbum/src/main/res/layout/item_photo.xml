@@ -36,7 +36,7 @@
             android:button="@null"
             android:background="@drawable/checkbox"
             android:checked="@={photoModel.isChecked}"
-            setVisibility="@{photoModel.isCheckboxVisible}"
+            visibleWhen="@{photoModel.isCheckboxVisible}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

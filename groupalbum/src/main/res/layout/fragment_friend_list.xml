@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.ui.friendlist.FriendListViewModel"/>
@@ -79,7 +78,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_empty_card_view"
-                android:visibility="@{viewModel.friends.elements.size() == 0? View.VISIBLE: View.GONE}"
+                visibleWhen="@{viewModel.friends.elements.size() == 0}"
                 style="@style/ListCardView"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -97,7 +96,7 @@
                         android:layout_height="@dimen/size_empty_image"
                         android:src="@drawable/ico_empty_person"
                         android:layout_marginBottom="@dimen/margin_top_empty_text_in_card_view"
-                        android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                        visibleWhen="@{!viewModel.isApiLoading}"
                         app:layout_constraintBottom_toTopOf="@id/text_emptyfriends"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
@@ -106,7 +105,7 @@
                         android:id="@+id/text_emptyfriends"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                        visibleWhen="@{!viewModel.isApiLoading}"
                         style="@style/EmptyText"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -118,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_bottom_empty_text_in_card_view"
-                        android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                        visibleWhen="@{!viewModel.isApiLoading}"
                         style="@style/EmptyButton"
                         app:layout_constraintTop_toBottomOf="@id/text_emptyfriends"
                         app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +134,7 @@
                     <ProgressBar
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                        visibleWhen="@{viewModel.isApiLoading}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +149,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.friends.elements.size() > 0? View.VISIBLE: View.GONE}"
+            visibleWhen="@{viewModel.friends.elements.size() > 0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

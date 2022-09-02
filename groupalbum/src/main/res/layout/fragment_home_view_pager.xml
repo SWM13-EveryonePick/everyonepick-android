@@ -10,7 +10,6 @@
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel" />
-        <import type="android.view.View" />
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode" />
     </data>
 
@@ -73,7 +72,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:paddingLeft="30dp"
-                android:visibility="@{viewModel.viewPagerPosition == 0? View.VISIBLE: View.GONE}"
+                visibleWhen="@{viewModel.viewPagerPosition == 0}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:onClick="@{onClickSelectButtonListener}"

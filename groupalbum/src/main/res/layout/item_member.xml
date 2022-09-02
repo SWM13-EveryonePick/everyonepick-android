@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
         <variable
             name="memberModel"
             type="org.soma.everyonepick.common.domain.model.MemberModel" />
@@ -41,7 +40,7 @@
             android:layout_marginEnd="-3dp"
             android:layout_marginBottom="-3dp"
             android:src="@drawable/ic_ico_crown"
-            setVisibility="@{isMemberHostUser}"
+            visibleWhen="@{isMemberHostUser}"
             app:layout_constraintBottom_toBottomOf="@id/image_profile"
             app:layout_constraintEnd_toEndOf="@id/image_profile"
             />
@@ -67,7 +66,7 @@
             android:button="@null"
             android:background="@drawable/checkbox"
             android:checked="@={memberModel.isChecked}"
-            setVisibility="@{memberModel.isCheckboxVisible &amp;&amp; !isMemberHostUser}"
+            visibleWhen="@{memberModel.isCheckboxVisible &amp;&amp; !isMemberHostUser}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

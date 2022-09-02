@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
         <variable
             name="listener"
@@ -56,14 +55,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.photoModelList.size() == 0? View.GONE: View.VISIBLE}"
+            visibleWhen="@{viewModel.photoModelList.size() > 0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:layout_margin="@dimen/margin_fab"
                 android:src="@drawable/ic_btn_floating_add"
-                android:visibility="@{parentViewModel.photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}"
+                visibleWhen="@{parentViewModel.photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal()}"
                 android:onClick="@{() -> listener.onClickUploadPhotoButton()}"
                 style="@style/ImageViewFab"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +74,7 @@
                 android:padding="@dimen/margin_fab"
                 android:orientation="vertical"
                 android:clipToPadding="false"
-                android:visibility="@{parentViewModel.photoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+                visibleWhen="@{parentViewModel.photoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
@@ -103,7 +102,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewModel.photoModelList.size() == 0? View.VISIBLE: View.GONE}">
+            visibleWhen="@{viewModel.photoModelList.size() == 0}">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -118,8 +117,8 @@
                 android:id="@+id/text_emptyphotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
                 android:layout_marginBottom="@dimen/margin_bottom_empty_text"
+                visibleWhen="@{!viewModel.isApiLoading}"
                 style="@style/EmptyText"
                 app:layout_constraintBottom_toTopOf="@id/cardview_emptybutton"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +129,7 @@
                 android:id="@+id/cardview_emptybutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.isApiLoading? View.GONE: View.VISIBLE}"
+                visibleWhen="@{!viewModel.isApiLoading}"
                 style="@style/EmptyButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -149,7 +148,7 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                visibleWhen="@{viewModel.isApiLoading}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

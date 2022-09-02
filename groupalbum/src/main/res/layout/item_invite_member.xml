@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
         <variable
             name="memberModel"
             type="org.soma.everyonepick.common.domain.model.MemberModel" />
@@ -22,7 +21,7 @@
         android:paddingLeft="@dimen/margin_drawer"
         android:paddingRight="@dimen/margin_drawer"
         android:background="?attr/selectableItemBackground"
-        setVisibility="@{visibility}"
+        visibleWhen="@{visibility}"
         android:onClick="@{onClickRoot}">
 
         <de.hdodenhof.circleimageview.CircleImageView

@@ -5,7 +5,6 @@
 
     <data>
         <import type="androidx.core.content.ContextCompat"/>
-        <import type="android.view.View"/>
         <variable
             name="onClickNextButtonListener"
             type="android.view.View.OnClickListener" />
@@ -157,12 +156,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/scrollview"
             app:layout_constraintBottom_toBottomOf="@id/scrollview"
-            android:visibility="@{viewModel.inviteFriendModelList.size() == 0? View.VISIBLE: View.GONE}">
+            visibleWhen="@{viewModel.inviteFriendModelList.size() == 0}">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.isApiLoading()? View.GONE: View.VISIBLE}"
+                visibleWhen="@{!viewModel.isApiLoading()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -176,7 +175,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                visibleWhen="@{viewModel.isApiLoading}"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

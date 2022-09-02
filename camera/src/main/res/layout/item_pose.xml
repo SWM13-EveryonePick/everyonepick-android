@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="android.view.View" />
         <variable
             name="poseModel"
             type="org.soma.everyonepick.camera.domain.model.PoseModel" />

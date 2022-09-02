@@ -92,7 +92,7 @@
             <ProgressBar
                 android:layout_width="@dimen/size_loginprogressbar"
                 android:layout_height="@dimen/size_loginprogressbar"
-                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                visibleWhen="@{viewModel.isApiLoading}"
                 app:layout_constraintTop_toTopOf="@id/imagebutton_login"
                 app:layout_constraintBottom_toBottomOf="@id/imagebutton_login"
                 app:layout_constraintStart_toStartOf="@id/imagebutton_login"

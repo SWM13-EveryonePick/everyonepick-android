@@ -13,7 +13,6 @@
         <variable
             name="viewModel"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel" />
-        <import type="android.view.View" />
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
     </data>
 
@@ -68,7 +67,7 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@{viewModel.photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? @drawable/ic_btn_gnb_check: @drawable/ic_btn_gnb_check_on}"
                         android:layout_marginEnd="@dimen/margin_action_bar_item"
-                        android:visibility="@{viewModel.viewPagerPosition == 1? View.GONE: View.VISIBLE}"
+                        visibleWhen="@{viewModel.viewPagerPosition != 1}"
                         android:padding="10dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -156,7 +155,7 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_btn_drawer_edit"
                         android:padding="@dimen/margin_drawer"
-                        android:visibility="@{viewModel.me.id == viewModel.groupAlbum.hostUserId? View.VISIBLE: View.GONE}"
+                        visibleWhen="@{viewModel.me.id == viewModel.groupAlbum.hostUserId}"
                         app:layout_constraintTop_toTopOf="@id/text_drawer_title"
                         app:layout_constraintBottom_toBottomOf="@id/text_drawer_title"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -204,7 +203,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="@{viewModel.memberSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? View.VISIBLE: View.GONE}">>
+                        visibleWhen="@{viewModel.memberSelectionMode == SelectionMode.NORMAL_MODE.ordinal()}">
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -226,7 +225,7 @@
                             android:paddingLeft="@dimen/margin_drawer_bottom_icon"
                             android:paddingRight="@dimen/margin_half_drawer_bottom_icon"
                             android:onClick="@{() -> listener.onClickKickIcon()}"
-                            android:visibility="@{viewModel.me.id == viewModel.groupAlbum.hostUserId? View.VISIBLE: View.GONE}"
+                            visibleWhen="@{viewModel.me.id == viewModel.groupAlbum.hostUserId}"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/button_drawer_notification"
@@ -250,7 +249,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="@{viewModel.memberSelectionMode == SelectionMode.NORMAL_MODE.ordinal()? View.GONE: View.VISIBLE}">
+                        visibleWhen="@{viewModel.memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal()}">
                         <TextView
                             android:id="@+id/text_cancel"
                             android:layout_width="0dp"

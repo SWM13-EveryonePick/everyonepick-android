@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
         <variable
             name="listener"
@@ -38,7 +37,7 @@
                     android:id="@+id/recyclerview_groupalbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.groupAlbumModelList.getActualItemCount() > 0? View.VISIBLE: View.GONE}"
+                    visibleWhen="@{viewModel.groupAlbumModelList.getActualItemCount() > 0}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +57,7 @@
             android:padding="@dimen/margin_fab"
             android:orientation="vertical"
             android:clipToPadding="false"
-            android:visibility="@{parentViewModel.selectionMode == SelectionMode.SELECTION_MODE.ordinal()? View.VISIBLE: View.GONE}"
+            visibleWhen="@{parentViewModel.selectionMode == SelectionMode.SELECTION_MODE.ordinal()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -78,7 +77,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_empty_card_view"
-            android:visibility="@{viewModel.groupAlbumModelList.getActualItemCount() == 0 &amp;&amp; !viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+            visibleWhen="@{viewModel.groupAlbumModelList.getActualItemCount() == 0 &amp;&amp; !viewModel.isApiLoading}"
             style="@style/ListCardView"
             app:layout_constraintTop_toTopOf="parent">
 

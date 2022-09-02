@@ -19,7 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
-@BindingAdapter("setVisibility")
+@BindingAdapter("visibleWhen")
 fun setVisibility(view: View, flag: Boolean) {
     view.visibility = if (flag) View.VISIBLE else View.GONE
 }
