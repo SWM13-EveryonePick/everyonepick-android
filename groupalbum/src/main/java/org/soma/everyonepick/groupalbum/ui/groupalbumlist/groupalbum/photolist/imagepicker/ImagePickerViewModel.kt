@@ -41,11 +41,11 @@ class ImagePickerViewModel: ViewModel() {
         }
     }
 
-
     fun getCheckedImageUriList() = _imageModelList.value
         .filter { it.isChecked.value }
         .map { it.uri.toString() }
         .toMutableList()
+
 
     companion object {
         private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID

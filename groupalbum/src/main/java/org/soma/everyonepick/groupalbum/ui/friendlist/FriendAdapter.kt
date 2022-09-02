@@ -8,19 +8,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kakao.sdk.talk.model.Friend
+import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemFriendBinding
 
 class FriendAdapter: ListAdapter<Friend, RecyclerView.ViewHolder>(FriendDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return FriendViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_friend,
-                parent,
-                false
-            )
-        )
+        val binding = getViewDataBinding<ItemFriendBinding>(parent, R.layout.item_friend)
+        return FriendViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

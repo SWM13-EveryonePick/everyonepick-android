@@ -43,27 +43,27 @@ class GroupAlbumTitleFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickCreateButton = View.OnClickListener {
-                lifecycleScope.launch {
-                    try {
-                        val token = dataStoreUseCase.bearerAccessToken.first()!!
-                        val groupAlbum = GroupAlbum(
-                            viewModel.title.value!!,
-                            getUserListToCreateGroupAlbum()
-                        )
-                        groupAlbumUseCase.createGroupAlbum(token, groupAlbum)
+                createGroupAlbum()
+                KeyboardUtil.hideKeyboard(requireActivity())
 
-                        KeyboardUtil.hideKeyboard(requireActivity())
-
-                        val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(viewModel.title.value?: "")
-                        findNavController().navigate(directions)
-                    } catch (e: Exception) {
-                        Toast.makeText(requireContext(), "단체공유앨범 생성에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(viewModel.title.value)
+                findNavController().navigate(directions)
             }
         }
 
         return binding.root
+    }
+
+    private fun createGroupAlbum() {
+        lifecycleScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val groupAlbum = GroupAlbum(viewModel.title.value, getUserListToCreateGroupAlbum())
+                groupAlbumUseCase.createGroupAlbum(token, groupAlbum)
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "단체공유앨범 생성에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun getUserListToCreateGroupAlbum(): List<User> {

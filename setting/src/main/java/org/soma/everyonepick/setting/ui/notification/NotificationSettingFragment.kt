@@ -16,7 +16,7 @@ class NotificationSettingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNotificationSettingBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
         }

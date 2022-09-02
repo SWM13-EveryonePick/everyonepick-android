@@ -21,7 +21,7 @@ class TermsFragment : Fragment(), TermsFragmentListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTermsBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
             it.listener = this

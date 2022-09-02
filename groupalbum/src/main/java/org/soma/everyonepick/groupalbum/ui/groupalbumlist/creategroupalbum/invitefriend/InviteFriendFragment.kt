@@ -22,11 +22,14 @@ import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment.Companion.FRIEND_LIST_TO_INVITE_KEY
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment.Companion.FRIEND_LIST_TO_INVITE_REQUEST_KEY
 
 /**
- * 이 프래그먼트의 목적은 [InviteFriendFragmentType]
+ * 이 프래그먼트의 [navArgs]로 [InviteFriendFragmentType]가 전달됩니다.
+ * [InviteFriendFragmentType.TO_CREATE]일 경우 이 프래그먼트는 단체공유앨범 생성을 위해 인원을 선택하는 페이지가 되고,
+ * [InviteFriendFragmentType.TO_INVITE]일 경우에는, 기존 단체공유앨범에 인원을 추가로 초대하는 페이지가 됩니다.
  */
 @AndroidEntryPoint
 class InviteFriendFragment: Fragment() {
@@ -36,7 +39,6 @@ class InviteFriendFragment: Fragment() {
     private val viewModel: InviteFriendViewModel by viewModels()
     private val args: InviteFriendFragmentArgs by navArgs()
 
-    // 친구가 한 명이라도 선택되어 있다면 정말 취소할지 물어봐야 하며, 이를 위한 콜백입니다.
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun onCreateView(
@@ -49,18 +51,9 @@ class InviteFriendFragment: Fragment() {
             it.viewModel = viewModel
             it.onClickNextButtonListener = View.OnClickListener {
                 if (viewModel.checked.value <= viewModel.maxInviteCount.value) {
-                    // InviteFriendFragmentType에 따라 분기합니다.
-                    if (args.inviteFriendFragmentType == InviteFriendFragmentType.TO_CREATE) {
-                        val directions = InviteFriendFragmentDirections
-                            .toGroupAlbumTitleFragment(viewModel.getCheckedFriendList().toTypedArray())
-                        findNavController().navigate(directions)
-                    } else {
-                        // GroupAlbumFragment에 데이터를 전달합니다.
-                        activity?.supportFragmentManager?.setFragmentResult(
-                            FRIEND_LIST_TO_INVITE_REQUEST_KEY,
-                            bundleOf(FRIEND_LIST_TO_INVITE_KEY to viewModel.getCheckedFriendList())
-                        )
-                        findNavController().navigateUp()
+                    when (args.inviteFriendFragmentType) {
+                        InviteFriendFragmentType.TO_CREATE -> navigateToGroupAlbumTitleFragment()
+                        else -> returnToGroupAlbumFragment()
                     }
                 } else {
                     Toast.makeText(context, "선택 인원을 초과했어요! 초대 인원은 최대 ${viewModel.maxInviteCount.value}명까지입니다.", Toast.LENGTH_LONG).show()
@@ -68,12 +61,25 @@ class InviteFriendFragment: Fragment() {
             }
         }
 
-        args.existingUserClientIdList?.let {
-            viewModel.setExistingUserClientIdList(it.toList())
-            viewModel.setMaxInviteCount(viewModel.maxInviteCount.value - it.count())
-        }
-
         return binding.root
+    }
+
+    private fun navigateToGroupAlbumTitleFragment() {
+        val directions = InviteFriendFragmentDirections
+            .toGroupAlbumTitleFragment(viewModel.getCheckedFriendList().toTypedArray())
+        findNavController().navigate(directions)
+    }
+
+    /**
+     * [GroupAlbumFragment]로 복귀합니다. 초대 API 호출을 [GroupAlbumFragment]에서 진행하므로, 이곳에서 체크한 친구
+     * 목록 데이터를 전달합니다.
+     */
+    private fun returnToGroupAlbumFragment() {
+        activity?.supportFragmentManager?.setFragmentResult(
+            FRIEND_LIST_TO_INVITE_REQUEST_KEY,
+            bundleOf(FRIEND_LIST_TO_INVITE_KEY to viewModel.getCheckedFriendList())
+        )
+        findNavController().navigateUp()
     }
 
     override fun onStart() {

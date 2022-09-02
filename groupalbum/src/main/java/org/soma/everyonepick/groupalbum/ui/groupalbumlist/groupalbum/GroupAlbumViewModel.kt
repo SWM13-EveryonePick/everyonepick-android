@@ -32,6 +32,7 @@ class GroupAlbumViewModel @Inject constructor(
     groupAlbumUseCase: GroupAlbumUseCase
 ): ViewModel() {
     private val bearerAccessToken = dataStoreUseCase.bearerAccessToken
+
     val me: StateFlow<User> = bearerAccessToken.transformLatest {
         if (it != null) emit(userUseCase.readUser(it))
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), User.dummyData)
@@ -75,10 +76,13 @@ class GroupAlbumViewModel @Inject constructor(
 
         viewModelScope.launch {
             _memberModelList.collectLatest { memberModelList ->
+                // checked 값 바인딩
                 memberModelList.data.forEach {
                     viewModelScope.launch {
                         it.isChecked.collectLatest { isChecked ->
                             if (isChecked) _checked.value += 1
+                            // 초기에 체크박스가 체크 해제된 채로 있기 때문에 아래 코드가 수행되게 됩니다. 이 때문에
+                            // checked 값이 0이 아니라 음수로 초기화되는 문제가 있었고, 이를 해결하고자 하는 의도입니다.
                             else _checked.value = max(0, _checked.value - 1)
                         }
                     }

@@ -78,7 +78,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED_REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
             bundle.getStringArrayList(URI_LIST_CHECKED_KEY)?.let { uriList ->
                 for (uri in uriList) {
-                    // TODO: 업로드 -> 성공 -> viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 다시 로드
+                    // TODO: 함수 추가: 업로드 -> 성공 -> viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 다시 로드?
                 }
             }
         }

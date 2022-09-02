@@ -1,10 +1,7 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.kakao.sdk.talk.model.Friend
 import com.kakao.sdk.talk.model.Friends
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InviteFriendViewModel @Inject constructor(
-    private val friendUseCase: FriendUseCase
+    private val friendUseCase: FriendUseCase,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
     /**
      * [inviteFriendModelList]는 전체 친구 리스트이자 '실제' 데이터인 반면, [filteredList]는 검색 필터링이 적용된
@@ -60,18 +58,24 @@ class InviteFriendViewModel @Inject constructor(
     val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
     init {
+        savedStateHandle.get<Array<String>>("existingUserClientIdList")?.let {
+            existingUserClientIdList.value = it.toList()
+            _maxInviteCount.value -= it.count()
+        }
+
         readInviteFriendModelList()
 
         viewModelScope.launch {
             _inviteFriendModelList.collectLatest { inviteFriendModelList ->
                 updateFilteredList()
 
+                // checked 값 바인딩
                 inviteFriendModelList.forEach {
                     viewModelScope.launch {
                         it.isChecked.collectLatest { isChecked ->
                             if (isChecked) _checked.value += 1
-                            // 초기에 체크박스가 체크 해제된 채로 있는데, 이때 checked를 감소시키면 음수값이 나오며,
-                            // 이를 방지하는 코드이다.
+                            // 초기에 체크박스가 체크 해제된 채로 있기 때문에 아래 코드가 수행되게 됩니다. 이 때문에
+                            // checked 값이 0이 아니라 음수로 초기화되는 문제가 있었고, 이를 해결하고자 하는 의도입니다.
                             else _checked.value = max(0, _checked.value - 1)
                         }
                     }
@@ -90,14 +94,6 @@ class InviteFriendViewModel @Inject constructor(
         .filter { it.isChecked.value}
         .map { it.friend }
         .toMutableList()
-
-    fun setExistingUserClientIdList(value: List<String>) {
-        existingUserClientIdList.value = value
-    }
-
-    fun setMaxInviteCount(value: Int) {
-        _maxInviteCount.value = value
-    }
 
     private fun readInviteFriendModelList() {
         _isApiLoading.value = true

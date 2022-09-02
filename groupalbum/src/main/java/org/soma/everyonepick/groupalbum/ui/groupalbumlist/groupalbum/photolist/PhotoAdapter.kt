@@ -28,8 +28,7 @@ class PhotoAdapter: ListAdapter<PhotoModel, RecyclerView.ViewHolder>(PhotoDiffCa
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val photoUrl = item.photo.photoUrl
-                val directions = GroupAlbumFragmentDirections.toPhotoFragment(photoUrl)
+                val directions = GroupAlbumFragmentDirections.toPhotoFragment(item.photo.photoUrl)
                 binding.root.findNavController().navigate(directions)
             } else {
                 binding.checkbox.performTouch()
