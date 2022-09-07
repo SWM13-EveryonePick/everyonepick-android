@@ -26,7 +26,7 @@ class ImagePickerFragment : Fragment() {
         _binding = FragmentImagePickerBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
-            it.adapter = ImageAdapter(viewModel)
+            it.adapter = ImageAdapter()
             it.onClickUploadButtonListener = View.OnClickListener {
                 activity?.supportFragmentManager?.setFragmentResult(
                     URI_LIST_CHECKED_REQUEST_KEY,

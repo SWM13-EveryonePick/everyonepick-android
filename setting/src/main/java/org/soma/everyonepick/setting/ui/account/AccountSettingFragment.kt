@@ -27,7 +27,7 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAccountSettingBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
             it.listener = this

@@ -13,6 +13,8 @@
     <color name="main_point_color_end">#484DD1</color>
 
     <color name="black">#FF000000</color>
+    <color name="black_gray">#333333</color>
+    <color name="dark_gray">#4b4b4b</color>
     <color name="gray">#777777</color>
     <color name="light_gray">#b9b9b9</color>
     <color name="disabled">#cbcbcb</color>

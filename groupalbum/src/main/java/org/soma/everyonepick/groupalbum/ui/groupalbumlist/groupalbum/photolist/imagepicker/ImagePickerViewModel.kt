@@ -32,21 +32,20 @@ class ImagePickerViewModel: ViewModel() {
         val cursor = context.contentResolver.query(uri, projection, selection, null, sortOrder)
 
         cursor?.let {
-            while(cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 val mediaPath = cursor.getString(cursor.getColumnIndex(INDEX_MEDIA_URI))
-                _imageModelList.value.add(ImageModel(Uri.fromFile(File(mediaPath)), false))
+                _imageModelList.value.add(ImageModel(Uri.fromFile(File(mediaPath)), MutableStateFlow(false)))
                 _imageModelList.value = _imageModelList.value
             }
+            it.close()
         }
-
-        cursor?.close()
     }
 
-
     fun getCheckedImageUriList() = _imageModelList.value
-        .filter { it.isChecked }
+        .filter { it.isChecked.value }
         .map { it.uri.toString() }
         .toMutableList()
+
 
     companion object {
         private const val INDEX_MEDIA_ID = MediaStore.MediaColumns._ID

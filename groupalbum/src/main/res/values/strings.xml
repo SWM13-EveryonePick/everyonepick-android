@@ -4,6 +4,7 @@
     <string name="group_album_with_space">단체 공유 앨범</string>
     <string name="empty_group_albums">단체공유앨범이 없습니다.</string>
     <string name="create_group_album">앨범 생성</string>
+    <string name="photo_count">사진 %s장</string>
 
     <!--친구-->
     <string name="invite_with_kakao">카톡으로 초대 메시지 보내기</string>
@@ -32,6 +33,7 @@
     <string name="update_group_album_title">단체공유앨범 이름 변경</string>
     <string name="member_count">단체인원(%s)</string>
     <string name="select_member_to_kick">내보낼 인원을 선택하세요.</string>
+    <string name="do_invite">초대하기</string>
 
     <!--사진-->
     <string name="empty_photos">사진이 없습니다 :/</string>

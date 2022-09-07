@@ -47,13 +47,4 @@ class GroupAlbumViewModelTest {
         )
         viewModel.setGroupAlbum(testGroupAlbumReadDetail)
     }
-
-    @Test
-    fun testOnClickCheckbox() {
-        runBlocking {
-            viewModel.onClickCheckbox(0, true)
-            assertEquals(viewModel.checked.value, 1)
-            assertTrue(viewModel.memberModelList.value.data[0].isChecked)
-        }
-    }
 }

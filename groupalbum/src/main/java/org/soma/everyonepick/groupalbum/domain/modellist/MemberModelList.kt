@@ -35,7 +35,7 @@ class MemberModelList {
         for (i in _data.indices) {
             val newItem = copyMemberModel(_data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
-            newItem.isChecked = false
+            newItem.isChecked.value = false
             _data[i] = newItem
         }
     }

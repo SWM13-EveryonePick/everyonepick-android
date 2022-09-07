@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+
+    <data>
+        <variable
+            name="friend"
+            type="com.kakao.sdk.talk.model.Friend" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_friend_item">
@@ -11,6 +18,7 @@
             android:id="@+id/image_profile"
             android:layout_width="@dimen/size_friend_profile"
             android:layout_height="@dimen/size_friend_profile"
+            photoUrl="@{friend.profileThumbnailImage}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +31,8 @@
             android:gravity="center_vertical"
             android:textSize="15sp"
             android:textColor="@color/title"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@{friend.profileNickname}"
             app:layout_constraintStart_toEndOf="@id/image_profile"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="서달미"

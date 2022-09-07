@@ -1,14 +1,15 @@
 package org.soma.everyonepick.groupalbum.domain.model
 
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadList
 
 class GroupAlbumModel(
     val groupAlbum: GroupAlbumReadList,
-    var isChecked: Boolean,
+    var isChecked: MutableStateFlow<Boolean>,
     var isCheckboxVisible: Boolean
 ) {
     companion object {
-        fun createDummyData() = GroupAlbumModel(GroupAlbumReadList(-1, "", 0, listOf(), 0), isChecked = false, isCheckboxVisible = false)
+        fun createDummyData() = GroupAlbumModel(GroupAlbumReadList(-1, "", 0, listOf(), 0), isChecked = MutableStateFlow(false), isCheckboxVisible = false)
     }
 
     // DiffCall의 areContentsTheSame()에서의 오류를 해결하기 위함

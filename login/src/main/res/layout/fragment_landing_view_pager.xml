@@ -45,7 +45,7 @@
                 android:text="@string/next"
                 android:textColor="@color/primary_blue"
                 android:textSize="18sp"
-                android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"
                 app:layout_constraintTop_toTopOf="@id/image_next"
                 app:layout_constraintBottom_toBottomOf="@id/image_next"
                 app:layout_constraintEnd_toStartOf="@id/image_next"/>
@@ -92,7 +92,7 @@
             <ProgressBar
                 android:layout_width="@dimen/size_loginprogressbar"
                 android:layout_height="@dimen/size_loginprogressbar"
-                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                visibleWhen="@{viewModel.isApiLoading}"
                 app:layout_constraintTop_toTopOf="@id/imagebutton_login"
                 app:layout_constraintBottom_toBottomOf="@id/imagebutton_login"
                 app:layout_constraintStart_toStartOf="@id/imagebutton_login"

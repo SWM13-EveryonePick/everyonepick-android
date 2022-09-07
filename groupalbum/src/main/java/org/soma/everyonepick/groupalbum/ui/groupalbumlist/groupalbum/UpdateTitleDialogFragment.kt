@@ -26,7 +26,7 @@ class UpdateTitleDialogFragment(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DialogFragmentUpdateTitleDialogBinding.inflate(inflater, container, false)
         return binding.root
     }

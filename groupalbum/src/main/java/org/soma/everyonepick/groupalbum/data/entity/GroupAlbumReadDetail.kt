@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.data.entity
 
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
@@ -17,7 +18,7 @@ data class GroupAlbumReadDetail(
 
     fun toMemberModelList() = MemberModelList(
         users.map { user ->
-            user?.let { MemberModel(user, isChecked = false, isCheckboxVisible = false) }
+            user?.let { MemberModel(user, MutableStateFlow(false), isCheckboxVisible = false) }
         }.toMutableList() as MutableList<MemberModel>
     )
 }

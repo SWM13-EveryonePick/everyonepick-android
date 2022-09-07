@@ -5,7 +5,6 @@
 
     <data>
         <import type="androidx.core.content.ContextCompat"/>
-        <import type="android.view.View"/>
         <variable
             name="onClickNextButtonListener"
             type="android.view.View.OnClickListener" />
@@ -34,8 +33,8 @@
             android:id="@+id/text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_side"
-            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginStart="@dimen/margin_side"
+            android:layout_marginEnd="@dimen/margin_side"
             android:textColor="@color/black"
             android:textSize="22sp"
             app:text="@{@string/title_fragment_invite_friend}"
@@ -48,8 +47,8 @@
             android:id="@+id/text_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_side"
-            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginStart="@dimen/margin_side"
+            android:layout_marginEnd="@dimen/margin_side"
             android:layout_marginTop="20dp"
             android:textColor="@color/black"
             app:text="@{@string/description_fragment_invite_friend(viewModel.maxInviteCount.toString())}"
@@ -63,7 +62,7 @@
             android:id="@+id/text_checked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:textColor="@color/black"
             app:prefix="@{`(`}"
             app:text="@{Integer.toString(viewModel.checked)}"
@@ -78,8 +77,8 @@
             android:id="@+id/layout_search"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_search_bar"
-            android:layout_marginLeft="@dimen/margin_side"
-            android:layout_marginRight="@dimen/margin_side"
+            android:layout_marginStart="@dimen/margin_side"
+            android:layout_marginEnd="@dimen/margin_side"
             android:layout_marginTop="30dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
@@ -157,12 +156,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/scrollview"
             app:layout_constraintBottom_toBottomOf="@id/scrollview"
-            android:visibility="@{viewModel.inviteFriendModelList.size() == 0? View.VISIBLE: View.GONE}">
+            visibleWhen="@{viewModel.inviteFriendModelList.size() == 0}">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.isApiLoading()? View.GONE: View.VISIBLE}"
+                visibleWhen="@{!viewModel.isApiLoading()}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -176,7 +175,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="@{viewModel.isApiLoading? View.VISIBLE: View.GONE}"
+                visibleWhen="@{viewModel.isApiLoading}"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

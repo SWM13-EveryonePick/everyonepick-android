@@ -1,4 +1,4 @@
-package org.soma.everyonepick.camera.ui.camerafragments
+package org.soma.everyonepick.camera.ui
 
 import android.Manifest
 import android.os.Bundle
@@ -15,7 +15,7 @@ class ParentPermissionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val fragment = PermissionFragment(arrayOf(Manifest.permission.CAMERA)) {
+        val fragment = PermissionFragment(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             val directions = ParentPermissionFragmentDirections.toPreviewFragment()
             findNavController().navigate(directions)
         }

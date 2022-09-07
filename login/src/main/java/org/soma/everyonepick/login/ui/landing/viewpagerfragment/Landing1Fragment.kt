@@ -18,7 +18,9 @@ class Landing1Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentLanding1Binding.inflate(inflater, container, false)
+        _binding = FragmentLanding1Binding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+        }
         return binding.root
     }
 

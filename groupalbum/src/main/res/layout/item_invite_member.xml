@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="memberModel"
+            type="org.soma.everyonepick.common.domain.model.MemberModel" />
+        <variable
+            name="visibility"
+            type="Boolean" />
+        <variable
+            name="onClickRoot"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_member_item"
+        android:paddingLeft="@dimen/margin_drawer"
+        android:paddingRight="@dimen/margin_drawer"
+        android:background="?attr/selectableItemBackground"
+        visibleWhen="@{visibility}"
+        android:onClick="@{onClickRoot}">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_profile"
+            android:layout_width="@dimen/size_member_profile"
+            android:layout_height="@dimen/size_member_profile"
+            android:src="@drawable/ic_btn_drawer_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_nickname"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/primary_blue"
+            android:layout_marginStart="16dp"
+            android:text="@string/do_invite"
+            app:layout_constraintStart_toEndOf="@id/image_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

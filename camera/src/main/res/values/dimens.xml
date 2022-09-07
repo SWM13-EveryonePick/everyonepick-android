@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="shutter_button">64dp</dimen>
-    <dimen name="shutter_button_margin">80dp</dimen>
+    <dimen name="size_shutter_button">75dp</dimen>
+    <dimen name="size_camera_side_button">60dp</dimen>
+    <dimen name="top_margin_camera_button_layout">40dp</dimen>
+    <dimen name="bottom_margin_camera_button_layout">80dp</dimen>
+    <dimen name="side_margin_camera_button_layout">32dp</dimen>
+    <dimen name="size_pose">95dp</dimen>
 </resources>

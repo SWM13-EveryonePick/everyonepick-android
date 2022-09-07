@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/parentPermissionFragment"
-        android:name="org.soma.everyonepick.camera.ui.camerafragments.ParentPermissionFragment">
+        android:name="org.soma.everyonepick.camera.ui.ParentPermissionFragment">
 
         <action
             android:id="@+id/to_previewFragment"
@@ -19,6 +19,6 @@
 
     <fragment
         android:id="@+id/previewFragment"
-        android:name="org.soma.everyonepick.camera.ui.camerafragments.PreviewFragment"/>
+        android:name="org.soma.everyonepick.camera.ui.preview.PreviewFragment"/>
 
 </navigation>

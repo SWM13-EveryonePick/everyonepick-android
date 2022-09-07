@@ -31,7 +31,7 @@ class GroupAlbumModelList {
     fun removeCheckedItems() {
         val newData = mutableListOf<GroupAlbumModel>()
         for (i in 0 until getActualItemCount()) {
-            if (!data[i].isChecked) newData.add(data[i])
+            if (!data[i].isChecked.value) newData.add(data[i])
         }
         _data = newData
     }
@@ -40,16 +40,16 @@ class GroupAlbumModelList {
         for (i in data.indices) {
             val newItem = copyGroupAlbumModel(data[i])
             newItem.isCheckboxVisible = isCheckboxVisible
-            newItem.isChecked = false
+            newItem.isChecked.value = false
             _data[i] = newItem
         }
     }
 
     fun checkAll() {
-        val isAllChecked = getActualData().all { it.isChecked }
+        val isAllChecked = getActualData().all { it.isChecked.value }
         for (i in data.indices) {
             val newItem = copyGroupAlbumModel(data[i])
-            newItem.isChecked = !isAllChecked
+            newItem.isChecked.value = !isAllChecked
             _data[i] = newItem
         }
     }

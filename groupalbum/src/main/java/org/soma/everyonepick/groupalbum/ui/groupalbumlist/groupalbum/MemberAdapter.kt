@@ -13,17 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.model.MemberModel
+import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.common.util.setVisibility
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.databinding.ItemInviteMemberBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumAdapter
 import org.soma.everyonepick.groupalbum.databinding.ItemMemberBinding
+import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType
 import org.soma.everyonepick.groupalbum.util.MemberViewType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 
 /**
  * @see GroupAlbumAdapter
+ * @see MemberModelList
  */
 class MemberAdapter(
     private val parentViewModel: GroupAlbumViewModel
@@ -35,91 +39,66 @@ class MemberAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = DataBindingUtil.inflate<ItemMemberBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_member,
-            parent,
-            false
-        )
-
-        val holder = MemberViewHolder(binding)
-        subscribeUi(binding, holder)
-
-        return holder
-    }
-
-    private fun subscribeUi(binding: ItemMemberBinding, holder: MemberViewHolder) {
-        binding.root.setOnClickListener {
-            val isInviteItem = holder.absoluteAdapterPosition == itemCount - 1
-            if (isInviteItem) {
-                val existingUserClientIdList = parentViewModel.memberModelList.value.getActualData()
-                    .filter { it.user.id != parentViewModel.me.value.id }
-                    .map { it.user.withoutKakaoPrefix().clientId?: "" }
-                    .toTypedArray()
-                val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(
-                    InviteFriendFragmentType.TO_INVITE,
-                    existingUserClientIdList
-                )
-                binding.root.findNavController().navigate(directions)
-            } else {
-                if (binding.checkbox.visibility == View.VISIBLE) {
-                    binding.checkbox.performTouch()
+        return when (viewType) {
+            MemberViewType.INVITE.ordinal -> {
+                val binding = getViewDataBinding<ItemInviteMemberBinding>(parent, R.layout.item_invite_member).apply {
+                    onClickRoot = View.OnClickListener {
+                        // 초대 페이지로 이동
+                        val existingUserClientIdList = parentViewModel.memberModelList.value.getActualData()
+                            .filter { it.user.id != parentViewModel.me.value.id }
+                            .map { it.user.withoutKakaoPrefix().clientId?: "" }
+                            .toTypedArray()
+                        val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(
+                            InviteFriendFragmentType.TO_INVITE,
+                            existingUserClientIdList
+                        )
+                        root.findNavController().navigate(directions)
+                    }
                 }
+                InviteMemberViewHolder(binding)
             }
-        }
-
-        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            val position = holder.absoluteAdapterPosition
-            parentViewModel.onClickCheckbox(position, isChecked)
+            else -> {
+                val binding = getViewDataBinding<ItemMemberBinding>(parent, R.layout.item_member).apply {
+                    onClickRoot = View.OnClickListener {
+                        if (checkbox.visibility == View.VISIBLE) {
+                            checkbox.performTouch()
+                        }
+                    }
+                }
+                MemberViewHolder(binding)
+            }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val memberModel = getItem(position)
-        (holder as MemberViewHolder).bind(
-            memberModel,
-            isInviteItem = position == itemCount - 1,
-            parentViewModel
-        )
+        when (holder) {
+            is MemberViewHolder -> holder.bind(memberModel, parentViewModel)
+            is InviteMemberViewHolder -> holder.bind(memberModel, parentViewModel)
+        }
     }
 
-    class MemberViewHolder(
-        private val binding: ItemMemberBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class MemberViewHolder(private val binding: ItemMemberBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(
             memberModel: MemberModel,
-            isInviteItem: Boolean,
             parentViewModel: GroupAlbumViewModel
         ) {
-            if (isInviteItem) {
-                val amIHost = parentViewModel.groupAlbum.value.hostUserId == parentViewModel.me.value.id
-                val isModeNormal = parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal
-                binding.root.setVisibility(amIHost && isModeNormal)
+            binding.memberModel = memberModel
+            binding.isMemberHostUser = memberModel.user.id == parentViewModel.groupAlbum.value.hostUserId
+            binding.executePendingBindings()
+        }
+    }
 
-                Glide.with(binding.root)
-                    .load(R.drawable.ic_btn_drawer_add)
-                    .into(binding.imageProfile)
-
-                binding.textNickname.text = "초대하기"
-                binding.textNickname.setTextColor(
-                    ContextCompat.getColor(binding.root.context, org.soma.everyonepick.common_ui.R.color.primary_blue)
-                )
-
-                binding.checkbox.visibility = View.GONE
-                binding.imageCrown.visibility = View.GONE
-            } else {
-                Glide.with(binding.root)
-                    .load(memberModel.user.thumbnailImageUrl)
-                    .into(binding.imageProfile)
-
-                binding.textNickname.text = memberModel.user.nickname
-                binding.checkbox.isChecked = memberModel.isChecked
-
-                val isHostUser = parentViewModel.groupAlbum.value.hostUserId == memberModel.user.id
-                binding.imageCrown.setVisibility(isHostUser)
-                // 방장일 경우 체크박스를 표시하지 않습니다.
-                binding.checkbox.setVisibility(memberModel.isCheckboxVisible && !isHostUser)
-            }
+    class InviteMemberViewHolder(private val binding: ItemInviteMemberBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            memberModel: MemberModel,
+            parentViewModel: GroupAlbumViewModel
+        ) {
+            binding.memberModel = memberModel
+            val amIHost = parentViewModel.groupAlbum.value.hostUserId == parentViewModel.me.value.id
+            val isModeNormal = parentViewModel.memberSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal
+            binding.visibility = amIHost && isModeNormal
+            binding.executePendingBindings()
         }
     }
 }

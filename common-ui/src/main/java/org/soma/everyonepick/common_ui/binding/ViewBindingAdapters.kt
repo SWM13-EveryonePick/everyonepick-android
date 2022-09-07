@@ -1,7 +1,9 @@
 package org.soma.everyonepick.common_ui.binding
 
 import android.content.ContextWrapper
+import android.graphics.Bitmap
 import android.graphics.Typeface
+import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -13,8 +15,14 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
+@BindingAdapter("visibleWhen")
+fun setVisibility(view: View, flag: Boolean) {
+    view.visibility = if (flag) View.VISIBLE else View.GONE
+}
 
 @BindingAdapter("onBackPressed")
 fun bindBackButton(view: View, onBackPressed: Boolean) {
@@ -35,6 +43,26 @@ fun bindImageView(imageView: ImageView, photoUrl: String) {
     Glide.with(imageView.context)
         .load(photoUrl)
         .into(imageView)
+}
+
+@BindingAdapter("photoUrl", "roundingRadius", requireAll = true)
+fun bindImageView(imageView: ImageView, photoUrl: String, roundingRadius: Int) {
+    Glide.with(imageView.context)
+        .load(photoUrl)
+        .transform(CenterCrop(), RoundedCorners(roundingRadius))
+        .into(imageView)
+}
+
+@BindingAdapter("uri")
+fun bindImageView(imageView: ImageView, uri: Uri) {
+    Glide.with(imageView.context)
+        .load(uri)
+        .into(imageView)
+}
+
+@BindingAdapter("bitmap")
+fun bindImageView(imageView: ImageView, bitmap: Bitmap?) {
+    imageView.setImageBitmap(bitmap)
 }
 
 /**

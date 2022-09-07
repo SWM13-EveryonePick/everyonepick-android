@@ -1,45 +1,27 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.common.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import org.soma.everyonepick.groupalbum.databinding.ItemImageBinding
 
-class ImageAdapter(
-    private val parentViewModel: ImagePickerViewModel
-): ListAdapter<ImageModel, RecyclerView.ViewHolder>(ImageDiffCallback()) {
+class ImageAdapter: ListAdapter<ImageModel, RecyclerView.ViewHolder>(ImageDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = DataBindingUtil.inflate<ItemImageBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.item_image,
-            parent,
-            false
-        )
-
-        val holder = ImageViewHolder(binding)
-        subscribeUi(binding, holder)
-
-        return holder
-    }
-
-    private fun subscribeUi(binding: ItemImageBinding, holder: ImageViewHolder) {
-        binding.root.setOnClickListener {
-            binding.checkbox.performTouch()
-        }
-
-        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
-            parentViewModel.imageModelList.value?.let { imageModelList ->
-                val position = holder.absoluteAdapterPosition
-                imageModelList[position].isChecked = isChecked
+        val binding = getViewDataBinding<ItemImageBinding>(parent, R.layout.item_image).apply {
+            onClickRoot = View.OnClickListener {
+                checkbox.performTouch()
             }
         }
+        return ImageViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -47,13 +29,10 @@ class ImageAdapter(
         (holder as ImageViewHolder).bind(imageModel)
     }
 
-    class ImageViewHolder(
-        private val binding: ItemImageBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    class ImageViewHolder(private val binding: ItemImageBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(imageModel: ImageModel) {
-            Glide.with(binding.root)
-                .load(imageModel.uri)
-                .into(binding.image)
+            binding.imageModel = imageModel
+            binding.executePendingBindings()
         }
     }
 }
