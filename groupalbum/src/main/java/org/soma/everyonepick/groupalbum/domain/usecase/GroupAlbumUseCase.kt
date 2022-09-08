@@ -5,7 +5,7 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
-import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumReadListToGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumListToGroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class GroupAlbumUseCase @Inject constructor(
 ) {
     suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
         val groupAlbumList = groupAlbumRepository.readGroupAlbumList(token).data.toMutableList()
-        return groupAlbumList.groupAlbumReadListToGroupAlbumModelList()
+        return groupAlbumList.groupAlbumListToGroupAlbumModelList()
     }
 
     suspend fun readGroupAlbum(token: String, id: Long): GroupAlbum {
