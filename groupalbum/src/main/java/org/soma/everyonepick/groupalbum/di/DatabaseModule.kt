@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.soma.everyonepick.groupalbum.data.AppDatabase
-import org.soma.everyonepick.groupalbum.data.dao.GroupAlbumLocalDao
+import org.soma.everyonepick.groupalbum.data.source.local.GroupAlbumLocalDao
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

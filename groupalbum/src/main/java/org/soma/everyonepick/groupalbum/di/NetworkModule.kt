@@ -6,9 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.soma.everyonepick.common.data.RetrofitFactory
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
-import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumRepository
-import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
-import org.soma.everyonepick.groupalbum.domain.usecase.PhotoUseCase
+import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
+import org.soma.everyonepick.groupalbum.data.source.remote.PhotoService
 import javax.inject.Singleton
 
 
@@ -23,13 +22,13 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providePhotoRepository(): PhotoRepository {
-        return RetrofitFactory.create(PhotoRepository::class.java)
+    fun providePhotoService(): PhotoService {
+        return RetrofitFactory.create(PhotoService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideGroupAlbumRepository(): GroupAlbumRepository {
-        return RetrofitFactory.create(GroupAlbumRepository::class.java)
+    fun provideGroupAlbumService(): GroupAlbumService {
+        return RetrofitFactory.create(GroupAlbumService::class.java)
     }
 }

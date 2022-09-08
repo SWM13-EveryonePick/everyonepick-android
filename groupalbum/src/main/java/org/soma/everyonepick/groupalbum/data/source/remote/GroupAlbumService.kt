@@ -1,11 +1,11 @@
-package org.soma.everyonepick.groupalbum.data.repository
+package org.soma.everyonepick.groupalbum.data.source.remote
 
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumListResponse
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumResponse
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import retrofit2.http.*
 
-interface GroupAlbumRepository {
+interface GroupAlbumService {
     @GET("api/album")
     suspend fun readGroupAlbumList(@Header("Authorization") token: String): GroupAlbumListResponse
 

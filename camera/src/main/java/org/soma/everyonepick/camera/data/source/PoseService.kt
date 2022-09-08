@@ -1,9 +1,9 @@
-package org.soma.everyonepick.camera.data.repository
+package org.soma.everyonepick.camera.data.source
 
 import org.soma.everyonepick.camera.data.dto.PoseListResponse
 import org.soma.everyonepick.camera.data.entity.Pose
 
-class PoseRepository {
+class PoseService {
     suspend fun readPoseList(token: String, posePackId: Long): PoseListResponse {
         // TODO: Retrofit2
         return PoseListResponse(

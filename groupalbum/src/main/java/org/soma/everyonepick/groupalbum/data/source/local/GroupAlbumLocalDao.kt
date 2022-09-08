@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.data.dao
+package org.soma.everyonepick.groupalbum.data.source.local
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow

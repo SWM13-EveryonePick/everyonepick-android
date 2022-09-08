@@ -1,35 +1,29 @@
 package org.soma.everyonepick.groupalbum.domain.modellist
 
 import org.soma.everyonepick.common.domain.model.MemberModel
+import java.lang.Integer.max
 
 /**
  * @see GroupAlbumModelList
  */
 class MemberModelList {
     private var _data: MutableList<MemberModel>
-        set(value) {
-            field = value
-            field.add(MemberModel.createDummyData())
-        }
-
     val data: List<MemberModel>
         get() = _data
 
     constructor() {
         _data = mutableListOf()
+        _data.add(MemberModel.createDummyData())
     }
 
     constructor(actualData: MutableList<MemberModel>) {
         _data = actualData
+        _data.add(MemberModel.createDummyData())
     }
 
-    fun getActualItemCount() = _data.size - 1
+    fun getActualItemCount() = max(data.size - 1, 0)
 
-    fun getActualData() = _data.subList(0, getActualItemCount()).toMutableList()
-
-    fun setActualData(actualData: MutableList<MemberModel>) {
-        _data = actualData
-    }
+    fun getActualData() = data.subList(0, getActualItemCount()).toMutableList()
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         for (i in _data.indices) {
