@@ -33,6 +33,7 @@ class GroupAlbumModelList {
         for (i in 0 until getActualItemCount()) {
             if (!data[i].isChecked.value) newData.add(data[i])
         }
+        newData.add(GroupAlbumModel.createDummyData())
         _data = newData
     }
 

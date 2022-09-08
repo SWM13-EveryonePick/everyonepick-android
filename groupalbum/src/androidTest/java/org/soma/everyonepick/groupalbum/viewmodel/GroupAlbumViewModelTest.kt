@@ -17,8 +17,8 @@ import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.GroupAlbumListViewModel
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.util.testGroupAlbum
 import org.soma.everyonepick.groupalbum.util.testGroupAlbumModelList
-import org.soma.everyonepick.groupalbum.util.testGroupAlbumReadDetail
 import javax.inject.Inject
 
 @HiltAndroidTest
@@ -45,6 +45,6 @@ class GroupAlbumViewModelTest {
             userUseCase,
             groupAlbumUseCase
         )
-        viewModel.setGroupAlbum(testGroupAlbumReadDetail)
+        viewModel.setGroupAlbum(testGroupAlbum)
     }
 }

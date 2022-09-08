@@ -59,7 +59,7 @@ class GroupAlbumAdapter: ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(G
                     val item = getItem(holder.absoluteAdapterPosition)
                     // 일반 모드일 때
                     if (!item.isCheckboxVisible) {
-                        val directions = HomeViewPagerFragmentDirections.toGroupAlbumFragment(item.groupAlbum.id)
+                        val directions = HomeViewPagerFragmentDirections.toGroupAlbumFragment(item.groupAlbum.id?:0)
                         binding.root.findNavController().navigate(directions)
                     } else {
                         binding.checkbox.performTouch()
