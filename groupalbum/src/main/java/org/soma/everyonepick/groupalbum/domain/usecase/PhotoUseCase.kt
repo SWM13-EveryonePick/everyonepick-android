@@ -2,12 +2,12 @@ package org.soma.everyonepick.groupalbum.domain.usecase
 
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.data.entity.Photo
-import org.soma.everyonepick.groupalbum.data.repository.PhotoRepository
+import org.soma.everyonepick.groupalbum.data.source.remote.PhotoService
 import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
 import javax.inject.Inject
 
 class PhotoUseCase @Inject constructor(
-    private val photoRepository: PhotoRepository
+    private val photoService: PhotoService
 ) {
     suspend fun readPhotoModelList(groupAlbumId: Long): MutableList<PhotoModel> {
         // TODO: photoRepository

@@ -1,35 +1,28 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment
@@ -107,7 +100,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val data = groupAlbumUseCase
-                    .inviteUsersToGroupAlbum(token, viewModel.groupAlbum.value.id, friendList)
+                    .inviteUsersToGroupAlbum(token, viewModel.groupAlbum.value.id!!, friendList)
 
                 viewModel.setGroupAlbum(data)
             } catch (e: Exception) {
@@ -180,9 +173,9 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             lifecycleScope.launch {
                 try {
                     val token = dataStoreUseCase.bearerAccessToken.first()!!
-                    val groupAlbum = viewModel.groupAlbum.value.toGroupAlbum().apply { title = newTitle }
+                    val groupAlbum = viewModel.groupAlbum.value.copy(title = newTitle)
 
-                    val data = groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value.id, groupAlbum)
+                    val data = groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value.id!!, groupAlbum)
                     viewModel.setGroupAlbum(data)
                 } catch (e: Exception) {
                     Toast.makeText(requireContext(), "단체공유앨범 이름 변경에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -199,7 +192,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                 lifecycleScope.launch {
                     try {
                         val token = dataStoreUseCase.bearerAccessToken.first()!!
-                        groupAlbumUseCase.leaveGroupAlbum(token, viewModel.groupAlbum.value.id)
+                        groupAlbumUseCase.leaveGroupAlbum(token, viewModel.groupAlbum.value.id!!)
 
                         findNavController().navigateUp()
                     } catch (e: Exception) {
@@ -223,7 +216,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                 val groupAlbumId = viewModel.groupAlbum.value.id
                 val userListToKick = viewModel.getCheckedUserList()
 
-                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbumId, userListToKick)
+                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbumId!!, userListToKick)
                 viewModel.setGroupAlbum(data)
 
                 viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)

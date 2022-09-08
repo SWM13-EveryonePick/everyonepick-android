@@ -43,23 +43,23 @@ class GroupAlbumTitleFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickCreateButton = View.OnClickListener {
-                createGroupAlbum()
-                KeyboardUtil.hideKeyboard(requireActivity())
-
-                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(viewModel.title.value)
-                findNavController().navigate(directions)
+                createGroupAlbumAndNavigate()
             }
         }
 
         return binding.root
     }
 
-    private fun createGroupAlbum() {
+    private fun createGroupAlbumAndNavigate() {
         lifecycleScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val groupAlbum = GroupAlbum(viewModel.title.value, getUserListToCreateGroupAlbum())
+                val groupAlbum = GroupAlbum(title = viewModel.title.value, users = getUserListToCreateGroupAlbum())
                 groupAlbumUseCase.createGroupAlbum(token, groupAlbum)
+
+                KeyboardUtil.hideKeyboard(requireActivity())
+                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(viewModel.title.value)
+                findNavController().navigate(directions)
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "단체공유앨범 생성에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }

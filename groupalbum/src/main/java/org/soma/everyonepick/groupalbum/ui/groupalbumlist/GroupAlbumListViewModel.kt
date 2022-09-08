@@ -78,9 +78,7 @@ class GroupAlbumListViewModel @Inject constructor(
         }
     }
 
-    fun deleteCheckedItems() {
-        _groupAlbumModelList.value.removeCheckedItems()
-    }
+    fun getCheckedItemList() = _groupAlbumModelList.value.getCheckedItemIdList()
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         _groupAlbumModelList.value.setIsCheckboxVisible(isCheckboxVisible)

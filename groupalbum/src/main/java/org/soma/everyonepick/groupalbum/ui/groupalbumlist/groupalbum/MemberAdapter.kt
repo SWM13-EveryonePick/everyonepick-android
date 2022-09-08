@@ -46,7 +46,7 @@ class MemberAdapter(
                         // 초대 페이지로 이동
                         val existingUserClientIdList = parentViewModel.memberModelList.value.getActualData()
                             .filter { it.user.id != parentViewModel.me.value.id }
-                            .map { it.user.withoutKakaoPrefix().clientId?: "" }
+                            .map { it.user.clientId?: "" }
                             .toTypedArray()
                         val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(
                             InviteFriendFragmentType.TO_INVITE,

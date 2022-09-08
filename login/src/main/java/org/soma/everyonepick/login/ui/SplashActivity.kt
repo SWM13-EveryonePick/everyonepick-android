@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -14,16 +13,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import org.soma.everyonepick.common.data.dto.RefreshRequest
-import org.soma.everyonepick.common.data.repository.AuthRepository
+import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.util.NATIVE_APP_KEY
-import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.util.LoginUtil
@@ -34,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModels()
 
-    @Inject lateinit var authRepository: AuthRepository
+    @Inject lateinit var authService: AuthService
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
     private var job: Job? = null
@@ -97,7 +92,7 @@ class SplashActivity : AppCompatActivity() {
 
     private suspend fun refreshAccessTokenAndSaveToDataStore(refreshToken: String) {
         try {
-            val data = authRepository.refresh(RefreshRequest(refreshToken)).data
+            val data = authService.refresh(RefreshRequest(refreshToken)).data
             dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
 
             viewModel.addSuccess()

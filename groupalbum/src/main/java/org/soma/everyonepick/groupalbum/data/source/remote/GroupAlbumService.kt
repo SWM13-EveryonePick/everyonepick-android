@@ -1,11 +1,11 @@
-package org.soma.everyonepick.groupalbum.data.repository
+package org.soma.everyonepick.groupalbum.data.source.remote
 
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumListResponse
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumResponse
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import retrofit2.http.*
 
-interface GroupAlbumRepository {
+interface GroupAlbumService {
     @GET("api/album")
     suspend fun readGroupAlbumList(@Header("Authorization") token: String): GroupAlbumListResponse
 
@@ -28,8 +28,6 @@ interface GroupAlbumRepository {
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
-
-    // 초대
     @POST ("api/album/{groupAlbumId}/user")
     suspend fun inviteUsersToGroupAlbum(
         @Header("Authorization") token: String,
@@ -37,7 +35,6 @@ interface GroupAlbumRepository {
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
-    // 강퇴
     @PATCH("api/album/{groupAlbumId}/user")
     suspend fun kickUsersOutOfGroupAlbum(
         @Header("Authorization") token: String,
@@ -45,7 +42,6 @@ interface GroupAlbumRepository {
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
-    // 나가기
     @DELETE("api/album/{groupAlbumId}")
     suspend fun leaveGroupAlbum(
         @Header("Authorization") token: String,

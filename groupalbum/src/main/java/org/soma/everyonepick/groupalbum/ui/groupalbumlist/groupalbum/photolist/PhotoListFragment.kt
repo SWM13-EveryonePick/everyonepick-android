@@ -61,7 +61,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                 launch {
                     parentViewModel.groupAlbum.collect {
                         try {
-                            if (it.id != User.dummyData.id) viewModel.readPhotoModelList(it.id)
+                            if (it.id != User.dummyData.id) viewModel.readPhotoModelList(it.id!!)
                         } catch (e: Exception) {
                             Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         }

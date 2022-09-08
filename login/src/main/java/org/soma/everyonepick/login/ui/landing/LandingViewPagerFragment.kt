@@ -8,7 +8,6 @@ import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +16,13 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.data.entity.ProviderName
-import org.soma.everyonepick.common.data.repository.AuthRepository
+import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.data.dto.SignUpRequest
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
@@ -42,7 +40,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
-    @Inject lateinit var authRepository: AuthRepository
+    @Inject lateinit var authService: AuthService
     @Inject lateinit var userUseCase: UserUseCase
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
 
@@ -118,7 +116,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     /**
      * 1. 카카오톡으로 로그인
-     * 2. 카카오 토큰을 기반으로 [AuthRepository.signUp] 호출
+     * 2. 카카오 토큰을 기반으로 [AuthService.signUp] 호출
      * 3. 얼굴정보 등록 여부에 따라서, HomeActivity 혹은 FaceInformation 페이지로 이동
      */
     override fun onClickLoginButton() {
@@ -137,7 +135,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private suspend fun signUpAndNavigate(token: OAuthToken?) {
         try {
-            val data = authRepository.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
+            val data = authService.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
             dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
             dataStoreUseCase.editRefreshToken(data.everyonepickRefreshToken)
 

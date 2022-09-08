@@ -27,7 +27,6 @@ class KakaoUtil {
             Friend(1, "", "Rachmaninoff", "https://picsum.photos/201", favorite = false, allowedMsg = false, 0),
         ), 0, "","")
 
-        fun Friend.toUserWithClientId() = User(null, null, id.toString(), null, null)
-        fun Friend.toUserWithClientIdWithoutKakaoPrefix() = toUserWithClientId().withoutKakaoPrefix()
+        fun Friend.toUserWithClientId() = User(null, null, "kakao_$id", null, null)
     }
 }

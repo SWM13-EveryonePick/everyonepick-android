@@ -7,9 +7,7 @@ import com.kakao.sdk.talk.model.Friends
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientId
-import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientIdWithoutKakaoPrefix
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
 import java.lang.Integer.max
@@ -32,7 +30,7 @@ class InviteFriendViewModel @Inject constructor(
     val filteredList: StateFlow<MutableList<InviteFriendModel>> = _filteredList
 
     /**
-     * 기존 단체공유앨범에 속한 멤버들의 clientId(without "kakao_") 리스트입니다. 친구 목록에 있으나 여기에 속한 멤버들은
+     * 기존 단체공유앨범에 속한 멤버들의 clientId 리스트입니다. 친구 목록에 있으나 여기에 속한 멤버들은
      * 리스트에 표시하지 않습니다. 이에 대한 필터링은 [filteredList]에 적용됩니다.
      */
     private val existingUserClientIdList = MutableStateFlow(listOf<String>())
@@ -112,7 +110,7 @@ class InviteFriendViewModel @Inject constructor(
             // 추가로 existingUserClientId에 있지 않은 경우만 보여주는 필터링을 적용합니다.
             .filter { inviteFriendModel ->
                 !existingUserClientIdList.value.any { existingUserClientId ->
-                    existingUserClientId == inviteFriendModel.friend.id.toString()
+                    existingUserClientId == inviteFriendModel.friend.toUserWithClientId().clientId.toString()
                 }
             }
             .toMutableList()

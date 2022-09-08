@@ -1,7 +1,5 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,12 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.entity.User
-import org.soma.everyonepick.common.domain.model.MemberModel
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadDetail
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbumReadList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -37,8 +32,8 @@ class GroupAlbumViewModel @Inject constructor(
         if (it != null) emit(userUseCase.readUser(it))
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), User.dummyData)
 
-    private val _groupAlbum = MutableStateFlow(GroupAlbumReadDetail(-1, "", -1, listOf(), listOf()))
-    val groupAlbum: StateFlow<GroupAlbumReadDetail> = _groupAlbum
+    private val _groupAlbum = MutableStateFlow(GroupAlbum(-1, "", -1, listOf(), 0))
+    val groupAlbum: StateFlow<GroupAlbum> = _groupAlbum
 
     private val _memberModelList = MutableStateFlow(MemberModelList())
     val memberModelList: StateFlow<MemberModelList> = _memberModelList
@@ -70,7 +65,7 @@ class GroupAlbumViewModel @Inject constructor(
 
         viewModelScope.launch {
             groupAlbum.collectLatest {
-                _memberModelList.value = it.toMemberModelList()
+                _memberModelList.value = it.getMemberModelList()
             }
         }
 
@@ -113,7 +108,7 @@ class GroupAlbumViewModel @Inject constructor(
         _memberSelectionMode.value = selectionMode.ordinal
     }
 
-    fun setGroupAlbum(groupAlbumReadDetail: GroupAlbumReadDetail) {
-        _groupAlbum.value = groupAlbumReadDetail
+    fun setGroupAlbum(groupAlbum: GroupAlbum) {
+        _groupAlbum.value = groupAlbum
     }
 }
