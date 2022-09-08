@@ -15,16 +15,23 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
+import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
+    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+
     private var _binding: FragmentGroupAlbumListBinding? = null
     private val binding get() = _binding!!
 
@@ -88,7 +95,18 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
 
     /** GroupAlbumListFragmentListener */
     override fun onClickDeleteButton() {
-        viewModel.deleteCheckedItems()
+        lifecycleScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                viewModel.getCheckedItemList().forEach {
+                    groupAlbumUseCase.leaveGroupAlbum(token, it!!)
+                }
+                viewModel.readGroupAlbumModelList()
+            } catch (e: Exception) {
+                viewModel.readGroupAlbumModelList()
+                Toast.makeText(requireContext(), "단체공유앨범에서 나가는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
         parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
     }
 

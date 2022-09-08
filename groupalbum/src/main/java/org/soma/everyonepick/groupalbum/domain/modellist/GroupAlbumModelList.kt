@@ -28,14 +28,7 @@ class GroupAlbumModelList {
 
     fun getActualData() = data.subList(0, getActualItemCount()).toMutableList()
 
-    fun removeCheckedItems() {
-        val newData = mutableListOf<GroupAlbumModel>()
-        for (i in 0 until getActualItemCount()) {
-            if (!data[i].isChecked.value) newData.add(data[i])
-        }
-        newData.add(GroupAlbumModel.createDummyData())
-        _data = newData
-    }
+    fun getCheckedItemIdList() = getActualData().map { it.groupAlbum.id }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         for (i in data.indices) {
