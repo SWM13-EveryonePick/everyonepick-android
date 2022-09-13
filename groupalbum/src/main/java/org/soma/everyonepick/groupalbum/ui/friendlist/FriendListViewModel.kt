@@ -1,4 +1,5 @@
 package org.soma.everyonepick.groupalbum.ui.friendlist
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kakao.sdk.talk.model.Friend

@@ -156,7 +156,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
 
-    /** GroupAlbumFragmentListener */
+    /** [GroupAlbumFragmentListener] */
     override fun onClickSelectButton() {
         viewModel.setPhotoSelectionMode(
             if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE
