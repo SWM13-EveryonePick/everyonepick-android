@@ -25,6 +25,9 @@ class DataStoreUseCase @Inject constructor(
     val hasShownTutorial: Flow<Boolean?> =
         dataStore.data.map { preferences -> preferences[hasTutorialShownKey] }
 
+    val hasShownSyntheticDialog: Flow<Boolean?> =
+        dataStore.data.map { preferences -> preferences[hasShownSyntheticDialogKey] }
+
     suspend fun editAccessToken(accessToken: String) {
         dataStore.edit {
             it[accessTokenKey] = accessToken
@@ -40,6 +43,12 @@ class DataStoreUseCase @Inject constructor(
     suspend fun editHasShownTutorial(hasShownTutorial: Boolean) {
         dataStore.edit {
             it[hasTutorialShownKey] = hasShownTutorial
+        }
+    }
+
+    suspend fun editHasShownSyntheticDialog(hasShownSyntheticDialog: Boolean) {
+        dataStore.edit {
+            it[hasShownSyntheticDialogKey] = hasShownSyntheticDialog
         }
     }
 
@@ -62,5 +71,6 @@ class DataStoreUseCase @Inject constructor(
         private val refreshTokenKey = stringPreferencesKey("refresh_token")
 
         private val hasTutorialShownKey = booleanPreferencesKey("has_tutorial_shown")
+        private val hasShownSyntheticDialogKey = booleanPreferencesKey("has_shown_synthetic_dialog")
     }
 }
