@@ -1,20 +1,21 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
-import org.soma.everyonepick.groupalbum.domain.usecase.PhotoUseCase
+import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
-    private val photoUseCase: PhotoUseCase
+    private val groupAlbumUseCase: GroupAlbumUseCase,
+    private val dataStoreUseCase: DataStoreUseCase
 ): ViewModel() {
     private val _photoModelList = MutableStateFlow<MutableList<PhotoModel>>(mutableListOf())
     val photoModelList: StateFlow<MutableList<PhotoModel>> = _photoModelList
@@ -25,7 +26,10 @@ class PhotoListViewModel @Inject constructor(
     fun readPhotoModelList(groupAlbumId: Long) {
         viewModelScope.launch {
             _isApiLoading.value = true
-            _photoModelList.value = photoUseCase.readPhotoModelList(groupAlbumId)
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                _photoModelList.value = groupAlbumUseCase.readPhotoList(token, groupAlbumId)
+            } catch (e: Exception) { }
             _isApiLoading.value = false
         }
     }

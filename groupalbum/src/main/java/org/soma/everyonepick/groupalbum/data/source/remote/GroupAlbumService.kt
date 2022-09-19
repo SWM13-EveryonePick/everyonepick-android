@@ -2,6 +2,7 @@ package org.soma.everyonepick.groupalbum.data.source.remote
 
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumListResponse
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumResponse
+import org.soma.everyonepick.groupalbum.data.dto.PhotoListResponse
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import retrofit2.http.*
 
@@ -47,4 +48,10 @@ interface GroupAlbumService {
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long
     ): GroupAlbumResponse
+
+    @GET("api/album/{groupAlbumId}/photo")
+    suspend fun readPhotoList(
+        @Header("Authorization") token: String,
+        @Path("groupAlbumId") groupAlbumId: Long
+    ): PhotoListResponse
 }
