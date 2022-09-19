@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.data.source.remote
 
+import okhttp3.MultipartBody
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumListResponse
 import org.soma.everyonepick.groupalbum.data.dto.GroupAlbumResponse
 import org.soma.everyonepick.groupalbum.data.dto.PhotoListResponse
@@ -53,5 +54,13 @@ interface GroupAlbumService {
     suspend fun readPhotoList(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long
+    ): PhotoListResponse
+
+    @Multipart
+    @POST("api/album/{groupAlbumId}/photo")
+    suspend fun createPhotoList(
+        @Header("Authorization") token: String,
+        @Path("groupAlbumId") groupAlbumId: Long,
+        @Part images: List<MultipartBody.Part>
     ): PhotoListResponse
 }

@@ -1,6 +1,8 @@
 package org.soma.everyonepick.groupalbum.domain.usecase
 
 import com.kakao.sdk.talk.model.Friend
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
@@ -51,6 +53,15 @@ class GroupAlbumUseCase @Inject constructor(
 
     suspend fun readPhotoList(token: String, id: Long): MutableList<PhotoModel> {
         val photoList = groupAlbumService.readPhotoList(token, id).data.toMutableList()
+        return photoList.toPhotoModelList()
+    }
+
+    suspend fun createPhotoList(
+        token: String,
+        id: Long,
+        images: List<MultipartBody.Part>
+    ): MutableList<PhotoModel> {
+        val photoList = groupAlbumService.createPhotoList(token, id, images).data.toMutableList()
         return photoList.toPhotoModelList()
     }
 }
