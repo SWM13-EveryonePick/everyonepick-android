@@ -13,8 +13,8 @@ import org.soma.everyonepick.common.util.NATIVE_APP_KEY
 
 class LoginUtil {
     companion object {
-        fun startHomeActivity(activity: Activity) {
-            val intent = Intent(activity, Class.forName(HOME_ACTIVITY_CLASS)).apply {
+        fun startHomeActivity(activity: Activity, homeActivityClass: Class<*>) {
+            val intent = Intent(activity, homeActivityClass).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             }
             activity.startActivity(intent)

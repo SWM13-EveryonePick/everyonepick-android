@@ -41,6 +41,8 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
+    @Inject lateinit var homeActivityClass: Class<*>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -157,7 +159,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             // 얼굴 정보가 등록되어 있는가?
             // TODO: if (user.faceInformation != null)
             if (false) {
-                LoginUtil.startHomeActivity(requireActivity())
+                LoginUtil.startHomeActivity(requireActivity(), homeActivityClass)
             } else {
                 val directions = LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
                 findNavController().navigate(directions)
