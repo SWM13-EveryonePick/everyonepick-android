@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
@@ -40,10 +41,6 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
     private val viewModel: LandingViewPagerViewModel by viewModels()
 
-    @Inject lateinit var authService: AuthService
-    @Inject lateinit var userUseCase: UserUseCase
-    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +51,19 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             it.listener = this
         }
 
+        subscribeUi()
+
         return binding.root
+    }
+
+    private fun subscribeUi() {
+        lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -124,47 +133,35 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
 
         viewModel.setIsApiLoading(true)
         LoginUtil.loginWithKakao(requireContext(), { token, _ ->
-            lifecycleScope.launch {
-                signUpAndNavigate(token)
-            }
+            signUpAndNavigate(token)
         }, { _, _ ->
             viewModel.setIsApiLoading(false)
             Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
         })
     }
 
-    private suspend fun signUpAndNavigate(token: OAuthToken?) {
-        try {
-            val data = authService.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
-            dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
-            dataStoreUseCase.editRefreshToken(data.everyonepickRefreshToken)
-
+    /**
+     * 회원가입을 시도하고, 성공 시 [navigateToNextPageByFaceInformation]를 호출합니다.
+     */
+    private fun signUpAndNavigate(token: OAuthToken?) {
+        viewModel.signUp(token) {
             navigateToNextPageByFaceInformation()
-        } catch (e: Exception) {
-            Toast.makeText(context, "회원가입에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            viewModel.setIsApiLoading(false)
         }
     }
 
     /**
      * 얼굴정보가 등록되어 이미 등록되어 있으면 HomeActivity, 등록되어 있지 않다면 FaceInformation으로 이동합니다.
      */
-    private suspend fun navigateToNextPageByFaceInformation() {
-        try {
-            val token = dataStoreUseCase.bearerAccessToken.first()!!
-            val data = userUseCase.readUser(token)
-
+    private fun navigateToNextPageByFaceInformation() {
+        viewModel.withReadUser { user ->
             // 얼굴 정보가 등록되어 있는가?
-            // TODO: if (data.faceInformation != null)
+            // TODO: if (user.faceInformation != null)
             if (false) {
                 LoginUtil.startHomeActivity(requireActivity())
             } else {
                 val directions = LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()
                 findNavController().navigate(directions)
             }
-        } catch (e: Exception) {
-            Toast.makeText(context, "회원정보를 불러오는 데 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            viewModel.setIsApiLoading(false)
         }
     }
 
