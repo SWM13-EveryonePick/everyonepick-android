@@ -28,8 +28,6 @@ class GroupAlbumModelList {
 
     fun getActualData() = data.subList(0, getActualItemCount()).toMutableList()
 
-    fun getCheckedItemIdList() = getActualData().map { it.groupAlbum.id }
-
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         for (i in data.indices) {
             val newItem = copyGroupAlbumModel(data[i])

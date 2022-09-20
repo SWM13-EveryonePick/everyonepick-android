@@ -3,6 +3,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -46,6 +47,9 @@ class GroupAlbumListViewModel @Inject constructor(
     private val _isApiLoading = MutableStateFlow(true)
     val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
+    private val _toastMessage = MutableStateFlow("")
+    val toastMessage: StateFlow<String> = _toastMessage
+
     private var readJob: Job? = null
 
     init {
@@ -55,6 +59,16 @@ class GroupAlbumListViewModel @Inject constructor(
                 .groupAlbumLocalListToGroupAlbumModelList()
             _groupAlbumModelList.value = GroupAlbumModelList(newGroupAlbumModelList)
         }
+    }
+
+    fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
+        _groupAlbumModelList.value.setIsCheckboxVisible(isCheckboxVisible)
+        _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
+    }
+
+    fun checkAll() {
+        _groupAlbumModelList.value.checkAll()
+        _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
     }
 
     fun readGroupAlbumModelList() {
@@ -72,21 +86,30 @@ class GroupAlbumListViewModel @Inject constructor(
                         .groupAlbumModelListToGroupAlbumLocalList()
                     groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                 }
-            } catch (e: Exception) {}
+            } catch (e: Exception) {
+                _toastMessage.value = "단체공유앨범을 불러오는 데 실패했습니다."
+            }
 
             _isApiLoading.value = false
         }
     }
 
-    fun getCheckedItemList() = _groupAlbumModelList.value.getCheckedItemIdList()
-
-    fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        _groupAlbumModelList.value.setIsCheckboxVisible(isCheckboxVisible)
-        _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
+    fun leaveCheckedGroupAlbum() {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                getCheckedItemList().forEach {
+                    groupAlbumUseCase.leaveGroupAlbum(token, it!!)
+                }
+                readGroupAlbumModelList()
+            } catch (e: Exception) {
+                readGroupAlbumModelList()
+                _toastMessage.value = "단체공유앨범에서 나가는 데 실패했습니다."
+            }
+        }
     }
 
-    fun checkAll() {
-        _groupAlbumModelList.value.checkAll()
-        _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
-    }
+    private fun getCheckedItemList() = _groupAlbumModelList.value.getActualData()
+        .filter { it.isChecked.value }
+        .map { it.groupAlbum.id }
 }

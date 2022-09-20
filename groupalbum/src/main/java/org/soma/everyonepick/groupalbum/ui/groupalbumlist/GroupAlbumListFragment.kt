@@ -29,9 +29,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
-    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
-    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
-
     private var _binding: FragmentGroupAlbumListBinding? = null
     private val binding get() = _binding!!
 
@@ -73,6 +70,14 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
                         viewModel.checkAll()
                     }
                 }
+
+                launch {
+                    viewModel.toastMessage.collectLatest {
+                        if (it.isNotEmpty()) {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
         }
     }
@@ -80,11 +85,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     override fun onStart() {
         super.onStart()
         parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
-        try {
-            viewModel.readGroupAlbumModelList()
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-        }
+        viewModel.readGroupAlbumModelList()
     }
 
     override fun onDestroy() {
@@ -95,18 +96,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
 
     /** GroupAlbumListFragmentListener */
     override fun onClickDeleteButton() {
-        lifecycleScope.launch {
-            try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                viewModel.getCheckedItemList().forEach {
-                    groupAlbumUseCase.leaveGroupAlbum(token, it!!)
-                }
-                viewModel.readGroupAlbumModelList()
-            } catch (e: Exception) {
-                viewModel.readGroupAlbumModelList()
-                Toast.makeText(requireContext(), "단체공유앨범에서 나가는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            }
-        }
+        viewModel.leaveCheckedGroupAlbum()
         parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
     }
 

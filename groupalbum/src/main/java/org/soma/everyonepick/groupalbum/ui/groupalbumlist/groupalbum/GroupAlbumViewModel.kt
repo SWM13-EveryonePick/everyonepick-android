@@ -102,7 +102,7 @@ class GroupAlbumViewModel @Inject constructor(
         _memberModelList.value = _memberModelList.value.getNewInstance()
     }
 
-    fun getCheckedUserList() = _memberModelList.value.getActualData()
+    private fun getCheckedUserList() = _memberModelList.value.getActualData()
         .filter { it.isChecked.value }
         .map { it.user }
         .toMutableList()
