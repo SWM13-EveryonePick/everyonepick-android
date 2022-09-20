@@ -1,6 +1,6 @@
 # 모두의 PICK
 
-> 모두가 마음에 드는 사진을 쉽고 빠르게!
+![0](https://user-images.githubusercontent.com/58168528/191180797-eb17da71-2d0f-431d-bf1a-6d97efbdc3a6.png)
 
 ## 사용자
 

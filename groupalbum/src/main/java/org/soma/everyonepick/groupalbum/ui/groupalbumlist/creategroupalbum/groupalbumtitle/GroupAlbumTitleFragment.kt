@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.entity.User
@@ -32,9 +33,6 @@ class GroupAlbumTitleFragment : Fragment() {
 
     private val args: GroupAlbumTitleFragmentArgs by navArgs()
 
-    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
-    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,25 +41,25 @@ class GroupAlbumTitleFragment : Fragment() {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickCreateButton = View.OnClickListener {
-                createGroupAlbumAndNavigate()
+                viewModel.createGroupAlbum(getUserListToCreateGroupAlbum()) {
+                    KeyboardUtil.hideKeyboard(requireActivity())
+                    val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(viewModel.title.value)
+                    findNavController().navigate(directions)
+                }
             }
         }
+
+        subscribeUi()
 
         return binding.root
     }
 
-    private fun createGroupAlbumAndNavigate() {
+    private fun subscribeUi() {
         lifecycleScope.launch {
-            try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val groupAlbum = GroupAlbum(title = viewModel.title.value, users = getUserListToCreateGroupAlbum())
-                groupAlbumUseCase.createGroupAlbum(token, groupAlbum)
-
-                KeyboardUtil.hideKeyboard(requireActivity())
-                val directions = GroupAlbumTitleFragmentDirections.toCreateGroupAlbumCompleteFragment(viewModel.title.value)
-                findNavController().navigate(directions)
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "단체공유앨범 생성에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

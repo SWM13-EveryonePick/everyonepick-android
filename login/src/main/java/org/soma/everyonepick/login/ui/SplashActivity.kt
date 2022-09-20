@@ -31,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
 
     @Inject lateinit var authService: AuthService
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+    @Inject lateinit var homeActivityClass: Class<*>
 
     private var job: Job? = null
 
@@ -80,7 +81,7 @@ class SplashActivity : AppCompatActivity() {
                     launch {
                         // 모두 성공했을 경우
                         viewModel.success.collect {
-                            if (it == 2) LoginUtil.startHomeActivity(activity)
+                            if (it == 2) LoginUtil.startHomeActivity(activity, homeActivityClass)
                         }
                     }
                 }
