@@ -1,6 +1,6 @@
 # 모두의 PICK
 
-![0](https://user-images.githubusercontent.com/58168528/191180797-eb17da71-2d0f-431d-bf1a-6d97efbdc3a6.png)
+![0](https://user-images.githubusercontent.com/58168528/191194495-f37d21a1-ca88-4e98-a91e-34dfe8072ce3.png)
 
 ## 사용자
 
