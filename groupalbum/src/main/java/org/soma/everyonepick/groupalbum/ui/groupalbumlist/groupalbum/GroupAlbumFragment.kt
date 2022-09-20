@@ -31,9 +31,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
-    @Inject lateinit var groupAlbumUseCase: GroupAlbumUseCase
-    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
-
     private var _binding: FragmentGroupAlbumBinding? = null
     private val binding get() = _binding!!
 
@@ -77,6 +74,14 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                         viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
                     }
                 }
+
+                launch {
+                    viewModel.toastMessage.collectLatest {
+                        if (it.isNotEmpty()) {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
         }
     }
@@ -90,21 +95,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
         ) { _, bundle ->
             bundle.get(FRIEND_LIST_TO_INVITE_KEY)?.let { friendList ->
                 friendList as MutableList<Friend>
-                inviteUsersToGroupAlbum(friendList)
-            }
-        }
-    }
-
-    private fun inviteUsersToGroupAlbum(friendList: MutableList<Friend>) {
-        lifecycleScope.launch {
-            try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val data = groupAlbumUseCase
-                    .inviteUsersToGroupAlbum(token, viewModel.groupAlbum.value.id!!, friendList)
-
-                viewModel.setGroupAlbum(data)
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "단체공유앨범 초대에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                viewModel.inviteUsersToGroupAlbum(friendList)
             }
         }
     }
@@ -170,17 +161,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onClickUpdateTitleButton() {
         UpdateTitleDialogFragment { newTitle ->
-            lifecycleScope.launch {
-                try {
-                    val token = dataStoreUseCase.bearerAccessToken.first()!!
-                    val groupAlbum = viewModel.groupAlbum.value.copy(title = newTitle)
-
-                    val data = groupAlbumUseCase.updateGroupAlbum(token, viewModel.groupAlbum.value.id!!, groupAlbum)
-                    viewModel.setGroupAlbum(data)
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "단체공유앨범 이름 변경에 실패하였습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                }
-            }
+           viewModel.updateGroupAlbum(newTitle)
         }.show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
     }
 
@@ -189,16 +170,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             .setMessage("단체공유앨범에서 나갑니다.")
             .setPositiveButtonText("나가기")
             .setOnClickPositiveButton {
-                lifecycleScope.launch {
-                    try {
-                        val token = dataStoreUseCase.bearerAccessToken.first()!!
-                        groupAlbumUseCase.leaveGroupAlbum(token, viewModel.groupAlbum.value.id!!)
-
-                        findNavController().navigateUp()
-                    } catch (e: Exception) {
-                        Toast.makeText(requireContext(), "단체공유앨범에서 나가는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                viewModel.leaveGroupAlbum()
+                findNavController().navigateUp()
             }
             .build().show()
     }
@@ -209,21 +182,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onClickKickButton() {
         if (viewModel.checked.value == 0) return
-
-        lifecycleScope.launch {
-            try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val groupAlbumId = viewModel.groupAlbum.value.id
-                val userListToKick = viewModel.getCheckedUserList()
-
-                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbumId!!, userListToKick)
-                viewModel.setGroupAlbum(data)
-
-                viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "사용자를 강퇴하는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-            }
-        }
+        viewModel.kickUsersOutOfGroupAlbum()
+        viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
     }
 
     override fun onClickCancelKickButton() {

@@ -1,8 +1,12 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
+import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
+import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,11 +26,14 @@ import javax.inject.Inject
 @HiltViewModel
 class GroupAlbumViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    dataStoreUseCase: DataStoreUseCase,
+    private val dataStoreUseCase: DataStoreUseCase,
     private val userUseCase: UserUseCase,
-    groupAlbumUseCase: GroupAlbumUseCase
+    private val groupAlbumUseCase: GroupAlbumUseCase
 ): ViewModel() {
     private val bearerAccessToken = dataStoreUseCase.bearerAccessToken
+
+    private val _toastMessage = MutableStateFlow("")
+    val toastMessage: StateFlow<String> = _toastMessage
 
     val me: StateFlow<User> = bearerAccessToken.transformLatest {
         if (it != null) emit(userUseCase.readUser(it))
@@ -95,7 +102,7 @@ class GroupAlbumViewModel @Inject constructor(
         _memberModelList.value = _memberModelList.value.getNewInstance()
     }
 
-    fun getCheckedUserList() = _memberModelList.value.getActualData()
+    private fun getCheckedUserList() = _memberModelList.value.getActualData()
         .filter { it.isChecked.value }
         .map { it.user }
         .toMutableList()
@@ -110,5 +117,55 @@ class GroupAlbumViewModel @Inject constructor(
 
     fun setGroupAlbum(groupAlbum: GroupAlbum) {
         _groupAlbum.value = groupAlbum
+    }
+
+    fun inviteUsersToGroupAlbum(friendList: MutableList<Friend>) {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val data = groupAlbumUseCase
+                    .inviteUsersToGroupAlbum(token, groupAlbum.value.id!!, friendList)
+                _groupAlbum.value = data
+            } catch (e: Exception) {
+                _toastMessage.value = "단체공유앨범 초대에 실패했습니다."
+            }
+        }
+    }
+
+    fun updateGroupAlbum(title: String) {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val groupAlbum = groupAlbum.value.copy(title = title)
+                val data = groupAlbumUseCase.updateGroupAlbum(token, groupAlbum.id!!, groupAlbum)
+                _groupAlbum.value = data
+            } catch (e: Exception) {
+                _toastMessage.value = "단체공유앨범 이름 변경에 실패하였습니다."
+            }
+        }
+    }
+
+    fun leaveGroupAlbum() {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                groupAlbumUseCase.leaveGroupAlbum(token, groupAlbum.value.id!!)
+            } catch (e: Exception) {
+                _toastMessage.value = "단체공유앨범에서 나가는 데 실패했습니다."
+            }
+        }
+    }
+
+    fun kickUsersOutOfGroupAlbum() {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val userListToKick = getCheckedUserList()
+                val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbum.value.id!!, userListToKick)
+                _groupAlbum.value = data
+            } catch (e: Exception) {
+                _toastMessage.value = "사용자를 강퇴하는 데 실패했습니다."
+            }
+        }
     }
 }

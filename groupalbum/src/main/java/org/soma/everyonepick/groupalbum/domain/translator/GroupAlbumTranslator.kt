@@ -7,7 +7,8 @@ import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 
 class GroupAlbumTranslator {
     companion object {
-        fun MutableList<GroupAlbum>.groupAlbumListToGroupAlbumModelList(): MutableList<GroupAlbumModel> {
+        @JvmName("groupAlbumListToGroupAlbumModelList")
+        fun MutableList<GroupAlbum>.toGroupAlbumModelList(): MutableList<GroupAlbumModel> {
             val groupAlbumModelList = mutableListOf<GroupAlbumModel>()
             for (i in 0 until size) {
                 groupAlbumModelList.add(GroupAlbumModel(get(i), isChecked = MutableStateFlow(false), isCheckboxVisible = false))
@@ -15,7 +16,8 @@ class GroupAlbumTranslator {
             return groupAlbumModelList
         }
 
-        fun List<GroupAlbumLocal>.groupAlbumLocalListToGroupAlbumModelList(): MutableList<GroupAlbumModel> {
+        @JvmName("groupAlbumLocalListToGroupAlbumModelList")
+        fun List<GroupAlbumLocal>.toGroupAlbumModelList(): MutableList<GroupAlbumModel> {
             val groupAlbumModelList = mutableListOf<GroupAlbumModel>()
             for (i in 0 until size) {
                 val item = get(i)
@@ -27,7 +29,8 @@ class GroupAlbumTranslator {
             return groupAlbumModelList
         }
 
-        fun MutableList<GroupAlbumModel>.groupAlbumModelListToGroupAlbumLocalList(): List<GroupAlbumLocal> {
+        @JvmName("groupAlbumModelListToGroupAlbumLocalList")
+        fun MutableList<GroupAlbumModel>.toGroupAlbumLocalList(): List<GroupAlbumLocal> {
             val groupAlbumLocalList = mutableListOf<GroupAlbumLocal>()
             for (i in 0 until size) {
                 val item = get(i).groupAlbum

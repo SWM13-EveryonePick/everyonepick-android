@@ -1,11 +1,15 @@
 package org.soma.everyonepick.groupalbum.domain.usecase
 
 import com.kakao.sdk.talk.model.Friend
+import okhttp3.MultipartBody
 import org.soma.everyonepick.common.data.entity.User
+import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
-import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumListToGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
+import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
 import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
 
@@ -14,7 +18,7 @@ class GroupAlbumUseCase @Inject constructor(
 ) {
     suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
         val groupAlbumList = groupAlbumService.readGroupAlbumList(token).data.toMutableList()
-        return groupAlbumList.groupAlbumListToGroupAlbumModelList()
+        return groupAlbumList.toGroupAlbumModelList()
     }
 
     suspend fun readGroupAlbum(token: String, id: Long): GroupAlbum {
@@ -45,5 +49,29 @@ class GroupAlbumUseCase @Inject constructor(
 
     suspend fun leaveGroupAlbum(token: String, id: Long): GroupAlbum {
         return groupAlbumService.leaveGroupAlbum(token, id).data
+    }
+
+    suspend fun readPhotoList(token: String, id: Long): MutableList<PhotoModel> {
+        // 가장 최근 사진이 위에 있어야 하므로 데이터를 뒤집어야 합니다.
+        // 단, Pagination이 구현될 경우 데이터가 처음부터 적절한 순서로 배치되므로 reversed()를 삭제해야 합니다.
+        val photoList = groupAlbumService.readPhotoList(token, id).data.reversed().toMutableList()
+        return photoList.toPhotoModelList()
+    }
+
+    suspend fun createPhotoList(
+        token: String,
+        id: Long,
+        images: List<MultipartBody.Part>
+    ): MutableList<PhotoModel> {
+        val photoList = groupAlbumService.createPhotoList(token, id, images).data.toMutableList()
+        return photoList.toPhotoModelList()
+    }
+
+    suspend fun deletePhotoList(
+        token: String,
+        id: Long,
+        photoIdList: PhotoIdListRequest
+    ) {
+        groupAlbumService.deletePhotoList(token, id, photoIdList)
     }
 }

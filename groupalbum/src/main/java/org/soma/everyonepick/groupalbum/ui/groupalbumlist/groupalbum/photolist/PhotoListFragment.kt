@@ -1,11 +1,17 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
+import android.content.ContentResolver
+import android.content.Context
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,14 +22,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
-import org.soma.everyonepick.groupalbum.util.SelectionMode
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment
+import org.soma.everyonepick.groupalbum.util.SelectionMode
+import java.io.File
 import javax.inject.Inject
 
 
@@ -66,10 +76,14 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
                 launch {
                     parentViewModel.groupAlbum.collect {
-                        try {
-                            if (it.id != User.dummyData.id) viewModel.readPhotoModelList(it.id!!)
-                        } catch (e: Exception) {
-                            Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        if (it.id != null && it.id != User.dummyData.id) viewModel.readPhotoModelList(it.id)
+                    }
+                }
+
+                launch {
+                    viewModel.toastMessage.collectLatest {
+                        if (it.isNotEmpty()) {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -83,9 +97,12 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     private fun setFragmentResultListener() {
         activity?.supportFragmentManager?.setFragmentResultListener(URI_LIST_CHECKED_REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
             bundle.getStringArrayList(URI_LIST_CHECKED_KEY)?.let { uriList ->
-                for (uri in uriList) {
-                    // TODO: 함수 추가: 업로드 -> 성공 -> viewModel.readPhotoModelList(parentViewModel.groupAlbum.value!!.id) 다시 로드?
+                val images = uriList.map {
+                    val inputStream = requireContext().contentResolver.openInputStream(it.toUri())
+                    val responseBody = inputStream!!.readBytes().toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                    MultipartBody.Part.createFormData("images", File(it).name, responseBody)
                 }
+                viewModel.createPhotoList(parentViewModel.groupAlbum.value.id, images)
             }
         }
     }
@@ -108,7 +125,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     override fun onClickDeleteButton() {
-        viewModel.deleteCheckedItems()
+        viewModel.deleteCheckedPhotoList(parentViewModel.groupAlbum.value.id)
         parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
     }
 
