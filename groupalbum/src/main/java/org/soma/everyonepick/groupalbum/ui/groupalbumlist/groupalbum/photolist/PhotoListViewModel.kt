@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.entity.Photo
+import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -26,16 +29,19 @@ class PhotoListViewModel @Inject constructor(
     fun readPhotoModelList(groupAlbumId: Long) {
         viewModelScope.launch {
             _isApiLoading.value = true
-            try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                _photoModelList.value = groupAlbumUseCase.readPhotoList(token, groupAlbumId)
-            } catch (e: Exception) { }
+            val token = dataStoreUseCase.bearerAccessToken.first()!!
+            _photoModelList.value = groupAlbumUseCase.readPhotoList(token, groupAlbumId)
             _isApiLoading.value = false
         }
     }
 
-    fun deleteCheckedItems() {
-        _photoModelList.value = _photoModelList.value.filter { !it.isChecked.value }.toMutableList()
+    fun deleteCheckedPhotoList(groupAlbumId: Long) {
+        viewModelScope.launch {
+            val token = dataStoreUseCase.bearerAccessToken.first()!!
+            val photoIdList = _photoModelList.value.filter { it.isChecked.value }.map { PhotoId(it.photo.id) }
+            groupAlbumUseCase.deletePhotoList(token, groupAlbumId, PhotoIdListRequest(photoIdList))
+            readPhotoModelList(groupAlbumId)
+        }
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {

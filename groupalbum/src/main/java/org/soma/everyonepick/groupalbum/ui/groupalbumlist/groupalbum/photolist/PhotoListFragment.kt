@@ -137,7 +137,11 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     override fun onClickDeleteButton() {
-        viewModel.deleteCheckedItems()
+        try {
+            viewModel.deleteCheckedPhotoList(parentViewModel.groupAlbum.value.id!!)
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "사진을 삭제하는 데 실패했습니다. 잠시 후에 다시 시도해주세요,", Toast.LENGTH_SHORT).show()
+        }
         parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
     }
 

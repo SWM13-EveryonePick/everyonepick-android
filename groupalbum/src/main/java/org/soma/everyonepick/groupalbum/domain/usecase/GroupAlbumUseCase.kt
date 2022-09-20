@@ -4,7 +4,10 @@ import com.kakao.sdk.talk.model.Friend
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.soma.everyonepick.common.data.entity.User
+import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.entity.Photo
+import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
@@ -63,5 +66,13 @@ class GroupAlbumUseCase @Inject constructor(
     ): MutableList<PhotoModel> {
         val photoList = groupAlbumService.createPhotoList(token, id, images).data.toMutableList()
         return photoList.toPhotoModelList()
+    }
+
+    suspend fun deletePhotoList(
+        token: String,
+        id: Long,
+        photoIdList: PhotoIdListRequest
+    ) {
+        groupAlbumService.deletePhotoList(token, id, photoIdList)
     }
 }
