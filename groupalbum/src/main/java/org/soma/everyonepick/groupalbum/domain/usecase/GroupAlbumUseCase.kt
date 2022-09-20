@@ -8,7 +8,7 @@ import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
-import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumListToGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
 import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class GroupAlbumUseCase @Inject constructor(
 ) {
     suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
         val groupAlbumList = groupAlbumService.readGroupAlbumList(token).data.toMutableList()
-        return groupAlbumList.groupAlbumListToGroupAlbumModelList()
+        return groupAlbumList.toGroupAlbumModelList()
     }
 
     suspend fun readGroupAlbum(token: String, id: Long): GroupAlbum {

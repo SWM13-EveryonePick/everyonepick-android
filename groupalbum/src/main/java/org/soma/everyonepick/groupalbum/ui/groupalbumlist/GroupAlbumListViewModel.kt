@@ -1,26 +1,19 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.groupalbum.data.AppDatabase
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumLocalRepository
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList
-import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumLocalListToGroupAlbumModelList
-import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.groupAlbumModelListToGroupAlbumLocalList
+import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
+import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumLocalList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
 
@@ -56,7 +49,7 @@ class GroupAlbumListViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             // Offline cache 데이터 불러오기
             val newGroupAlbumModelList = groupAlbumLocalRepository.getGroupAlbumLocalList()
-                .groupAlbumLocalListToGroupAlbumModelList()
+                .toGroupAlbumModelList()
             _groupAlbumModelList.value = GroupAlbumModelList(newGroupAlbumModelList)
         }
     }
@@ -83,7 +76,7 @@ class GroupAlbumListViewModel @Inject constructor(
 
                     // Offline cache를 위해 데이터 저장
                     val groupAlbumLocalList = _groupAlbumModelList.value.getActualData()
-                        .groupAlbumModelListToGroupAlbumLocalList()
+                        .toGroupAlbumLocalList()
                     groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                 }
             } catch (e: Exception) {
