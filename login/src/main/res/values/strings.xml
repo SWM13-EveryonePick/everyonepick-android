@@ -10,13 +10,18 @@
     <string name="face_information_description_title">얼굴 정보 등록</string>
     <string name="face_information_description_description">얼굴 인식을 위해 얼굴 정보를 등록합니다.\n얼굴 인식에서 사용된 사진은 저장되지 않으며,\n얼굴 특징점 정보만을 수집합니다.</string>
     <string name="face_information_description_button">등록하기</string>
+
+    <string name="face_information_camera_guide_title">가이드라인</string>
+    <string name="face_information_camera_guide_description">아래 안내사항을 준수해주시면 저희 서비스를 더욱 원할하게 이용하실 수 있어요!</string>
     <string name="face_information_camera_guide_front_text">얼굴의 정면을 비춰주세요!</string>
     <string name="face_information_camera_guide_mask_text">마스크는 벗어주세요!</string>
     <string name="face_information_camera_guide_many_people_text">다른 사람이 나오지 않게 해주세요!</string>
     <string name="face_information_camera_guide_side_text">측면을 비추지 말아주세요!</string>
     <string name="face_information_camera_guide_button">확인했습니다!</string>
+
     <string name="face_information_camera_title">정면 얼굴을 프레임이 맞추세요!</string>
     <string name="face_information_camera_description">마스크를 쓰거나, 얼굴이 가려지면 인식이 어렵습니다.</string>
+
     <string name="face_information_complete_title">얼굴 정보가 등록되었습니다.</string>
     <string name="face_information_complete_description">이제, 모두의 PICK을 마음껏 이용해보세요!</string>
     <string name="face_information_complete_button">시작하기</string>
