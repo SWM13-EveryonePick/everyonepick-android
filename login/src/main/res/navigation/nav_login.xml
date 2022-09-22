@@ -24,12 +24,17 @@
         android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationDescriptionFragment"
         tools:layout="@layout/fragment_face_information_description">
         <action
+            android:id="@+id/to_faceInformationCameraGuideFragment"
+            app:destination="@id/faceInformationCameraGuideFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/faceInformationCameraGuideFragment"
+        android:name="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraGuideFragment"
+        android:label="FaceInformationCameraGuideFragment" >
+        <action
             android:id="@+id/to_faceInformationCameraFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:destination="@id/faceInformationCameraFragment"/>
+            app:destination="@id/faceInformationCameraFragment" />
     </fragment>
 
     <fragment
