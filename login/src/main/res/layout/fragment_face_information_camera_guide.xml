@@ -99,7 +99,7 @@
             android:layout_height="0dp"
             android:background="@drawable/border_without_bottom"
             app:layout_constraintTop_toBottomOf="@id/layout_top_left"
-            app:layout_constraintBottom_toTopOf="@id/button_next"
+            app:layout_constraintBottom_toTopOf="@id/layout_next_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/layout_bottom_right"
             >
@@ -139,7 +139,7 @@
             android:layout_height="0dp"
             android:background="@drawable/border_without_bottom"
             app:layout_constraintTop_toBottomOf="@id/layout_top_right"
-            app:layout_constraintBottom_toTopOf="@id/button_next"
+            app:layout_constraintBottom_toTopOf="@id/layout_next_button"
             app:layout_constraintStart_toEndOf="@id/layout_bottom_left"
             app:layout_constraintEnd_toEndOf="parent"
             >
@@ -173,14 +173,23 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/button_next"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_next_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/BottomButton"
-            android:text="@string/face_information_camera_guide_button"
-            android:onClick="@{onClickNextButton}"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/BottomButton"
+                android:text="@string/face_information_camera_guide_button"
+                android:onClick="@{onClickNextButton}"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
