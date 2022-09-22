@@ -21,9 +21,14 @@ class FaceInformationCameraFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFaceInformationCameraBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        binding.fragment = this
+        _binding = FragmentFaceInformationCameraBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            onClickUploadButton = View.OnClickListener {
+                // TODO: API 호출 + 성공 시 navigate
+                val directions = FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
+                findNavController().navigate(directions)
+            }
+        }
 
         return binding.root
     }
@@ -31,11 +36,5 @@ class FaceInformationCameraFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    // TODO: 얼굴 인식 성공하면 자동으로 넘어가기
-    fun onClickNextButton() {
-        val directions = FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
-        findNavController().navigate(directions)
     }
 }
