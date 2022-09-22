@@ -31,6 +31,11 @@ class FaceInformationCameraGuideFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        AnimationUtil.startShowingUpAnimation(binding.root, SHOWING_UP_ANIMATION_Y_OFFSET, SHOWING_UP_ANIMATION_DURATION)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
