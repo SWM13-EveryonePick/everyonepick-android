@@ -26,6 +26,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.soma.everyonepick.common.data.entity.User
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
@@ -37,6 +39,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class PhotoListFragment: Fragment(), PhotoListFragmentListener {
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+
     private var _binding: FragmentPhotoListBinding? = null
     private val binding get() = _binding!!
 
@@ -126,7 +130,21 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     override fun onClickProcessButton() {
-        // TODO: 합성 플로우
+        lifecycleScope.launch {
+            val hasShownSyntheticDialog = dataStoreUseCase.hasShownSyntheticDialog.first()
+            if (hasShownSyntheticDialog != true) {
+                DialogWithTwoButton.Builder(requireContext())
+                    .setMessage("아래와 같은 사항을 지켜야 좋은 사진이 나올 수 있어요!\n\n1. 모든 사진에 모든 멤버들이 포함되어야 해요.\n 2. 마스크를 끼거나 얼굴이 많이 가려진 경우 인식이 힘들어요.\n 3. 유사 구도의 사진들을 선택해주세요.")
+                    .setPositiveButtonText("확인")
+                    .setOnClickPositiveButton {
+                        // TODO: 합성 플로우
+                    }
+                    .build().show()
+                dataStoreUseCase.editHasShownSyntheticDialog(true)
+            } else {
+                // TODO: 합성 플로우
+            }
+        }
     }
 
     override fun onClickCancelButton() {

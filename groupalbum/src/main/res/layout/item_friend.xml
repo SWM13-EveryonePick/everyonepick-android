@@ -18,7 +18,7 @@
             android:id="@+id/image_profile"
             android:layout_width="@dimen/size_friend_profile"
             android:layout_height="@dimen/size_friend_profile"
-            photoUrl="@{friend.profileThumbnailImage}"
+            profileThumbnailImage="@{friend.profileThumbnailImage}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

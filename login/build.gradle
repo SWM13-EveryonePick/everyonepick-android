@@ -57,6 +57,8 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "androidx.core:core-splashscreen:$rootProject.splashScreenVersion"
 
+    implementation "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
+
     // Kakao API: https://developers.kakao.com/docs/latest/ko/getting-started/sdk-android#select-module
     implementation "com.kakao.sdk:v2-all:$rootProject.kakaoVersion" // 전체 모듈 설치, 2.11.0 버전부터 지원
 

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="fragment"
-            type="org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment" />
+            name="onClickUploadButton"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,6 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> fragment.onClickNextButton()}"
             app:layout_constraintBottom_toTopOf="@id/text_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -42,10 +41,18 @@
             android:text="@string/face_information_camera_description"
             android:textColor="@color/white"
             android:layout_marginBottom="40dp"
-            android:onClick="@{() -> fragment.onClickNextButton()}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_upload"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/button_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/BottomButton"
+            android:onClick="@{onClickUploadButton}"
+            android:text="@string/face_information_description_button"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
