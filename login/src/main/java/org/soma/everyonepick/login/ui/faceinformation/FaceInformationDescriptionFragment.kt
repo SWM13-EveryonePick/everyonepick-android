@@ -33,7 +33,7 @@ class FaceInformationDescriptionFragment : Fragment() {
         _binding = FragmentFaceInformationDescriptionBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             onClickNextButton = View.OnClickListener {
-                val directions = FaceInformationDescriptionFragmentDirections.toFaceInformationCameraGuideFragment()
+                val directions = FaceInformationDescriptionFragmentDirections.toFaceInformationGuideFragment()
                 findNavController().navigate(directions)
             }
         }

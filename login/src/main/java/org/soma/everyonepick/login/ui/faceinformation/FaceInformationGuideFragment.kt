@@ -9,10 +9,10 @@ import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.common.util.AnimationUtil
 import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_DURATION
 import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_Y_OFFSET
-import org.soma.everyonepick.login.databinding.FragmentFaceInformationCameraGuideBinding
+import org.soma.everyonepick.login.databinding.FragmentFaceInformationGuideBinding
 
-class FaceInformationCameraGuideFragment : Fragment() {
-    private var _binding: FragmentFaceInformationCameraGuideBinding? = null
+class FaceInformationGuideFragment : Fragment() {
+    private var _binding: FragmentFaceInformationGuideBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -20,10 +20,10 @@ class FaceInformationCameraGuideFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFaceInformationCameraGuideBinding.inflate(inflater, container, false).apply {
+        _binding = FragmentFaceInformationGuideBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             onClickNextButton = View.OnClickListener {
-                val directions = FaceInformationCameraGuideFragmentDirections.toFaceInformationCameraFragment()
+                val directions = FaceInformationGuideFragmentDirections.toFaceInformationCameraFragment()
                 findNavController().navigate(directions)
             }
         }

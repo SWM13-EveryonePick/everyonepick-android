@@ -26,7 +26,7 @@
                 android:textColor="@color/title"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:text="@string/face_information_camera_guide_title"
+                android:text="@string/face_information_guide_title"
                 android:gravity="center_horizontal"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +145,7 @@
                 android:id="@+id/text_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/face_information_camera_guide_description"
+                android:text="@string/face_information_guide_description"
                 android:textColor="@color/subtext"
                 android:textSize="16sp"
                 android:gravity="center_horizontal"
@@ -167,7 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/BottomButton"
-                android:text="@string/face_information_camera_guide_button"
+                android:text="@string/face_information_guide_button"
                 android:onClick="@{onClickNextButton}"
                 app:layout_constraintTop_toTopOf="parent"/>
 
