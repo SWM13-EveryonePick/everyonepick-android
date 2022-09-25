@@ -19,14 +19,9 @@ import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.data.entity.ProviderName
 import org.soma.everyonepick.common.data.source.AuthService
-import org.soma.everyonepick.common.data.dto.SignUpRequest
-import org.soma.everyonepick.common.domain.usecase.UserUseCase
-import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
+import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.FullTextActivity
 import org.soma.everyonepick.common_ui.FullTextActivity.Companion.putFullTextActivityExtras
 import org.soma.everyonepick.common_ui.R

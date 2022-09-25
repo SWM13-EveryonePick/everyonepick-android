@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">모두의 PICK</string>
 
-    <string name="camera_menu_item">카메라</string>
-    <string name="group_album_menu_item">단체공유앨범</string>
-    <string name="setting_menu_item">설정</string>
-    <string name="select">선택</string>
-    <string name="select_all">전체선택</string>
-    <string name="cancel">취소</string>
-    <string name="kick">내보내기</string>
 </resources>

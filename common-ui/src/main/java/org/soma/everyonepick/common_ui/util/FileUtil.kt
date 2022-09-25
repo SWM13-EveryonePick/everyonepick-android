@@ -1,10 +1,9 @@
-package org.soma.everyonepick.common.util
+package org.soma.everyonepick.common_ui.util
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
-import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
@@ -67,7 +66,7 @@ class FileUtil {
             return File(imageRoot, "${getFileName(context)}.png")
         }
 
-        private fun getAppName(context: Context) = context.getString(org.soma.everyonepick.common.R.string.app_name)
+        private fun getAppName(context: Context) = context.getString(org.soma.everyonepick.common_ui.R.string.app_name)
 
         private fun getFileName(context: Context) = "${getAppName(context)}_${Calendar.getInstance().toFileString()}"
 

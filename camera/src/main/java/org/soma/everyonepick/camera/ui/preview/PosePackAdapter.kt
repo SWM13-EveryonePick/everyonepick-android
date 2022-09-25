@@ -1,21 +1,16 @@
 package org.soma.everyonepick.camera.ui.preview
 
 import android.graphics.Color
-import android.text.Layout
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.camera.R
-import org.soma.everyonepick.camera.data.entity.PosePack
-import org.soma.everyonepick.camera.databinding.ItemPoseBinding
 import org.soma.everyonepick.camera.databinding.ItemPosePackBinding
 import org.soma.everyonepick.camera.domain.model.PosePackModel
-import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
-import org.soma.everyonepick.common.util.performTouch
+import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
+import org.soma.everyonepick.common_ui.util.performTouch
 
 class PosePackAdapter(
     private val parentViewModel: PreviewViewModel

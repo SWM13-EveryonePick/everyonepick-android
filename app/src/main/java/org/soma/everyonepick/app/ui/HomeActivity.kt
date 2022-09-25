@@ -1,19 +1,13 @@
 package org.soma.everyonepick.app.ui
 
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +17,7 @@ import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.util.setVisibility
+import org.soma.everyonepick.common_ui.util.setVisibility
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
 import javax.inject.Inject
@@ -122,7 +116,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
 
     override fun showAreYouSureDialog() {
         DialogWithTwoButton.Builder(this)
-            .setMessage("${baseContext.getString(org.soma.everyonepick.common.R.string.app_name)}을 종료합니다.")
+            .setMessage("${baseContext.getString(org.soma.everyonepick.common_ui.R.string.app_name)}을 종료합니다.")
             .setPositiveButtonText("종료")
             .setOnClickPositiveButton { finish() }
             .build().show()

@@ -1,14 +1,11 @@
 package org.soma.everyonepick.groupalbum.ui.friendlist
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.kakao.sdk.talk.model.Friend
-import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
+import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemFriendBinding
 

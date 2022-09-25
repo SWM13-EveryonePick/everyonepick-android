@@ -28,12 +28,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
-import org.soma.everyonepick.common.util.CameraUtil.Companion.rotate
-import org.soma.everyonepick.common.util.CameraUtil.Companion.toBitmap
-import org.soma.everyonepick.common.util.FileUtil.Companion.saveBitmapInPictureDirectory
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.rotate
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toBitmap
+import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common.util.HomeActivityUtil
 
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 

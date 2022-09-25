@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,18 +15,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
-import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
+import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
-import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment
 import org.soma.everyonepick.groupalbum.util.SelectionMode
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {

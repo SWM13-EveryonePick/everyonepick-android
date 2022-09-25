@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common.util
+package org.soma.everyonepick.common_ui.util
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

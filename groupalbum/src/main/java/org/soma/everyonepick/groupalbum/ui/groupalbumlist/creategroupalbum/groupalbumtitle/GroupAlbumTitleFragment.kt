@@ -12,17 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.entity.User
-import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.util.KeyboardUtil
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientId
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.common_ui.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumTitleBinding
-import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupAlbumTitleFragment : Fragment() {

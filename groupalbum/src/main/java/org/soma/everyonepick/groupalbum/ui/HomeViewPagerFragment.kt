@@ -3,9 +3,6 @@ package org.soma.everyonepick.groupalbum.ui
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +14,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.util.ViewUtil.Companion.setTabLayoutEnabled
+import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
-import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
+import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentHomeViewPagerBinding
 import org.soma.everyonepick.groupalbum.util.SelectionMode

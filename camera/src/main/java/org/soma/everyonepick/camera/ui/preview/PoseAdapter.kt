@@ -1,19 +1,14 @@
 package org.soma.everyonepick.camera.ui.preview
 
-import android.animation.ValueAnimator
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import org.soma.everyonepick.camera.R
 import org.soma.everyonepick.camera.databinding.ItemPoseBinding
 import org.soma.everyonepick.camera.domain.model.PoseModel
-import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
-import org.soma.everyonepick.common.util.setVisibility
+import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
 
 class PoseAdapter(
     private val parentViewModel: PreviewViewModel

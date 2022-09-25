@@ -1,15 +1,12 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
-import org.soma.everyonepick.common.util.performTouch
+import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
+import org.soma.everyonepick.common_ui.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.databinding.ItemInviteFriendBinding
