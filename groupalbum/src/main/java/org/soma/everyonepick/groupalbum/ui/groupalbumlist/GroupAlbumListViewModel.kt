@@ -91,7 +91,7 @@ class GroupAlbumListViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                getCheckedItemList().forEach {
+                getCheckedGroupAlbumIdList().forEach {
                     groupAlbumUseCase.leaveGroupAlbum(token, it!!)
                 }
                 readGroupAlbumModelList()
@@ -102,7 +102,7 @@ class GroupAlbumListViewModel @Inject constructor(
         }
     }
 
-    private fun getCheckedItemList() = _groupAlbumModelList.value.getActualData()
+    private fun getCheckedGroupAlbumIdList() = _groupAlbumModelList.value.getActualData()
         .filter { it.isChecked.value }
         .map { it.groupAlbum.id }
 }
