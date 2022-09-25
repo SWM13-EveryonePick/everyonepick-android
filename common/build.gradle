@@ -49,12 +49,6 @@ dependencies {
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.hiltVersion"
 
-    // Retrofit2
-    api "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
-    api "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
-    api "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version"
-    api "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2Version"
-
     // Kakao
     implementation "com.kakao.sdk:v2-all:$rootProject.kakaoVersion" // 전체 모듈 설치, 2.11.0 버전부터 지원
 

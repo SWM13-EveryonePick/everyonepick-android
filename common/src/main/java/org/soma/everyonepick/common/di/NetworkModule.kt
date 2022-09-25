@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.soma.everyonepick.common.data.RetrofitFactory
 import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.data.source.UserService
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -14,13 +14,13 @@ import javax.inject.Singleton
 class NetworkModule {
     @Singleton
     @Provides
-    fun provideAuthService(): AuthService {
-        return RetrofitFactory.create(AuthService::class.java)
+    fun provideAuthService(retrofit: Retrofit): AuthService {
+        return retrofit.create(AuthService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideUserService(): UserService {
-        return RetrofitFactory.create(UserService::class.java)
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
     }
 }
