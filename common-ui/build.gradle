@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    api project(path: ':foundation')
+
     api "androidx.core:core-ktx:$rootProject.ktxVersion"
     api "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     api "com.google.android.material:material:$rootProject.materialVersion"

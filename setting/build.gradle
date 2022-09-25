@@ -39,9 +39,8 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':common')
-    implementation project(path: ':common-ui')
-    implementation project(path: ':foundation')
+    api project(path: ':common')
+    api project(path: ':common-ui')
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"

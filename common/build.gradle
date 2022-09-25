@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':foundation')
+    api project(path: ':foundation')
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:$rootProject.dataStorePreferencesVersion")

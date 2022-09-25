@@ -42,13 +42,10 @@ android {
 
 dependencies {
 
-    implementation project(path: ':camera')
-    implementation project(path: ':setting')
-    implementation project(path: ':groupalbum')
-    implementation project(path: ':login')
-    implementation project(path: ':common')
-    implementation project(path: ':common-ui')
-    implementation project(path: ':foundation')
+    api project(path: ':camera')
+    api project(path: ':setting')
+    api project(path: ':groupalbum')
+    api project(path: ':login')
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
