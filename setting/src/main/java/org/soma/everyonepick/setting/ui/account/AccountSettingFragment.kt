@@ -49,8 +49,8 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
     /** AccountSettingFragmentListener */
     override fun onClickLogoutButton() {
         DialogWithTwoButton.Builder(requireContext())
-            .setMessage("로그아웃 하시겠습니까?")
-            .setPositiveButtonText("로그아웃")
+            .setMessage(getString(R.string.dialog_logout))
+            .setPositiveButtonText(getString(R.string.logout))
             .setOnClickPositiveButton {
                 lifecycleScope.launch {
                     dataStoreUseCase.removeAccessToken()
@@ -62,8 +62,8 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
     }
     override fun onClickLeaveButton() {
         DialogWithTwoButton.Builder(requireContext())
-            .setMessage("정말 회원탈퇴를 하시겠습니까?")
-            .setPositiveButtonText("회원탈퇴")
+            .setMessage(getString(R.string.leave))
+            .setPositiveButtonText(getString(R.string.leave))
             .setOnClickPositiveButton {
                 // TODO: 회원탈퇴
             }
