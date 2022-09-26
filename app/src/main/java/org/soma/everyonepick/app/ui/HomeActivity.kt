@@ -116,8 +116,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
 
     override fun showAreYouSureDialog() {
         DialogWithTwoButton.Builder(this)
-            .setMessage("${baseContext.getString(org.soma.everyonepick.common_ui.R.string.app_name)}을 종료합니다.")
-            .setPositiveButtonText("종료")
+            .setMessage(getString(R.string.terminate_app, getString(org.soma.everyonepick.common_ui.R.string.app_name)))
+            .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.termination))
             .setOnClickPositiveButton { finish() }
             .build().show()
     }

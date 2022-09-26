@@ -133,7 +133,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             signUpAndNavigate(token)
         }, { _, _ ->
             viewModel.setIsApiLoading(false)
-            Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(org.soma.everyonepick.login.R.string.toast_failed_to_login_with_kakao), Toast.LENGTH_SHORT).show()
         })
     }
 

@@ -98,7 +98,7 @@ class SplashActivity : AppCompatActivity() {
 
             viewModel.addSuccess()
         } catch (e: Exception) {
-            Toast.makeText(baseContext, "Refresh Token이 유효하지 않습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, getString(R.string.toast_failed_to_refresh_token), Toast.LENGTH_SHORT).show()
             viewModel.addFailure()
         }
     }
@@ -107,7 +107,7 @@ class SplashActivity : AppCompatActivity() {
         LoginUtil.loginWithKakao(this, { _, _ ->
             viewModel.addSuccess()
         }, { _, _ ->
-            Toast.makeText(baseContext, "카카오톡 로그인에 실패했습니다. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, getString(R.string.toast_failed_to_login_with_kakao), Toast.LENGTH_SHORT).show()
             viewModel.addFailure()
         })
     }

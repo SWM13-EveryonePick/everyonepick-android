@@ -9,6 +9,8 @@
     <string name="select_all">전체선택</string>
     <string name="kick">내보내기</string>
 
+    <string name="termination">종료</string>
+
     <string name="app_description">모두가 마음에 들어하는 사진을 쉽고 빠르게</string>
     <string name="next">다음</string>
     <string name="delete">삭제</string>
