@@ -17,6 +17,7 @@ import com.kakao.sdk.template.model.Link
 import com.kakao.sdk.template.model.TextTemplate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentFriendListBinding
 
 @AndroidEntryPoint
@@ -37,9 +38,7 @@ class FriendListFragment : Fragment() {
             it.onClickKakaoButton = View.OnClickListener {
                 // TODO: 스토어 링크 변경
                 val textTemplate = TextTemplate(
-                    text = """
-                        모두가 마음에 들어하는 사진을 쉽고 빠르게, 인공지능 단체사진 합성 서비스 [모두의 PICK]에 초대합니다!
-                    """.trimIndent(),
+                    text = getString(R.string.kakao_message_text).trimIndent(),
                     link = Link(
                         webUrl = "https://play.google.com/",
                         mobileWebUrl = "https://play.google.com/"
@@ -69,7 +68,7 @@ class FriendListFragment : Fragment() {
                 }
             }
         } else {
-            Toast.makeText(requireContext(), "카카오톡이 설치되어 있지 않습니다.", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.toast_kakao_talk_is_not_installed), Toast.LENGTH_LONG).show()
         }
     }
 

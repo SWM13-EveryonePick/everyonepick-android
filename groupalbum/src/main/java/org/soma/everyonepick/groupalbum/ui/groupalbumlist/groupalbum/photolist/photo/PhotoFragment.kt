@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common_ui.util.FileUtil.Companion.getUriFromBitmap
 import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoBinding
 
 @AndroidEntryPoint
@@ -51,12 +52,12 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
 
     override fun onClickDeleteButton() {
         DialogWithTwoButton.Builder(requireContext())
-            .setMessage("사진을 삭제합니다.")
-            .setPositiveButtonText("삭제")
+            .setMessage(getString(R.string.dialog_delete_photo))
+            .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.delete))
             .setOnClickPositiveButton {
                 viewModel.deletePhoto(
                     { findNavController().navigateUp() },
-                    { Toast.makeText(requireContext(), "사진을 삭제하는 데 실패했습니다.", Toast.LENGTH_SHORT).show() }
+                    { Toast.makeText(requireContext(), getString(R.string.toast_failed_to_delete_photo), Toast.LENGTH_SHORT).show() }
                 )
             }
             .build().show()
@@ -69,7 +70,7 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
             val uri = getUriFromBitmap(requireContext(), bitmap)
             putExtra(Intent.EXTRA_STREAM, uri)
         }
-        startActivity(Intent.createChooser(intent, "사진 공유"))
+        startActivity(Intent.createChooser(intent, getString(R.string.share_photo)))
     }
 
     override fun onClickAddToStoryButton() {

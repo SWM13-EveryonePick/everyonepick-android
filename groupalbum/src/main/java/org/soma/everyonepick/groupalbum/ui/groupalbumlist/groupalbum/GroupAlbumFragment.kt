@@ -20,6 +20,7 @@ import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setTabLayoutEnabl
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -102,8 +103,9 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             it.adapter = GroupAlbumViewPagerAdapter(this)
             it.setOnPageSelectedListener { position -> viewModel.setViewPagerPosition(position) }
         }
+        val tabItems = listOf(getString(R.string.tab_text_photo), getString(R.string.tab_text_in_progress), getString(R.string.tab_text_complete))
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
-            tab.text = TAB_ITEMS[position]
+            tab.text = tabItems[position]
         }.attach()
     }
 
@@ -162,8 +164,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onClickExitButton() {
         DialogWithTwoButton.Builder(requireContext())
-            .setMessage("단체공유앨범에서 나갑니다.")
-            .setPositiveButtonText("나가기")
+            .setMessage(getString(R.string.dialog_exit_group_album))
+            .setPositiveButtonText(getString(R.string.exit))
             .setOnClickPositiveButton {
                 viewModel.leaveGroupAlbum()
                 findNavController().navigateUp()
@@ -187,7 +189,6 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
 
     companion object {
-        private val TAB_ITEMS = listOf("사진", "합성중", "합성완료")
         const val FRIEND_LIST_TO_INVITE_REQUEST_KEY = "friend_list_to_invite_request_key"
         const val FRIEND_LIST_TO_INVITE_KEY = "friend_list_to_invite_key"
     }

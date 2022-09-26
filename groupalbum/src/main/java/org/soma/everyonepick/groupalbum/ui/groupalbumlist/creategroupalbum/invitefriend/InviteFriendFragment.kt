@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.common_ui.util.KeyboardUtil
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentInviteFriendBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragment.Companion.FRIEND_LIST_TO_INVITE_KEY
@@ -50,7 +51,7 @@ class InviteFriendFragment: Fragment() {
                         else -> returnToGroupAlbumFragment()
                     }
                 } else {
-                    Toast.makeText(context, "선택 인원을 초과했어요! 초대 인원은 최대 ${viewModel.maxInviteCount.value}명까지입니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.toast_exceed_selection, viewModel.maxInviteCount.value), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -90,8 +91,8 @@ class InviteFriendFragment: Fragment() {
                 if (viewModel.checked.value == 0) findNavController().navigateUp()
                 else {
                     DialogWithTwoButton.Builder(requireContext())
-                        .setMessage("초대 인원 선택을 그만둡니다.")
-                        .setPositiveButtonText("그만두기")
+                        .setMessage(getString(R.string.dialog_give_up_to_invite))
+                        .setPositiveButtonText(getString(R.string.give_up))
                         .setOnClickPositiveButton { findNavController().navigateUp() }
                         .build().show()
                 }

@@ -1,7 +1,9 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
+import android.content.Context
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumLocalRepository
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList
@@ -19,7 +22,7 @@ import javax.inject.Inject
 
 /**
  * [GroupAlbumAdapter]의 설계상, 가장 마지막 아이템을 '생성 버튼'으로 취급하게 되므로 마지막 아이템에는
- * [GroupAlbumModel.dummyData]가 위치하는 것을 보장해야 하며, 이 책임은 [GroupAlbumModelList]가 지고 있습니다.
+ * [GroupAlbumModel]의 dummyData가 위치하는 것을 보장해야 하며, 이 책임은 [GroupAlbumModelList]가 지고 있습니다.
  *
  * 사용자 경험을 위해 Offline Cache를 사용하며, [groupAlbumModelList]의 값은 아래 순서를 따라 변경됩니다.
  *
@@ -30,6 +33,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupAlbumListViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val groupAlbumUseCase: GroupAlbumUseCase,
     private val dataStoreUseCase: DataStoreUseCase,
     private val groupAlbumLocalRepository: GroupAlbumLocalRepository,
@@ -80,7 +84,7 @@ class GroupAlbumListViewModel @Inject constructor(
                     groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                 }
             } catch (e: Exception) {
-                _toastMessage.value = "단체공유앨범을 불러오는 데 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_read_group_album)
             }
 
             _isApiLoading.value = false
@@ -97,7 +101,7 @@ class GroupAlbumListViewModel @Inject constructor(
                 readGroupAlbumModelList()
             } catch (e: Exception) {
                 readGroupAlbumModelList()
-                _toastMessage.value = "단체공유앨범에서 나가는 데 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_exit_group_album)
             }
         }
     }

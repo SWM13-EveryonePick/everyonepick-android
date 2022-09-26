@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class InviteFriendViewModel @Inject constructor(
     private val friendUseCase: FriendUseCase,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
     /**
      * [inviteFriendModelList]는 전체 친구 리스트이자 '실제' 데이터인 반면, [filteredList]는 검색 필터링이 적용된
