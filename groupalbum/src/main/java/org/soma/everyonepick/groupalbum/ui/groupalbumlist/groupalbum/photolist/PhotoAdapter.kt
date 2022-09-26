@@ -12,8 +12,12 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoViewModel
 
-class PhotoAdapter: ListAdapter<PhotoModel, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
+class PhotoAdapter(
+    private val groupAlbumViewModel: GroupAlbumViewModel
+): ListAdapter<PhotoModel, RecyclerView.ViewHolder>(PhotoDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = getViewDataBinding<ItemPhotoBinding>(parent, R.layout.item_photo)
         val holder = PhotoViewHolder(binding)
@@ -22,7 +26,11 @@ class PhotoAdapter: ListAdapter<PhotoModel, RecyclerView.ViewHolder>(PhotoDiffCa
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                val directions = GroupAlbumFragmentDirections.toPhotoFragment(item.photo.photoUrl)
+                val directions = GroupAlbumFragmentDirections.toPhotoFragment(
+                    groupAlbumViewModel.groupAlbum.value.id?: -1,
+                    item.photo.id,
+                    item.photo.photoUrl
+                )
                 binding.root.findNavController().navigate(directions)
             } else {
                 binding.checkbox.performTouch()

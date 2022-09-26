@@ -69,9 +69,9 @@ class GroupAlbumUseCase @Inject constructor(
 
     suspend fun deletePhotoList(
         token: String,
-        id: Long,
+        groupAlbumId: Long,
         photoIdList: PhotoIdListRequest
     ) {
-        groupAlbumService.deletePhotoList(token, id, photoIdList)
+        groupAlbumService.deletePhotoList(token, groupAlbumId, photoIdList)
     }
 }
