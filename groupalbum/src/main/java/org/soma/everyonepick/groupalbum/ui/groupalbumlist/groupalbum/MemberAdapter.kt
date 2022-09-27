@@ -37,7 +37,7 @@ class MemberAdapter(
                 val binding = getViewDataBinding<ItemInviteMemberBinding>(parent, R.layout.item_invite_member).apply {
                     onClickRoot = View.OnClickListener {
                         // 초대 페이지로 이동
-                        val existingUserClientIdList = parentViewModel.memberModelList.value.getActualData()
+                        val existingUserClientIdList = parentViewModel.memberModelList.value.getListWithoutDummy()
                             .filter { it.user.id != parentViewModel.me.value.id }
                             .map { it.user.clientId?: "" }
                             .toTypedArray()

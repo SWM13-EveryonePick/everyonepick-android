@@ -38,6 +38,10 @@ class GroupAlbumListViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase,
     private val groupAlbumLocalRepository: GroupAlbumLocalRepository,
 ): ViewModel() {
+    /**
+     * withDummyData = false로 두는 이유는, 부드러운 애니메이션을 위해서입니다. 그렇게 하지 않았으면, 초기에 + 버튼이
+     * 존재하게 되고 이후에 데이터를 불러왔을 때 + 버튼이 인덱스 0으로부터 이동하게 되는 애니메이션이 연출되기 때문입니다.
+     */
     private val _groupAlbumModelList = MutableStateFlow(GroupAlbumModelList(withDummyData = false))
     val groupAlbumModelList: StateFlow<GroupAlbumModelList> = _groupAlbumModelList
 
@@ -79,7 +83,7 @@ class GroupAlbumListViewModel @Inject constructor(
                     _groupAlbumModelList.value = GroupAlbumModelList(newGroupAlbumModelList)
 
                     // Offline cache를 위해 데이터 저장
-                    val groupAlbumLocalList = _groupAlbumModelList.value.getActualData()
+                    val groupAlbumLocalList = _groupAlbumModelList.value.getListWithoutDummy()
                         .toGroupAlbumLocalList()
                     groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                 }
@@ -106,7 +110,7 @@ class GroupAlbumListViewModel @Inject constructor(
         }
     }
 
-    private fun getCheckedGroupAlbumIdList() = _groupAlbumModelList.value.getActualData()
+    private fun getCheckedGroupAlbumIdList() = _groupAlbumModelList.value.getListWithoutDummy()
         .filter { it.isChecked.value }
         .map { it.groupAlbum.id }
 }

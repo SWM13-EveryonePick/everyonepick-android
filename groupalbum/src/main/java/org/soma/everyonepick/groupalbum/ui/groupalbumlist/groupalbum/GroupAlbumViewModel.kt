@@ -1,12 +1,9 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -106,7 +103,7 @@ class GroupAlbumViewModel @Inject constructor(
         _memberModelList.value = _memberModelList.value.getNewInstance()
     }
 
-    private fun getCheckedUserList() = _memberModelList.value.getActualData()
+    private fun getCheckedUserList() = _memberModelList.value.getListWithoutDummy()
         .filter { it.isChecked.value }
         .map { it.user }
         .toMutableList()
