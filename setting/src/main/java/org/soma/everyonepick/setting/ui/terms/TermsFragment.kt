@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.common.util.HomeActivityUtil
-import org.soma.everyonepick.common_ui.FullTextActivity
-import org.soma.everyonepick.common_ui.FullTextActivity.Companion.putFullTextActivityExtras
+import org.soma.everyonepick.common.util.PRIVACY_POLICY_URL
+import org.soma.everyonepick.common.util.TERMS_OF_SERVICE_URL
+import org.soma.everyonepick.common_ui.ScrollableWebViewActivity
+import org.soma.everyonepick.common_ui.ScrollableWebViewActivity.Companion.putScrollableWebViewActivityExtras
 import org.soma.everyonepick.common_ui.R
 import org.soma.everyonepick.setting.databinding.FragmentTermsBinding
 
@@ -42,14 +42,14 @@ class TermsFragment : Fragment(), TermsFragmentListener {
 
     /** TermsFragmentListener */
     override fun onClickTermsOfServiceButton() {
-        val intent = Intent(requireContext(), FullTextActivity::class.java)
-            .putFullTextActivityExtras(getString(R.string.terms_of_service_title), getString(R.string.terms_of_service_contents))
+        val intent = Intent(requireContext(), ScrollableWebViewActivity::class.java)
+            .putScrollableWebViewActivityExtras(getString(R.string.terms_of_service_title), TERMS_OF_SERVICE_URL)
         startActivity(intent)
     }
 
     override fun onClickPrivacyPolicyButton() {
-        val intent = Intent(requireContext(), FullTextActivity::class.java)
-            .putFullTextActivityExtras(getString(R.string.privacy_policy_title), getString(R.string.privacy_policy_contents))
+        val intent = Intent(requireContext(), ScrollableWebViewActivity::class.java)
+            .putScrollableWebViewActivityExtras(getString(R.string.privacy_policy_title), PRIVACY_POLICY_URL)
         startActivity(intent)
     }
 }
