@@ -1,6 +1,6 @@
 package org.soma.everyonepick.groupalbum.domain.modellist
 
-import org.soma.everyonepick.common.domain.model.MemberModel
+import org.soma.everyonepick.groupalbum.domain.model.MemberModel
 import java.lang.Integer.max
 
 class MemberModelList: ListWithDummy<MemberModel> {

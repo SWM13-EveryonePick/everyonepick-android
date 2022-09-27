@@ -1,13 +1,12 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.kakao.sdk.talk.model.Friend
-import com.kakao.sdk.talk.model.Friends
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientId
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.getCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
 import java.lang.Integer.max
@@ -88,8 +87,7 @@ class InviteFriendViewModel @Inject constructor(
         }
     }
 
-    fun getCheckedFriendList() = _inviteFriendModelList.value
-        .filter { it.isChecked.value}
+    fun getCheckedFriendList() = getCheckedItemList(_inviteFriendModelList.value)
         .map { it.friend }
         .toMutableList()
 

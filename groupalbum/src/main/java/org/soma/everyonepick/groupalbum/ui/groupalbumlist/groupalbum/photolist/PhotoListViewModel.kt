@@ -14,6 +14,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.getCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -62,8 +63,9 @@ class PhotoListViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val photoIdList = _photoModelList.value.filter { it.isChecked.value }.map { PhotoId(it.photo.id) }
-                groupAlbumUseCase.deletePhotoList(token, groupAlbumId!!, PhotoIdListRequest(photoIdList))
+                val checkedPhotoIdList = getCheckedItemList(_photoModelList.value)
+                    .map { PhotoId(it.photo.id) }
+                groupAlbumUseCase.deletePhotoList(token, groupAlbumId!!, PhotoIdListRequest(checkedPhotoIdList))
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_delete_photo)

@@ -6,7 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.soma.everyonepick.common.domain.model.MemberModel
+import org.soma.everyonepick.groupalbum.domain.model.MemberModel
 import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
 import org.soma.everyonepick.common_ui.util.performTouch
 import org.soma.everyonepick.groupalbum.R

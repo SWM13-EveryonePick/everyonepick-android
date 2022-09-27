@@ -14,6 +14,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.getCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -103,11 +104,6 @@ class GroupAlbumViewModel @Inject constructor(
         _memberModelList.value = _memberModelList.value.getNewInstance()
     }
 
-    private fun getCheckedUserList() = _memberModelList.value.getListWithoutDummy()
-        .filter { it.isChecked.value }
-        .map { it.user }
-        .toMutableList()
-
     fun setPhotoSelectionMode(selectionMode: SelectionMode) {
         _photoSelectionMode.value = selectionMode.ordinal
     }
@@ -161,7 +157,8 @@ class GroupAlbumViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val userListToKick = getCheckedUserList()
+                val userListToKick = getCheckedItemList(_memberModelList.value.getListWithoutDummy())
+                    .map { it.user }.toMutableList()
                 val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbum.value.id!!, userListToKick)
                 _groupAlbum.value = data
             } catch (e: Exception) {
