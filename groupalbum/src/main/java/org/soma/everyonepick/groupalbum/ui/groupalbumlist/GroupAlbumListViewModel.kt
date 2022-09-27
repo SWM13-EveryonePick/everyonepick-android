@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumLocalRepository
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.getCheckedItemList
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
@@ -100,7 +100,7 @@ class GroupAlbumListViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val checkedItemList = getCheckedItemList(_groupAlbumModelList.value.getListWithoutDummy())
+                val checkedItemList = _groupAlbumModelList.value.getListWithoutDummy().toCheckedItemList()
                 checkedItemList.forEach {
                     groupAlbumUseCase.leaveGroupAlbum(token, it.groupAlbum.id!!)
                 }

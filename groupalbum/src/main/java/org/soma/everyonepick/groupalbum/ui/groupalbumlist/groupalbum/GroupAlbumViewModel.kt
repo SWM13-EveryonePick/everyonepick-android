@@ -14,7 +14,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.getCheckedItemList
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -157,7 +157,7 @@ class GroupAlbumViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val userListToKick = getCheckedItemList(_memberModelList.value.getListWithoutDummy())
+                val userListToKick = _memberModelList.value.getListWithoutDummy().toCheckedItemList()
                     .map { it.user }.toMutableList()
                 val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbum.value.id!!, userListToKick)
                 _groupAlbum.value = data
