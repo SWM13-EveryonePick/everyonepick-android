@@ -21,9 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.source.AuthService
+import org.soma.everyonepick.common.util.PRIVACY_POLICY_URL
+import org.soma.everyonepick.common.util.TERMS_OF_SERVICE_URL
 import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
-import org.soma.everyonepick.common_ui.FullTextActivity
-import org.soma.everyonepick.common_ui.FullTextActivity.Companion.putFullTextActivityExtras
+import org.soma.everyonepick.common_ui.ScrollableWebViewActivity
+import org.soma.everyonepick.common_ui.ScrollableWebViewActivity.Companion.putScrollableWebViewActivityExtras
 import org.soma.everyonepick.common_ui.R
 import org.soma.everyonepick.login.databinding.FragmentLandingViewPagerBinding
 import org.soma.everyonepick.login.util.LoginUtil
@@ -82,8 +84,8 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
                 setSpan(
                     object: ClickableSpan() {
                         override fun onClick(widget: View) {
-                            val intent = Intent(requireContext(), FullTextActivity::class.java)
-                                .putFullTextActivityExtras(getString(R.string.terms_of_service_title), getString(R.string.terms_of_service_contents))
+                            val intent = Intent(requireContext(), ScrollableWebViewActivity::class.java)
+                                .putScrollableWebViewActivityExtras(getString(R.string.terms_of_service_title), TERMS_OF_SERVICE_URL)
                             startActivity(intent)
                         }
                         override fun updateDrawState(ds: TextPaint) {
@@ -95,8 +97,8 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
                 setSpan(
                     object: ClickableSpan() {
                         override fun onClick(widget: View) {
-                            val intent = Intent(requireContext(), FullTextActivity::class.java)
-                                .putFullTextActivityExtras(getString(R.string.privacy_policy_title), getString(R.string.privacy_policy_contents))
+                            val intent = Intent(requireContext(), ScrollableWebViewActivity::class.java)
+                                .putScrollableWebViewActivityExtras(getString(R.string.privacy_policy_title), PRIVACY_POLICY_URL)
                             startActivity(intent)
                         }
                         override fun updateDrawState(ds: TextPaint) {

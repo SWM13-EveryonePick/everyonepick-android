@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".FullTextActivity"
+            android:name=".ScrollableWebViewActivity"
             android:exported="false" />
     </application>
 
