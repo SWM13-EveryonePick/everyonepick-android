@@ -1,15 +1,13 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
-import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import org.soma.everyonepick.common.util.KeyboardUtil
+import org.soma.everyonepick.common_ui.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.databinding.DialogFragmentUpdateTitleDialogBinding
 
 /**

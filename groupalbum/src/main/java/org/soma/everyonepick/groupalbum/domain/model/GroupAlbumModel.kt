@@ -2,12 +2,13 @@ package org.soma.everyonepick.groupalbum.domain.model
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.domain.Checkable
 
 class GroupAlbumModel(
     val groupAlbum: GroupAlbum,
-    var isChecked: MutableStateFlow<Boolean>,
-    var isCheckboxVisible: Boolean
-) {
+    override var isChecked: MutableStateFlow<Boolean>,
+    override var isCheckboxVisible: Boolean = true
+): Checkable {
     companion object {
         fun createDummyData() = GroupAlbumModel(GroupAlbum(-1, "", 0, listOf(), 0), isChecked = MutableStateFlow(false), isCheckboxVisible = false)
     }

@@ -39,24 +39,8 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
-    implementation project(path: ':common')
-    implementation project(path: ':common-ui')
-    implementation project(path: ':foundation')
-    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
-
-    // Glide
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
-    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
-
-    implementation "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
+    api project(path: ':common')
+    api project(path: ':common-ui')
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
@@ -73,9 +57,6 @@ dependencies {
     implementation("androidx.room:room-ktx:$rootProject.roomVersion")
     // optional - Test helpers
     testImplementation("androidx.room:room-testing:$rootProject.roomVersion")
-
-    // Kakao
-    implementation "com.kakao.sdk:v2-all:$rootProject.kakaoVersion" // 전체 모듈 설치, 2.11.0 버전부터 지원
 
     // Lottie
     implementation "com.airbnb.android:lottie:$rootProject.lottieVersion"

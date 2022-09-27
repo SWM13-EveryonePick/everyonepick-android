@@ -19,14 +19,9 @@ import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.data.entity.ProviderName
 import org.soma.everyonepick.common.data.source.AuthService
-import org.soma.everyonepick.common.data.dto.SignUpRequest
-import org.soma.everyonepick.common.domain.usecase.UserUseCase
-import org.soma.everyonepick.common.util.ViewUtil.Companion.setOnPageSelectedListener
+import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.common_ui.FullTextActivity
 import org.soma.everyonepick.common_ui.FullTextActivity.Companion.putFullTextActivityExtras
 import org.soma.everyonepick.common_ui.R
@@ -138,7 +133,7 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
             signUpAndNavigate(token)
         }, { _, _ ->
             viewModel.setIsApiLoading(false)
-            Toast.makeText(requireContext(), "카카오 로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(org.soma.everyonepick.login.R.string.toast_failed_to_login_with_kakao), Toast.LENGTH_SHORT).show()
         })
     }
 

@@ -1,30 +1,28 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
-import android.widget.Toast
-import androidx.core.net.toUri
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
-import org.soma.everyonepick.groupalbum.data.entity.Photo
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
-import java.io.File
 import javax.inject.Inject
-import kotlin.Throws
 
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val groupAlbumUseCase: GroupAlbumUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ): ViewModel() {
@@ -45,7 +43,7 @@ class PhotoListViewModel @Inject constructor(
                 _photoModelList.value = groupAlbumUseCase.readPhotoList(token, groupAlbumId!!)
                 _isApiLoading.value = false
             } catch (e: Exception) {
-                _toastMessage.value = "사진을 불러오는 데 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_read_photo)
             }
         }
     }
@@ -57,7 +55,7 @@ class PhotoListViewModel @Inject constructor(
                 groupAlbumUseCase.createPhotoList(token, groupAlbumId!!, images)
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {
-                _toastMessage.value = "사진을 업로드하는 데 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_create_photo)
             }
         }
     }
@@ -66,18 +64,18 @@ class PhotoListViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val photoIdList = _photoModelList.value.filter { it.isChecked.value }.map { PhotoId(it.photo.id) }
-                groupAlbumUseCase.deletePhotoList(token, groupAlbumId!!, PhotoIdListRequest(photoIdList))
+                val checkedPhotoIdList = _photoModelList.value.toCheckedItemList()
+                    .map { PhotoId(it.photo.id) }
+                groupAlbumUseCase.deletePhotoList(token, groupAlbumId!!, PhotoIdListRequest(checkedPhotoIdList))
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {
-                _toastMessage.value = "사진을 삭제하는 데 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_delete_photo)
             }
         }
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        _photoModelList.value = _photoModelList.value.map {
-            PhotoModel(it.photo, MutableStateFlow(false), isCheckboxVisible = isCheckboxVisible)
-        }.toMutableList()
+        _photoModelList.value.setIsCheckboxVisible(isCheckboxVisible)
+        _photoModelList.value = _photoModelList.value.map { it.copy() }.toMutableList()
     }
 }

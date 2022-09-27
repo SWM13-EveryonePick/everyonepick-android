@@ -1,2 +1,3 @@
 <resources>
+    <string name="terminate_app">%s을 종료합니다.</string>
 </resources>

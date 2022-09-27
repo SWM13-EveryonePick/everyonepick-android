@@ -1,11 +1,11 @@
-package org.soma.everyonepick.common.util
+package org.soma.everyonepick.common_ui.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.Image
 
-class CameraUtil {
+class ImageUtil {
     companion object {
         fun Image.toBitmap(): Bitmap {
             val buffer = planes[0].buffer

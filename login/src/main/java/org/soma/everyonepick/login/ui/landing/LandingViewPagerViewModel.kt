@@ -1,5 +1,6 @@
 package org.soma.everyonepick.login.ui.landing
 
+import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -17,11 +19,13 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.util.LoginUtil
 import javax.inject.Inject
 
 @HiltViewModel
 class LandingViewPagerViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val authService: AuthService,
     private val userUseCase: UserUseCase,
     private val dataStoreUseCase: DataStoreUseCase
@@ -52,7 +56,7 @@ class LandingViewPagerViewModel @Inject constructor(
 
                 onSuccess.invoke()
             } catch (e: Exception) {
-                _toastMessage.value = "회원가입에 실패하였습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_sign_up)
                 _isApiLoading.value = false
             }
         }
@@ -65,7 +69,7 @@ class LandingViewPagerViewModel @Inject constructor(
                 val data = userUseCase.readUser(token)
                 onSuccess.invoke(data)
             } catch (e: Exception) {
-                _toastMessage.value = "회원정보를 불러오는 데 실패하였습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_read_user)
                 _isApiLoading.value = false
             }
         }

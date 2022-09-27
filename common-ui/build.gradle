@@ -37,18 +37,29 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+    api project(path: ':foundation')
+
+    api "androidx.core:core-ktx:$rootProject.ktxVersion"
+    api "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    api "com.google.android.material:material:$rootProject.materialVersion"
+    api "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    api "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+    api "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    api "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+
+    // CameraX
+    api "androidx.camera:camera-core:$rootProject.cameraXVersion"
+    api "androidx.camera:camera-camera2:$rootProject.cameraXVersion"
+    api "androidx.camera:camera-lifecycle:$rootProject.cameraXVersion"
+    api "androidx.camera:camera-view:$rootProject.cameraXVersion"
+
+    api "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
+    api "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    api "com.kakao.sdk:v2-all:$rootProject.kakaoVersion" // 전체 모듈 설치, 2.11.0 버전부터 지원
 
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
-
-    // Glide
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

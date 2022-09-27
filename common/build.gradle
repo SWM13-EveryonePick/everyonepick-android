@@ -38,19 +38,10 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
-    implementation project(path: ':foundation')
+    api project(path: ':foundation')
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:$rootProject.dataStorePreferencesVersion")
-
-    // Retrofit2
-    implementation "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2Version"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"

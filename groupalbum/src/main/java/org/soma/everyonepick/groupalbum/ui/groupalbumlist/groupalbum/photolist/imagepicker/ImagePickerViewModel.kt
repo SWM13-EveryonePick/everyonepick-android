@@ -5,10 +5,10 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import java.io.File
 
@@ -41,8 +41,7 @@ class ImagePickerViewModel: ViewModel() {
         }
     }
 
-    fun getCheckedImageUriList() = _imageModelList.value
-        .filter { it.isChecked.value }
+    fun getCheckedImageUriList() = _imageModelList.value.toCheckedItemList()
         .map { it.uri.toString() }
         .toMutableList()
 

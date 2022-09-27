@@ -1,4 +1,4 @@
-package org.soma.everyonepick.common.util
+package org.soma.everyonepick.common_ui.util
 
 import android.os.SystemClock
 import android.view.MotionEvent

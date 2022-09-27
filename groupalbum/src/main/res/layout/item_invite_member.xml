@@ -6,7 +6,7 @@
     <data>
         <variable
             name="memberModel"
-            type="org.soma.everyonepick.common.domain.model.MemberModel" />
+            type="org.soma.everyonepick.groupalbum.domain.model.MemberModel" />
         <variable
             name="visibility"
             type="Boolean" />

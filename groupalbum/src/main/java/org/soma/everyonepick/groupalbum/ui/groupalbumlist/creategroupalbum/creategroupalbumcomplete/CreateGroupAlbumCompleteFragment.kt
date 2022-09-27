@@ -5,11 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.animation.doOnEnd
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import org.soma.everyonepick.common.util.AnimationUtil
-import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_DURATION
+import org.soma.everyonepick.common_ui.util.AnimationUtil
 import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_Y_OFFSET
 import org.soma.everyonepick.groupalbum.databinding.FragmentCreateGroupAlbumCompleteBinding
 

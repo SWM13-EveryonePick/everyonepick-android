@@ -16,7 +16,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import org.soma.everyonepick.common.util.CONTACT_EMAIL_ADDRESS
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.setting.R
 import org.soma.everyonepick.setting.databinding.FragmentSettingBinding
 import javax.inject.Inject
 
@@ -73,10 +75,10 @@ class SettingFragment : Fragment(), SettingFragmentListener {
     override fun onClickContactButton() {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("everyonepickofficial@gmail.com"))
-            putExtra(Intent.EXTRA_SUBJECT, "[모두의 PICK] 서비스 문의")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(CONTACT_EMAIL_ADDRESS))
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.contact_subject))
         }
-        startActivity(Intent.createChooser(intent, "이메일 전송 수단을 선택하세요."))
+        startActivity(Intent.createChooser(intent, getString(R.string.contact_chooser_text)))
     }
 }
 

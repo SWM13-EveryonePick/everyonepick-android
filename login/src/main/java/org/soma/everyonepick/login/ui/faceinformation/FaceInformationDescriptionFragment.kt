@@ -6,19 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.util.AnimationUtil
+import org.soma.everyonepick.common_ui.util.AnimationUtil
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationDescriptionBinding
 import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_DURATION
 import org.soma.everyonepick.common.util.SHOWING_UP_ANIMATION_Y_OFFSET
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
-import org.soma.everyonepick.login.ui.LoginActivity
-import org.soma.everyonepick.login.ui.SplashActivity
-import javax.inject.Inject
+import org.soma.everyonepick.login.R
 
 class FaceInformationDescriptionFragment : Fragment() {
     private var _binding: FragmentFaceInformationDescriptionBinding? = null
@@ -51,8 +45,8 @@ class FaceInformationDescriptionFragment : Fragment() {
         onBackPressedCallback = object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 DialogWithTwoButton.Builder(requireContext())
-                    .setMessage("회원가입을 취소하고 앱을 종료합니다.")
-                    .setPositiveButtonText("종료")
+                    .setMessage(getString(R.string.dialog_leave_app_to_cancel_to_sign_up))
+                    .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.termination))
                     .setOnClickPositiveButton {
                         activity?.finish()
                     }

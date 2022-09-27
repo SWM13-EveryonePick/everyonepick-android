@@ -53,7 +53,7 @@ class PermissionFragment(
             onSuccess.invoke()
         } else {
             binding.button.visibility = View.VISIBLE
-            Toast.makeText(requireContext(), "권한이 필요합니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.toast_need_to_get_permission), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.soma.everyonepick.common.data.RetrofitFactory
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 
@@ -21,7 +21,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGroupAlbumService(): GroupAlbumService {
-        return RetrofitFactory.create(GroupAlbumService::class.java)
+    fun provideGroupAlbumService(retrofit: Retrofit): GroupAlbumService {
+        return retrofit.create(GroupAlbumService::class.java)
     }
 }

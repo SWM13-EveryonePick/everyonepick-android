@@ -1,13 +1,12 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.kakao.sdk.talk.model.Friend
-import com.kakao.sdk.talk.model.Friends
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientId
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
 import java.lang.Integer.max
@@ -16,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class InviteFriendViewModel @Inject constructor(
     private val friendUseCase: FriendUseCase,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ): ViewModel() {
     /**
      * [inviteFriendModelList]는 전체 친구 리스트이자 '실제' 데이터인 반면, [filteredList]는 검색 필터링이 적용된
@@ -88,8 +87,7 @@ class InviteFriendViewModel @Inject constructor(
         }
     }
 
-    fun getCheckedFriendList() = _inviteFriendModelList.value
-        .filter { it.isChecked.value}
+    fun getCheckedFriendList() = _inviteFriendModelList.value.toCheckedItemList()
         .map { it.friend }
         .toMutableList()
 

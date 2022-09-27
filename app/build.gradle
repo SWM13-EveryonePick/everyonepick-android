@@ -42,35 +42,16 @@ android {
 
 dependencies {
 
-    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-    implementation project(path: ':camera')
-    implementation project(path: ':setting')
-    implementation project(path: ':groupalbum')
-    implementation project(path: ':login')
-    implementation project(path: ':common')
-    implementation project(path: ':common-ui')
-    implementation project(path: ':foundation')
-    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+    api project(path: ':camera')
+    api project(path: ':setting')
+    api project(path: ':groupalbum')
+    api project(path: ':login')
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.hiltVersion"
-
-    // Room
-    implementation("androidx.room:room-runtime:$rootProject.roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$rootProject.roomVersion")
-    // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$rootProject.roomVersion")
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:$rootProject.roomVersion")
-    // optional - Test helpers
-    testImplementation("androidx.room:room-testing:$rootProject.roomVersion")
 
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"

@@ -1,18 +1,13 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.soma.everyonepick.common.util.BindingUtil.Companion.getViewDataBinding
-import org.soma.everyonepick.common.util.performTouch
-import org.soma.everyonepick.common.util.setVisibility
+import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
+import org.soma.everyonepick.common_ui.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding

@@ -71,6 +71,12 @@
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment"
         tools:layout="@layout/fragment_photo">
         <argument
+            android:name="groupAlbumId"
+            app:argType="long"/>
+        <argument
+            android:name="photoId"
+            app:argType="long"/>
+        <argument
             android:name="photoUrl"
             app:argType="string"/>
     </fragment>

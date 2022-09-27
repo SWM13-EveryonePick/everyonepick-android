@@ -24,7 +24,6 @@ class FaceInformationCameraFragment : Fragment() {
         _binding = FragmentFaceInformationCameraBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             onClickUploadButton = View.OnClickListener {
-                // TODO: API 호출 + 성공 시 navigate
                 val directions = FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
                 findNavController().navigate(directions)
             }

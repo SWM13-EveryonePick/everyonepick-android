@@ -1,19 +1,21 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum
 
-import android.widget.Toast
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -25,6 +27,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class GroupAlbumViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     savedStateHandle: SavedStateHandle,
     private val dataStoreUseCase: DataStoreUseCase,
     private val userUseCase: UserUseCase,
@@ -97,15 +100,10 @@ class GroupAlbumViewModel @Inject constructor(
         _viewPagerPosition.value = position
     }
 
-    fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        _memberModelList.value.setIsCheckboxVisible(isCheckboxVisible)
+    fun setIsCheckboxVisibleOfMember(isCheckboxVisible: Boolean) {
+        _memberModelList.value.data.setIsCheckboxVisible(isCheckboxVisible)
         _memberModelList.value = _memberModelList.value.getNewInstance()
     }
-
-    private fun getCheckedUserList() = _memberModelList.value.getActualData()
-        .filter { it.isChecked.value }
-        .map { it.user }
-        .toMutableList()
 
     fun setPhotoSelectionMode(selectionMode: SelectionMode) {
         _photoSelectionMode.value = selectionMode.ordinal
@@ -127,7 +125,7 @@ class GroupAlbumViewModel @Inject constructor(
                     .inviteUsersToGroupAlbum(token, groupAlbum.value.id!!, friendList)
                 _groupAlbum.value = data
             } catch (e: Exception) {
-                _toastMessage.value = "단체공유앨범 초대에 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_invite)
             }
         }
     }
@@ -140,7 +138,7 @@ class GroupAlbumViewModel @Inject constructor(
                 val data = groupAlbumUseCase.updateGroupAlbum(token, groupAlbum.id!!, groupAlbum)
                 _groupAlbum.value = data
             } catch (e: Exception) {
-                _toastMessage.value = "단체공유앨범 이름 변경에 실패하였습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_rename_group_album)
             }
         }
     }
@@ -151,7 +149,7 @@ class GroupAlbumViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.leaveGroupAlbum(token, groupAlbum.value.id!!)
             } catch (e: Exception) {
-                _toastMessage.value = "단체공유앨범에서 나가는 데 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_exit_group_album)
             }
         }
     }
@@ -160,11 +158,12 @@ class GroupAlbumViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val userListToKick = getCheckedUserList()
+                val userListToKick = _memberModelList.value.getListWithoutDummy().toCheckedItemList()
+                    .map { it.user }.toMutableList()
                 val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbum.value.id!!, userListToKick)
                 _groupAlbum.value = data
             } catch (e: Exception) {
-                _toastMessage.value = "사용자를 강퇴하는 데 실패했습니다."
+                _toastMessage.value = context.getString(R.string.toast_failed_to_kick)
             }
         }
     }

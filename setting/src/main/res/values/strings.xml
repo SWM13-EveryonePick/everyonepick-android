@@ -10,4 +10,10 @@
     <string name="complete_synthesis_notification">합성 완료 알림</string>
     <string name="terms_setting">이용약관</string>
     <string name="do_contact">문의하기</string>
+    
+    <string name="contact_subject">[모두의 PICK] 서비스 문의</string>
+    <string name="contact_chooser_text">이메일 전송 수단을 선택하세요.</string>
+
+    <string name="dialog_logout">로그아웃 하시겠습니까?</string>
+    <string name="dialog_leave">정말 회원탈퇴를 하시겠습니까?</string>
 </resources>

@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.soma.everyonepick.common.data.RetrofitFactory.Companion.toBearerToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,6 +26,8 @@ class DataStoreUseCase @Inject constructor(
 
     val hasShownSyntheticDialog: Flow<Boolean?> =
         dataStore.data.map { preferences -> preferences[hasShownSyntheticDialogKey] }
+
+    private fun String.toBearerToken() = "Bearer $this"
 
     suspend fun editAccessToken(accessToken: String) {
         dataStore.edit {
