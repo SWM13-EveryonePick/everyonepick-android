@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.repository.GroupAlbumLocalRepository
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.checkAll
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
 import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList
@@ -64,12 +66,12 @@ class GroupAlbumListViewModel @Inject constructor(
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        _groupAlbumModelList.value.setIsCheckboxVisible(isCheckboxVisible)
+        _groupAlbumModelList.value.data.setIsCheckboxVisible(isCheckboxVisible)
         _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
     }
 
     fun checkAll() {
-        _groupAlbumModelList.value.checkAll()
+        _groupAlbumModelList.value.getListWithoutDummy().checkAll()
         _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
     }
 

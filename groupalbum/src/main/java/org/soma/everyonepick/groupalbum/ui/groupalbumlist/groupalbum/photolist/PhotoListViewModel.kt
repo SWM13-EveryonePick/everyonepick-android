@@ -14,6 +14,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
 import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
@@ -74,8 +75,7 @@ class PhotoListViewModel @Inject constructor(
     }
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        _photoModelList.value = _photoModelList.value.map {
-            PhotoModel(it.photo, MutableStateFlow(false), isCheckboxVisible = isCheckboxVisible)
-        }.toMutableList()
+        _photoModelList.value.setIsCheckboxVisible(isCheckboxVisible)
+        _photoModelList.value = _photoModelList.value.map { it.copy() }.toMutableList()
     }
 }

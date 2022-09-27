@@ -67,7 +67,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
                 launch {
                     viewModel.memberSelectionMode.collectLatest { memberSelectionMode ->
-                        viewModel.setIsCheckboxVisible(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
+                        viewModel.setIsCheckboxVisibleOfMember(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
                     }
                 }
 

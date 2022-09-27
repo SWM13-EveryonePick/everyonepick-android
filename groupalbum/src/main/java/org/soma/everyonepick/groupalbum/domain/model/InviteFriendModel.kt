@@ -6,5 +6,6 @@ import org.soma.everyonepick.groupalbum.domain.Checkable
 
 data class InviteFriendModel(
     val friend: Friend,
-    override var isChecked: MutableStateFlow<Boolean>
+    override var isChecked: MutableStateFlow<Boolean>,
+    override var isCheckboxVisible: Boolean = true
 ): Checkable

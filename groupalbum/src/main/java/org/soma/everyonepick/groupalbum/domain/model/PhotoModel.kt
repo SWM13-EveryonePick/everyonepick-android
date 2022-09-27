@@ -6,5 +6,7 @@ import org.soma.everyonepick.groupalbum.domain.Checkable
 data class PhotoModel(
     val photo: Photo,
     override var isChecked: MutableStateFlow<Boolean>,
-    var isCheckboxVisible: Boolean
-): Checkable
+    override var isCheckboxVisible: Boolean
+): Checkable {
+    fun copy() = PhotoModel(photo.copy(), MutableStateFlow(isChecked.value), isCheckboxVisible)
+}

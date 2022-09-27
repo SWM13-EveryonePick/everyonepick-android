@@ -10,7 +10,7 @@ import org.soma.everyonepick.groupalbum.domain.Checkable
 class MemberModel(
     val user: User,
     override var isChecked: MutableStateFlow<Boolean>,
-    var isCheckboxVisible: Boolean
+    override var isCheckboxVisible: Boolean
 ): Checkable {
     companion object {
         fun createDummyData() = MemberModel(User.dummyData, MutableStateFlow(false), isCheckboxVisible = false)

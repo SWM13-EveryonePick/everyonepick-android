@@ -14,6 +14,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
 import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
@@ -99,8 +100,8 @@ class GroupAlbumViewModel @Inject constructor(
         _viewPagerPosition.value = position
     }
 
-    fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
-        _memberModelList.value.setIsCheckboxVisible(isCheckboxVisible)
+    fun setIsCheckboxVisibleOfMember(isCheckboxVisible: Boolean) {
+        _memberModelList.value.data.setIsCheckboxVisible(isCheckboxVisible)
         _memberModelList.value = _memberModelList.value.getNewInstance()
     }
 
