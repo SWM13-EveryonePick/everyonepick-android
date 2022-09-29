@@ -15,7 +15,7 @@
     <string name="dialog_exit_group_album">단체공유앨범에서 나갑니다.</string>
     <string name="exit">나가기</string>
     <string name="tab_text_photo">사진</string>
-    <string name="tab_text_in_progress">합성중</string>
+    <string name="tab_text_pick">합성중</string>
     <string name="tab_text_complete">합성완료</string>
 
     <!--생성 플로우-->

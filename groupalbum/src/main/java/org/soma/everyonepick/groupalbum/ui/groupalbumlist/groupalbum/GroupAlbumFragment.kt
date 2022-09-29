@@ -103,7 +103,7 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             it.adapter = GroupAlbumViewPagerAdapter(this)
             it.setOnPageSelectedListener { position -> viewModel.setViewPagerPosition(position) }
         }
-        val tabItems = listOf(getString(R.string.tab_text_photo), getString(R.string.tab_text_in_progress), getString(R.string.tab_text_complete))
+        val tabItems = listOf(getString(R.string.tab_text_photo), getString(R.string.tab_text_pick), getString(R.string.tab_text_complete))
         TabLayoutMediator(binding.tablayout, binding.viewpager2) { tab, position ->
             tab.text = tabItems[position]
         }.attach()
