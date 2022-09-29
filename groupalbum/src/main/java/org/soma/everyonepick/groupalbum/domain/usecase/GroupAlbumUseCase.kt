@@ -4,7 +4,11 @@ import com.kakao.sdk.talk.model.Friend
 import okhttp3.MultipartBody
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.dto.PickRequest
+import org.soma.everyonepick.groupalbum.data.dto.PickResponse
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.entity.Pick
+import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
@@ -14,7 +18,8 @@ import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
 
 class GroupAlbumUseCase @Inject constructor(
-    private val groupAlbumService: GroupAlbumService
+    private val groupAlbumService: GroupAlbumService,
+    private val groupAlbumPickService: GroupAlbumPickService
 ) {
     suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
         val groupAlbumList = groupAlbumService.readGroupAlbumList(token).data.toMutableList()
@@ -73,5 +78,16 @@ class GroupAlbumUseCase @Inject constructor(
         photoIdList: PhotoIdListRequest
     ) {
         groupAlbumService.deletePhotoList(token, groupAlbumId, photoIdList)
+    }
+
+
+    /**
+     * GroupAlbum Pick Services
+     */
+    suspend fun createPick(
+        token: String,
+        pickRequest: PickRequest
+    ): Pick {
+        return groupAlbumPickService.createPick(token, pickRequest).data
     }
 }
