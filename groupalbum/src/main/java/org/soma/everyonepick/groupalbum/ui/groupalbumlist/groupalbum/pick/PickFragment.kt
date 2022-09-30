@@ -28,6 +28,14 @@ class PickFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.viewpager2.let {
+
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

@@ -8,13 +8,90 @@
         android:layout_height="match_parent">
 
         <org.soma.everyonepick.common_ui.CustomActionBar
+            android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hasBackButton="@{true}"
             app:layout_constraintTop_toTopOf="parent"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_pick"
+            android:textSize="16sp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:textColor="@color/subtext"
+            android:padding="@dimen/margin_side"
+            app:layout_constraintTop_toTopOf="@id/customactionbar"
+            app:layout_constraintBottom_toBottomOf="@id/customactionbar"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/title"
+            android:layout_margin="@dimen/margin_side"
+            app:text="@{@string/pick_best_photo}"
+            app:boldStart="@{0}"
+            app:boldEnd="@{10}"
+            app:layout_constraintTop_toBottomOf="@id/customactionbar"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_pickme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/pick_me"
+            android:textColor="@color/primary_blue"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/margin_side"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="4dp"
+            app:text="@{@string/picked_status}"
+            app:colorStart="@{11}"
+            app:colorEnd="@{12}"
+            app:color="@{@color/primary_blue}"
+            app:layout_constraintTop_toTopOf="@id/text_pickme"
+            app:layout_constraintStart_toEndOf="@id/text_pickme"
+            />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_complete"
+            />
+        
+        <org.soma.everyonepick.common_ui.CustomIndicator
+            android:id="@+id/customindicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/viewpager2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+        
+        <Button
+            android:id="@+id/button_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/complete_to_pick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/BottomButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
