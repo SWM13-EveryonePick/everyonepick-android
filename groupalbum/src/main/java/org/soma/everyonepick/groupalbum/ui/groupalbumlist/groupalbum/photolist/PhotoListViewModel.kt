@@ -79,7 +79,7 @@ class PhotoListViewModel @Inject constructor(
         _photoModelList.value = _photoModelList.value.map { it.copy() }.toMutableList()
     }
 
-    fun getCheckedPhotoUrlList() = photoModelList.value
+    fun getCheckedPhotoList() = photoModelList.value
         .filter { it.isChecked.value }
-        .map { it.photo.photoUrl }
+        .map { it.photo }
 }

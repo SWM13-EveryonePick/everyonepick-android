@@ -148,6 +148,9 @@
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragment"
         android:label="PickFragment">
         <argument
+            android:name="photoIdList"
+            app:argType="long[]"/>
+        <argument
             android:name="photoUrlList"
             app:argType="string[]"/>
         <argument

@@ -35,7 +35,7 @@ class PickFragment : Fragment() {
     ): View {
         _binding = FragmentPickBinding.inflate(inflater, container, false)
 
-        viewModel.setPhotoUrlList(args.photoUrlList.toList())
+        viewModel.setPhotoModelListByPhotoList(args.photoIdList.toList(), args.photoUrlList.toList())
 
         return binding.root
     }

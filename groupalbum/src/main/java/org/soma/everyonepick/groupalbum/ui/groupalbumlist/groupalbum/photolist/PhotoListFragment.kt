@@ -150,8 +150,10 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     private fun navigateToPickFragment() {
+        val checkedPhotoList = viewModel.getCheckedPhotoList()
         val directions = GroupAlbumFragmentDirections.toPickFragment(
-            viewModel.getCheckedPhotoUrlList().toTypedArray(),
+            checkedPhotoList.map { it.id }.toLongArray(),
+            checkedPhotoList.map { it.photoUrl }.toTypedArray(),
             PickFragmentType.TO_CREATE
         )
         findNavController().navigate(directions)

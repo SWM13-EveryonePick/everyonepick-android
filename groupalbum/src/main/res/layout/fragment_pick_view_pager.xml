@@ -14,7 +14,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        photoUrlList="@{viewModel.photoUrlList}"
+        photoModelList="@{viewModel.photoModelList}"
         index="@{index}"/>
 
 </layout>

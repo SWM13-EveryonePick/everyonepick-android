@@ -7,7 +7,7 @@ class PickViewPagerAdapter(
     fragment: Fragment,
     private val viewModel: PickViewModel
 ): FragmentStateAdapter(fragment) {
-    override fun getItemCount(): Int = viewModel.photoUrlList.value.size
+    override fun getItemCount(): Int = viewModel.photoModelList.value.size
 
     override fun createFragment(position: Int): Fragment {
         return PickViewPagerFragment(position, viewModel)
