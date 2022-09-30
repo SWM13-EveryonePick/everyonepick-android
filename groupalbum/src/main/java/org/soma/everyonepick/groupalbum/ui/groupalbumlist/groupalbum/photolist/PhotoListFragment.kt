@@ -33,6 +33,7 @@ import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import java.io.File
 import javax.inject.Inject
@@ -149,8 +150,10 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     private fun navigateToPickFragment() {
-        // TODO: Type + url list 전달
-        val directions = GroupAlbumFragmentDirections.toPickFragment()
+        val directions = GroupAlbumFragmentDirections.toPickFragment(
+            viewModel.getPhotoUrlList().toTypedArray(),
+            PickFragmentType.TO_CREATE
+        )
         findNavController().navigate(directions)
     }
 

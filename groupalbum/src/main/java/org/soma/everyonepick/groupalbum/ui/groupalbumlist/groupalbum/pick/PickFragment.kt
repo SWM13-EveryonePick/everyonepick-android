@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPickBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment
@@ -18,6 +19,7 @@ class PickFragment : Fragment() {
     private var _binding: FragmentPickBinding? = null
     private val binding get() = _binding!!
 
+    private val args: PickFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,3 +43,5 @@ class PickFragment : Fragment() {
         _binding = null
     }
 }
+
+enum class PickFragmentType { TO_CREATE, TO_SELECT }

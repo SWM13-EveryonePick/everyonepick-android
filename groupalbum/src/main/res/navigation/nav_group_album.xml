@@ -147,5 +147,11 @@
         android:id="@+id/pickFragment"
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragment"
         android:label="PickFragment">
+        <argument
+            android:name="urlList"
+            app:argType="string[]"/>
+        <argument
+            android:name="pickFragmentType"
+            app:argType="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType"/>
     </fragment>
 </navigation>
