@@ -49,6 +49,13 @@
             app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/InviteFriendFragment" />
+        <action
+            android:id="@+id/to_pickFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:destination="@id/pickFragment" />
     </fragment>
 
     <fragment
@@ -134,5 +141,11 @@
             app:exitAnim="@anim/stay_out"
             app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/pickFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragment"
+        android:label="PickFragment">
     </fragment>
 </navigation>

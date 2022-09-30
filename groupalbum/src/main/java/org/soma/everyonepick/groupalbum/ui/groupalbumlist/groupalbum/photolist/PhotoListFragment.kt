@@ -138,14 +138,20 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                     .setMessage(getString(R.string.dialog_synthetic))
                     .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.confirm))
                     .setOnClickPositiveButton {
-                        // TODO: 합성 플로우
+                        navigateToPickFragment()
                     }
                     .build().show()
                 dataStoreUseCase.editHasShownSyntheticDialog(true)
             } else {
-                // TODO: 합성 플로우
+                navigateToPickFragment()
             }
         }
+    }
+
+    private fun navigateToPickFragment() {
+        // TODO: Type + url list 전달
+        val directions = GroupAlbumFragmentDirections.toPickFragment()
+        findNavController().navigate(directions)
     }
 
     override fun onClickCancelButton() {
