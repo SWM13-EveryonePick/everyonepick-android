@@ -151,7 +151,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
     private fun navigateToPickFragment() {
         val directions = GroupAlbumFragmentDirections.toPickFragment(
-            viewModel.getPhotoUrlList().toTypedArray(),
+            viewModel.getCheckedPhotoUrlList().toTypedArray(),
             PickFragmentType.TO_CREATE
         )
         findNavController().navigate(directions)

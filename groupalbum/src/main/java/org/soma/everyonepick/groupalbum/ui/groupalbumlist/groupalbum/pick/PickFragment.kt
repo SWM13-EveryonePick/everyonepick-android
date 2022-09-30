@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPickBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment
@@ -34,7 +35,8 @@ class PickFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewpager2.let {
-
+            it.adapter = PickViewPagerAdapter(this, args.photoUrlList.toList())
+            binding.customindicator.setupViewPager2(it, it.currentItem)
         }
     }
 
