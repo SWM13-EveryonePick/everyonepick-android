@@ -10,6 +10,6 @@ class PickViewPagerAdapter(
     override fun getItemCount(): Int = viewModel.photoModelList.value.size
 
     override fun createFragment(position: Int): Fragment {
-        return PickViewPagerFragment(position, viewModel)
+        return PickViewPagerFragment(position, viewModel.photoModelList.value[position])
     }
 }
