@@ -4,13 +4,17 @@
 
     <data>
         <variable
-            name="photoUrl"
-            type="String" />
+            name="viewModel"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickViewModel" />
+        <variable
+            name="index"
+            type="Integer" />
     </data>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        photoUrl="@{photoUrl}"/>
+        photoUrlList="@{viewModel.photoUrlList}"
+        index="@{index}"/>
 
 </layout>

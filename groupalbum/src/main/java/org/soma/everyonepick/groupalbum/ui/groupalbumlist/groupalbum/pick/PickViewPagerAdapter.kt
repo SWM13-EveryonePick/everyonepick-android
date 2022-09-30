@@ -5,11 +5,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class PickViewPagerAdapter(
     fragment: Fragment,
-    private val photoUrlList: List<String>
+    private val viewModel: PickViewModel
 ): FragmentStateAdapter(fragment) {
-    override fun getItemCount(): Int = photoUrlList.size
+    override fun getItemCount(): Int = viewModel.photoUrlList.value.size
 
     override fun createFragment(position: Int): Fragment {
-        return ImageViewFragment(photoUrlList[position])
+        return PickViewPagerFragment(position, viewModel)
     }
 }

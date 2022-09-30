@@ -1,11 +1,16 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPickBinding
@@ -20,6 +25,8 @@ class PickFragment : Fragment() {
     private var _binding: FragmentPickBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: PickViewModel by viewModels()
+
     private val args: PickFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -28,6 +35,8 @@ class PickFragment : Fragment() {
     ): View {
         _binding = FragmentPickBinding.inflate(inflater, container, false)
 
+        viewModel.setPhotoUrlList(args.photoUrlList.toList())
+
         return binding.root
     }
 
@@ -35,7 +44,7 @@ class PickFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewpager2.let {
-            it.adapter = PickViewPagerAdapter(this, args.photoUrlList.toList())
+            it.adapter = PickViewPagerAdapter(this, viewModel)
             binding.customindicator.setupViewPager2(it, it.currentItem)
         }
     }
