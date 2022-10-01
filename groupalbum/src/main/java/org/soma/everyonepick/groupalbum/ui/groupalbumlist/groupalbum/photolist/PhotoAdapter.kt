@@ -53,7 +53,7 @@ class PhotoAdapter(
     }
 }
 
-private class PhotoDiffCallback: DiffUtil.ItemCallback<PhotoModel>() {
+class PhotoDiffCallback: DiffUtil.ItemCallback<PhotoModel>() {
     override fun areItemsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
         return oldItem.photo.id == newItem.photo.id
     }

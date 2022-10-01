@@ -17,8 +17,9 @@ import org.soma.everyonepick.groupalbum.databinding.FragmentPickBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragment
 
 /**
- * 마음에 드는 사진을 선택하는 프래그먼트입니다. 진입점은, [PhotoListFragment]에서 여러 사진을 선택하여 합성 작업을 시작하는
- * 시점과, 합성중 탭에서 내가 Pick하지 않은 사진을 눌렀을 때입니다. TODO: Type 관련 주석
+ * 마음에 드는 사진을 선택하는 프래그먼트입니다. 이 프래그먼트는 [PhotoListFragment]에서 여러 사진을 선택하여 합성 작업을
+ * 시작하 시점과, 합성중 탭에서 내가 Pick하지 않은 사진을 눌렀을 때 실행되며, [PickFragmentType]로 구분하여 각기 다른
+ * 작업을 수행합니다.
  */
 class PickFragment : Fragment() {
 
@@ -33,20 +34,15 @@ class PickFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPickBinding.inflate(inflater, container, false)
+        _binding = FragmentPickBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.adapter = PickPhotoAdapter()
+        }
 
         viewModel.setPhotoModelListByPhotoList(args.photoIdList.toList(), args.photoUrlList.toList())
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.viewpager2.let {
-            it.adapter = PickViewPagerAdapter(this, viewModel)
-            binding.customindicator.setupViewPager2(it, it.currentItem)
-        }
     }
 
     override fun onDestroy() {
