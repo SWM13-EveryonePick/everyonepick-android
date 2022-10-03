@@ -1,10 +1,30 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.timeout
 
+import android.content.Context
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.dto.PickRequest
+import org.soma.everyonepick.groupalbum.data.entity.PhotoId
+import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
+import javax.inject.Inject
 
-class TimeoutViewModel: ViewModel() {
+@HiltViewModel
+class TimeoutViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    @ApplicationContext private val context: Context,
+    private val dataStoreUseCase: DataStoreUseCase,
+    private val groupAlbumUseCase: GroupAlbumUseCase
+): ViewModel() {
     private val _hour = MutableStateFlow(0)
     private val _min1 = MutableStateFlow(0)
     val min1: StateFlow<Int> = _min1
@@ -15,6 +35,9 @@ class TimeoutViewModel: ViewModel() {
      */
     private val _filledEditText = MutableStateFlow(0)
     val filledEditText: StateFlow<Int> = _filledEditText
+
+    private val _toastMessage = MutableStateFlow("")
+    val toastMessage: StateFlow<String> = _toastMessage
 
     fun setHour(hour: Int) {
         _hour.value = hour
@@ -36,5 +59,27 @@ class TimeoutViewModel: ViewModel() {
         _filledEditText.value -= 1
     }
 
-    fun calculateTimeoutAsMin() = _hour.value*60 + _min1.value*10 + _min2.value
+    fun createPick(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val groupAlbumId = savedStateHandle.get<Long>("groupAlbumId")?: -1
+                groupAlbumUseCase.createPick(token, groupAlbumId, createPickRequest())
+
+                onSuccess.invoke()
+            } catch (e: Exception) {
+                _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick)
+            }
+        }
+    }
+
+    private fun createPickRequest(): PickRequest {
+        val selectedPhotoIdList = savedStateHandle.get<LongArray>("selectedPhotoIdList")?: longArrayOf()
+        return PickRequest(
+            calculateTimeoutAsMin(),
+            selectedPhotoIdList.map { PhotoId(it) }
+        )
+    }
+
+    private fun calculateTimeoutAsMin() = (_hour.value*60 + _min1.value*10 + _min2.value).toLong()
 }

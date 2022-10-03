@@ -9,13 +9,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.soma.everyonepick.common_ui.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentTimeoutBinding
 
+@AndroidEntryPoint
 class TimeoutFragment : Fragment(), TimeoutFragmentListener {
 
     private var _binding: FragmentTimeoutBinding? = null
@@ -39,6 +44,14 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
     }
 
     private fun subscribeUi() {
+        lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         binding.edittextHour.addTextChangedListener {
             if (it?.length == 1) {
                 viewModel.setHour(it.toString().toInt())
@@ -85,10 +98,12 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
         if (viewModel.min1.value >= 6) {
             Toast.makeText(requireContext(), getString(R.string.toast_min_error), Toast.LENGTH_SHORT).show()
         } else {
-            // TODO: 사진선택 생성 API with viewModel.calculateTimeoutAsMin() -> 사진 '선택' API -> navigate
-            val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
-            findNavController().navigate(directions)
-            Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
+            viewModel.createPick {
+                // TODO: 사진 '선택' API -> navigate
+                val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
+                findNavController().navigate(directions)
+                Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

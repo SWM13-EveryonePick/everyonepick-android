@@ -88,8 +88,9 @@ class GroupAlbumUseCase @Inject constructor(
      */
     suspend fun createPick(
         token: String,
+        groupAlbumId: Long,
         pickRequest: PickRequest
     ): Pick {
-        return groupAlbumPickService.createPick(token, pickRequest).data
+        return groupAlbumPickService.createPick(token, groupAlbumId, pickRequest).data
     }
 }
