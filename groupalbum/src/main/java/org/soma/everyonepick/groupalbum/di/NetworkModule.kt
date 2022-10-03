@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
@@ -31,5 +32,11 @@ class NetworkModule {
     @Provides
     fun provideGroupAlbumPickService(retrofit: Retrofit): GroupAlbumPickService {
         return retrofit.create(GroupAlbumPickService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGroupAlbumPhotoService(retrofit: Retrofit): GroupAlbumPhotoService {
+        return retrofit.create(GroupAlbumPhotoService::class.java)
     }
 }
