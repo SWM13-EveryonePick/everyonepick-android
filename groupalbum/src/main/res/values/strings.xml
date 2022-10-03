@@ -75,5 +75,5 @@
     <string name="pick_best_photo">본인이 잘나온 사진을\n선택해주세요!</string>
     <string name="pick_me">Pick me! 마음에 드는 사진</string>
     <string name="picked_status">마음에 드는 사진 (%d/5)</string>
-    <string name="complete_to_pick">선택완료</string>
+    <string name="pick_complete">선택완료</string>
 </resources>

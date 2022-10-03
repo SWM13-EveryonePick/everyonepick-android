@@ -22,7 +22,7 @@ import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.P
  * 시작하 시점과, 합성중 탭에서 내가 Pick하지 않은 사진을 눌렀을 때 실행되며, [PickFragmentType]로 구분하여 각기 다른
  * 작업을 수행합니다.
  */
-class PickFragment : Fragment() {
+class PickFragment : Fragment(), PickFragmentListener {
 
     private var _binding: FragmentPickBinding? = null
     private val binding get() = _binding!!
@@ -51,6 +51,34 @@ class PickFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    /** [PickFragmentListener] */
+    override fun onClickNoPickButton() {
+        when (args.pickFragmentType) {
+            PickFragmentType.TO_CREATE -> navigateToTimeout()
+            else -> {
+                // TODO: 노선택 API 호출
+            }
+        }
+    }
+
+    override fun onClickPickCompleteButton() {
+        when (args.pickFragmentType) {
+            PickFragmentType.TO_CREATE -> navigateToTimeout()
+            else -> {
+                // TODO: 선택 API 호출
+            }
+        }
+    }
+
+    private fun navigateToTimeout() {
+        // TODO: 선택 정보 args로 전달 + Navigate
+    }
 }
 
 enum class PickFragmentType { TO_CREATE, TO_SELECT }
+
+interface PickFragmentListener {
+    fun onClickNoPickButton()
+    fun onClickPickCompleteButton()
+}

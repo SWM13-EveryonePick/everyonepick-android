@@ -10,6 +10,9 @@
         <variable
             name="adapter"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickPhotoAdapter" />
+        <variable
+            name="listener"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +36,7 @@
             android:clickable="true"
             android:textColor="@color/subtext"
             android:padding="@dimen/margin_side"
+            android:onClick="@{() -> listener.onClickNoPickButton()}"
             app:layout_constraintTop_toTopOf="@id/customactionbar"
             app:layout_constraintBottom_toBottomOf="@id/customactionbar"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -97,7 +101,9 @@
             android:id="@+id/button_complete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/complete_to_pick"
+            android:text="@string/pick_complete"
+            android:enabled="@{viewModel.checked > 0}"
+            android:onClick="@{() -> listener.onClickPickCompleteButton()}"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/BottomButton"/>
 
