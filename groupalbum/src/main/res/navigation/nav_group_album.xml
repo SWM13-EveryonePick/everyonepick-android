@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/parentPermissionFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ParentPermissionFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ParentPermissionFragment"
         tools:layout="@layout/fragment_parent_permission">
         <action
             android:id="@+id/to_imagePickerFragment"
@@ -70,12 +70,12 @@
 
     <fragment
         android:id="@+id/imagePickerFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ImagePickerFragment"
         tools:layout="@layout/fragment_image_picker"/>
 
     <fragment
         android:id="@+id/photoFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photo.PhotoFragment"
         tools:layout="@layout/fragment_photo">
         <argument
             android:name="groupAlbumId"

@@ -1,6 +1,5 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photo
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

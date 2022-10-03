@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker
+package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker
 
 import android.annotation.SuppressLint
 import android.content.Context

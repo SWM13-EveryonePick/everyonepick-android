@@ -7,16 +7,16 @@
         <import type="android.widget.LinearLayout.LayoutParams" />
         <variable
             name="listener"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragmentListener" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photo.PhotoFragmentListener" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photo.PhotoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.photo.PhotoFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

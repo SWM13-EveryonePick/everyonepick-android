@@ -1,12 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
-import android.content.ContentResolver
-import android.content.Context
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +26,7 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ImagePickerFragment
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import java.io.File
