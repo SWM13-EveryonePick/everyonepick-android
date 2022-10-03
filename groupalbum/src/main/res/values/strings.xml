@@ -82,5 +82,7 @@
     <string name="what_is_timeout">타임아웃이 무엇인가요?</string>
     <string name="hour">시간</string>
     <string name="min">분</string>
+    <string name="toast_min_error">0~59분까지만 입력할 수 있어요!</string>
+    <string name="toast_create_pick_success">사진선택 작업을 등록하는 데 성공했어요!</string>
 
 </resources>

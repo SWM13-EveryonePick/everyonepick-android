@@ -75,7 +75,7 @@ class PickFragment : Fragment(), PickFragmentListener {
 
     private fun navigateToTimeout() {
         val selectedPhotoIdList = viewModel.getSelectedPhotoIdList().toLongArray()
-        val directions = PickFragmentDirections.toTimeoutFragment(selectedPhotoIdList)
+        val directions = PickFragmentDirections.toTimeoutFragment(args.groupAlbumId, selectedPhotoIdList)
         findNavController().navigate(directions)
     }
 }

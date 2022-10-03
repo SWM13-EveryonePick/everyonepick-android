@@ -148,6 +148,9 @@
         android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragment"
         android:label="PickFragment">
         <argument
+            android:name="groupAlbumId"
+            app:argType="long"/>
+        <argument
             android:name="photoIdList"
             app:argType="long[]"/>
         <argument
@@ -171,7 +174,13 @@
         android:label="fragment_timeout"
         tools:layout="@layout/fragment_timeout">
         <argument
+            android:name="groupAlbumId"
+            app:argType="long"/>
+        <argument
             android:name="selectedPhotoIdList"
             app:argType="long[]"/>
+        <action
+            android:id="@+id/to_groupAlbumFragment"
+            app:destination="@id/groupAlbumFragment" />
     </fragment>
 </navigation>

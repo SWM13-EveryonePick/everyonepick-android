@@ -129,9 +129,4 @@ fun applyNextFocusEditText(view: EditText, nextFocusEditTextId: Int) {
             nextFocusEditText.requestFocus()
         }
     }
-    nextFocusEditText.addTextChangedListener {
-        if (it?.length == 0) {
-            view.requestFocus()
-        }
-    }
 }
