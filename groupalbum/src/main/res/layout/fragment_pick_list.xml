@@ -28,113 +28,143 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/text_uncompleted_pick_title"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_uncompleted_pick"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/uncompleted_pick_title"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/primary_blue"
-                    android:layout_margin="@dimen/margin_side"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_ico_like"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toEndOf="@id/text_uncompleted_pick_title"
-                    app:layout_constraintTop_toTopOf="@id/text_uncompleted_pick_title"
-                    app:layout_constraintBottom_toBottomOf="@id/text_uncompleted_pick_title"
-                    />
-
-                <TextView
-                    android:id="@+id/text_uncompleted_pick_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/uncompleted_pick_description"
-                    android:textColor="@color/title"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@id/text_uncompleted_pick_title"
-                    app:layout_constraintStart_toStartOf="@id/text_uncompleted_pick_title"
-                    />
-                
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_uncompleted_pick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:layout_marginTop="16dp"
-                    android:paddingBottom="36dp"
-                    android:background="@drawable/border_bottom"
-                    app:layout_constraintTop_toBottomOf="@id/text_uncompleted_pick_description"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:listitem="@layout/item_pick"
-                    adapter="@{uncompletedAdapter}"
-                    submitList="@{viewModel.uncompletedPickModelList}"
-                    />
-
-                <TextView
-                    android:id="@+id/text_completed_pick_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/title"
-                    android:layout_marginTop="36dp"
-                    android:layout_marginStart="@dimen/margin_side"
-                    text="@{@string/completed_pick_title}"
-                    colorStart="@{4}"
-                    colorEnd="@{8}"
-                    color="@{@color/primary_blue}"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerview_uncompleted_pick"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="@string/completed_pick_title"
-                    />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_ico_time"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toEndOf="@id/text_completed_pick_title"
-                    app:layout_constraintTop_toTopOf="@id/text_completed_pick_title"
-                    app:layout_constraintBottom_toBottomOf="@id/text_completed_pick_title"
-                    />
-
-                <TextView
-                    android:id="@+id/text_completed_pick_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/completed_pick_description"
-                    android:textColor="@color/title"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@id/text_completed_pick_title"
-                    app:layout_constraintStart_toStartOf="@id/text_completed_pick_title"
-                    />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_completed_pick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:layout_marginTop="16dp"
+                    android:paddingTop="@dimen/margin_side"
                     android:paddingBottom="@dimen/margin_side"
-                    app:layout_constraintTop_toBottomOf="@id/text_completed_pick_description"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:listitem="@layout/item_pick"
-                    adapter="@{completedAdapter}"
-                    submitList="@{viewModel.completedPickModelList}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    visibleWhen="@{viewModel.uncompletedPickModelList.size() > 0}"
+                    >
+
+                    <TextView
+                        android:id="@+id/text_uncompleted_pick_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/uncompleted_pick_title"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue"
+                        android:layout_marginStart="@dimen/margin_side"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_ico_like"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/text_uncompleted_pick_title"
+                        app:layout_constraintTop_toTopOf="@id/text_uncompleted_pick_title"
+                        app:layout_constraintBottom_toBottomOf="@id/text_uncompleted_pick_title"
+                        />
+
+                    <TextView
+                        android:id="@+id/text_uncompleted_pick_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/uncompleted_pick_description"
+                        android:textColor="@color/title"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_uncompleted_pick_title"
+                        app:layout_constraintStart_toStartOf="@id/text_uncompleted_pick_title"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_uncompleted_pick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_uncompleted_pick_description"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="3"
+                        tools:listitem="@layout/item_pick"
+                        adapter="@{uncompletedAdapter}"
+                        submitList="@{viewModel.uncompletedPickModelList}"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="@dimen/margin_side"
+                    android:layout_marginEnd="@dimen/margin_side"
+                    android:background="@drawable/border_bottom"
+                    visibleWhen="@{viewModel.uncompletedPickModelList.size() > 0 &amp;&amp; viewModel.completedPickModelList.size() > 0}"
+                    app:layout_constraintTop_toBottomOf="@id/layout_uncompleted_pick"
                     />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_side"
+                    android:paddingBottom="@dimen/margin_side"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider"
+                    visibleWhen="@{viewModel.completedPickModelList.size() > 0}"
+                    >
+
+                    <TextView
+                        android:id="@+id/text_completed_pick_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/title"
+                        android:layout_marginStart="@dimen/margin_side"
+                        text="@{@string/completed_pick_title}"
+                        colorStart="@{4}"
+                        colorEnd="@{8}"
+                        color="@{@color/primary_blue}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="@string/completed_pick_title"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_ico_time"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/text_completed_pick_title"
+                        app:layout_constraintTop_toTopOf="@id/text_completed_pick_title"
+                        app:layout_constraintBottom_toBottomOf="@id/text_completed_pick_title"
+                        />
+
+                    <TextView
+                        android:id="@+id/text_completed_pick_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/completed_pick_description"
+                        android:textColor="@color/title"
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_completed_pick_title"
+                        app:layout_constraintStart_toStartOf="@id/text_completed_pick_title"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_completed_pick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/text_completed_pick_description"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="3"
+                        tools:listitem="@layout/item_pick"
+                        adapter="@{completedAdapter}"
+                        submitList="@{viewModel.completedPickModelList}"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
