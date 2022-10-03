@@ -116,6 +116,23 @@
                     app:layout_constraintStart_toStartOf="@id/text_completed_pick_title"
                     />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_completed_pick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:layout_marginTop="16dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/text_completed_pick_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="3"
+                    tools:listitem="@layout/item_pick"
+                    adapter="@{adapter}"
+                    submitList="@{viewModel.pickModelList}"
+                    />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
