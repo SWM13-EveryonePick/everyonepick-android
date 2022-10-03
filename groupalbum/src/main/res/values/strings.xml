@@ -76,6 +76,11 @@
     <string name="pick_me">Pick me! 마음에 드는 사진</string>
     <string name="picked_status">마음에 드는 사진 (%d/5)</string>
     <string name="pick_complete">선택완료</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--타임아웃-->
+    <string name="set_timeout">타임아웃을\n설정해주세요!</string>
+    <string name="what_is_timeout">타임아웃이 무엇인가요?</string>
+    <string name="hour">시간</string>
+    <string name="min">분</string>
+
 </resources>

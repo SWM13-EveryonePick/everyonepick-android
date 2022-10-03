@@ -10,9 +10,12 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedDispatcherOwner
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -116,4 +119,19 @@ fun setTextViewBoldAndColorWithRange(view: TextView, text: String, boldColorStar
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     view.text = spannable
+}
+
+@BindingAdapter("nextFocusEditText")
+fun applyNextFocusEditText(view: EditText, nextFocusEditTextId: Int) {
+    val nextFocusEditText = (view.parent as ViewGroup).findViewById<EditText>(nextFocusEditTextId)
+    view.addTextChangedListener {
+        if (it?.length == 1) {
+            nextFocusEditText.requestFocus()
+        }
+    }
+    nextFocusEditText.addTextChangedListener {
+        if (it?.length == 0) {
+            view.requestFocus()
+        }
+    }
 }

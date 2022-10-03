@@ -53,7 +53,8 @@
             app:boldStart="@{0}"
             app:boldEnd="@{10}"
             app:layout_constraintTop_toBottomOf="@id/customactionbar"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/pick_best_photo"/>
 
         <TextView
             android:id="@+id/text_pickme"
@@ -68,6 +69,7 @@
             color="@{@color/primary_blue}"
             app:layout_constraintTop_toBottomOf="@id/text_title"
             app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/pick_me"
             />
 
         <TextView
@@ -81,6 +83,7 @@
             app:color="@{viewModel.checked &lt;= 5? @color/primary_blue: @color/light_red}"
             app:layout_constraintTop_toTopOf="@id/text_pickme"
             app:layout_constraintStart_toEndOf="@id/text_pickme"
+            tools:text="(1/5)"
             />
 
         <androidx.recyclerview.widget.RecyclerView
