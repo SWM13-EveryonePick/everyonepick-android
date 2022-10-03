@@ -13,16 +13,19 @@ import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
+import org.soma.everyonepick.groupalbum.domain.model.PickModel
 import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
+import org.soma.everyonepick.groupalbum.domain.translator.PickTranslator.Companion.toPickModelList
 import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
 
 class GroupAlbumUseCase @Inject constructor(
     private val groupAlbumService: GroupAlbumService,
-    private val groupAlbumPickService: GroupAlbumPickService,
-    private val groupAlbumPhotoService: GroupAlbumPhotoService
+    private val groupAlbumPhotoService: GroupAlbumPhotoService,
+    private val groupAlbumPickService: GroupAlbumPickService
 ) {
+    /** [GroupAlbumService] */
     suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
         val groupAlbumList = groupAlbumService.readGroupAlbumList(token).data.toMutableList()
         return groupAlbumList.toGroupAlbumModelList()
@@ -58,6 +61,8 @@ class GroupAlbumUseCase @Inject constructor(
         return groupAlbumService.leaveGroupAlbum(token, id).data
     }
 
+
+    /** [GroupAlbumPhotoService] */
     suspend fun readPhotoList(token: String, id: Long): MutableList<PhotoModel> {
         // 가장 최근 사진이 위에 있어야 하므로 데이터를 뒤집어야 합니다.
         // 단, Pagination이 구현될 경우 데이터가 처음부터 적절한 순서로 배치되므로 reversed()를 삭제해야 합니다.
@@ -83,9 +88,12 @@ class GroupAlbumUseCase @Inject constructor(
     }
 
 
-    /**
-     * GroupAlbum Pick Services
-     */
+    /** [GroupAlbumPickService] */
+    suspend fun readPickList(token: String, groupAlbumId: Long): MutableList<PickModel> {
+        val pickList = groupAlbumPickService.readPickList(token, groupAlbumId).data
+        return pickList.toPickModelList().toMutableList()
+    }
+
     suspend fun createPick(
         token: String,
         groupAlbumId: Long,

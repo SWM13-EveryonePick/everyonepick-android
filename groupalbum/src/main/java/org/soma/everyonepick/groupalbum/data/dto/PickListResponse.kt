@@ -2,8 +2,8 @@ package org.soma.everyonepick.groupalbum.data.dto
 
 import org.soma.everyonepick.groupalbum.data.entity.Pick
 
-data class PickResponse(
+data class PickListResponse(
     val message: String,
-    val data: Pick,
+    val data: List<Pick>,
     val timestamp: Long
 )

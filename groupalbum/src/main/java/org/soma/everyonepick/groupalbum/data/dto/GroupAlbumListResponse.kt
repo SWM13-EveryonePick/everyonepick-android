@@ -6,5 +6,5 @@ import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 data class GroupAlbumListResponse(
     val message: String,
     val data: List<GroupAlbum>,
-    val timestamp: String
+    val timestamp: Long
 )

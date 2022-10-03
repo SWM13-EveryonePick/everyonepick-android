@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.R
@@ -48,6 +50,14 @@ class PickListFragment : Fragment() {
                     parentViewModel.groupAlbum.collect {
                         if (it.id != null && it.id != GroupAlbum.dummyData.id)
                             viewModel.readPickModelList(it.id)
+                    }
+                }
+
+                launch {
+                    viewModel.toastMessage.collectLatest {
+                        if (it.isNotEmpty()) {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }

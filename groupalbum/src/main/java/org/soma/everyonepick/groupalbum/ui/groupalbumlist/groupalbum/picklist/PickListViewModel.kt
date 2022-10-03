@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
@@ -29,7 +30,8 @@ class PickListViewModel @Inject constructor(
     fun readPickModelList(groupAlbumId: Long) {
         viewModelScope.launch {
             try {
-                _pickModelList.value = mutableListOf(PickModel(0, false, "http://k.kakaocdn.net/dn/bh32Ln/btrwA0gpWIl/7yGKKShKzEterVMnCKCmD0/img_110x110.jpg"))
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                _pickModelList.value = groupAlbumUseCase.readPickList(token, groupAlbumId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick)
             }
