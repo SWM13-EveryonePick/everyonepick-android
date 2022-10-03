@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.PagerSnapHelper
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
@@ -39,6 +40,7 @@ class PickFragment : Fragment() {
             it.viewModel = viewModel
             it.adapter = PickPhotoAdapter()
         }
+        PagerSnapHelper().attachToRecyclerView(binding.recyclerviewPickphoto)
 
         viewModel.setPhotoModelListByPhotoList(args.photoIdList.toList(), args.photoUrlList.toList())
 
