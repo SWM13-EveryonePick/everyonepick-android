@@ -57,19 +57,19 @@
             tools:text="@string/pick_best_photo"/>
 
         <TextView
-            android:id="@+id/text_pickme"
+            android:id="@+id/text_pickmeprefix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
             android:layout_marginStart="@dimen/margin_side"
-            text="@{@string/pick_me}"
+            text="@{@string/pick_me_prefix}"
             colorStart="@{0}"
             colorEnd="@{8}"
             color="@{@color/primary_blue}"
             app:layout_constraintTop_toBottomOf="@id/text_title"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="@string/pick_me"
+            tools:text="@string/pick_me_prefix"
             />
 
         <TextView
@@ -81,8 +81,8 @@
             app:text="@{Integer.toString(viewModel.checked)}"
             app:suffix="@{`/5)`}"
             app:color="@{viewModel.checked &lt;= 5? @color/primary_blue: @color/light_red}"
-            app:layout_constraintTop_toTopOf="@id/text_pickme"
-            app:layout_constraintStart_toEndOf="@id/text_pickme"
+            app:layout_constraintTop_toTopOf="@id/text_pickmeprefix"
+            app:layout_constraintStart_toEndOf="@id/text_pickmeprefix"
             tools:text="(1/5)"
             />
 
@@ -93,7 +93,7 @@
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toBottomOf="@id/text_pickme"
+            app:layout_constraintTop_toBottomOf="@id/text_pickmeprefix"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             adapter="@{adapter}"
             submitList="@{viewModel.photoModelList}"
