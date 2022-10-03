@@ -91,7 +91,7 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
 
     /** [TimeoutFragmentListener] */
     override fun onClickWhatItTimeoutButton() {
-
+        // TODO
     }
 
     override fun onClickConfirmButton() {

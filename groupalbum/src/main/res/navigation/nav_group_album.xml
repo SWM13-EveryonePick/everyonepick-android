@@ -181,6 +181,8 @@
             app:argType="long[]"/>
         <action
             android:id="@+id/to_groupAlbumFragment"
+            app:popUpTo="@id/groupAlbumFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/groupAlbumFragment" />
     </fragment>
 </navigation>
