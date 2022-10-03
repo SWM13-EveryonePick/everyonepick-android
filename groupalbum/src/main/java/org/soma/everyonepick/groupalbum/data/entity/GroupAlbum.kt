@@ -17,4 +17,8 @@ data class GroupAlbum(
             user?.let { MemberModel(user, MutableStateFlow(false), isCheckboxVisible = false) }
         }?.toMutableList() as MutableList<MemberModel>
     )
+
+    companion object {
+        val dummyData = GroupAlbum(-1, "", -1, listOf(), 0)
+    }
 }

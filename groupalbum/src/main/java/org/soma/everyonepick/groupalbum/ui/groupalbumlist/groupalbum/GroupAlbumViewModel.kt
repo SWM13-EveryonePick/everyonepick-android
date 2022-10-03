@@ -42,7 +42,7 @@ class GroupAlbumViewModel @Inject constructor(
         if (it != null) emit(userUseCase.readUser(it))
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), User.dummyData)
 
-    private val _groupAlbum = MutableStateFlow(GroupAlbum(-1, "", -1, listOf(), 0))
+    private val _groupAlbum = MutableStateFlow(GroupAlbum.dummyData)
     val groupAlbum: StateFlow<GroupAlbum> = _groupAlbum
 
     private val _memberModelList = MutableStateFlow(MemberModelList())

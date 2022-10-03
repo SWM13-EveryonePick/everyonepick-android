@@ -23,6 +23,7 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
@@ -72,7 +73,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
                 launch {
                     parentViewModel.groupAlbum.collect {
-                        if (it.id != null && it.id != User.dummyData.id) viewModel.readPhotoModelList(it.id)
+                        if (it.id != null && it.id != GroupAlbum.dummyData.id)
+                            viewModel.readPhotoModelList(it.id)
                     }
                 }
 
