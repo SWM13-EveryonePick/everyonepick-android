@@ -43,4 +43,8 @@ class PickViewModel: ViewModel() {
         photoIdList: List<Long>,
         photoUrlList: List<String>
     ) = photoIdList.mapIndexed { index, l -> Photo(l, photoUrlList[index]) }
+
+    fun getSelectedPhotoIdList() = _photoModelList.value
+        .filter { it.isChecked.value }
+        .map { it.photo.id }
 }

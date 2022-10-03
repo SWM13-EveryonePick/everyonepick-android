@@ -156,5 +156,22 @@
         <argument
             android:name="pickFragmentType"
             app:argType="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType"/>
+        <action
+            android:id="@+id/to_timeoutFragment"
+            app:destination="@id/timeoutFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/timeoutFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.timeout.TimeoutFragment"
+        android:label="fragment_timeout"
+        tools:layout="@layout/fragment_timeout">
+        <argument
+            android:name="selectedPhotoIdList"
+            app:argType="long[]"/>
     </fragment>
 </navigation>

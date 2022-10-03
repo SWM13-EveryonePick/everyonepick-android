@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.PagerSnapHelper
 import kotlinx.coroutines.flow.collectLatest
@@ -39,6 +40,7 @@ class PickFragment : Fragment(), PickFragmentListener {
             it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.adapter = PickPhotoAdapter()
+            it.listener = this
         }
         PagerSnapHelper().attachToRecyclerView(binding.recyclerviewPickphoto)
 
@@ -72,7 +74,9 @@ class PickFragment : Fragment(), PickFragmentListener {
     }
 
     private fun navigateToTimeout() {
-        // TODO: 선택 정보 args로 전달 + Navigate
+        val selectedPhotoIdList = viewModel.getSelectedPhotoIdList().toLongArray()
+        val directions = PickFragmentDirections.toTimeoutFragment(selectedPhotoIdList)
+        findNavController().navigate(directions)
     }
 }
 
