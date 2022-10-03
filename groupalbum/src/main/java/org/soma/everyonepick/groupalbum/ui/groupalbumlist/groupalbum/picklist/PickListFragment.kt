@@ -34,7 +34,8 @@ class PickListFragment : Fragment() {
     ): View {
         _binding = FragmentPickListBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
-            it.adapter = PickAdapter()
+            it.uncompletedAdapter = PickAdapter()
+            it.completedAdapter = PickAdapter()
             it.viewModel = viewModel
         }
 

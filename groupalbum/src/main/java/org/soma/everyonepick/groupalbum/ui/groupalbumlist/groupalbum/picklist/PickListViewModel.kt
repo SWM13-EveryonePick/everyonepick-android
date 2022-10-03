@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
@@ -21,11 +19,29 @@ class PickListViewModel @Inject constructor(
     private val groupAlbumUseCase: GroupAlbumUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ): ViewModel() {
+    /**
+     * [_pickModelList]에서 각각 아이템을 [PickModel.isDone]을 기준으로 나누어 각각 [_completedPickModelList],
+     * [_uncompletedPickModelList]로 흘려보냅니다.
+     */
     private val _pickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
-    val pickModelList: StateFlow<MutableList<PickModel>> = _pickModelList
+
+    private val _completedPickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
+    val completedPickModelList: StateFlow<MutableList<PickModel>> = _completedPickModelList
+
+    private val _uncompletedPickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
+    val uncompletedPickModelList: StateFlow<MutableList<PickModel>> = _uncompletedPickModelList
 
     private val _toastMessage = MutableStateFlow("")
     val toastMessage: StateFlow<String> = _toastMessage
+
+    init {
+        viewModelScope.launch {
+            _pickModelList.collectLatest { pickModelList ->
+                _completedPickModelList.value = pickModelList.filter { it.isDone }.toMutableList()
+                _uncompletedPickModelList.value = pickModelList.filter { !it.isDone }.toMutableList()
+            }
+        }
+    }
 
     fun readPickModelList(groupAlbumId: Long) {
         viewModelScope.launch {

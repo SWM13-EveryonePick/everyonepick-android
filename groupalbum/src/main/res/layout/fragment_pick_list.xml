@@ -5,7 +5,10 @@
 
     <data>
         <variable
-            name="adapter"
+            name="uncompletedAdapter"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.picklist.PickAdapter" />
+        <variable
+            name="completedAdapter"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.picklist.PickAdapter" />
         <variable
             name="viewModel"
@@ -30,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/uncompleted_pick_title"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/primary_blue"
                     android:layout_margin="@dimen/margin_side"
@@ -73,8 +76,8 @@
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
                     tools:listitem="@layout/item_pick"
-                    adapter="@{adapter}"
-                    submitList="@{viewModel.pickModelList}"
+                    adapter="@{uncompletedAdapter}"
+                    submitList="@{viewModel.uncompletedPickModelList}"
                     />
 
                 <TextView
@@ -129,8 +132,8 @@
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
                     tools:listitem="@layout/item_pick"
-                    adapter="@{adapter}"
-                    submitList="@{viewModel.pickModelList}"
+                    adapter="@{completedAdapter}"
+                    submitList="@{viewModel.completedPickModelList}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
