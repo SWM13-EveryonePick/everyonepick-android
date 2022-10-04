@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.entity.PickDetail
 import org.soma.everyonepick.groupalbum.domain.model.PickModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -48,6 +49,18 @@ class PickListViewModel @Inject constructor(
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 _pickModelList.value = groupAlbumUseCase.readPickList(token, groupAlbumId)
+            } catch (e: Exception) {
+                _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick)
+            }
+        }
+    }
+
+    fun readPickDetail(groupAlbumId: Long, pickId: Long, onSuccess: (PickDetail) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val pickDetail = groupAlbumUseCase.readPickDetail(token, groupAlbumId, pickId)
+                onSuccess.invoke(pickDetail)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick)
             }

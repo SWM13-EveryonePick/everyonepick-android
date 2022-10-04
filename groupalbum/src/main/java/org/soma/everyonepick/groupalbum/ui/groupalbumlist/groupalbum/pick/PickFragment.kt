@@ -60,6 +60,7 @@ class PickFragment : Fragment(), PickFragmentListener {
             PickFragmentType.TO_CREATE -> navigateToTimeout()
             else -> {
                 // TODO: 노선택 API 호출
+                findNavController().navigateUp()
             }
         }
     }
@@ -69,6 +70,7 @@ class PickFragment : Fragment(), PickFragmentListener {
             PickFragmentType.TO_CREATE -> navigateToTimeout()
             else -> {
                 // TODO: 선택 API 호출
+                findNavController().navigateUp()
             }
         }
     }

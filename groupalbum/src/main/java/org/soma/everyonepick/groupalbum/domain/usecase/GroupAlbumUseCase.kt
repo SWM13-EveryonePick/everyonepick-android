@@ -8,6 +8,7 @@ import org.soma.everyonepick.groupalbum.data.dto.PickRequest
 import org.soma.everyonepick.groupalbum.data.dto.PickResponse
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.Pick
+import org.soma.everyonepick.groupalbum.data.entity.PickDetail
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
@@ -92,6 +93,10 @@ class GroupAlbumUseCase @Inject constructor(
     suspend fun readPickList(token: String, groupAlbumId: Long): MutableList<PickModel> {
         val pickList = groupAlbumPickService.readPickList(token, groupAlbumId).data
         return pickList.toPickModelList().toMutableList()
+    }
+
+    suspend fun readPickDetail(token: String, groupAlbumId: Long, pickId: Long): PickDetail {
+        return groupAlbumPickService.readPick(token, groupAlbumId, pickId).data
     }
 
     suspend fun createPick(

@@ -2,6 +2,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.picklist
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,14 +10,23 @@ import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBin
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemPickBinding
 import org.soma.everyonepick.groupalbum.domain.model.PickModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 
-class PickAdapter: ListAdapter<PickModel, RecyclerView.ViewHolder>(PickDiffCallback()) {
+class PickAdapter(
+    private val pickAdapterCallback: PickAdapterCallback
+): ListAdapter<PickModel, RecyclerView.ViewHolder>(PickDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = getViewDataBinding<ItemPickBinding>(parent, R.layout.item_pick)
         val holder = PickViewHolder(binding)
 
         binding.onClickRoot = View.OnClickListener {
-            // TODO: 선택 화면 or 선택 현황
+            val item = getItem(holder.absoluteAdapterPosition)
+            if (item.isDone) {
+                pickAdapterCallback.navigateToPickStatusFragment(item.id)
+            } else {
+                pickAdapterCallback.navigateToPickFragment(item.id)
+            }
         }
 
         return holder
@@ -43,4 +53,9 @@ private class PickDiffCallback: DiffUtil.ItemCallback<PickModel>() {
     override fun areContentsTheSame(oldItem: PickModel, newItem: PickModel): Boolean {
         return oldItem == newItem
     }
+}
+
+interface PickAdapterCallback {
+    fun navigateToPickFragment(pickId: Long)
+    fun navigateToPickStatusFragment(pickId: Long)
 }

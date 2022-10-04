@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -18,10 +19,12 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentPickListBinding
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType
 
 @AndroidEntryPoint
-class PickListFragment : Fragment() {
+class PickListFragment : Fragment(), PickAdapterCallback {
     private var _binding: FragmentPickListBinding? = null
     private val binding get() = _binding!!
 
@@ -34,8 +37,8 @@ class PickListFragment : Fragment() {
     ): View {
         _binding = FragmentPickListBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
-            it.uncompletedAdapter = PickAdapter()
-            it.completedAdapter = PickAdapter()
+            it.uncompletedAdapter = PickAdapter(this)
+            it.completedAdapter = PickAdapter(this)
             it.viewModel = viewModel
         }
 
@@ -69,6 +72,29 @@ class PickListFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+
+    /** [PickAdapterCallback] */
+    override fun navigateToPickFragment(pickId: Long) {
+        val groupAlbumId = parentViewModel.groupAlbum.value.id?: -1
+        viewModel.readPickDetail(groupAlbumId, pickId) { pickDetail ->
+            val directions = GroupAlbumFragmentDirections.toPickFragment(
+                groupAlbumId,
+                pickDetail.photos.map { it.id }.toLongArray(),
+                pickDetail.photos.map { it.photoUrl }.toTypedArray(),
+                PickFragmentType.TO_SELECT
+            )
+            findNavController().navigate(directions)
+        }
+    }
+
+    override fun navigateToPickStatusFragment(pickId: Long) {
+        val groupAlbumId = parentViewModel.groupAlbum.value.id?: -1
+        viewModel.readPickDetail(groupAlbumId, pickId) { pickDetail ->
+            // TODO: navigate to PickStatusFragment
+        }
+    }
+
 
     companion object {
         @JvmStatic
