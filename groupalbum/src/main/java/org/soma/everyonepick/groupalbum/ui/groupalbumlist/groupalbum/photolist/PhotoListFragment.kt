@@ -164,6 +164,9 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     companion object {
         const val URI_LIST_CHECKED_REQUEST_KEY = "uri_list_checked_request_key"
         const val URI_LIST_CHECKED_KEY = "uri_list_checked_key"
+
+        @JvmStatic
+        fun newInstance() = PhotoListFragment()
     }
 }
 

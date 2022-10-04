@@ -85,5 +85,8 @@ class FriendListFragment : Fragment() {
 
     companion object {
         private const val TAG = "FriendListFragment"
+
+        @JvmStatic
+        fun newInstance() = FriendListFragment()
     }
 }

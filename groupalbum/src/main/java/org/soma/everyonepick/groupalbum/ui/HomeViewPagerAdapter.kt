@@ -10,8 +10,8 @@ class HomeViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> GroupAlbumListFragment()
-            else -> FriendListFragment()
+            0 -> GroupAlbumListFragment.newInstance()
+            else -> FriendListFragment.newInstance()
         }
     }
 }

@@ -15,7 +15,7 @@ class ParentPermissionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val fragment = PermissionFragment(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        val fragment = PermissionFragment.newInstance(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             val directions = ParentPermissionFragmentDirections.toImagePickerFragment()
             findNavController().navigate(directions)
         }

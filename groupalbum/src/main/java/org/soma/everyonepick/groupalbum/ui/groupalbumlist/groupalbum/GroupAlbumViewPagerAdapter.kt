@@ -10,9 +10,9 @@ class GroupAlbumViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragm
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> PhotoListFragment()
+            0 -> PhotoListFragment.newInstance()
             1 -> PickListFragment.newInstance()
-            else -> PhotoListFragment()
+            else -> PhotoListFragment.newInstance()
         }
     }
 }
