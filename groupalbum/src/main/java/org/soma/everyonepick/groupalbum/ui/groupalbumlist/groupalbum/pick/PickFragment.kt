@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -69,11 +70,15 @@ class PickFragment : Fragment(), PickFragmentListener {
     }
 
     override fun onClickPickCompleteButton() {
-        when (args.pickFragmentType) {
-            PickFragmentType.TO_CREATE -> navigateToTimeout()
-            else -> {
-                // TODO: 선택 API 호출
-                findNavController().navigateUp()
+        if (viewModel.checked.value > viewModel.maxPickCount) {
+            Toast.makeText(requireContext(), getString(R.string.toast_exceed_selection, viewModel.maxPickCount), Toast.LENGTH_SHORT).show()
+        } else {
+            when (args.pickFragmentType) {
+                PickFragmentType.TO_CREATE -> navigateToTimeout()
+                else -> {
+                    // TODO: 선택 API 호출
+                    findNavController().navigateUp()
+                }
             }
         }
     }

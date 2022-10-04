@@ -12,6 +12,8 @@ import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import java.lang.Integer.max
 
 class PickViewModel: ViewModel() {
+    val maxPickCount = 5
+
     private val _photoModelList = MutableStateFlow<List<PhotoModel>>(listOf())
     val photoModelList: StateFlow<List<PhotoModel>> = _photoModelList
 
