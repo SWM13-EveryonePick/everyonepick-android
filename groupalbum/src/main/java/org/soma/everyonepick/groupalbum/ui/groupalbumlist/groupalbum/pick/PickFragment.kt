@@ -32,6 +32,11 @@ class PickFragment : Fragment(), PickFragmentListener {
 
     private val args: PickFragmentArgs by navArgs()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setPhotoModelListByPhotoList(args.photoIdList.toList(), args.photoUrlList.toList())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,8 +48,6 @@ class PickFragment : Fragment(), PickFragmentListener {
             it.listener = this
         }
         PagerSnapHelper().attachToRecyclerView(binding.recyclerviewPickphoto)
-
-        viewModel.setPhotoModelListByPhotoList(args.photoIdList.toList(), args.photoUrlList.toList())
 
         return binding.root
     }
