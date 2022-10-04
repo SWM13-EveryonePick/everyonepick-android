@@ -99,6 +99,15 @@
             submitList="@{viewModel.photoModelList}"
             tools:listitem="@layout/item_pick_photo"
             />
+
+        <org.soma.everyonepick.common_ui.CustomIndicator
+            android:id="@+id/customindicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_pickphoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
         
         <Button
             android:id="@+id/button_complete"

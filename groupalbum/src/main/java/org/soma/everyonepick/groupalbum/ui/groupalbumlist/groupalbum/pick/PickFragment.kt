@@ -1,6 +1,8 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
@@ -30,7 +33,6 @@ class PickFragment : Fragment(), PickFragmentListener {
     private val binding get() = _binding!!
 
     private val viewModel: PickViewModel by viewModels()
-
     private val args: PickFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +50,15 @@ class PickFragment : Fragment(), PickFragmentListener {
             it.adapter = PickPhotoAdapter()
             it.listener = this
         }
-        PagerSnapHelper().attachToRecyclerView(binding.recyclerviewPickphoto)
+
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(binding.recyclerviewPickphoto)
+
+        binding.recyclerviewPickphoto.apply {
+            val snapView = pagerSnapHelper.findSnapView(layoutManager)
+            val position = if (snapView == null) 0 else layoutManager?.getPosition(snapView)?: 0
+            binding.customindicator.setupRecyclerView(this, pagerSnapHelper, args.photoIdList.count(), position)
+        }
 
         return binding.root
     }
