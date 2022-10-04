@@ -99,7 +99,7 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
             Toast.makeText(requireContext(), getString(R.string.toast_min_error), Toast.LENGTH_SHORT).show()
         } else {
             viewModel.createPick {
-                // TODO: 사진 '선택' API -> navigate
+                // TODO: 사진 '선택' API by selectedPhotoIdList -> navigate
                 val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
                 findNavController().navigate(directions)
                 Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()

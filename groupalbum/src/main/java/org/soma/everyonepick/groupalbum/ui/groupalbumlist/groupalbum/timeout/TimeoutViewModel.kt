@@ -74,7 +74,7 @@ class TimeoutViewModel @Inject constructor(
     }
 
     private fun createPickRequest(): PickRequest {
-        val selectedPhotoIdList = savedStateHandle.get<LongArray>("selectedPhotoIdList")?: longArrayOf()
+        val selectedPhotoIdList = savedStateHandle.get<LongArray>("photoIdList")?: longArrayOf()
         return PickRequest(
             calculateTimeoutAsMin(),
             selectedPhotoIdList.map { PhotoId(it) }
