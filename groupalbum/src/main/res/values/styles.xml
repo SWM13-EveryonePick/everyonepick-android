@@ -41,6 +41,13 @@
         <item name="android:layout_height">45dp</item>
         <item name="android:scaleType">fitXY</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-
+    </style>
+    <style name="BigEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">55dp</item>
+        <item name="android:layout_height">65dp</item>
+        <item name="android:background">@drawable/border_with_small_radius</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLength">1</item>
     </style>
 </resources>

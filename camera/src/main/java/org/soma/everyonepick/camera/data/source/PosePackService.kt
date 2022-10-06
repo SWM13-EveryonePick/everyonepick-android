@@ -16,7 +16,7 @@ class PosePackService {
                 PosePack(4, "6인"),
                 PosePack(5, "7인"),
             ),
-            ""
+            0
         )
     }
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="photoModel"
+            type="org.soma.everyonepick.groupalbum.domain.model.PhotoModel" />
+        <variable
+            name="onClickRoot"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{onClickRoot}">
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            photoUrl="@{photoModel.photo.photoUrl}"/>
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="@dimen/size_large_checkbox"
+            android:layout_height="@dimen/size_large_checkbox"
+            android:layout_margin="16dp"
+            android:button="@null"
+            android:background="@drawable/checkbox"
+            android:checked="@={photoModel.isChecked}"
+            app:layout_constraintTop_toTopOf="@id/imageview"
+            app:layout_constraintEnd_toEndOf="@id/imageview"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

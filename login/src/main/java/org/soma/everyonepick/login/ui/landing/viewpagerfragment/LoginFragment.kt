@@ -33,4 +33,10 @@ class LoginFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = LoginFragment()
+    }
 }

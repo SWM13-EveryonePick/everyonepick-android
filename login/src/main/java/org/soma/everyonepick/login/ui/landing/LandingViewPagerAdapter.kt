@@ -11,9 +11,9 @@ class LandingViewPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> Landing1Fragment()
-            1 -> Landing2Fragment()
-            else -> LoginFragment()
+            0 -> Landing1Fragment.newInstance()
+            1 -> Landing2Fragment.newInstance()
+            else -> LoginFragment.newInstance()
         }
     }
 }

@@ -4,18 +4,29 @@ import com.kakao.sdk.talk.model.Friend
 import okhttp3.MultipartBody
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.dto.PickRequest
+import org.soma.everyonepick.groupalbum.data.dto.PickResponse
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
+import org.soma.everyonepick.groupalbum.data.entity.Pick
+import org.soma.everyonepick.groupalbum.data.entity.PickDetail
+import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
+import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
+import org.soma.everyonepick.groupalbum.domain.model.PickModel
 import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
+import org.soma.everyonepick.groupalbum.domain.translator.PickTranslator.Companion.toPickModelList
 import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
 
 class GroupAlbumUseCase @Inject constructor(
-    private val groupAlbumService: GroupAlbumService
+    private val groupAlbumService: GroupAlbumService,
+    private val groupAlbumPhotoService: GroupAlbumPhotoService,
+    private val groupAlbumPickService: GroupAlbumPickService
 ) {
+    /** [GroupAlbumService] */
     suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
         val groupAlbumList = groupAlbumService.readGroupAlbumList(token).data.toMutableList()
         return groupAlbumList.toGroupAlbumModelList()
@@ -51,10 +62,12 @@ class GroupAlbumUseCase @Inject constructor(
         return groupAlbumService.leaveGroupAlbum(token, id).data
     }
 
+
+    /** [GroupAlbumPhotoService] */
     suspend fun readPhotoList(token: String, id: Long): MutableList<PhotoModel> {
         // 가장 최근 사진이 위에 있어야 하므로 데이터를 뒤집어야 합니다.
         // 단, Pagination이 구현될 경우 데이터가 처음부터 적절한 순서로 배치되므로 reversed()를 삭제해야 합니다.
-        val photoList = groupAlbumService.readPhotoList(token, id).data.reversed().toMutableList()
+        val photoList = groupAlbumPhotoService.readPhotoList(token, id).data.reversed().toMutableList()
         return photoList.toPhotoModelList()
     }
 
@@ -63,7 +76,7 @@ class GroupAlbumUseCase @Inject constructor(
         id: Long,
         images: List<MultipartBody.Part>
     ): MutableList<PhotoModel> {
-        val photoList = groupAlbumService.createPhotoList(token, id, images).data.toMutableList()
+        val photoList = groupAlbumPhotoService.createPhotoList(token, id, images).data.toMutableList()
         return photoList.toPhotoModelList()
     }
 
@@ -72,6 +85,25 @@ class GroupAlbumUseCase @Inject constructor(
         groupAlbumId: Long,
         photoIdList: PhotoIdListRequest
     ) {
-        groupAlbumService.deletePhotoList(token, groupAlbumId, photoIdList)
+        groupAlbumPhotoService.deletePhotoList(token, groupAlbumId, photoIdList)
+    }
+
+
+    /** [GroupAlbumPickService] */
+    suspend fun readPickList(token: String, groupAlbumId: Long): MutableList<PickModel> {
+        val pickList = groupAlbumPickService.readPickList(token, groupAlbumId).data
+        return pickList.toPickModelList().toMutableList()
+    }
+
+    suspend fun readPickDetail(token: String, groupAlbumId: Long, pickId: Long): PickDetail {
+        return groupAlbumPickService.readPick(token, groupAlbumId, pickId).data
+    }
+
+    suspend fun createPick(
+        token: String,
+        groupAlbumId: Long,
+        pickRequest: PickRequest
+    ): Pick {
+        return groupAlbumPickService.createPick(token, groupAlbumId, pickRequest).data
     }
 }

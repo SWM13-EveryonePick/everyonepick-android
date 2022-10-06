@@ -94,4 +94,11 @@ class PermissionFragment(
         super.onDestroy()
         _binding = null
     }
+
+
+    companion object {
+        @JvmStatic
+        fun newInstance(requiredPermissions: Array<String>, onSuccess: () -> Unit) =
+            PermissionFragment(requiredPermissions, onSuccess)
+    }
 }

@@ -33,4 +33,10 @@ class Landing2Fragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = Landing2Fragment()
+    }
 }

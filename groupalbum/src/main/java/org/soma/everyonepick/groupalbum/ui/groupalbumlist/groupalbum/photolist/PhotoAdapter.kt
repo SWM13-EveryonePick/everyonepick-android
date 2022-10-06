@@ -13,7 +13,6 @@ import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoViewModel
 
 class PhotoAdapter(
     private val groupAlbumViewModel: GroupAlbumViewModel
@@ -53,7 +52,7 @@ class PhotoAdapter(
     }
 }
 
-private class PhotoDiffCallback: DiffUtil.ItemCallback<PhotoModel>() {
+class PhotoDiffCallback: DiffUtil.ItemCallback<PhotoModel>() {
     override fun areItemsTheSame(oldItem: PhotoModel, newItem: PhotoModel): Boolean {
         return oldItem.photo.id == newItem.photo.id
     }

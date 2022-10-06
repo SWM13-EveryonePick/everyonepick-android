@@ -108,6 +108,11 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
         val directions = HomeViewPagerFragmentDirections.toInviteFriendFragment(InviteFriendFragmentType.TO_CREATE)
         findNavController().navigate(directions)
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = GroupAlbumListFragment()
+    }
 }
 
 interface GroupAlbumListFragmentListener {

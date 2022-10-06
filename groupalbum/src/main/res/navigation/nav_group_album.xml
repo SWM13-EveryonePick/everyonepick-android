@@ -49,11 +49,18 @@
             app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/InviteFriendFragment" />
+        <action
+            android:id="@+id/to_pickFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:destination="@id/pickFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/parentPermissionFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ParentPermissionFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ParentPermissionFragment"
         tools:layout="@layout/fragment_parent_permission">
         <action
             android:id="@+id/to_imagePickerFragment"
@@ -63,12 +70,12 @@
 
     <fragment
         android:id="@+id/imagePickerFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ImagePickerFragment"
         tools:layout="@layout/fragment_image_picker"/>
 
     <fragment
         android:id="@+id/photoFragment"
-        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.photo.PhotoFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photo.PhotoFragment"
         tools:layout="@layout/fragment_photo">
         <argument
             android:name="groupAlbumId"
@@ -134,5 +141,51 @@
             app:exitAnim="@anim/stay_out"
             app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/pickFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragment"
+        android:label="PickFragment">
+        <argument
+            android:name="groupAlbumId"
+            app:argType="long"/>
+        <argument
+            android:name="photoIdList"
+            app:argType="long[]"/>
+        <argument
+            android:name="photoUrlList"
+            app:argType="string[]"/>
+        <argument
+            android:name="pickFragmentType"
+            app:argType="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType"/>
+        <action
+            android:id="@+id/to_timeoutFragment"
+            app:destination="@id/timeoutFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/stay_out"
+            app:popEnterAnim="@anim/stay_in"
+            app:popExitAnim="@anim/slide_out_bottom"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/timeoutFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.timeout.TimeoutFragment"
+        android:label="fragment_timeout"
+        tools:layout="@layout/fragment_timeout">
+        <argument
+            android:name="groupAlbumId"
+            app:argType="long"/>
+        <argument
+            android:name="photoIdList"
+            app:argType="long[]"/>
+        <argument
+            android:name="selectedPhotoIdList"
+            app:argType="long[]"/>
+        <action
+            android:id="@+id/to_groupAlbumFragment"
+            app:popUpTo="@id/groupAlbumFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/groupAlbumFragment" />
     </fragment>
 </navigation>

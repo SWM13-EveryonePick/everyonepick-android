@@ -30,7 +30,7 @@ class PoseService {
                 Pose(3, "https://picsum.photos/203"),
                 Pose(4, "https://picsum.photos/204"),
             ),
-            ""
+            0
         )
     }
 }

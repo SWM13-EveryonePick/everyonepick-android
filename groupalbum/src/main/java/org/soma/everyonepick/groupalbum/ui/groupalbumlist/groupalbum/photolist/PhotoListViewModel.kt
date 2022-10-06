@@ -78,4 +78,8 @@ class PhotoListViewModel @Inject constructor(
         _photoModelList.value.setIsCheckboxVisible(isCheckboxVisible)
         _photoModelList.value = _photoModelList.value.map { it.copy() }.toMutableList()
     }
+
+    fun getCheckedPhotoList() = photoModelList.value
+        .filter { it.isChecked.value }
+        .map { it.photo }
 }

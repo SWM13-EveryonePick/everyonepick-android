@@ -1,12 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
-import android.content.ContentResolver
-import android.content.Context
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,10 +23,12 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
-import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ImagePickerFragment
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 import java.io.File
 import javax.inject.Inject
@@ -77,7 +73,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
                 launch {
                     parentViewModel.groupAlbum.collect {
-                        if (it.id != null && it.id != User.dummyData.id) viewModel.readPhotoModelList(it.id)
+                        if (it.id != null && it.id != GroupAlbum.dummyData.id)
+                            viewModel.readPhotoModelList(it.id)
                     }
                 }
 
@@ -138,14 +135,25 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                     .setMessage(getString(R.string.dialog_synthetic))
                     .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.confirm))
                     .setOnClickPositiveButton {
-                        // TODO: 합성 플로우
+                        navigateToPickFragment()
                     }
                     .build().show()
                 dataStoreUseCase.editHasShownSyntheticDialog(true)
             } else {
-                // TODO: 합성 플로우
+                navigateToPickFragment()
             }
         }
+    }
+
+    private fun navigateToPickFragment() {
+        val checkedPhotoList = viewModel.getCheckedPhotoList()
+        val directions = GroupAlbumFragmentDirections.toPickFragment(
+            parentViewModel.groupAlbum.value.id?: -1,
+            checkedPhotoList.map { it.id }.toLongArray(),
+            checkedPhotoList.map { it.photoUrl }.toTypedArray(),
+            PickFragmentType.TO_CREATE
+        )
+        findNavController().navigate(directions)
     }
 
     override fun onClickCancelButton() {
@@ -156,6 +164,9 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     companion object {
         const val URI_LIST_CHECKED_REQUEST_KEY = "uri_list_checked_request_key"
         const val URI_LIST_CHECKED_KEY = "uri_list_checked_key"
+
+        @JvmStatic
+        fun newInstance() = PhotoListFragment()
     }
 }
 

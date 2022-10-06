@@ -9,15 +9,22 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedDispatcherOwner
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.internal.managers.ViewComponentManager
+import org.soma.everyonepick.common_ui.R
 
 @BindingAdapter("visibleWhen")
 fun setVisibility(view: View, flag: Boolean) {
@@ -42,13 +49,24 @@ fun bindBackButton(view: View, onBackPressed: Boolean) {
 fun bindImageView(imageView: ImageView, photoUrl: String) {
     Glide.with(imageView.context)
         .load(photoUrl)
+        .placeholder(createCircularProgressDrawable(imageView))
         .into(imageView)
+}
+
+fun createCircularProgressDrawable(view: View): CircularProgressDrawable {
+    return CircularProgressDrawable(view.context).apply {
+        strokeWidth = 5f
+        centerRadius = 30f
+        setColorSchemeColors(ContextCompat.getColor(view.context, R.color.primary_blue))
+        start()
+    }
 }
 
 @BindingAdapter("photoUrl", "roundingRadius", requireAll = true)
 fun bindImageView(imageView: ImageView, photoUrl: String, roundingRadius: Int) {
     Glide.with(imageView.context)
         .load(photoUrl)
+        .placeholder(createCircularProgressDrawable(imageView))
         .transform(CenterCrop(), RoundedCorners(roundingRadius))
         .into(imageView)
 }
@@ -116,4 +134,14 @@ fun setTextViewBoldAndColorWithRange(view: TextView, text: String, boldColorStar
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     view.text = spannable
+}
+
+@BindingAdapter("nextFocusEditText")
+fun applyNextFocusEditText(view: EditText, nextFocusEditTextId: Int) {
+    val nextFocusEditText = (view.parent as ViewGroup).findViewById<EditText>(nextFocusEditTextId)
+    view.addTextChangedListener {
+        if (it?.length == 1) {
+            nextFocusEditText.requestFocus()
+        }
+    }
 }

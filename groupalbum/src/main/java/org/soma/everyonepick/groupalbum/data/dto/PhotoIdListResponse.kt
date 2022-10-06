@@ -7,5 +7,5 @@ import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 data class PhotoIdListResponse(
     val message: String,
     val data: List<PhotoId>,
-    val timestamp: String
+    val timestamp: Long
 )

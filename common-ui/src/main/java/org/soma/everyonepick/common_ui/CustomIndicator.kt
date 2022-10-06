@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -11,6 +12,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import org.soma.everyonepick.common_ui.databinding.LayoutCustomIndicatorBinding
 
@@ -24,7 +27,6 @@ class CustomIndicator @JvmOverloads constructor(
 ): FrameLayout(context, attrs, defStyle) {
 
     private lateinit var binding: LayoutCustomIndicatorBinding
-    private lateinit var viewPager2: ViewPager2
 
     private var indicatorSize = 20
     private var indicatorMargin = 15
@@ -69,10 +71,8 @@ class CustomIndicator @JvmOverloads constructor(
      * @param startPosition A start position of [ViewPager2].
      */
     fun setupViewPager2(viewPager2: ViewPager2, startPosition: Int) {
-        this.viewPager2 = viewPager2
-
         val itemCount = viewPager2.adapter?.itemCount?: 0
-        for(i in 0 until itemCount) addIndicator(i, startPosition)
+        for (i in 0 until itemCount) addIndicator(i, startPosition)
 
         viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
@@ -123,6 +123,8 @@ class CustomIndicator @JvmOverloads constructor(
         secondIndex: Int,
         positionOffset: Float
     ) {
+        if (!(0 <= firstIndex && secondIndex <= indicators.count() - 1)) return
+
         // Blend selectedIndicatorColor and indicatorColor by positionOffset
         val firstColor = ColorUtils.blendARGB(selectedIndicatorColor, indicatorColor, positionOffset)
         val secondColor = ColorUtils.blendARGB(indicatorColor, selectedIndicatorColor, positionOffset)
@@ -136,6 +138,8 @@ class CustomIndicator @JvmOverloads constructor(
         secondIndex: Int,
         positionOffset: Float
     ) {
+        if (!(0 <= firstIndex && secondIndex <= indicators.count() - 1)) return
+
         val firstWidth = calculateWidthByOffset(positionOffset)
         val secondWidth = calculateWidthByOffset(1 - positionOffset)
 
@@ -149,4 +153,35 @@ class CustomIndicator @JvmOverloads constructor(
     }
 
     private fun calculateWidthByOffset(offset: Float) = indicatorSize * offset + indicatorSize * selectedIndicatorWidthScale * (1-offset)
+
+    /**
+     * @param recyclerView A [RecyclerView] which [CustomIndicator] refers to.
+     * @param pagerSnapHelper A [PagerSnapHelper] attached to [recyclerView].
+     * @param itemCount Item count of [recyclerView].
+     * @param startPosition A start position of [RecyclerView].
+     */
+    fun setupRecyclerView(
+        recyclerView: RecyclerView,
+        pagerSnapHelper: PagerSnapHelper,
+        itemCount: Int,
+        startPosition: Int
+    ) {
+        for (i in 0 until itemCount) addIndicator(i, startPosition)
+
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                pagerSnapHelper.findSnapView(recyclerView.layoutManager)?.let { itemView ->
+                    val position = recyclerView.layoutManager?.getPosition(itemView)?: 0
+                    val offset = itemView.x / itemView.width
+                    val firstIndex = if (offset < 0) position else position - 1
+                    val secondIndex = if (offset < 0) position + 1 else position
+                    val positionOffset = if (offset < 0) -offset else 1 - offset
+                    refreshTwoIndicatorColor(firstIndex, secondIndex, positionOffset)
+                    refreshTwoIndicatorWidth(firstIndex, secondIndex, positionOffset)
+                }
+            }
+        })
+    }
 }

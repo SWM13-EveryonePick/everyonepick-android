@@ -9,16 +9,16 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerViewModel" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ImagePickerViewModel" />
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.imagepicker.ImageAdapter" />
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.imagepicker.ImageAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbumlist.groupalbum.photolist.imagepicker.ImagePickerFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.imagepicker.ImagePickerFragment">
 
         <org.soma.everyonepick.common_ui.CustomActionBar
             android:id="@+id/customactionbar"
