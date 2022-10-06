@@ -25,6 +25,10 @@ class PickListViewModel @Inject constructor(
      * [_uncompletedPickModelList]로 흘려보냅니다.
      */
     private val _pickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
+    val pickModelList: StateFlow<MutableList<PickModel>> = _pickModelList
+
+    private val _isApiLoading = MutableStateFlow(true)
+    val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
     private val _completedPickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
     val completedPickModelList: StateFlow<MutableList<PickModel>> = _completedPickModelList
@@ -47,10 +51,13 @@ class PickListViewModel @Inject constructor(
     fun readPickModelList(groupAlbumId: Long) {
         viewModelScope.launch {
             try {
+                _isApiLoading.value = true
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 _pickModelList.value = groupAlbumUseCase.readPickList(token, groupAlbumId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick)
+            } finally {
+                _isApiLoading.value = false
             }
         }
     }

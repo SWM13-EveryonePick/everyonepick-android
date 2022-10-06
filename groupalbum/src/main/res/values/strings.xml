@@ -87,6 +87,7 @@
     <string name="toast_failed_to_create_pick">사진선택 작업을 등록하는 데 실패했습니다.</string>
 
     <!--합성중(사진작업)-->
+    <string name="empty_picks">현재 합성중인 사진이 없습니다 :/</string>
     <string name="toast_failed_to_read_pick">사진 작업을 불러오는 데 실패했습니다.</string>
     <string name="uncompleted_pick_title">Pick Me!</string>
     <string name="uncompleted_pick_description">마음에 드는 사진을 선택해주세요!</string>
