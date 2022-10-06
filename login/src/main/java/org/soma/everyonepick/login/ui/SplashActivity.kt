@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -62,10 +63,8 @@ class SplashActivity : AppCompatActivity() {
         job = lifecycleScope.launch {
             val refreshToken = dataStoreUseCase.refreshToken.first()
             if (refreshToken != null) {
-                awaitAll(
-                    async { refreshAccessTokenAndSaveToDataStore(refreshToken) },
-                    async { loginWithKakao() }
-                )
+                refreshAccessTokenAndSaveToDataStore(refreshToken)
+                loginWithKakao()
 
                 lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     launch {
