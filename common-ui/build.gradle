@@ -48,6 +48,7 @@ dependencies {
     api "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     api "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    api "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swipeRefreshLayoutVersion"
 
     // CameraX
     api "androidx.camera:camera-core:$rootProject.cameraXVersion"

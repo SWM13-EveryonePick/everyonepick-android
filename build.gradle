@@ -18,6 +18,7 @@ buildscript {
         roomVersion = '2.4.3'
         dataStorePreferencesVersion = '1.0.0'
         cameraXVersion = '1.2.0-alpha04'
+        swipeRefreshLayoutVersion = '1.1.0'
 
         jUnitVersion = '4.13.2'
         coreTestingVersion = '2.1.0'
