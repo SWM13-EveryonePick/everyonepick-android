@@ -77,8 +77,8 @@ class PickViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.createPickInfo(
                     token,
-                    savedStateHandle["groupAlbumId"] ?: -1,
-                    savedStateHandle["pickId"] ?: -1,
+                    savedStateHandle["groupAlbumId"]?: -1,
+                    savedStateHandle["pickId"]?: -1,
                     PhotoIdListRequest(getSelectedPhotoIdList().map { PhotoId(it) })
                 )
                 onSuccess.invoke()

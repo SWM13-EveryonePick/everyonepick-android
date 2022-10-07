@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.dto.PickRequest
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
@@ -31,7 +32,7 @@ class TimeoutViewModel @Inject constructor(
     private val _min2 = MutableStateFlow(0)
 
     /**
-     * EditText가 전부 채워졌을 때만 확인 버튼을 허용하기 때문에 이를 체크하기 위한 값입니다.
+     * EditText가 전부 채워졌을 때만 확인 버튼을 enable로 두는데, 이를 체크하기 위한 값으로 3일 때 버튼을 enable합니다.
      */
     private val _filledEditText = MutableStateFlow(0)
     val filledEditText: StateFlow<Int> = _filledEditText
@@ -59,14 +60,14 @@ class TimeoutViewModel @Inject constructor(
         _filledEditText.value -= 1
     }
 
-    fun createPick(onSuccess: () -> Unit) {
+    fun createPick(onSuccess: (Long) -> Unit) {
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val groupAlbumId = savedStateHandle.get<Long>("groupAlbumId")?: -1
-                groupAlbumUseCase.createPick(token, groupAlbumId, createPickRequest())
+                val pickId = groupAlbumUseCase.createPick(token, groupAlbumId, createPickRequest()).id
 
-                onSuccess.invoke()
+                onSuccess.invoke(pickId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick)
             }
@@ -82,4 +83,23 @@ class TimeoutViewModel @Inject constructor(
     }
 
     private fun calculateTimeoutAsMin() = (_hour.value*60 + _min1.value*10 + _min2.value).toLong()
+
+    fun createPickInfo(pickId: Long, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val selectedPhotos = savedStateHandle.get<LongArray>("selectedPhotoIdList")?.map { PhotoId(it) }?: listOf()
+                groupAlbumUseCase.createPickInfo(
+                    token,
+                    savedStateHandle["groupAlbumId"]?: -1,
+                    pickId,
+                    PhotoIdListRequest(selectedPhotos)
+                )
+
+                onSuccess.invoke()
+            } catch (e: Exception) {
+                _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick_info)
+            }
+        }
+    }
 }

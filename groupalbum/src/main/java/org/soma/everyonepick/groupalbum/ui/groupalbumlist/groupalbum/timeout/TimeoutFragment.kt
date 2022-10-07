@@ -98,11 +98,12 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
         if (viewModel.min1.value >= 6) {
             Toast.makeText(requireContext(), getString(R.string.toast_min_error), Toast.LENGTH_SHORT).show()
         } else {
-            viewModel.createPick {
-                // TODO: 사진 '선택' API by selectedPhotoIdList -> navigate
-                val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
-                findNavController().navigate(directions)
-                Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
+            viewModel.createPick { pickId ->
+                viewModel.createPickInfo(pickId) {
+                    val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
+                    findNavController().navigate(directions)
+                    Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
