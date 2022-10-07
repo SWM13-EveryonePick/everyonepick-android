@@ -9,14 +9,17 @@ import org.soma.everyonepick.groupalbum.data.dto.PickResponse
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.Pick
 import org.soma.everyonepick.groupalbum.data.entity.PickDetail
+import org.soma.everyonepick.groupalbum.data.entity.PickInfo
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
+import org.soma.everyonepick.groupalbum.domain.model.PickInfoModel
 import org.soma.everyonepick.groupalbum.domain.model.PickModel
 import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
+import org.soma.everyonepick.groupalbum.domain.translator.PickInfoTranslator.Companion.toPickInfoModel
 import org.soma.everyonepick.groupalbum.domain.translator.PickTranslator.Companion.toPickModelList
 import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
@@ -105,5 +108,20 @@ class GroupAlbumUseCase @Inject constructor(
         pickRequest: PickRequest
     ): Pick {
         return groupAlbumPickService.createPick(token, groupAlbumId, pickRequest).data
+    }
+
+    suspend fun readPickInfo(token: String, groupAlbumId: Long, pickId: Long): PickInfoModel {
+        val pickInfo = groupAlbumPickService.readPickInfo(token, groupAlbumId, pickId).data
+        return pickInfo.toPickInfoModel()
+    }
+
+    suspend fun createPickInfo(
+        token: String,
+        groupAlbumId: Long,
+        pickId: Long,
+        photoIdList: PhotoIdListRequest
+    ): PickInfoModel {
+        val pickInfo = groupAlbumPickService.createPickInfo(token, groupAlbumId, pickId, photoIdList).data
+        return pickInfo.toPickInfoModel()
     }
 }
