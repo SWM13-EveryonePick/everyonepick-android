@@ -22,8 +22,7 @@ class PickAdapter(
 
         binding.onClickRoot = View.OnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
-            // TODO: if (item.isDone) {
-            if (true) {
+            if (item.isDone) {
                 pickAdapterCallback.navigateToPickInfoFragment(item.id)
             } else {
                 pickAdapterCallback.navigateToPickFragment(item.id)
