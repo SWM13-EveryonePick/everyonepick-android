@@ -22,8 +22,9 @@ class PickAdapter(
 
         binding.onClickRoot = View.OnClickListener {
             val item = getItem(holder.absoluteAdapterPosition)
-            if (item.isDone) {
-                pickAdapterCallback.navigateToPickStatusFragment(item.id)
+            // TODO: if (item.isDone) {
+            if (true) {
+                pickAdapterCallback.navigateToPickInfoFragment(item.id)
             } else {
                 pickAdapterCallback.navigateToPickFragment(item.id)
             }
@@ -57,5 +58,5 @@ private class PickDiffCallback: DiffUtil.ItemCallback<PickModel>() {
 
 interface PickAdapterCallback {
     fun navigateToPickFragment(pickId: Long)
-    fun navigateToPickStatusFragment(pickId: Long)
+    fun navigateToPickInfoFragment(pickId: Long)
 }

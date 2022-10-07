@@ -89,13 +89,13 @@ class PickListFragment : Fragment(), PickAdapterCallback {
         }
     }
 
-    override fun navigateToPickStatusFragment(pickId: Long) {
+    override fun navigateToPickInfoFragment(pickId: Long) {
         val groupAlbumId = parentViewModel.groupAlbum.value.id?: -1
-        viewModel.readPickDetail(groupAlbumId, pickId) { pickDetail ->
-            // TODO: navigate to PickStatusFragment
+        viewModel.readPickInfo(groupAlbumId, pickId) {
+            val directions = GroupAlbumFragmentDirections.toPickInfoFragment(it.userCount, it.pickUserCount, it.timeout)
+            findNavController().navigate(directions)
         }
     }
-
 
     companion object {
         @JvmStatic

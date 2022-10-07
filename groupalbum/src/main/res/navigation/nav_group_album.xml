@@ -56,6 +56,9 @@
             app:popEnterAnim="@anim/stay_in"
             app:popExitAnim="@anim/slide_out_bottom"
             app:destination="@id/pickFragment" />
+        <action
+            android:id="@+id/to_pickInfoFragment"
+            app:destination="@id/pickInfoFragment" />
     </fragment>
 
     <fragment
@@ -190,5 +193,21 @@
             app:popUpTo="@id/groupAlbumFragment"
             app:popUpToInclusive="true"
             app:destination="@id/groupAlbumFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pickInfoFragment"
+        android:name="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pickinfo.PickInfoFragment"
+        android:label="PickInfoFragment"
+        tools:layout="@layout/fragment_pick_info">
+        <argument
+            android:name="userCount"
+            app:argType="integer"/>
+        <argument
+            android:name="pickUserCount"
+            app:argType="integer"/>
+        <argument
+            android:name="timeout"
+            app:argType="long"/>
     </fragment>
 </navigation>
