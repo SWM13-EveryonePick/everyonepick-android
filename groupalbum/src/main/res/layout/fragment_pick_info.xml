@@ -54,7 +54,7 @@
             android:id="@+id/text_count_prefix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/pick_info_count_prefix}"
+            android:text="@{@string/pick_info_count_prefix(viewModel.userCount, viewModel.pickUserCount)}"
             android:textSize="18sp"
             android:textColor="@color/subtext"
             android:layout_marginTop="16dp"

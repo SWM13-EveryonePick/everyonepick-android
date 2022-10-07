@@ -95,7 +95,7 @@
     <string name="completed_pick_description">진행현황을 확인해보세요!</string>
 
     <string name="pick_info_title">진행현황</string>
-    <string name="pick_info_count_prefix">%명 중 %d명이</string>
+    <string name="pick_info_count_prefix">%d명 중 %d명이</string>
     <string name="pick_info_count_suffix">PICK 완료!</string>
     <string name="pick_info_timeout">hh:mm:ss 남았습니다.</string>
 
