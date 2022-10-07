@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textColor="@color/subtext"
-            text="@{@string/pick_info_timeout}"
+            text="@{@string/pick_info_timeout(viewModel.timeout/3600, (viewModel.timeout % 3600)/60, viewModel.timeout % 60)}"
             boldColorStart="@{0}"
             boldColorEnd="@{8}"
             color="@{@color/primary_blue}"

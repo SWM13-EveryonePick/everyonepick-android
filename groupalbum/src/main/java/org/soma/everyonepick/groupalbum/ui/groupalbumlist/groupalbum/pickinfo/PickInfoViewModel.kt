@@ -2,11 +2,14 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pickinfo
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.soma.everyonepick.groupalbum.domain.model.PickInfoModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.max
 
 @HiltViewModel
 class PickInfoViewModel @Inject constructor(
@@ -19,7 +22,13 @@ class PickInfoViewModel @Inject constructor(
     val timeout: StateFlow<Long> = _timeout
 
     init {
-        // TODO: timeout 감소
+        viewModelScope.launch {
+            // Count down to 0
+            for (i in _timeout.value downTo 0) {
+                _timeout.value = i
+                delay(1000)
+            }
+        }
     }
 
     companion object {

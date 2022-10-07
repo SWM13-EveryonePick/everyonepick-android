@@ -97,7 +97,7 @@
     <string name="pick_info_title">진행현황</string>
     <string name="pick_info_count_prefix">%d명 중 %d명이</string>
     <string name="pick_info_count_suffix">PICK 완료!</string>
-    <string name="pick_info_timeout">hh:mm:ss 남았습니다.</string>
+    <string name="pick_info_timeout">%02d:%02d:%02d 남았습니다.</string>
 
     <string name="toast_failed_to_create_pick_info">사진 선택 정보를 등록하는 데 실패했습니다.</string>
     <string name="toast_failed_to_read_pick_info">사진 선택 정보를 불러오는 데 실패했습니다.</string>
