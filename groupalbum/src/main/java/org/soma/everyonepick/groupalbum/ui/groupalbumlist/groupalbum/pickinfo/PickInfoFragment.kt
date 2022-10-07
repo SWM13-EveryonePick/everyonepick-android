@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentPickInfoBinding
@@ -23,7 +24,13 @@ class PickInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPickInfoBinding.inflate(inflater, container, false)
+        _binding = FragmentPickInfoBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = this
+            it.viewModel = viewModel
+            it.onClickConfirmButton = View.OnClickListener {
+                findNavController().navigateUp()
+            }
+        }
         return binding.root
     }
 
