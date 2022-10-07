@@ -82,7 +82,7 @@ class TimeoutViewModel @Inject constructor(
         )
     }
 
-    private fun calculateTimeoutAsMin() = (_hour.value*60 + _min1.value*10 + _min2.value).toLong()
+    private fun calculateTimeoutAsMin() = (_hour.value*60*60 + (_min1.value*10 + _min2.value)*60).toLong()
 
     fun createPickInfo(pickId: Long, onSuccess: () -> Unit) {
         viewModelScope.launch {
