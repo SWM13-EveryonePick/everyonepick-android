@@ -151,8 +151,10 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
             parentViewModel.groupAlbum.value.id?: -1,
             checkedPhotoList.map { it.id }.toLongArray(),
             checkedPhotoList.map { it.photoUrl }.toTypedArray(),
-            PickFragmentType.TO_CREATE
+            PickFragmentType.TO_CREATE,
+            -1L
         )
+
         findNavController().navigate(directions)
     }
 

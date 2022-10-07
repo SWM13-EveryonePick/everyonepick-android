@@ -159,6 +159,9 @@
         <argument
             android:name="pickFragmentType"
             app:argType="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickFragmentType"/>
+        <argument
+            android:name="pickId"
+            app:argType="long"/>
         <action
             android:id="@+id/to_timeoutFragment"
             app:destination="@id/timeoutFragment"

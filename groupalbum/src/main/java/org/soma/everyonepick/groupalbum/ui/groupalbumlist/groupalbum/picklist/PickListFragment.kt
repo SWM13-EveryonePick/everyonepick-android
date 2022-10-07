@@ -82,7 +82,8 @@ class PickListFragment : Fragment(), PickAdapterCallback {
                 groupAlbumId,
                 pickDetail.photos.map { it.id }.toLongArray(),
                 pickDetail.photos.map { it.photoUrl }.toTypedArray(),
-                PickFragmentType.TO_SELECT
+                PickFragmentType.TO_SELECT,
+                pickId
             )
             findNavController().navigate(directions)
         }
