@@ -67,7 +67,7 @@ class GroupAlbumViewModel @Inject constructor(
             bearerAccessToken.collectLatest {
                 it?.let {
                     // GroupAlbumFragment의 navArgs 값을 불러옵니다.
-                    val groupAlbumId = savedStateHandle.get<Long>("groupAlbumId")?: -1
+                    val groupAlbumId = savedStateHandle[GROUP_ALBUM_ID] ?: -1L
                     _groupAlbum.value = groupAlbumUseCase.readGroupAlbum(it, groupAlbumId)
                 }
             }
@@ -166,5 +166,9 @@ class GroupAlbumViewModel @Inject constructor(
                 _toastMessage.value = context.getString(R.string.toast_failed_to_kick)
             }
         }
+    }
+
+    companion object {
+        private const val GROUP_ALBUM_ID = "groupAlbumId"
     }
 }

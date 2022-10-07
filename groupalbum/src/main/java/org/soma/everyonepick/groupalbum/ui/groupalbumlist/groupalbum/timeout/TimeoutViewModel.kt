@@ -64,7 +64,7 @@ class TimeoutViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val groupAlbumId = savedStateHandle.get<Long>("groupAlbumId")?: -1
+                val groupAlbumId = savedStateHandle[GROUP_ALBUM_ID] ?: -1L
                 val pickId = groupAlbumUseCase.createPick(token, groupAlbumId, createPickRequest()).id
 
                 onSuccess.invoke(pickId)
@@ -75,7 +75,7 @@ class TimeoutViewModel @Inject constructor(
     }
 
     private fun createPickRequest(): PickRequest {
-        val selectedPhotoIdList = savedStateHandle.get<LongArray>("photoIdList")?: longArrayOf()
+        val selectedPhotoIdList = savedStateHandle[PHOTO_ID_LIST] ?: longArrayOf()
         return PickRequest(
             calculateTimeoutAsMin(),
             selectedPhotoIdList.map { PhotoId(it) }
@@ -88,10 +88,10 @@ class TimeoutViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val selectedPhotos = savedStateHandle.get<LongArray>("selectedPhotoIdList")?.map { PhotoId(it) }?: listOf()
+                val selectedPhotos = savedStateHandle.get<LongArray>(SELECTED_PHOTO_ID_LIST)?.map { PhotoId(it) }?: listOf()
                 groupAlbumUseCase.createPickInfo(
                     token,
-                    savedStateHandle["groupAlbumId"]?: -1,
+                    savedStateHandle[GROUP_ALBUM_ID]?: -1,
                     pickId,
                     PhotoIdListRequest(selectedPhotos)
                 )
@@ -101,5 +101,12 @@ class TimeoutViewModel @Inject constructor(
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick_info)
             }
         }
+    }
+
+
+    companion object {
+        private const val SELECTED_PHOTO_ID_LIST = "selectedPhotoIdList"
+        private const val GROUP_ALBUM_ID = "groupAlbumId"
+        private const val PHOTO_ID_LIST = "photoIdList"
     }
 }

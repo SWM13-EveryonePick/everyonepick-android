@@ -77,8 +77,8 @@ class PickViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.createPickInfo(
                     token,
-                    savedStateHandle["groupAlbumId"]?: -1,
-                    savedStateHandle["pickId"]?: -1,
+                    savedStateHandle[GROUP_ALBUM_ID]?: -1L,
+                    savedStateHandle[PICK_ID]?: -1L,
                     PhotoIdListRequest(getSelectedPhotoIdList().map { PhotoId(it) })
                 )
                 onSuccess.invoke()
@@ -86,5 +86,10 @@ class PickViewModel @Inject constructor(
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick_info)
             }
         }
+    }
+
+    companion object {
+        private const val GROUP_ALBUM_ID = "groupAlbumId"
+        private const val PICK_ID = "pickId"
     }
 }
