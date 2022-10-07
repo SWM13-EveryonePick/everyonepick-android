@@ -23,7 +23,7 @@
             android:id="@+id/customactionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hasBackButton="@{true}"
+            app:hasBackButton="true"
             app:layout_constraintTop_toTopOf="parent"
             />
 

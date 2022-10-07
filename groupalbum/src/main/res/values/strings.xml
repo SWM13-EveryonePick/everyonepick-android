@@ -93,6 +93,12 @@
     <string name="uncompleted_pick_description">마음에 드는 사진을 선택해주세요!</string>
     <string name="completed_pick_title">친구의 Pick을 기다리는 중</string>
     <string name="completed_pick_description">진행현황을 확인해보세요!</string>
+
+    <string name="pick_info_title">진행현황</string>
+    <string name="pick_info_count_prefix">%명 중 %d명이</string>
+    <string name="pick_info_count_suffix">PICK 완료!</string>
+    <string name="pick_info_timeout">hh:mm:ss 남았습니다.</string>
+
     <string name="toast_failed_to_create_pick_info">사진 선택 정보를 등록하는 데 실패했습니다.</string>
     <string name="toast_failed_to_read_pick_info">사진 선택 정보를 불러오는 데 실패했습니다.</string>
 
