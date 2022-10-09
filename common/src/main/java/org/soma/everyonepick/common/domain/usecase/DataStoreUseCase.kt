@@ -21,11 +21,14 @@ class DataStoreUseCase @Inject constructor(
     val refreshToken: Flow<String?> =
         dataStore.data.map { preferences -> preferences[refreshTokenKey] }
 
-    val hasShownTutorial: Flow<Boolean?> =
+    val hasTutorialShown: Flow<Boolean?> =
         dataStore.data.map { preferences -> preferences[hasTutorialShownKey] }
 
-    val hasShownSyntheticDialog: Flow<Boolean?> =
-        dataStore.data.map { preferences -> preferences[hasShownSyntheticDialogKey] }
+    val hasSyntheticTutorialShown: Flow<Boolean?> =
+        dataStore.data.map { preferences -> preferences[hasSyntheticTutorialShownKey] }
+
+    val hasSyntheticDialogShown: Flow<Boolean?> =
+        dataStore.data.map { preferences -> preferences[hasSyntheticDialogShownKey] }
 
     private fun String.toBearerToken() = "Bearer $this"
 
@@ -41,15 +44,21 @@ class DataStoreUseCase @Inject constructor(
         }
     }
 
-    suspend fun editHasShownTutorial(hasShownTutorial: Boolean) {
+    suspend fun editHasTutorialShown(hasTutorialShown: Boolean) {
         dataStore.edit {
-            it[hasTutorialShownKey] = hasShownTutorial
+            it[hasTutorialShownKey] = hasTutorialShown
         }
     }
 
-    suspend fun editHasShownSyntheticDialog(hasShownSyntheticDialog: Boolean) {
+    suspend fun editHasSyntheticTutorialShown(hasSyntheticTutorialShown: Boolean) {
         dataStore.edit {
-            it[hasShownSyntheticDialogKey] = hasShownSyntheticDialog
+            it[hasSyntheticTutorialShownKey] = hasSyntheticTutorialShown
+        }
+    }
+
+    suspend fun editHasSyntheticDialogShown(hasSyntheticDialogShown: Boolean) {
+        dataStore.edit {
+            it[hasSyntheticDialogShownKey] = hasSyntheticDialogShown
         }
     }
 
@@ -72,6 +81,7 @@ class DataStoreUseCase @Inject constructor(
         private val refreshTokenKey = stringPreferencesKey("refresh_token")
 
         private val hasTutorialShownKey = booleanPreferencesKey("has_tutorial_shown")
-        private val hasShownSyntheticDialogKey = booleanPreferencesKey("has_shown_synthetic_dialog")
+        private val hasSyntheticDialogShownKey = booleanPreferencesKey("has_synthetic_dialog_shown")
+        private val hasSyntheticTutorialShownKey = booleanPreferencesKey("has_synthetic_tutorial_shown")
     }
 }

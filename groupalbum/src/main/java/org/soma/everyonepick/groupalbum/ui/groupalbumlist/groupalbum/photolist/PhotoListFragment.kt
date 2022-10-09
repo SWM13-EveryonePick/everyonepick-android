@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.R
@@ -134,8 +133,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
     override fun onClickProcessButton() {
         lifecycleScope.launch {
-            val hasShownSyntheticDialog = dataStoreUseCase.hasShownSyntheticDialog.first()
-            if (hasShownSyntheticDialog != true) {
+            val hasSyntheticDialogShown = dataStoreUseCase.hasSyntheticDialogShown.first()
+            if (hasSyntheticDialogShown != true) {
                 DialogWithTwoButton.Builder(requireContext())
                     .setMessage(getString(R.string.dialog_synthetic))
                     .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.confirm))
@@ -143,7 +142,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                         navigateToPickFragment()
                     }
                     .build().show()
-                dataStoreUseCase.editHasShownSyntheticDialog(true)
+                dataStoreUseCase.editHasSyntheticDialogShown(true)
             } else {
                 navigateToPickFragment()
             }
