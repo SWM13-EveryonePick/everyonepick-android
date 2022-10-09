@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.entity.PickDetail
+import org.soma.everyonepick.groupalbum.domain.model.PickInfoModel
 import org.soma.everyonepick.groupalbum.domain.model.PickModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -30,11 +31,11 @@ class PickListViewModel @Inject constructor(
     private val _isApiLoading = MutableStateFlow(true)
     val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
-    private val _completedPickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
-    val completedPickModelList: StateFlow<MutableList<PickModel>> = _completedPickModelList
-
     private val _uncompletedPickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
     val uncompletedPickModelList: StateFlow<MutableList<PickModel>> = _uncompletedPickModelList
+
+    private val _completedPickModelList = MutableStateFlow<MutableList<PickModel>>(mutableListOf())
+    val completedPickModelList: StateFlow<MutableList<PickModel>> = _completedPickModelList
 
     private val _toastMessage = MutableStateFlow("")
     val toastMessage: StateFlow<String> = _toastMessage
@@ -42,8 +43,8 @@ class PickListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _pickModelList.collectLatest { pickModelList ->
-                _completedPickModelList.value = pickModelList.filter { it.isDone }.toMutableList()
                 _uncompletedPickModelList.value = pickModelList.filter { !it.isDone }.toMutableList()
+                _completedPickModelList.value = pickModelList.filter { it.isDone }.toMutableList()
             }
         }
     }
@@ -70,6 +71,18 @@ class PickListViewModel @Inject constructor(
                 onSuccess.invoke(pickDetail)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick)
+            }
+        }
+    }
+
+    fun readPickInfo(groupAlbumId: Long, pickId: Long, onSuccess: (PickInfoModel) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val pickInfoModel = groupAlbumUseCase.readPickInfo(token, groupAlbumId, pickId)
+                onSuccess.invoke(pickInfoModel)
+            } catch (e: Exception) {
+                _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick_info)
             }
         }
     }

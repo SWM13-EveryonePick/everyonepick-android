@@ -49,10 +49,10 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
     private fun showTutorialAtFirst() {
         lifecycleScope.launch {
             dataStoreUseCase.run {
-                val hasTutorialShown = hasShownTutorial.first()
+                val hasTutorialShown = hasTutorialShown.first()
                 if (hasTutorialShown != true) {
                     binding.layoutTutorial.visibility = View.VISIBLE
-                    editHasShownTutorial(true)
+                    editHasTutorialShown(true)
                 }
             }
         }

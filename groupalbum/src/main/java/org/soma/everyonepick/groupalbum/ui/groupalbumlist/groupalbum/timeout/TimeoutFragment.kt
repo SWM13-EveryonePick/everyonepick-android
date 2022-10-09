@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.soma.everyonepick.common_ui.DialogWithOneButton
 import org.soma.everyonepick.common_ui.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentTimeoutBinding
@@ -90,25 +91,28 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
 
 
     /** [TimeoutFragmentListener] */
-    override fun onClickWhatItTimeoutButton() {
-        // TODO
+    override fun onClickWhatIsTimeoutButton() {
+        DialogWithOneButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_what_is_timeout))
+            .build().show()
     }
 
     override fun onClickConfirmButton() {
         if (viewModel.min1.value >= 6) {
             Toast.makeText(requireContext(), getString(R.string.toast_min_error), Toast.LENGTH_SHORT).show()
         } else {
-            viewModel.createPick {
-                // TODO: 사진 '선택' API by selectedPhotoIdList -> navigate
-                val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
-                findNavController().navigate(directions)
-                Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
+            viewModel.createPick { pickId ->
+                viewModel.createPickInfo(pickId) {
+                    val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
+                    findNavController().navigate(directions)
+                    Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 }
 
 interface TimeoutFragmentListener {
-    fun onClickWhatItTimeoutButton()
+    fun onClickWhatIsTimeoutButton()
     fun onClickConfirmButton()
 }

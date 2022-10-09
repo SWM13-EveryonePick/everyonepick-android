@@ -1,6 +1,5 @@
 package org.soma.everyonepick.setting.ui.account
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.setting.R
 import org.soma.everyonepick.setting.databinding.FragmentAccountSettingBinding
 import javax.inject.Inject
-import kotlin.coroutines.suspendCoroutine
 
 @AndroidEntryPoint
 class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {

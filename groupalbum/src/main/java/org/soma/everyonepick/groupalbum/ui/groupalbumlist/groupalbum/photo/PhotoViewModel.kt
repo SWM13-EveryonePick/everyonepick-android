@@ -20,10 +20,10 @@ class PhotoViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase,
     private val groupAlbumUseCase: GroupAlbumUseCase
 ): ViewModel() {
-    private val groupAlbumId: Long = savedStateHandle.get<Long>("groupAlbumId")?: -1
-    private val photoId: Long = savedStateHandle.get<Long>("photoId")?: -1
+    private val groupAlbumId = savedStateHandle[GROUP_ALBUM_ID] ?: -1L
+    private val photoId = savedStateHandle[PHOTO_ID] ?: -1L
 
-    private val _photoUrl = MutableStateFlow(savedStateHandle.get<String>("photoUrl")?: "")
+    private val _photoUrl = MutableStateFlow(savedStateHandle[PHOTO_URL] ?: "")
     val photoUrl: StateFlow<String?> = _photoUrl
 
     fun deletePhoto(onSuccess: () -> Unit, onFailure: () -> Unit) {
@@ -36,5 +36,11 @@ class PhotoViewModel @Inject constructor(
                 onFailure.invoke()
             }
         }
+    }
+
+    companion object {
+        private const val GROUP_ALBUM_ID = "groupAlbumId"
+        private const val PHOTO_ID = "photoId"
+        private const val PHOTO_URL = "photoUrl"
     }
 }

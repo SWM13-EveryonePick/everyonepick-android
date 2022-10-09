@@ -36,12 +36,11 @@ class FriendListFragment : Fragment() {
             it.adapter = FriendAdapter()
             it.viewModel = viewModel
             it.onClickKakaoButton = View.OnClickListener {
-                // TODO: 스토어 링크 변경
                 val textTemplate = TextTemplate(
                     text = getString(R.string.kakao_message_text).trimIndent(),
                     link = Link(
-                        webUrl = "https://play.google.com/",
-                        mobileWebUrl = "https://play.google.com/"
+                        webUrl = "https://play.google.com/store/apps/details?id=org.soma.everyonepick.app",
+                        mobileWebUrl = "https://play.google.com/store/apps/details?id=org.soma.everyonepick.app"
                     )
                 )
                 shareKakaoMessage(textTemplate)

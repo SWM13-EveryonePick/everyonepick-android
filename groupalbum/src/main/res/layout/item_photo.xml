@@ -11,13 +11,17 @@
         <variable
             name="onClickRoot"
             type="android.view.View.OnClickListener" />
+        <variable
+            name="onLongClickRoot"
+            type="android.view.View.OnLongClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/size_photo"
         android:layout_height="@dimen/size_photo"
         android:layout_margin="@dimen/margin_photo"
-        android:onClick="@{onClickRoot}">
+        android:onClick="@{onClickRoot}"
+        android:onLongClick="@{onLongClickRoot}">
 
         <ImageView
             android:id="@+id/image_photo"

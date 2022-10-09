@@ -11,7 +11,7 @@ import org.soma.everyonepick.camera.domain.model.PoseModel
 import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
 
 class PoseAdapter(
-    private val parentViewModel: PreviewViewModel
+    private val viewModel: PreviewViewModel
 ): ListAdapter<PoseModel, PoseAdapter.PoseViewHolder>(PoseDiffCallback()) {
     /**
      * 최근에 선택한 뷰 바인딩입니다. 아이템을 클릭할 때 기존에 선택된 아이템을 선택 해제 처리해야 하는데, 이를 위해 사용됩니다.
@@ -27,13 +27,13 @@ class PoseAdapter(
                 binding.layoutSelected.animate().alpha(0.0f)
 
                 prevBinding = null
-                parentViewModel.setSelectedPoseIndex(null)
+                viewModel.setSelectedPoseIndex(null)
             } else {
                 binding.layoutSelected.animate().alpha(0.5f)
                 prevBinding?.layoutSelected?.animate()?.alpha(0.0f)
 
                 prevBinding = binding
-                parentViewModel.setSelectedPoseIndex(holder.absoluteAdapterPosition)
+                viewModel.setSelectedPoseIndex(holder.absoluteAdapterPosition)
             }
         }
 

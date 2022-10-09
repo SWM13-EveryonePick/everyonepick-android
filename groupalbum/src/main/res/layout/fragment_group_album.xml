@@ -25,6 +25,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             tools:context=".ui.groupalbumlist.groupalbum.GroupAlbumViewPagerFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,6 +116,24 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_top"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_tutorial"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#676566"
+                android:visibility="gone"
+                android:onClick="@{() -> listener.onClickTutorialListener()}"
+                >
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/synthetic_tutorial"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

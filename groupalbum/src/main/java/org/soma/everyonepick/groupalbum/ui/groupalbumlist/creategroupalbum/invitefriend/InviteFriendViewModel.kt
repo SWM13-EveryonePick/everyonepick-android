@@ -55,7 +55,7 @@ class InviteFriendViewModel @Inject constructor(
     val isApiLoading: StateFlow<Boolean> = _isApiLoading
 
     init {
-        savedStateHandle.get<Array<String>>("existingUserClientIdList")?.let {
+        savedStateHandle.get<Array<String>>(EXISTING_USER_CLIENT_ID_LIST)?.let {
             existingUserClientIdList.value = it.toList()
             _maxInviteCount.value -= it.count()
         }
@@ -112,5 +112,10 @@ class InviteFriendViewModel @Inject constructor(
                 }
             }
             .toMutableList()
+    }
+
+
+    companion object {
+        private const val EXISTING_USER_CLIENT_ID_LIST = "existingUserClientIdList"
     }
 }

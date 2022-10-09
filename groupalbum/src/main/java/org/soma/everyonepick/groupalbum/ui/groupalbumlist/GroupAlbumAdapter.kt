@@ -1,5 +1,8 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -13,8 +16,10 @@ import org.soma.everyonepick.groupalbum.databinding.ItemCreateGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.databinding.ItemGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
+import org.soma.everyonepick.groupalbum.ui.HomeViewPagerViewModel
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragmentType
 import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 
 
 /**
@@ -22,7 +27,9 @@ import org.soma.everyonepick.groupalbum.util.GroupAlbumViewType
  * 따라서 데이터는 [원본 데이터]*N + [더미 데이터] 형태를 유지해야 합니다.
  * @see GroupAlbumListViewModel
  */
-class GroupAlbumAdapter: ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
+class GroupAlbumAdapter(
+    private val homeViewPagerViewModel: HomeViewPagerViewModel
+): ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(GroupAlbumDiffCallback()) {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == itemCount - 1) GroupAlbumViewType.CREATE.ordinal
@@ -59,6 +66,11 @@ class GroupAlbumAdapter: ListAdapter<GroupAlbumModel, RecyclerView.ViewHolder>(G
                     } else {
                         binding.checkbox.performTouch()
                     }
+                }
+
+                binding.onLongClickRoot = View.OnLongClickListener {
+                    homeViewPagerViewModel.setSelectionMode(SelectionMode.SELECTION_MODE)
+                    true
                 }
 
                 holder

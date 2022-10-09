@@ -15,7 +15,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.talk.model.Friend
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setTabLayoutEnabled
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common_ui.util.ViewUtil.Companion.setOnPageSelectedListener
@@ -24,9 +26,12 @@ import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.creategroupalbum.invitefriend.InviteFriendFragment
 import org.soma.everyonepick.groupalbum.util.SelectionMode
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
+    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+
     private var _binding: FragmentGroupAlbumBinding? = null
     private val binding get() = _binding!!
 
@@ -45,10 +50,24 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             it.listener = this
         }
 
+        showSyntheticTutorialAtFirst()
+
         subscribeUi()
         setFragmentResultListener()
 
         return binding.root
+    }
+
+    private fun showSyntheticTutorialAtFirst() {
+        lifecycleScope.launch {
+            dataStoreUseCase.run {
+                val hasSyntheticTutorialShown = hasSyntheticTutorialShown.first()
+                if (hasSyntheticTutorialShown != true) {
+                    binding.layoutTutorial.visibility = View.VISIBLE
+                    editHasSyntheticTutorialShown(true)
+                }
+            }
+        }
     }
 
     private fun subscribeUi() {
@@ -179,12 +198,21 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onClickKickButton() {
         if (viewModel.checked.value == 0) return
-        viewModel.kickUsersOutOfGroupAlbum()
-        viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_kick_checked_member))
+            .setOnClickPositiveButton {
+                viewModel.kickCheckedUsersOutOfGroupAlbum()
+                viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
+            }
+            .build().show()
     }
 
     override fun onClickCancelKickButton() {
         viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
+    }
+
+    override fun onClickTutorialListener() {
+        binding.layoutTutorial.visibility = View.GONE
     }
 
 
@@ -202,4 +230,5 @@ interface GroupAlbumFragmentListener {
     fun onClickKickIcon()
     fun onClickKickButton()
     fun onClickCancelKickButton()
+    fun onClickTutorialListener()
 }

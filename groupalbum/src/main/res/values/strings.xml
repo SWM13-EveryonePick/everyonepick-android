@@ -11,8 +11,9 @@
     <string name="toast_failed_to_exit_group_album">단체공유앨범에서 나가는 데 실패했습니다.</string>
 
     <string name="dialog_give_up_to_invite">초대 인원 선택을 그만둡니다.</string>
-    <string name="give_up">그만두기</string>
     <string name="dialog_exit_group_album">단체공유앨범에서 나갑니다.</string>
+
+    <string name="give_up">그만두기</string>
     <string name="exit">나가기</string>
     <string name="tab_text_photo">사진</string>
     <string name="tab_text_pick">합성중</string>
@@ -48,6 +49,7 @@
     <string name="toast_failed_to_invite">사용자를 초대하는 데 실패했습니다.</string>
     <string name="toast_failed_to_rename_group_album">단체공유앨범 이름 변경에 실패했습니다.</string>
     <string name="toast_failed_to_kick">사용자를 강퇴하는 데 실패했습니다.</string>
+    <string name="dialog_kick_checked_member">선택한 멤버를 내보냅니다.</string>
 
     <!--사진-->
     <string name="empty_photos">사진이 없습니다 :/</string>
@@ -93,5 +95,14 @@
     <string name="uncompleted_pick_description">마음에 드는 사진을 선택해주세요!</string>
     <string name="completed_pick_title">친구의 Pick을 기다리는 중</string>
     <string name="completed_pick_description">진행현황을 확인해보세요!</string>
+
+    <string name="pick_info_title">진행현황</string>
+    <string name="pick_info_count_prefix">%d명 중 %d명이</string>
+    <string name="pick_info_count_suffix">PICK 완료!</string>
+    <string name="pick_info_timeout">%02d:%02d:%02d 남았습니다.</string>
+
+    <string name="toast_failed_to_create_pick_info">사진 선택 정보를 등록하는 데 실패했습니다.</string>
+    <string name="toast_failed_to_read_pick_info">사진 선택 정보를 불러오는 데 실패했습니다.</string>
+    <string name="dialog_what_is_timeout">다른 멤버들은 타임아웃 내에 사진 선택을 마쳐야 합니다.\n타임아웃 이후에도 선택을 하지 않은 멤버가 있을 경우, 해당 멤버의 선택을 임의로 처리하고 합성을 진행합니다.</string>
 
 </resources>

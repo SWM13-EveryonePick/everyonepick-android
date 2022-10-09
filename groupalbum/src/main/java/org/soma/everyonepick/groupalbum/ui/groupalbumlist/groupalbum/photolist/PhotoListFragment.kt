@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.R
@@ -123,14 +122,19 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     override fun onClickDeleteButton() {
-        viewModel.deleteCheckedPhotoList(parentViewModel.groupAlbum.value.id)
-        parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_delete_photo))
+            .setOnClickPositiveButton {
+                viewModel.deleteCheckedPhotoList(parentViewModel.groupAlbum.value.id)
+                parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+            }
+            .build().show()
     }
 
     override fun onClickProcessButton() {
         lifecycleScope.launch {
-            val hasShownSyntheticDialog = dataStoreUseCase.hasShownSyntheticDialog.first()
-            if (hasShownSyntheticDialog != true) {
+            val hasSyntheticDialogShown = dataStoreUseCase.hasSyntheticDialogShown.first()
+            if (hasSyntheticDialogShown != true) {
                 DialogWithTwoButton.Builder(requireContext())
                     .setMessage(getString(R.string.dialog_synthetic))
                     .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.confirm))
@@ -138,7 +142,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                         navigateToPickFragment()
                     }
                     .build().show()
-                dataStoreUseCase.editHasShownSyntheticDialog(true)
+                dataStoreUseCase.editHasSyntheticDialogShown(true)
             } else {
                 navigateToPickFragment()
             }
@@ -151,8 +155,10 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
             parentViewModel.groupAlbum.value.id?: -1,
             checkedPhotoList.map { it.id }.toLongArray(),
             checkedPhotoList.map { it.photoUrl }.toTypedArray(),
-            PickFragmentType.TO_CREATE
+            PickFragmentType.TO_CREATE,
+            -1L
         )
+
         findNavController().navigate(directions)
     }
 
