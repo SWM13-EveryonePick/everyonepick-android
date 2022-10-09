@@ -47,7 +47,7 @@
             android:src="@drawable/ic_ico_help"
             android:layout_marginTop="16dp"
             android:layout_marginStart="@dimen/margin_side"
-            android:onClick="@{() -> listener.onClickWhatItTimeoutButton()}"
+            android:onClick="@{() -> listener.onClickWhatIsTimeoutButton()}"
             app:layout_constraintTop_toBottomOf="@id/text_title"
             app:layout_constraintStart_toStartOf="parent"
             />
@@ -59,7 +59,7 @@
             android:text="@string/what_is_timeout"
             android:textColor="@color/primary_blue"
             android:textSize="12sp"
-            android:onClick="@{() -> listener.onClickWhatItTimeoutButton()}"
+            android:onClick="@{() -> listener.onClickWhatIsTimeoutButton()}"
             app:layout_constraintTop_toTopOf="@id/image_help"
             app:layout_constraintBottom_toBottomOf="@id/image_help"
             app:layout_constraintStart_toEndOf="@id/image_help"/>

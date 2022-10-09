@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.soma.everyonepick.common_ui.DialogWithOneButton
 import org.soma.everyonepick.common_ui.util.KeyboardUtil
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentTimeoutBinding
@@ -90,8 +91,10 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
 
 
     /** [TimeoutFragmentListener] */
-    override fun onClickWhatItTimeoutButton() {
-        // TODO
+    override fun onClickWhatIsTimeoutButton() {
+        DialogWithOneButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_what_is_timeout))
+            .build().show()
     }
 
     override fun onClickConfirmButton() {
@@ -110,6 +113,6 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
 }
 
 interface TimeoutFragmentListener {
-    fun onClickWhatItTimeoutButton()
+    fun onClickWhatIsTimeoutButton()
     fun onClickConfirmButton()
 }
