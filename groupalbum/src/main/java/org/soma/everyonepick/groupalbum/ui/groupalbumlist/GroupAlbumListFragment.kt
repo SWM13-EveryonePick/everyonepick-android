@@ -43,7 +43,7 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     ): View {
         _binding = FragmentGroupAlbumListBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = viewLifecycleOwner
-            it.adapter = GroupAlbumAdapter()
+            it.adapter = GroupAlbumAdapter(parentViewModel)
             it.viewModel = viewModel
             it.parentViewModel = parentViewModel
             it.listener = this
