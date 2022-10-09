@@ -154,7 +154,7 @@ class GroupAlbumViewModel @Inject constructor(
         }
     }
 
-    fun kickUsersOutOfGroupAlbum() {
+    fun kickCheckedUsersOutOfGroupAlbum() {
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!

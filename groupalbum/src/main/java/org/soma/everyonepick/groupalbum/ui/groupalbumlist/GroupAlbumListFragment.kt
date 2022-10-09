@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
+import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentGroupAlbumListBinding
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.HomeViewPagerFragmentDirections
@@ -96,8 +98,13 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
 
     /** GroupAlbumListFragmentListener */
     override fun onClickDeleteButton() {
-        viewModel.leaveCheckedGroupAlbum()
-        parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_exit_group_album))
+            .setOnClickPositiveButton {
+                viewModel.leaveCheckedGroupAlbum()
+                parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
+            }
+            .build().show()
     }
 
     override fun onClickCancelButton() {

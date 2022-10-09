@@ -123,8 +123,13 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     override fun onClickDeleteButton() {
-        viewModel.deleteCheckedPhotoList(parentViewModel.groupAlbum.value.id)
-        parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_delete_photo))
+            .setOnClickPositiveButton {
+                viewModel.deleteCheckedPhotoList(parentViewModel.groupAlbum.value.id)
+                parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+            }
+            .build().show()
     }
 
     override fun onClickProcessButton() {

@@ -179,8 +179,13 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     override fun onClickKickButton() {
         if (viewModel.checked.value == 0) return
-        viewModel.kickUsersOutOfGroupAlbum()
-        viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_kick_checked_member))
+            .setOnClickPositiveButton {
+                viewModel.kickCheckedUsersOutOfGroupAlbum()
+                viewModel.setMemberSelectionMode(SelectionMode.NORMAL_MODE)
+            }
+            .build().show()
     }
 
     override fun onClickCancelKickButton() {
