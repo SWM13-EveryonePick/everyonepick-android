@@ -1,5 +1,8 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist
 
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -67,7 +70,6 @@ class GroupAlbumAdapter(
 
                 binding.onLongClickRoot = View.OnLongClickListener {
                     homeViewPagerViewModel.setSelectionMode(SelectionMode.SELECTION_MODE)
-                    binding.checkbox.isChecked = true
                     true
                 }
 

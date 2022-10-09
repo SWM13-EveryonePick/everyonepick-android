@@ -13,7 +13,7 @@ import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBin
 import org.soma.everyonepick.common_ui.util.performTouch
 
 class PosePackAdapter(
-    private val parentViewModel: PreviewViewModel
+    private val viewModel: PreviewViewModel
 ): ListAdapter<PosePackModel, PosePackAdapter.PosePackViewHolder>(PosePackDiffCallback()) {
     /**
      * 최근에 선택한 뷰 바인딩입니다. 아이템을 클릭할 때 기존에 선택된 아이템을 선택 해제 처리해야 하는데, 이를 위해 사용됩니다.
@@ -28,7 +28,7 @@ class PosePackAdapter(
             binding.textName.setTextColor(Color.WHITE)
 
             prevBinding = binding
-            parentViewModel.setSelectedPosePackIndex(holder.absoluteAdapterPosition)
+            viewModel.setSelectedPosePackIndex(holder.absoluteAdapterPosition)
         }
 
         return holder
@@ -36,7 +36,7 @@ class PosePackAdapter(
 
     override fun onBindViewHolder(holder: PosePackViewHolder, position: Int) {
         // 기본으로 선택되어 있어야 할 아이템 클릭 처리
-        if (holder.absoluteAdapterPosition == parentViewModel.selectedPosePackIndex.value) {
+        if (holder.absoluteAdapterPosition == viewModel.selectedPosePackIndex.value) {
             holder.getBinding().textName.performTouch()
         }
 

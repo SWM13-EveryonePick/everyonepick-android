@@ -1,5 +1,7 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist
 
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
@@ -13,6 +15,7 @@ import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.databinding.ItemPhotoBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 
 class PhotoAdapter(
     private val groupAlbumViewModel: GroupAlbumViewModel
@@ -34,6 +37,11 @@ class PhotoAdapter(
             } else {
                 binding.checkbox.performTouch()
             }
+        }
+
+        binding.onLongClickRoot = View.OnLongClickListener {
+            groupAlbumViewModel.setPhotoSelectionMode(SelectionMode.SELECTION_MODE)
+            true
         }
 
         return holder

@@ -23,7 +23,7 @@ import org.soma.everyonepick.groupalbum.util.SelectionMode
  * @see MemberModelList
  */
 class MemberAdapter(
-    private val parentViewModel: GroupAlbumViewModel
+    private val viewModel: GroupAlbumViewModel
 ): ListAdapter<MemberModel, RecyclerView.ViewHolder>(MemberDiffCall()) {
 
     override fun getItemViewType(position: Int): Int {
@@ -37,8 +37,8 @@ class MemberAdapter(
                 val binding = getViewDataBinding<ItemInviteMemberBinding>(parent, R.layout.item_invite_member).apply {
                     onClickRoot = View.OnClickListener {
                         // 초대 페이지로 이동
-                        val existingUserClientIdList = parentViewModel.memberModelList.value.getListWithoutDummy()
-                            .filter { it.user.id != parentViewModel.me.value.id }
+                        val existingUserClientIdList = viewModel.memberModelList.value.getListWithoutDummy()
+                            .filter { it.user.id != viewModel.me.value.id }
                             .map { it.user.clientId?: "" }
                             .toTypedArray()
                         val directions = GroupAlbumFragmentDirections.toInviteFriendFragment(
@@ -66,8 +66,8 @@ class MemberAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val memberModel = getItem(position)
         when (holder) {
-            is MemberViewHolder -> holder.bind(memberModel, parentViewModel)
-            is InviteMemberViewHolder -> holder.bind(memberModel, parentViewModel)
+            is MemberViewHolder -> holder.bind(memberModel, viewModel)
+            is InviteMemberViewHolder -> holder.bind(memberModel, viewModel)
         }
     }
 
