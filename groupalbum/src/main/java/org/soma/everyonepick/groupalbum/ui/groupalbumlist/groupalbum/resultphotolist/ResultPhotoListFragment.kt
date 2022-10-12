@@ -5,9 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.databinding.FragmentResultPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 import org.soma.everyonepick.groupalbum.util.SelectionMode
@@ -32,7 +40,42 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
             it.parentViewModel = parentViewModel
             it.listener = this
         }
+
+        subscribeUi()
+
         return binding.root
+    }
+
+    private fun subscribeUi() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    parentViewModel.photoSelectionMode.collectLatest { selectionMode ->
+                        viewModel.setIsCheckboxVisible(selectionMode == SelectionMode.SELECTION_MODE.ordinal)
+                    }
+                }
+
+                launch {
+                    parentViewModel.groupAlbum.collect {
+                        if (it.id != null && it.id != GroupAlbum.dummyData.id)
+                            viewModel.readResultPhotoModelList(it.id)
+                    }
+                }
+
+                launch {
+                    viewModel.toastMessage.collectLatest {
+                        if (it.isNotEmpty()) {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        parentViewModel.setResultPhotoSelectionMode(SelectionMode.NORMAL_MODE)
     }
 
     override fun onDestroy() {
@@ -43,7 +86,13 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
 
     /** [ResultPhotoListFragmentListener] */
     override fun onClickDeleteButton() {
-
+        DialogWithTwoButton.Builder(requireContext())
+            .setMessage(getString(R.string.dialog_delete_result_photo))
+            .setOnClickPositiveButton {
+                viewModel.deleteCheckedResultPhotoList(parentViewModel.groupAlbum.value.id)
+                parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+            }
+            .build().show()
     }
 
     override fun onClickCancelButton() {

@@ -131,10 +131,9 @@ class GroupAlbumUseCase @Inject constructor(
     /** [GroupAlbumResultPhotoService] */
     suspend fun readResultPhotoList(
         token: String,
-        groupAlbumId: Long,
-        pickId: Long
+        groupAlbumId: Long
     ): MutableList<ResultPhotoModel> {
-        val data = groupAlbumResultPhotoService.readResultPhotoList(token, groupAlbumId, pickId).data
+        val data = groupAlbumResultPhotoService.readResultPhotoList(token, groupAlbumId).data
         return data.toResultPhotoModelList()
     }
 }
