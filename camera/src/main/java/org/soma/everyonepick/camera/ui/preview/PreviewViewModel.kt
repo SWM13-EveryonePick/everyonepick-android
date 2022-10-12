@@ -26,6 +26,9 @@ class PreviewViewModel @Inject constructor(
     private val _posePackModelList = MutableStateFlow((3..7).map { PosePackModel(it) }.toMutableList())
     val posePackModelList: StateFlow<MutableList<PosePackModel>> = _posePackModelList
 
+    private val _currentPosePackIndex = MutableStateFlow(0)
+    val currentPosePackIndex: StateFlow<Int> = _currentPosePackIndex
+
     private val _selectedPosePackIndex = MutableStateFlow(0)
     val selectedPosePackIndex: StateFlow<Int> = _selectedPosePackIndex
 
@@ -52,14 +55,18 @@ class PreviewViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _selectedPosePackIndex.collect {
+            _currentPosePackIndex.collect {
                 readPoseModelList()
+
+                if (it == selectedPoseIndex.value) {
+                    // TODO: 기존에 선택했던 item 클릭 이벤트
+                }
             }
         }
     }
 
     private fun readPoseModelList() {
-        val peopleNum = _posePackModelList.value.elementAtOrNull(_selectedPosePackIndex.value)?.peopleNum ?: return
+        val peopleNum = _posePackModelList.value.elementAtOrNull(_currentPosePackIndex.value)?.peopleNum ?: return
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
             _poseModelList.value = poseUseCase.readPoseList(token, peopleNum.toString())
@@ -70,8 +77,12 @@ class PreviewViewModel @Inject constructor(
         _isPosePackShown.value = !_isPosePackShown.value
     }
 
-    fun setSelectedPosePackIndex(position: Int) {
-        _selectedPosePackIndex.value = position
+    fun setCurrentPosePackIndex(position: Int) {
+        _currentPosePackIndex.value = position
+    }
+
+    fun updateSelectedPosePackIndex() {
+        _selectedPosePackIndex.value = _currentPosePackIndex.value
     }
 
     fun setSelectedPoseIndex(index: Int?) {

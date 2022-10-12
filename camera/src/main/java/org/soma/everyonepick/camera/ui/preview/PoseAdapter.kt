@@ -33,6 +33,7 @@ class PoseAdapter(
                 prevBinding?.layoutSelected?.animate()?.alpha(0.0f)
 
                 prevBinding = binding
+                viewModel.updateSelectedPosePackIndex()
                 viewModel.setSelectedPoseIndex(holder.absoluteAdapterPosition)
             }
         }

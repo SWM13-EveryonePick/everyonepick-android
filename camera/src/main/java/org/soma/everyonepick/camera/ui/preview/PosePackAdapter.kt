@@ -28,7 +28,7 @@ class PosePackAdapter(
             binding.textName.setTextColor(Color.WHITE)
 
             prevBinding = binding
-            viewModel.setSelectedPosePackIndex(holder.absoluteAdapterPosition)
+            viewModel.setCurrentPosePackIndex(holder.absoluteAdapterPosition)
         }
 
         return holder
