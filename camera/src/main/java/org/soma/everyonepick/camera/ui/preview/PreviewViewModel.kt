@@ -5,17 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.camera.data.entity.PosePack
-import org.soma.everyonepick.camera.domain.model.PoseModel
+import org.soma.everyonepick.camera.data.entity.Pose
 import org.soma.everyonepick.camera.domain.model.PosePackModel
-import org.soma.everyonepick.camera.domain.usecase.PosePackUseCase
 import org.soma.everyonepick.camera.domain.usecase.PoseUseCase
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import java.io.File
@@ -23,19 +20,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
-    private val posePackUseCase: PosePackUseCase,
     private val poseUseCase: PoseUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ): ViewModel() {
-    private val _posePackModelList = MutableStateFlow(mutableListOf<PosePackModel>())
+    private val _posePackModelList = MutableStateFlow((3..7).map { PosePackModel(it) }.toMutableList())
     val posePackModelList: StateFlow<MutableList<PosePackModel>> = _posePackModelList
 
     private val _selectedPosePackIndex = MutableStateFlow(0)
     val selectedPosePackIndex: StateFlow<Int> = _selectedPosePackIndex
 
 
-    private val _poseModelList = MutableStateFlow(mutableListOf<PoseModel>())
-    val poseModelList: StateFlow<MutableList<PoseModel>> = _poseModelList
+    private val _poseModelList = MutableStateFlow(mutableListOf<Pose>())
+    val poseModelList: StateFlow<MutableList<Pose>> = _poseModelList
 
     private val _selectedPoseIndex = MutableStateFlow<Int?>(null)
     val selectedPoseIndex: StateFlow<Int?> = _selectedPoseIndex
@@ -55,34 +51,18 @@ class PreviewViewModel @Inject constructor(
 
 
     init {
-        readPosePackModelList()
-
         viewModelScope.launch {
             _selectedPosePackIndex.collect {
                 readPoseModelList()
             }
         }
-
-        viewModelScope.launch {
-            _posePackModelList.collect {
-                readPoseModelList()
-            }
-        }
-    }
-
-
-    private fun readPosePackModelList() {
-        viewModelScope.launch {
-            val token = dataStoreUseCase.bearerAccessToken.first()!!
-            _posePackModelList.value = posePackUseCase.readPosePackList(token)
-        }
     }
 
     private fun readPoseModelList() {
-        val posePackId = _posePackModelList.value.elementAtOrNull(_selectedPosePackIndex.value)?.id ?: return
+        val peopleNum = _posePackModelList.value.elementAtOrNull(_selectedPosePackIndex.value)?.peopleNum ?: return
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
-            _poseModelList.value = poseUseCase.readPoseList(token, posePackId)
+            _poseModelList.value = poseUseCase.readPoseList(token, peopleNum.toString())
         }
     }
 

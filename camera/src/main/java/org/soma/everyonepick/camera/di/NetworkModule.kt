@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.soma.everyonepick.camera.data.source.PosePackService
 import org.soma.everyonepick.camera.data.source.PoseService
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -13,15 +13,7 @@ import javax.inject.Singleton
 class NetworkModule {
     @Singleton
     @Provides
-    fun providePosePackService(): PosePackService {
-        // TODO: RetrofitFactory.create(PosePackRepository::class.java)
-        return PosePackService()
-    }
-
-    @Singleton
-    @Provides
-    fun providePoseService(): PoseService {
-        // TODO: RetrofitFactory.create(PoseRepository::class.java)
-        return PoseService()
+    fun providePoseService(retrofit: Retrofit): PoseService {
+        return retrofit.create(PoseService::class.java)
     }
 }

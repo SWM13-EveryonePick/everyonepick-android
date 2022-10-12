@@ -27,7 +27,7 @@
             android:textSize="12sp"
             android:clickable="true"
             android:onClick="@{onClickText}"
-            android:text="@{posePackModel.name}"
+            android:text="@{@string/people_number(posePackModel.peopleNum)}"
             android:textColor="@color/gray"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintTop_toTopOf="parent"

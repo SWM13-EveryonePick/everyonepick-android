@@ -55,7 +55,7 @@ class PosePackAdapter(
 
 private class PosePackDiffCallback: DiffUtil.ItemCallback<PosePackModel>() {
     override fun areItemsTheSame(oldItem: PosePackModel, newItem: PosePackModel): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.peopleNum == newItem.peopleNum
     }
 
     override fun areContentsTheSame(oldItem: PosePackModel, newItem: PosePackModel): Boolean {

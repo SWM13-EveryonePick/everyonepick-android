@@ -4,7 +4,7 @@
     <data>
         <variable
             name="poseModel"
-            type="org.soma.everyonepick.camera.domain.model.PoseModel" />
+            type="org.soma.everyonepick.camera.data.entity.Pose" />
         <variable
             name="onClickImage"
             type="android.view.View.OnClickListener" />
@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:onClick="@{onClickImage}"
-            photoUrl="@{poseModel.url}"
+            photoUrl="@{poseModel.poseUrl}"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.camera.R
+import org.soma.everyonepick.camera.data.entity.Pose
 import org.soma.everyonepick.camera.databinding.ItemPoseBinding
-import org.soma.everyonepick.camera.domain.model.PoseModel
 import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
 
 class PoseAdapter(
     private val viewModel: PreviewViewModel
-): ListAdapter<PoseModel, PoseAdapter.PoseViewHolder>(PoseDiffCallback()) {
+): ListAdapter<Pose, PoseAdapter.PoseViewHolder>(PoseDiffCallback()) {
     /**
      * 최근에 선택한 뷰 바인딩입니다. 아이템을 클릭할 때 기존에 선택된 아이템을 선택 해제 처리해야 하는데, 이를 위해 사용됩니다.
      */
@@ -45,19 +45,19 @@ class PoseAdapter(
     }
 
     class PoseViewHolder(private val binding: ItemPoseBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(poseModel: PoseModel) {
+        fun bind(poseModel: Pose) {
             binding.poseModel = poseModel
             binding.executePendingBindings()
         }
     }
 }
 
-private class PoseDiffCallback: DiffUtil.ItemCallback<PoseModel>() {
-    override fun areItemsTheSame(oldItem: PoseModel, newItem: PoseModel): Boolean {
+private class PoseDiffCallback: DiffUtil.ItemCallback<Pose>() {
+    override fun areItemsTheSame(oldItem: Pose, newItem: Pose): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: PoseModel, newItem: PoseModel): Boolean {
+    override fun areContentsTheSame(oldItem: Pose, newItem: Pose): Boolean {
         return oldItem == newItem
     }
 }
