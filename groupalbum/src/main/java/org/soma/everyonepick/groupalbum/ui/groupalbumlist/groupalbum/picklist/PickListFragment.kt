@@ -36,7 +36,7 @@ class PickListFragment : Fragment(), PickAdapterCallback {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPickListBinding.inflate(inflater, container, false).also {
-            it.lifecycleOwner = this
+            it.lifecycleOwner = viewLifecycleOwner
             it.uncompletedAdapter = PickAdapter(this)
             it.completedAdapter = PickAdapter(this)
             it.viewModel = viewModel

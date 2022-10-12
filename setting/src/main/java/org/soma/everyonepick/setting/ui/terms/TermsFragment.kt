@@ -23,7 +23,7 @@ class TermsFragment : Fragment(), TermsFragmentListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTermsBinding.inflate(inflater, container, false).also {
-            it.lifecycleOwner = this
+            it.lifecycleOwner = viewLifecycleOwner
             it.listener = this
         }
         return binding.root

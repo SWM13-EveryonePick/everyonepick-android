@@ -25,7 +25,7 @@ class PickInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPickInfoBinding.inflate(inflater, container, false).also {
-            it.lifecycleOwner = this
+            it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.onClickConfirmButton = View.OnClickListener {
                 findNavController().navigateUp()

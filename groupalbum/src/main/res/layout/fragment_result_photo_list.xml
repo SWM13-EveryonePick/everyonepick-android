@@ -1,17 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <data>
+        <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
+        <variable
+            name="listener"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoListFragmentListener"/>
+        <variable
+            name="viewModel"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoListViewModel"/>
+        <variable
+            name="parentViewModel"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel"/>
+        <variable
+            name="adapter"
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoAdapter"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoListFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.photolist.PhotoListFragment">
 
-        <TextView
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:clipToPadding="false"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3"
+                    tools:listitem="@layout/item_result_photo"
+                    adapter="@{adapter}"
+                    submitList="@{viewModel.resultPhotoModelList}"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            visibleWhen="@{viewModel.resultPhotoModelList.size() > 0}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_fab"
+                android:orientation="vertical"
+                android:clipToPadding="false"
+                visibleWhen="@{parentViewModel.photoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_delete"
+                    android:layout_marginBottom="@dimen/margin_bottom_fab"
+                    style="@style/ImageViewFab"
+                    android:onClick="@{() -> listener.onClickDeleteButton()}"/>
+
+                <ImageView
+                    android:src="@drawable/ic_btn_floating_closed"
+                    style="@style/ImageViewFab"
+                    android:onClick="@{() -> listener.onClickCancelButton()}"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            visibleWhen="@{viewModel.resultPhotoModelList.size() == 0}">
 
-    </FrameLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ico_empty"
+                android:layout_marginBottom="@dimen/margin_top_empty_text"
+                app:layout_constraintBottom_toTopOf="@id/text_emptyphotos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/text_emptyphotos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom_empty_text"
+                visibleWhen="@{!viewModel.isApiLoading}"
+                style="@style/EmptyText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/empty_photos"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                visibleWhen="@{viewModel.isApiLoading}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>
