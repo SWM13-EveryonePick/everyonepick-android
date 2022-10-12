@@ -22,15 +22,20 @@ class PhotoViewModel @Inject constructor(
 ): ViewModel() {
     private val groupAlbumId = savedStateHandle[GROUP_ALBUM_ID] ?: -1L
     private val photoId = savedStateHandle[PHOTO_ID] ?: -1L
+    private val resultPhotoId = savedStateHandle[RESULT_PHOTO_ID] ?: -1L
 
     private val _photoUrl = MutableStateFlow(savedStateHandle[PHOTO_URL] ?: "")
     val photoUrl: StateFlow<String?> = _photoUrl
 
-    fun deletePhoto(onSuccess: () -> Unit, onFailure: () -> Unit) {
+    fun deletePhotoOrResultPhoto(onSuccess: () -> Unit, onFailure: () -> Unit) {
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                groupAlbumUseCase.deletePhotoList(token, groupAlbumId, PhotoIdListRequest(listOf(PhotoId(photoId))))
+                if (photoId != -1L) {
+                    groupAlbumUseCase.deletePhotoList(token, groupAlbumId, PhotoIdListRequest(listOf(PhotoId(photoId))))
+                } else if (resultPhotoId != -1L) {
+                    // TODO: delete result photo by [resultPhotoId]
+                }
                 onSuccess.invoke()
             } catch (e: Exception) {
                 onFailure.invoke()
@@ -41,6 +46,7 @@ class PhotoViewModel @Inject constructor(
     companion object {
         private const val GROUP_ALBUM_ID = "groupAlbumId"
         private const val PHOTO_ID = "photoId"
+        private const val RESULT_PHOTO_ID = "resultPhotoId"
         private const val PHOTO_URL = "photoUrl"
     }
 }

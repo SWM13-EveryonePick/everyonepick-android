@@ -31,6 +31,7 @@ class PhotoAdapter(
                 val directions = GroupAlbumFragmentDirections.toPhotoFragment(
                     groupAlbumViewModel.groupAlbum.value.id?: -1,
                     item.photo.id,
+                    -1,
                     item.photo.photoUrl
                 )
                 binding.root.findNavController().navigate(directions)

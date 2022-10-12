@@ -91,6 +91,9 @@
             android:name="photoId"
             app:argType="long"/>
         <argument
+            android:name="resultPhotoId"
+            app:argType="long"/>
+        <argument
             android:name="photoUrl"
             app:argType="string"/>
     </fragment>

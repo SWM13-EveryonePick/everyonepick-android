@@ -2,6 +2,7 @@ package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphot
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.soma.everyonepick.common_ui.util.BindingUtil.Companion.getViewDataBinding
@@ -9,6 +10,7 @@ import org.soma.everyonepick.common_ui.util.performTouch
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.ItemResultPhotoBinding
 import org.soma.everyonepick.groupalbum.domain.model.ResultPhotoModel
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumFragmentDirections
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
 import org.soma.everyonepick.groupalbum.util.SelectionMode
 
@@ -23,7 +25,13 @@ class ResultPhotoAdapter(
             val item = getItem(holder.absoluteAdapterPosition)
             // 일반 모드일 때
             if (!item.isCheckboxVisible) {
-                // TODO: navigate to photo fragment
+                val directions = GroupAlbumFragmentDirections.toPhotoFragment(
+                    groupAlbumViewModel.groupAlbum.value.id?: -1,
+                    -1,
+                    item.resultPhoto.id,
+                    item.resultPhoto.resultPhotoUrl
+                )
+                binding.root.findNavController().navigate(directions)
             } else {
                 binding.checkbox.performTouch()
             }
