@@ -22,7 +22,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbumlist.groupalbum.photolist.PhotoListFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoListFragment">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_photo"
+                    android:id="@+id/recyclerview_resultphoto"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingTop="20dp"
@@ -65,7 +65,7 @@
                 android:padding="@dimen/margin_fab"
                 android:orientation="vertical"
                 android:clipToPadding="false"
-                visibleWhen="@{parentViewModel.photoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()}"
+                visibleWhen="@{parentViewModel.resultPhotoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
@@ -94,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_ico_empty"
                 android:layout_marginBottom="@dimen/margin_top_empty_text"
+                visibleWhen="@{!viewModel.isApiLoading}"
                 app:layout_constraintBottom_toTopOf="@id/text_emptyphotos"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

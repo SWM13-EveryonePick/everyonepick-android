@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.databinding.FragmentResultPhotoListBinding
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel
+import org.soma.everyonepick.groupalbum.util.SelectionMode
 
 @AndroidEntryPoint
 class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
@@ -46,7 +47,7 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
     }
 
     override fun onClickCancelButton() {
-
+        parentViewModel.setResultPhotoSelectionMode(SelectionMode.NORMAL_MODE)
     }
 
 
