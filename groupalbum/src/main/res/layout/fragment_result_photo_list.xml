@@ -104,13 +104,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_bottom_empty_text"
+                android:text="@string/empty_result_photos"
                 visibleWhen="@{!viewModel.isApiLoading}"
                 style="@style/EmptyText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/empty_photos"/>
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"
