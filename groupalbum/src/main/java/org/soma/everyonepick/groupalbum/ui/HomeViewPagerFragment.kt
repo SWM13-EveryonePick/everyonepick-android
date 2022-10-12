@@ -152,8 +152,8 @@ class HomeViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 

@@ -39,8 +39,8 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 

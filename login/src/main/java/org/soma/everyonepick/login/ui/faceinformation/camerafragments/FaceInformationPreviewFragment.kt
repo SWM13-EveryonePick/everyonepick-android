@@ -132,10 +132,10 @@ class FaceInformationPreviewFragment : Fragment() {
 
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
-
         cameraExecutor.shutdown()
+
+        super.onDestroy()
     }
 
 

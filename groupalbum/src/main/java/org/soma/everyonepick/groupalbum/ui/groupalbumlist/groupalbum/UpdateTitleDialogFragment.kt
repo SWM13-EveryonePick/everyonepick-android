@@ -48,7 +48,7 @@ class UpdateTitleDialogFragment(
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 }
