@@ -27,7 +27,7 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAccountSettingBinding.inflate(inflater, container, false).also {
-            it.lifecycleOwner = this
+            it.lifecycleOwner = viewLifecycleOwner
             it.listener = this
         }
         return binding.root
@@ -39,8 +39,8 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 

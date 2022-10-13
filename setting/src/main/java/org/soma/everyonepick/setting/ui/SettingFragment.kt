@@ -37,7 +37,7 @@ class SettingFragment : Fragment(), SettingFragmentListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingBinding.inflate(inflater, container, false).also {
-            it.lifecycleOwner = this
+            it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.listener = this
         }
@@ -51,8 +51,8 @@ class SettingFragment : Fragment(), SettingFragmentListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 

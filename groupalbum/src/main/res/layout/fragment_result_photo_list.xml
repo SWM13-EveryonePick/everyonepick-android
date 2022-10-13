@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="org.soma.everyonepick.groupalbum.util.SelectionMode"/>
         <variable
             name="listener"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListFragmentListener"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoListFragmentListener"/>
         <variable
             name="viewModel"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoListViewModel"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoListViewModel"/>
         <variable
             name="parentViewModel"
             type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.GroupAlbumViewModel"/>
         <variable
             name="adapter"
-            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.photolist.PhotoAdapter"/>
+            type="org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.groupalbumlist.groupalbum.photolist.PhotoListFragment">
+        tools:context=".ui.groupalbumlist.groupalbum.resultphotolist.ResultPhotoListFragment">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_photo"
+                    android:id="@+id/recyclerview_resultphoto"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingTop="20dp"
@@ -43,9 +43,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
-                    tools:listitem="@layout/item_photo"
+                    tools:listitem="@layout/item_result_photo"
                     adapter="@{adapter}"
-                    submitList="@{viewModel.photoModelList}"
+                    submitList="@{viewModel.resultPhotoModelList}"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -55,18 +55,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            visibleWhen="@{viewModel.photoModelList.size() > 0}"
+            visibleWhen="@{viewModel.resultPhotoModelList.size() > 0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-
-            <ImageView
-                android:layout_margin="@dimen/margin_fab"
-                android:src="@drawable/ic_btn_floating_add"
-                visibleWhen="@{parentViewModel.photoSelectionMode == SelectionMode.NORMAL_MODE.ordinal()}"
-                android:onClick="@{() -> listener.onClickUploadPhotoButton()}"
-                style="@style/ImageViewFab"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -74,7 +65,7 @@
                 android:padding="@dimen/margin_fab"
                 android:orientation="vertical"
                 android:clipToPadding="false"
-                visibleWhen="@{parentViewModel.photoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()}"
+                visibleWhen="@{parentViewModel.resultPhotoSelectionMode == SelectionMode.SELECTION_MODE.ordinal()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
@@ -83,12 +74,6 @@
                     android:layout_marginBottom="@dimen/margin_bottom_fab"
                     style="@style/ImageViewFab"
                     android:onClick="@{() -> listener.onClickDeleteButton()}"/>
-
-                <ImageView
-                    android:src="@drawable/ic_btn_floating_synthetic"
-                    android:layout_marginBottom="@dimen/margin_bottom_fab"
-                    style="@style/ImageViewFab"
-                    android:onClick="@{() -> listener.onClickProcessButton()}"/>
 
                 <ImageView
                     android:src="@drawable/ic_btn_floating_closed"
@@ -102,7 +87,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            visibleWhen="@{viewModel.photoModelList.size() == 0}">
+            visibleWhen="@{viewModel.resultPhotoModelList.size() == 0}">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -119,32 +104,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_bottom_empty_text"
+                android:text="@string/empty_result_photos"
                 visibleWhen="@{!viewModel.isApiLoading}"
                 style="@style/EmptyText"
-                app:layout_constraintBottom_toTopOf="@id/cardview_emptybutton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/empty_photos"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardview_emptybutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                visibleWhen="@{!viewModel.isApiLoading}"
-                style="@style/EmptyButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{() -> listener.onClickUploadPhotoButton()}">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/upload_photo"
-                    style="@style/EmptyButtonInnerText"/>
-
-            </com.google.android.material.card.MaterialCardView>
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -158,5 +124,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

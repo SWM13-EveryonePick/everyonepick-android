@@ -62,6 +62,9 @@ class GroupAlbumViewModel @Inject constructor(
     private val _photoSelectionMode = MutableStateFlow(SelectionMode.NORMAL_MODE.ordinal)
     val photoSelectionMode: StateFlow<Int> = _photoSelectionMode
 
+    private val _resultPhotoSelectionMode = MutableStateFlow(SelectionMode.NORMAL_MODE.ordinal)
+    val resultPhotoSelectionMode: StateFlow<Int> = _resultPhotoSelectionMode
+
     init {
         viewModelScope.launch {
             bearerAccessToken.collectLatest {
@@ -111,6 +114,10 @@ class GroupAlbumViewModel @Inject constructor(
 
     fun setMemberSelectionMode(selectionMode: SelectionMode) {
         _memberSelectionMode.value = selectionMode.ordinal
+    }
+
+    fun setResultPhotoSelectionMode(selectionMode: SelectionMode) {
+        _resultPhotoSelectionMode.value = selectionMode.ordinal
     }
 
     fun setGroupAlbum(groupAlbum: GroupAlbum) {

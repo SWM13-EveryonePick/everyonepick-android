@@ -62,7 +62,7 @@ class FaceInformationDescriptionFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 }

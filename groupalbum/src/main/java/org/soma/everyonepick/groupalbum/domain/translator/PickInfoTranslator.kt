@@ -6,7 +6,7 @@ import org.soma.everyonepick.groupalbum.domain.model.PickInfoModel
 class PickInfoTranslator {
     companion object {
         fun PickInfo.toPickInfoModel(): PickInfoModel {
-            return PickInfoModel(userCnt, pickUserCnt, timeOut)
+            return PickInfoModel(userCnt, pickUserCnt, timeout)
         }
     }
 }

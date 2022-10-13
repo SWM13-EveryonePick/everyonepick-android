@@ -12,22 +12,22 @@ import org.soma.everyonepick.groupalbum.data.entity.PickDetail
 import org.soma.everyonepick.groupalbum.data.entity.PickInfo
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
+import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumResultPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
-import org.soma.everyonepick.groupalbum.domain.model.GroupAlbumModel
-import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
-import org.soma.everyonepick.groupalbum.domain.model.PickInfoModel
-import org.soma.everyonepick.groupalbum.domain.model.PickModel
+import org.soma.everyonepick.groupalbum.domain.model.*
 import org.soma.everyonepick.groupalbum.domain.translator.GroupAlbumTranslator.Companion.toGroupAlbumModelList
 import org.soma.everyonepick.groupalbum.domain.translator.PhotoTranslator.Companion.toPhotoModelList
 import org.soma.everyonepick.groupalbum.domain.translator.PickInfoTranslator.Companion.toPickInfoModel
 import org.soma.everyonepick.groupalbum.domain.translator.PickTranslator.Companion.toPickModelList
+import org.soma.everyonepick.groupalbum.domain.translator.ResultPhotoTranslator.Companion.toResultPhotoModelList
 import org.soma.everyonepick.groupalbum.domain.translator.toUserListWithClientId
 import javax.inject.Inject
 
 class GroupAlbumUseCase @Inject constructor(
     private val groupAlbumService: GroupAlbumService,
     private val groupAlbumPhotoService: GroupAlbumPhotoService,
-    private val groupAlbumPickService: GroupAlbumPickService
+    private val groupAlbumPickService: GroupAlbumPickService,
+    private val groupAlbumResultPhotoService: GroupAlbumResultPhotoService
 ) {
     /** [GroupAlbumService] */
     suspend fun readGroupAlbumModelList(token: String): MutableList<GroupAlbumModel> {
@@ -125,5 +125,15 @@ class GroupAlbumUseCase @Inject constructor(
     ): PickInfoModel {
         val pickInfo = groupAlbumPickService.createPickInfo(token, groupAlbumId, pickId, photoIdList).data
         return pickInfo.toPickInfoModel()
+    }
+
+
+    /** [GroupAlbumResultPhotoService] */
+    suspend fun readResultPhotoList(
+        token: String,
+        groupAlbumId: Long
+    ): MutableList<ResultPhotoModel> {
+        val data = groupAlbumResultPhotoService.readResultPhotoList(token, groupAlbumId).data
+        return data.toResultPhotoModelList()
     }
 }

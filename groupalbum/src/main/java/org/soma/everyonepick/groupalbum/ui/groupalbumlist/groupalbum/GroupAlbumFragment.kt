@@ -85,6 +85,17 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                 }
 
                 launch {
+                    viewModel.resultPhotoSelectionMode.collectLatest { resultPhotoSelectionMode ->
+                        // 선택 모드일 때는 TabLayout을 비활성화 합니다.
+                        setTabLayoutEnabled(
+                            enabled = resultPhotoSelectionMode == SelectionMode.NORMAL_MODE.ordinal,
+                            binding.viewpager2,
+                            binding.tablayout
+                        )
+                    }
+                }
+
+                launch {
                     viewModel.memberSelectionMode.collectLatest { memberSelectionMode ->
                         viewModel.setIsCheckboxVisibleOfMember(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
                     }
@@ -158,17 +169,27 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 
     /** [GroupAlbumFragmentListener] */
     override fun onClickSelectButton() {
-        viewModel.setPhotoSelectionMode(
-            if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE
-            else SelectionMode.NORMAL_MODE
-        )
+        when (viewModel.viewPagerPosition.value) {
+            0 -> {
+                viewModel.setPhotoSelectionMode(
+                    if (viewModel.photoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE
+                    else SelectionMode.NORMAL_MODE
+                )
+            }
+            2 -> {
+                viewModel.setResultPhotoSelectionMode(
+                    if (viewModel.resultPhotoSelectionMode.value == SelectionMode.NORMAL_MODE.ordinal) SelectionMode.SELECTION_MODE
+                    else SelectionMode.NORMAL_MODE
+                )
+            }
+        }
     }
 
     override fun onClickDrawerButton() {

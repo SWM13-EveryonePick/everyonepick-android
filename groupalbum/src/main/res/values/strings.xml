@@ -105,4 +105,11 @@
     <string name="toast_failed_to_read_pick_info">사진 선택 정보를 불러오는 데 실패했습니다.</string>
     <string name="dialog_what_is_timeout">다른 멤버들은 타임아웃 내에 사진 선택을 마쳐야 합니다.\n타임아웃 이후에도 선택을 하지 않은 멤버가 있을 경우, 해당 멤버의 선택을 임의로 처리하고 합성을 진행합니다.</string>
 
+    <!--합성완료-->
+    <string name="empty_result_photos">합성완료 사진이 없습니다 :/</string>
+    <string name="toast_failed_to_read_result_photo">합성완료 사진을 불러오는 데 실패했습니다.</string>
+    <string name="toast_failed_to_delete_result_photo">합성완료 사진을 삭제하는 데 실패했습니다.</string>
+
+    <string name="dialog_delete_result_photo">합성완료 사진을 삭제합니다.</string>
+
 </resources>

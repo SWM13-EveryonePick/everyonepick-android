@@ -78,8 +78,8 @@ class PickFragment : Fragment(), PickFragmentListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
     /** [PickFragmentListener] */

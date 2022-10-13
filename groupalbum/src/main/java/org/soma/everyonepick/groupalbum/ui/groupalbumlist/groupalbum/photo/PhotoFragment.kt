@@ -39,8 +39,8 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 
@@ -55,7 +55,7 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
             .setMessage(getString(R.string.dialog_delete_photo))
             .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.delete))
             .setOnClickPositiveButton {
-                viewModel.deletePhoto(
+                viewModel.deletePhotoOrResultPhoto(
                     { findNavController().navigateUp() },
                     { Toast.makeText(requireContext(), getString(R.string.toast_failed_to_delete_photo), Toast.LENGTH_SHORT).show() }
                 )

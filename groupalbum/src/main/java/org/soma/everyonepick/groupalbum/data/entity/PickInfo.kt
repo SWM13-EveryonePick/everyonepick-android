@@ -1,7 +1,10 @@
 package org.soma.everyonepick.groupalbum.data.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class PickInfo(
     val userCnt: Int,
     val pickUserCnt: Int,
-    val timeOut: Long
+    @SerializedName("timeOut")
+    val timeout: Long
 )

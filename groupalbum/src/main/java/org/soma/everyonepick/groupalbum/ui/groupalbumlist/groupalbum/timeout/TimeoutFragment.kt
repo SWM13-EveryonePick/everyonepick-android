@@ -35,7 +35,7 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTimeoutBinding.inflate(inflater, container, false).also {
-            it.lifecycleOwner = this
+            it.lifecycleOwner = viewLifecycleOwner
             it.viewModel = viewModel
             it.listener = this
         }
@@ -85,8 +85,8 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         _binding = null
+        super.onDestroy()
     }
 
 
