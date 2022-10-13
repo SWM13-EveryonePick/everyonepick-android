@@ -35,7 +35,7 @@ class PosePackAdapter(
     }
 
     override fun onBindViewHolder(holder: PosePackViewHolder, position: Int) {
-        // 기본으로 선택되어 있어야 할 아이템 클릭 처리
+        // 포즈팩을 처음 열었을 때 기본으로 선택되어 있는 포즈팩 클릭 처리(보통 0번째 포즈팩)
         if (holder.absoluteAdapterPosition == viewModel.selectedPosePackIndex) {
             holder.getBinding().textName.performTouch()
         }

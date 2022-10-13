@@ -70,8 +70,8 @@ class PreviewViewModel @Inject constructor(
         val peopleNum = _posePackModelList.value.elementAtOrNull(currentPosePackIndex.value)?.peopleNum ?: return
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
-            // 이전에 열어두었던 pose가 있을 경우 isChecked를 true로 둡니다.
             val newPoseModelList = poseUseCase.readPoseList(token, peopleNum.toString())
+            // 이전에 열어두었던 pose가 있을 경우 isChecked를 true로 둡니다.
             newPoseModelList.forEach {
                 if (it.pose.id == selectedPoseId.value) it.isChecked.value = true
             }

@@ -30,7 +30,7 @@ class PoseAdapter(
                 } else {
                     viewModel.onClickPoseItem(null)
                 }
-            } catch (e: Exception) {}
+            } catch (e: Exception) {} // Pose recycler view가 api 호출을 하고 있는 도중에 클릭할 경우 에러 발생
         }
 
         return holder
