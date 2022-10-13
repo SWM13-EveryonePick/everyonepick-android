@@ -28,9 +28,9 @@ class PreviewViewModel @Inject constructor(
     private val _posePackModelList = MutableStateFlow((3..7).map { PosePackModel(it) }.toMutableList())
     val posePackModelList: StateFlow<MutableList<PosePackModel>> = _posePackModelList
 
-
     private val _poseModelList = MutableStateFlow(mutableListOf<PoseModel>())
     val poseModelList: StateFlow<MutableList<PoseModel>> = _poseModelList
+
 
     /** 현재 열려있는 PosePack의 Index */
     private val _currentPosePackIndex = MutableStateFlow(0)
@@ -70,6 +70,7 @@ class PreviewViewModel @Inject constructor(
         val peopleNum = _posePackModelList.value.elementAtOrNull(currentPosePackIndex.value)?.peopleNum ?: return
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
+            // 이전에 열어두었던 pose가 있을 경우 isChecked를 true로 둡니다.
             val newPoseModelList = poseUseCase.readPoseList(token, peopleNum.toString())
             newPoseModelList.forEach {
                 if (it.pose.id == selectedPoseId.value) it.isChecked.value = true
@@ -87,8 +88,8 @@ class PreviewViewModel @Inject constructor(
     }
 
     fun onClickPoseItem(index: Int?) {
+        // 이전에 선택했던 pose 선택 해제
         if (selectedPoseIndex != null && selectedPoseIndex != index) {
-            // 이전에 선택했던 pose 선택 해제
             _poseModelList.value[selectedPoseIndex!!].isChecked.value = false
             val prev = _poseModelList.value
             _poseModelList.value = mutableListOf()

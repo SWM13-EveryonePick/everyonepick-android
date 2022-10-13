@@ -23,14 +23,14 @@ class PoseAdapter(
             binding.checkbox.performTouch()
         }
         binding.onClickCheckbox = View.OnClickListener {
-            val item = getItem(holder.absoluteAdapterPosition)
-            if (item.isChecked.value) {
-                viewModel.onClickPoseItem(holder.absoluteAdapterPosition)
-            } else {
-                viewModel.onClickPoseItem(null)
-            }
-
-            binding.executePendingBindings()
+            try {
+                val item = getItem(holder.absoluteAdapterPosition)
+                if (item.isChecked.value) {
+                    viewModel.onClickPoseItem(holder.absoluteAdapterPosition)
+                } else {
+                    viewModel.onClickPoseItem(null)
+                }
+            } catch (e: Exception) {}
         }
 
         return holder
