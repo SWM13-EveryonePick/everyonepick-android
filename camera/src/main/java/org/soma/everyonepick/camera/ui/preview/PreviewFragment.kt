@@ -90,9 +90,11 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.selectedPoseIndex.collectLatest {
+                    viewModel.selectedPoseId.collectLatest {
                         if (it != null) {
-                            bindImageView(binding.imagePose, viewModel.poseModelList.value[it].pose.poseUrl)
+                            viewModel.getSelectedPoseModel()?.let { poseModel ->
+                                bindImageView(binding.imagePose, poseModel.pose.poseUrl)
+                            }
                         } else {
                             binding.imagePose.setImageResource(0)
                         }

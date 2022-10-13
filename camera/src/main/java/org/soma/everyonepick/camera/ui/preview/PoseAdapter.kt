@@ -29,6 +29,8 @@ class PoseAdapter(
             } else {
                 viewModel.onClickPoseItem(null)
             }
+
+            binding.executePendingBindings()
         }
 
         return holder

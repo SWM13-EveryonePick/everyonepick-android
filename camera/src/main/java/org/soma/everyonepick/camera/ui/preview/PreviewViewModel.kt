@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,18 +28,21 @@ class PreviewViewModel @Inject constructor(
     private val _posePackModelList = MutableStateFlow((3..7).map { PosePackModel(it) }.toMutableList())
     val posePackModelList: StateFlow<MutableList<PosePackModel>> = _posePackModelList
 
-    private val _currentPosePackIndex = MutableStateFlow(0)
-    val currentPosePackIndex: StateFlow<Int> = _currentPosePackIndex
-
-    private val _selectedPosePackIndex = MutableStateFlow(0)
-    val selectedPosePackIndex: StateFlow<Int> = _selectedPosePackIndex
-
 
     private val _poseModelList = MutableStateFlow(mutableListOf<PoseModel>())
     val poseModelList: StateFlow<MutableList<PoseModel>> = _poseModelList
 
-    private val _selectedPoseIndex = MutableStateFlow<Int?>(null)
-    val selectedPoseIndex: StateFlow<Int?> = _selectedPoseIndex
+    /** 현재 열려있는 PosePack의 Index */
+    private val _currentPosePackIndex = MutableStateFlow(0)
+    val currentPosePackIndex: StateFlow<Int> = _currentPosePackIndex
+
+    private var _selectedPosePackIndex = 0
+    val selectedPosePackIndex = _selectedPosePackIndex
+
+    private val _selectedPoseId = MutableStateFlow<Long?>(null)
+    val selectedPoseId: StateFlow<Long?> = _selectedPoseId
+
+    private var selectedPoseIndex: Int? = null
 
 
     private val _isPosePackShown = MutableStateFlow(false)
@@ -56,21 +60,21 @@ class PreviewViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _currentPosePackIndex.collect {
+            currentPosePackIndex.collect {
                 readPoseModelList()
-
-                if (it == selectedPoseIndex.value) {
-                    // TODO: 기존에 선택했던 item 클릭 이벤트
-                }
             }
         }
     }
 
     private fun readPoseModelList() {
-        val peopleNum = _posePackModelList.value.elementAtOrNull(_currentPosePackIndex.value)?.peopleNum ?: return
+        val peopleNum = _posePackModelList.value.elementAtOrNull(currentPosePackIndex.value)?.peopleNum ?: return
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
-            _poseModelList.value = poseUseCase.readPoseList(token, peopleNum.toString())
+            val newPoseModelList = poseUseCase.readPoseList(token, peopleNum.toString())
+            newPoseModelList.forEach {
+                if (it.pose.id == selectedPoseId.value) it.isChecked.value = true
+            }
+            _poseModelList.value = newPoseModelList
         }
     }
 
@@ -83,8 +87,21 @@ class PreviewViewModel @Inject constructor(
     }
 
     fun onClickPoseItem(index: Int?) {
-        _selectedPoseIndex.value = index
-        _selectedPosePackIndex.value = _currentPosePackIndex.value
+        if (selectedPoseIndex != null && selectedPoseIndex != index) {
+            // 이전에 선택했던 pose 선택 해제
+            _poseModelList.value[selectedPoseIndex!!].isChecked.value = false
+            val prev = _poseModelList.value
+            _poseModelList.value = mutableListOf()
+            _poseModelList.value = prev.toMutableList()
+        }
+
+        selectedPoseIndex = index
+        _selectedPosePackIndex = _currentPosePackIndex.value
+        _selectedPoseId.value = index?.let { poseModelList.value[it].pose.id }
+    }
+
+    fun getSelectedPoseModel(): PoseModel? {
+        return selectedPoseIndex?.let { poseModelList.value[it] }
     }
 
     /**

@@ -36,7 +36,7 @@ class PosePackAdapter(
 
     override fun onBindViewHolder(holder: PosePackViewHolder, position: Int) {
         // 기본으로 선택되어 있어야 할 아이템 클릭 처리
-        if (holder.absoluteAdapterPosition == viewModel.selectedPosePackIndex.value) {
+        if (holder.absoluteAdapterPosition == viewModel.selectedPosePackIndex) {
             holder.getBinding().textName.performTouch()
         }
 
