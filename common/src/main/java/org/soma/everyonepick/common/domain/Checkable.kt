@@ -1,4 +1,4 @@
-package org.soma.everyonepick.groupalbum.domain
+package org.soma.everyonepick.common.domain
 
 import kotlinx.coroutines.flow.MutableStateFlow
 

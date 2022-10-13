@@ -2,7 +2,7 @@ package org.soma.everyonepick.groupalbum.domain.model
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.common.data.entity.User
-import org.soma.everyonepick.groupalbum.domain.Checkable
+import org.soma.everyonepick.common.domain.Checkable
 
 /**
  * 단체공유앨범에 속하는 [User]를 지칭합니다.

@@ -1,7 +1,7 @@
 package org.soma.everyonepick.groupalbum.domain.model
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.groupalbum.data.entity.Photo
-import org.soma.everyonepick.groupalbum.domain.Checkable
+import org.soma.everyonepick.common.domain.Checkable
 
 data class PhotoModel(
     val photo: Photo,

@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.data.entity.Pose
+import org.soma.everyonepick.camera.domain.model.PoseModel
 import org.soma.everyonepick.camera.domain.model.PosePackModel
 import org.soma.everyonepick.camera.domain.usecase.PoseUseCase
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
@@ -33,8 +34,8 @@ class PreviewViewModel @Inject constructor(
     val selectedPosePackIndex: StateFlow<Int> = _selectedPosePackIndex
 
 
-    private val _poseModelList = MutableStateFlow(mutableListOf<Pose>())
-    val poseModelList: StateFlow<MutableList<Pose>> = _poseModelList
+    private val _poseModelList = MutableStateFlow(mutableListOf<PoseModel>())
+    val poseModelList: StateFlow<MutableList<PoseModel>> = _poseModelList
 
     private val _selectedPoseIndex = MutableStateFlow<Int?>(null)
     val selectedPoseIndex: StateFlow<Int?> = _selectedPoseIndex
@@ -81,12 +82,9 @@ class PreviewViewModel @Inject constructor(
         _currentPosePackIndex.value = position
     }
 
-    fun updateSelectedPosePackIndex() {
-        _selectedPosePackIndex.value = _currentPosePackIndex.value
-    }
-
-    fun setSelectedPoseIndex(index: Int?) {
+    fun onClickPoseItem(index: Int?) {
         _selectedPoseIndex.value = index
+        _selectedPosePackIndex.value = _currentPosePackIndex.value
     }
 
     /**

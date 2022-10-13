@@ -92,7 +92,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 launch {
                     viewModel.selectedPoseIndex.collectLatest {
                         if (it != null) {
-                            bindImageView(binding.imagePose, viewModel.poseModelList.value[it].poseUrl)
+                            bindImageView(binding.imagePose, viewModel.poseModelList.value[it].pose.poseUrl)
                         } else {
                             binding.imagePose.setImageResource(0)
                         }

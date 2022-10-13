@@ -2,7 +2,7 @@ package org.soma.everyonepick.groupalbum.domain.model
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
-import org.soma.everyonepick.groupalbum.domain.Checkable
+import org.soma.everyonepick.common.domain.Checkable
 
 class GroupAlbumModel(
     val groupAlbum: GroupAlbum,
