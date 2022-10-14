@@ -64,6 +64,10 @@ class ResultPhotoListViewModel @Inject constructor(
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         _resultPhotoModelList.value.setIsCheckboxVisible(isCheckboxVisible)
-        _resultPhotoModelList.value = _resultPhotoModelList.value.map { it.copy() }.toMutableList()
+        val prev = resultPhotoModelList.value
+        _resultPhotoModelList.value = mutableListOf()
+        viewModelScope.launch {
+            _resultPhotoModelList.emit(prev)
+        }
     }
 }

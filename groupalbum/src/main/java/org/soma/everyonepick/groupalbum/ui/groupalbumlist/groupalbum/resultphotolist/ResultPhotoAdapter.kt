@@ -1,5 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
