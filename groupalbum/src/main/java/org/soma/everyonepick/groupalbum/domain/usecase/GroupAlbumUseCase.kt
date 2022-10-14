@@ -139,8 +139,7 @@ class GroupAlbumUseCase @Inject constructor(
         token: String,
         groupAlbumId: Long,
         resultPhotoIdList: ResultPhotoIdListRequest
-    ): MutableList<ResultPhotoModel> {
-        val data = groupAlbumResultPhotoService.deleteResultPhotoList(token, groupAlbumId, resultPhotoIdList).data
-        return data.toResultPhotoModelList()
+    ) {
+        groupAlbumResultPhotoService.deleteResultPhotoList(token, groupAlbumId, resultPhotoIdList)
     }
 }

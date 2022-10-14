@@ -1,6 +1,7 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +51,7 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    parentViewModel.photoSelectionMode.collectLatest { selectionMode ->
+                    parentViewModel.resultPhotoSelectionMode.collectLatest { selectionMode ->
                         viewModel.setIsCheckboxVisible(selectionMode == SelectionMode.SELECTION_MODE.ordinal)
                     }
                 }
@@ -90,7 +91,7 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
             .setMessage(getString(R.string.dialog_delete_result_photo))
             .setOnClickPositiveButton {
                 viewModel.deleteCheckedResultPhotoList(parentViewModel.groupAlbum.value.id)
-                parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+                parentViewModel.setResultPhotoSelectionMode(SelectionMode.NORMAL_MODE)
             }
             .build().show()
     }

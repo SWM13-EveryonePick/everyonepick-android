@@ -1,6 +1,7 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,7 +54,8 @@ class ResultPhotoListViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val checkedPhotoIdList = _resultPhotoModelList.value.toCheckedItemList()
                     .map { PhotoId(it.resultPhoto.id) }
-                _resultPhotoModelList.value = groupAlbumUseCase.deleteResultPhotoList(token, groupAlbumId!!, ResultPhotoIdListRequest(checkedPhotoIdList))
+                groupAlbumUseCase.deleteResultPhotoList(token, groupAlbumId!!, ResultPhotoIdListRequest(checkedPhotoIdList))
+                _resultPhotoModelList.value = groupAlbumUseCase.readResultPhotoList(token, groupAlbumId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_delete_result_photo)
             }
