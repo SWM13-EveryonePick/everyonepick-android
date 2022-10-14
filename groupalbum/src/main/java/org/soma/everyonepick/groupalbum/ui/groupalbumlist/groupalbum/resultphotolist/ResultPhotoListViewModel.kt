@@ -9,12 +9,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.domain.Checkable.Companion.setIsCheckboxVisible
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
-import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
-import org.soma.everyonepick.groupalbum.data.entity.PhotoId
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.ResultPhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
