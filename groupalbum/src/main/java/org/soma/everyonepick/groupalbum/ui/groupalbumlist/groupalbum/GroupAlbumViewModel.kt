@@ -14,8 +14,8 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
+import org.soma.everyonepick.common.domain.Checkable.Companion.setIsCheckboxVisible
+import org.soma.everyonepick.common.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.modellist.MemberModelList
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.util.SelectionMode

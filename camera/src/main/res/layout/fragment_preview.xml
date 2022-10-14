@@ -80,10 +80,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
+            android:id="@+id/image_pose"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            poseModelList="@{viewModel.poseModelList}"
-            selectedPoseIndex="@{viewModel.selectedPoseIndex}"
             app:layout_constraintTop_toBottomOf="@id/layout_top"
             app:layout_constraintBottom_toTopOf="@id/layout_bottom"
             />
@@ -149,11 +148,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_posepack"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 adapter="@{posePackAdapter}"
                 submitList="@{viewModel.posePackModelList}"
                 tools:listitem="@layout/item_pose_pack"/>

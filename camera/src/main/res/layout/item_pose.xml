@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="poseModel"
             type="org.soma.everyonepick.camera.domain.model.PoseModel" />
         <variable
-            name="onClickImage"
+            name="onClickRoot"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="onClickCheckbox"
             type="android.view.View.OnClickListener" />
     </data>
 
@@ -15,32 +19,30 @@
         android:layout_height="@dimen/size_pose"
         android:layout_margin="4dp"
         android:clipToOutline="true"
-        android:background="@drawable/pose_background">
+        android:background="@drawable/pose_background"
+        android:onClick="@{onClickRoot}">
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:onClick="@{onClickImage}"
-            photoUrl="@{poseModel.url}"
+            photoUrl="@{poseModel.pose.poseUrl}"
             />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_selected"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.0"
-            android:background="@color/white"
-            >
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:src="@drawable/check"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:checked="@={poseModel.isChecked}"
+            android:button="@null"
+            android:background="@drawable/pose_checkbox"
+            android:alpha="0.5"
+            android:onClick="@{onClickCheckbox}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

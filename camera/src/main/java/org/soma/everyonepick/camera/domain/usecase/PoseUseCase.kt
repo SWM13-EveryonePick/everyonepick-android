@@ -8,7 +8,8 @@ import javax.inject.Inject
 class PoseUseCase @Inject constructor(
     private val poseService: PoseService
 ) {
-    suspend fun readPoseList(token: String, posePackId: Long): MutableList<PoseModel> {
-        return poseService.readPoseList(token, posePackId).data.toPoseModelList()
+    suspend fun readPoseList(token: String, peopleNum: String): MutableList<PoseModel> {
+        val data = poseService.readPoseList(token, peopleNum).data
+        return data.toPoseModelList()
     }
 }

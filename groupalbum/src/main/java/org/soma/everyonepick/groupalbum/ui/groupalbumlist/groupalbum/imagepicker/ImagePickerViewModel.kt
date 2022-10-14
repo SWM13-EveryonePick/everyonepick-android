@@ -8,7 +8,7 @@ import android.provider.MediaStore
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
+import org.soma.everyonepick.common.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.ImageModel
 import java.io.File
 

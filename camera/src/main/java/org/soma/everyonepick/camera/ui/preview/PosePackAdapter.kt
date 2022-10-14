@@ -28,15 +28,15 @@ class PosePackAdapter(
             binding.textName.setTextColor(Color.WHITE)
 
             prevBinding = binding
-            viewModel.setSelectedPosePackIndex(holder.absoluteAdapterPosition)
+            viewModel.setCurrentPosePackIndex(holder.absoluteAdapterPosition)
         }
 
         return holder
     }
 
     override fun onBindViewHolder(holder: PosePackViewHolder, position: Int) {
-        // 기본으로 선택되어 있어야 할 아이템 클릭 처리
-        if (holder.absoluteAdapterPosition == viewModel.selectedPosePackIndex.value) {
+        // 포즈팩을 처음 열었을 때 기본으로 선택되어 있는 포즈팩 클릭 처리(보통 0번째 포즈팩)
+        if (holder.absoluteAdapterPosition == viewModel.selectedPosePackIndex) {
             holder.getBinding().textName.performTouch()
         }
 
@@ -55,7 +55,7 @@ class PosePackAdapter(
 
 private class PosePackDiffCallback: DiffUtil.ItemCallback<PosePackModel>() {
     override fun areItemsTheSame(oldItem: PosePackModel, newItem: PosePackModel): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.peopleNum == newItem.peopleNum
     }
 
     override fun areContentsTheSame(oldItem: PosePackModel, newItem: PosePackModel): Boolean {

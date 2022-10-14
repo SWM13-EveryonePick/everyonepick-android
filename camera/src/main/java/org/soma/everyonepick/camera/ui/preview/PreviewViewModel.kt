@@ -12,10 +12,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.camera.data.entity.PosePack
+import org.soma.everyonepick.camera.data.entity.Pose
 import org.soma.everyonepick.camera.domain.model.PoseModel
 import org.soma.everyonepick.camera.domain.model.PosePackModel
-import org.soma.everyonepick.camera.domain.usecase.PosePackUseCase
 import org.soma.everyonepick.camera.domain.usecase.PoseUseCase
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import java.io.File
@@ -23,22 +22,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PreviewViewModel @Inject constructor(
-    private val posePackUseCase: PosePackUseCase,
     private val poseUseCase: PoseUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ): ViewModel() {
-    private val _posePackModelList = MutableStateFlow(mutableListOf<PosePackModel>())
+    private val _posePackModelList = MutableStateFlow((3..7).map { PosePackModel(it) }.toMutableList())
     val posePackModelList: StateFlow<MutableList<PosePackModel>> = _posePackModelList
-
-    private val _selectedPosePackIndex = MutableStateFlow(0)
-    val selectedPosePackIndex: StateFlow<Int> = _selectedPosePackIndex
-
 
     private val _poseModelList = MutableStateFlow(mutableListOf<PoseModel>())
     val poseModelList: StateFlow<MutableList<PoseModel>> = _poseModelList
 
-    private val _selectedPoseIndex = MutableStateFlow<Int?>(null)
-    val selectedPoseIndex: StateFlow<Int?> = _selectedPoseIndex
+
+    /** 현재 열려있는 PosePack의 Index */
+    private val _currentPosePackIndex = MutableStateFlow(0)
+    val currentPosePackIndex: StateFlow<Int> = _currentPosePackIndex
+
+    private var _selectedPosePackIndex = 0
+    val selectedPosePackIndex = _selectedPosePackIndex
+
+    private val _selectedPoseId = MutableStateFlow<Long?>(null)
+    val selectedPoseId: StateFlow<Long?> = _selectedPoseId
+
+    private var selectedPoseIndex: Int? = null
 
 
     private val _isPosePackShown = MutableStateFlow(false)
@@ -55,34 +59,23 @@ class PreviewViewModel @Inject constructor(
 
 
     init {
-        readPosePackModelList()
-
         viewModelScope.launch {
-            _selectedPosePackIndex.collect {
+            currentPosePackIndex.collect {
                 readPoseModelList()
             }
-        }
-
-        viewModelScope.launch {
-            _posePackModelList.collect {
-                readPoseModelList()
-            }
-        }
-    }
-
-
-    private fun readPosePackModelList() {
-        viewModelScope.launch {
-            val token = dataStoreUseCase.bearerAccessToken.first()!!
-            _posePackModelList.value = posePackUseCase.readPosePackList(token)
         }
     }
 
     private fun readPoseModelList() {
-        val posePackId = _posePackModelList.value.elementAtOrNull(_selectedPosePackIndex.value)?.id ?: return
+        val peopleNum = _posePackModelList.value.elementAtOrNull(currentPosePackIndex.value)?.peopleNum ?: return
         viewModelScope.launch {
             val token = dataStoreUseCase.bearerAccessToken.first()!!
-            _poseModelList.value = poseUseCase.readPoseList(token, posePackId)
+            val newPoseModelList = poseUseCase.readPoseList(token, peopleNum.toString())
+            // 이전에 열어두었던 pose가 있을 경우 isChecked를 true로 둡니다.
+            newPoseModelList.forEach {
+                if (it.pose.id == selectedPoseId.value) it.isChecked.value = true
+            }
+            _poseModelList.value = newPoseModelList
         }
     }
 
@@ -90,12 +83,26 @@ class PreviewViewModel @Inject constructor(
         _isPosePackShown.value = !_isPosePackShown.value
     }
 
-    fun setSelectedPosePackIndex(position: Int) {
-        _selectedPosePackIndex.value = position
+    fun setCurrentPosePackIndex(position: Int) {
+        _currentPosePackIndex.value = position
     }
 
-    fun setSelectedPoseIndex(index: Int?) {
-        _selectedPoseIndex.value = index
+    fun onClickPoseItem(index: Int?) {
+        // 이전에 선택했던 pose 선택 해제
+        if (selectedPoseIndex != null && selectedPoseIndex != index) {
+            _poseModelList.value[selectedPoseIndex!!].isChecked.value = false
+            val prev = _poseModelList.value
+            _poseModelList.value = mutableListOf()
+            _poseModelList.value = prev.toMutableList()
+        }
+
+        selectedPoseIndex = index
+        _selectedPosePackIndex = _currentPosePackIndex.value
+        _selectedPoseId.value = index?.let { poseModelList.value[it].pose.id }
+    }
+
+    fun getSelectedPoseModel(): PoseModel? {
+        return selectedPoseIndex?.let { poseModelList.value[it] }
     }
 
     /**

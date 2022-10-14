@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.util.KakaoUtil.Companion.toUserWithClientId
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.toCheckedItemList
+import org.soma.everyonepick.common.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.domain.model.InviteFriendModel
 import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
 import java.lang.Integer.max

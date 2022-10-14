@@ -2,7 +2,7 @@ package org.soma.everyonepick.groupalbum.domain.model
 
 import android.net.Uri
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.soma.everyonepick.groupalbum.domain.Checkable
+import org.soma.everyonepick.common.domain.Checkable
 
 data class ImageModel(
     var uri: Uri,

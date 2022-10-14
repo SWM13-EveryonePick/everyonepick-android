@@ -32,6 +32,7 @@ import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.rotate
 import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toBitmap
 import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common.util.HomeActivityUtil
+import org.soma.everyonepick.common_ui.binding.bindImageView
 
 import java.util.concurrent.Executors
 
@@ -88,6 +89,18 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private fun subscribeUi() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.selectedPoseId.collectLatest {
+                        if (it != null) {
+                            viewModel.getSelectedPoseModel()?.let { poseModel ->
+                                bindImageView(binding.imagePose, poseModel.pose.poseUrl)
+                            }
+                        } else {
+                            binding.imagePose.setImageResource(0)
+                        }
+                    }
+                }
+
                 launch {
                     viewModel.isPosePackShown.collectLatest {
                         if (it) {

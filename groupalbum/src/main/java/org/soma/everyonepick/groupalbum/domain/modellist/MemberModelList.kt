@@ -1,6 +1,5 @@
 package org.soma.everyonepick.groupalbum.domain.modellist
 
-import org.soma.everyonepick.groupalbum.domain.Checkable.Companion.setIsCheckboxVisible
 import org.soma.everyonepick.groupalbum.domain.model.MemberModel
 import java.lang.Integer.max
 
