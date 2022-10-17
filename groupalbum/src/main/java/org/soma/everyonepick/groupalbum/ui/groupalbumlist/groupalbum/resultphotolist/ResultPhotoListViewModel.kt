@@ -1,6 +1,7 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.resultphotolist
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,8 +11,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.Checkable.Companion.setIsCheckboxVisible
+import org.soma.everyonepick.common.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.dto.ResultPhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.domain.model.ResultPhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -47,12 +51,11 @@ class ResultPhotoListViewModel @Inject constructor(
     fun deleteCheckedResultPhotoList(groupAlbumId: Long?) {
         viewModelScope.launch {
             try {
-                // TODO
-                /*val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val checkedPhotoIdList = _resultPhotoModelList.value.toCheckedItemList()
                     .map { PhotoId(it.resultPhoto.id) }
-                groupAlbumUseCase.deleteResultPhotoList(token, groupAlbumId!!, PhotoIdListRequest(checkedPhotoIdList))
-                readPhotoModelList(groupAlbumId)*/
+                groupAlbumUseCase.deleteResultPhotoList(token, groupAlbumId!!, ResultPhotoIdListRequest(checkedPhotoIdList))
+                _resultPhotoModelList.value = groupAlbumUseCase.readResultPhotoList(token, groupAlbumId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_delete_result_photo)
             }
@@ -61,6 +64,6 @@ class ResultPhotoListViewModel @Inject constructor(
 
     fun setIsCheckboxVisible(isCheckboxVisible: Boolean) {
         _resultPhotoModelList.value.setIsCheckboxVisible(isCheckboxVisible)
-        _resultPhotoModelList.value = _resultPhotoModelList.value.map { it.copy() }.toMutableList()
+        _resultPhotoModelList.value = resultPhotoModelList.value.map { it.copy() }.toMutableList()
     }
 }

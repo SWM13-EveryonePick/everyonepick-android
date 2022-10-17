@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.dto.ResultPhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import javax.inject.Inject
@@ -34,7 +35,7 @@ class PhotoViewModel @Inject constructor(
                 if (photoId != -1L) {
                     groupAlbumUseCase.deletePhotoList(token, groupAlbumId, PhotoIdListRequest(listOf(PhotoId(photoId))))
                 } else if (resultPhotoId != -1L) {
-                    // TODO: delete result photo by [resultPhotoId]
+                    groupAlbumUseCase.deleteResultPhotoList(token, groupAlbumId, ResultPhotoIdListRequest(listOf(PhotoId(resultPhotoId))))
                 }
                 onSuccess.invoke()
             } catch (e: Exception) {

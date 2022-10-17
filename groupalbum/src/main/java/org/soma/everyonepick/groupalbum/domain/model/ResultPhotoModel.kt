@@ -8,4 +8,6 @@ data class ResultPhotoModel(
     val resultPhoto: ResultPhoto,
     override var isChecked: MutableStateFlow<Boolean>,
     override var isCheckboxVisible: Boolean
-): Checkable
+): Checkable {
+    fun copy() = ResultPhotoModel(resultPhoto.copy(), MutableStateFlow(isChecked.value), isCheckboxVisible)
+}

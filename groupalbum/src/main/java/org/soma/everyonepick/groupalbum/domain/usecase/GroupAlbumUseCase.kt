@@ -6,10 +6,8 @@ import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.dto.PickRequest
 import org.soma.everyonepick.groupalbum.data.dto.PickResponse
-import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
-import org.soma.everyonepick.groupalbum.data.entity.Pick
-import org.soma.everyonepick.groupalbum.data.entity.PickDetail
-import org.soma.everyonepick.groupalbum.data.entity.PickInfo
+import org.soma.everyonepick.groupalbum.data.dto.ResultPhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.entity.*
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumResultPhotoService
@@ -135,5 +133,13 @@ class GroupAlbumUseCase @Inject constructor(
     ): MutableList<ResultPhotoModel> {
         val data = groupAlbumResultPhotoService.readResultPhotoList(token, groupAlbumId).data
         return data.toResultPhotoModelList()
+    }
+
+    suspend fun deleteResultPhotoList(
+        token: String,
+        groupAlbumId: Long,
+        resultPhotoIdList: ResultPhotoIdListRequest
+    ) {
+        groupAlbumResultPhotoService.deleteResultPhotoList(token, groupAlbumId, resultPhotoIdList)
     }
 }
