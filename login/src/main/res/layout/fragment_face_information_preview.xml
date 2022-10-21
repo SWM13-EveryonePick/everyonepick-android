@@ -25,64 +25,75 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
-        <ImageView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:src="@drawable/ic_face_id_white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.35"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/face_information_camera_title"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@id/text_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/text_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/face_information_camera_description"
-            android:textColor="@color/white"
-            android:layout_marginBottom="40dp"
-            app:layout_constraintBottom_toTopOf="@id/button_upload"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <Button
-            android:id="@+id/button_upload"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/BottomButton"
-            android:onClick="@{onClickUploadButton}"
-            android:text="@string/face_information_description_button"
-            android:enabled="@{!viewModel.isApiLoading}"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gray"
-            android:alpha="0.5"
-            visibleWhen="@{viewModel.isApiLoading}">
+            android:background="@android:color/transparent">
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:src="@drawable/ic_face_id_white"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.35"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/face_information_camera_title"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@id/text_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/face_information_camera_description"
+                android:textColor="@color/white"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@id/imagebutton_shutter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imagebutton_shutter"
+                android:layout_width="@dimen/size_shutter_button"
+                android:layout_height="@dimen/size_shutter_button"
+                android:src="@drawable/ic_baseline_brightness_1_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="@{!viewModel.isApiLoading}"
+                android:onClick="@{onClickUploadButton}"
+                android:layout_marginBottom="24dp"
+                app:civ_border_color="@color/primary_blue"
+                app:civ_border_width="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                visibleWhen="@{viewModel.isApiLoading}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5"
+                android:background="@color/gray">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

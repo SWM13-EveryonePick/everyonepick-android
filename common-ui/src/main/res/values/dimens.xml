@@ -10,7 +10,7 @@
     <dimen name="size_checkbox">24dp</dimen>
     <dimen name="size_large_checkbox">36dp</dimen>
     <dimen name="width_dialog">300dp</dimen>
-
+    <dimen name="size_shutter_button">75dp</dimen>
     <dimen name="radius_small">15dp</dimen>
     <dimen name="radius_medium">20dp</dimen>
     <dimen name="radius_large">30dp</dimen>
