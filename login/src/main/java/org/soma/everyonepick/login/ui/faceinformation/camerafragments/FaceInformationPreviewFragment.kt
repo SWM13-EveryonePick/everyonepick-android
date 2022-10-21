@@ -130,6 +130,7 @@ class FaceInformationPreviewFragment : Fragment() {
 
         imageCapture = ImageCapture.Builder()
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+            .setTargetAspectRatio(AspectRatio.RATIO_4_3)
             .setJpegQuality(50)
             .build()
 
@@ -137,7 +138,7 @@ class FaceInformationPreviewFragment : Fragment() {
 
         try {
             preview?.setSurfaceProvider(binding.previewview.surfaceProvider)
-            camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview, imageCapture)
+            camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageCapture)
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
         }

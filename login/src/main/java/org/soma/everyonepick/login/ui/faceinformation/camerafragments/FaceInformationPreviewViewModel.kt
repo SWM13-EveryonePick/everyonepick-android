@@ -35,15 +35,18 @@ class FaceInformationPreviewViewModel @Inject constructor(
     @SuppressLint("UnsafeOptInUsageError")
     fun uploadFaceInfo(imageProxy: ImageProxy, onSuccess: () -> Unit, doOnEnd: () -> Unit) {
         viewModelScope.launch {
+            var responseMessage = ""
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val requestBody = imageProxy.image?.toByteArray()?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 val part = MultipartBody.Part.createFormData("image", "face_${userUseCase.readUser(token).id}", requestBody!!)
-                userUseCase.uploadFaceInfo(token, part)
+                responseMessage = userUseCase.uploadFaceInfo(token, part).message
 
                 onSuccess.invoke()
             } catch (e: Exception) {
-                _toastMessage.value = context.getString(R.string.toast_failed_to_upload_face_info)
+                Log.e("uploadFaceInfo", responseMessage)
+                Log.e("uploadFaceInfo", e.toString())
+                _toastMessage.value = "${context.getString(R.string.toast_failed_to_upload_face_info)} $responseMessage"
             }
             doOnEnd.invoke()
         }

@@ -4,20 +4,20 @@ import android.graphics.*
 import android.media.Image
 import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
+import java.nio.ByteBuffer
 
 class ImageUtil {
     companion object {
         fun Image.toByteArray(): ByteArray {
-            val buffer = planes[0].buffer
-            buffer.rewind()
-            return ByteArray(buffer.capacity())
+            val planeProxy = planes[0]
+            val buffer: ByteBuffer = planeProxy.buffer
+            val bytes = ByteArray(buffer.remaining())
+            buffer.get(bytes)
+            return bytes
         }
 
         fun Image.toBitmap(): Bitmap {
-            val buffer = planes[0].buffer
-            buffer.rewind()
-            val bytes = ByteArray(buffer.capacity())
-            buffer.get(bytes)
+            val bytes = toByteArray()
             return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
         }
 
