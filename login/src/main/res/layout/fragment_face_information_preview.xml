@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="viewModel"
+            type="org.soma.everyonepick.login.ui.faceinformation.camerafragments.FaceInformationPreviewViewModel" />
+        <variable
             name="onClickUploadButton"
             type="android.view.View.OnClickListener" />
     </data>
@@ -20,6 +23,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/ic_face_id_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.35"
             />
 
         <TextView
@@ -51,7 +65,26 @@
             style="@style/BottomButton"
             android:onClick="@{onClickUploadButton}"
             android:text="@string/face_information_description_button"
+            android:enabled="@{!viewModel.isApiLoading}"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray"
+            android:alpha="0.5"
+            visibleWhen="@{viewModel.isApiLoading}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

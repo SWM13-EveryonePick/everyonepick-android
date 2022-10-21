@@ -12,24 +12,15 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.domain.usecase.UserUseCase
-import org.soma.everyonepick.login.databinding.FaceInformationCameraUiContainerBinding
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationPreviewBinding
 import org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment
-import org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragmentDirections
 
-import org.soma.everyonepick.login.util.FROnnxMobileNet
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -42,8 +33,6 @@ class FaceInformationPreviewFragment : Fragment() {
 
     private val viewModel: FaceInformationPreviewViewModel by viewModels()
 
-    private var cameraUiContainerBinding: FaceInformationCameraUiContainerBinding? = null
-
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
     private var imageCapture: ImageCapture? = null
@@ -55,9 +44,10 @@ class FaceInformationPreviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFaceInformationPreviewBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = viewLifecycleOwner
-            onClickUploadButton = View.OnClickListener {
+        _binding = FragmentFaceInformationPreviewBinding.inflate(inflater, container, false).also {
+            it.lifecycleOwner = viewLifecycleOwner
+            it.viewModel = viewModel
+            it.onClickUploadButton = View.OnClickListener {
                 imageCapture?.let { imageCapture ->
                     imageCapture.takePicture(cameraExecutor, object: ImageCapture.OnImageCapturedCallback() {
                         override fun onCaptureSuccess(image: ImageProxy) {
@@ -92,21 +82,8 @@ class FaceInformationPreviewFragment : Fragment() {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         binding.previewview.post {
-            updateCameraUi()
             setUpCamera()
         }
-    }
-
-    private fun updateCameraUi() {
-        cameraUiContainerBinding?.root?.let {
-            binding.layoutRoot.removeView(it)
-        }
-
-        cameraUiContainerBinding = FaceInformationCameraUiContainerBinding.inflate(
-            LayoutInflater.from(requireContext()),
-            binding.layoutRoot,
-            true
-        )
     }
 
     private fun setUpCamera() {

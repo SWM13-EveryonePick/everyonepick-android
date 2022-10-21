@@ -32,23 +32,27 @@ class FaceInformationPreviewViewModel @Inject constructor(
     private val _toastMessage = MutableStateFlow("")
     val toastMessage: StateFlow<String> = _toastMessage
 
+    private val _isApiLoading = MutableStateFlow(false)
+    val isApiLoading: StateFlow<Boolean> = _isApiLoading
+
     @SuppressLint("UnsafeOptInUsageError")
     fun uploadFaceInfo(imageProxy: ImageProxy, onSuccess: () -> Unit, doOnEnd: () -> Unit) {
         viewModelScope.launch {
-            var responseMessage = ""
+            _isApiLoading.value = true
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val requestBody = imageProxy.image?.toByteArray()?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 val part = MultipartBody.Part.createFormData("image", "face_${userUseCase.readUser(token).id}", requestBody!!)
-                responseMessage = userUseCase.uploadFaceInfo(token, part).message
+                userUseCase.uploadFaceInfo(token, part).message
 
                 onSuccess.invoke()
             } catch (e: Exception) {
-                Log.e("uploadFaceInfo", responseMessage)
                 Log.e("uploadFaceInfo", e.toString())
-                _toastMessage.value = "${context.getString(R.string.toast_failed_to_upload_face_info)} $responseMessage"
+                _toastMessage.value = ""
+                _toastMessage.value = context.getString(R.string.toast_failed_to_upload_face_info)
             }
             doOnEnd.invoke()
+            _isApiLoading.value = false
         }
     }
 }
