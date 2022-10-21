@@ -18,6 +18,7 @@
     <string name="face_information_camera_title">정면 얼굴을 프레임이 맞추세요!</string>
     <string name="face_information_camera_description">마스크를 쓰거나, 얼굴이 가려지면 인식이 어렵습니다.</string>
 
+    <string name="toast_failed_to_upload_face_info">얼굴 정보 등록에 실패했습니다.</string>
     <string name="face_information_complete_title">얼굴 정보가 등록되었습니다.</string>
     <string name="face_information_complete_description">이제, 모두의 PICK을 마음껏 이용해보세요!</string>
     <string name="face_information_complete_button">시작하기</string>

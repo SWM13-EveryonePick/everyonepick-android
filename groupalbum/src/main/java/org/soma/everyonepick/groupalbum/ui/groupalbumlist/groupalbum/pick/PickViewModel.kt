@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

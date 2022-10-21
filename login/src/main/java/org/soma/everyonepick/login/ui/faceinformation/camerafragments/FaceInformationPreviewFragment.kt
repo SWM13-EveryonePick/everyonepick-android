@@ -6,12 +6,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.login.databinding.FaceInformationCameraUiContainerBinding
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationPreviewBinding
 import org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment
@@ -20,13 +29,18 @@ import org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragm
 import org.soma.everyonepick.login.util.FROnnxMobileNet
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
+@AndroidEntryPoint
 class FaceInformationPreviewFragment : Fragment() {
+
     private var _binding: FragmentFaceInformationPreviewBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: FaceInformationPreviewViewModel by viewModels()
 
     private var cameraUiContainerBinding: FaceInformationCameraUiContainerBinding? = null
 
@@ -44,10 +58,32 @@ class FaceInformationPreviewFragment : Fragment() {
         _binding = FragmentFaceInformationPreviewBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             onClickUploadButton = View.OnClickListener {
-                (parentFragment?.parentFragment as FaceInformationCameraFragment).navigateToFaceInformationCompleteFragment()
+                imageCapture?.let { imageCapture ->
+                    imageCapture.takePicture(cameraExecutor, object: ImageCapture.OnImageCapturedCallback() {
+                        override fun onCaptureSuccess(image: ImageProxy) {
+                            super.onCaptureSuccess(image)
+                            viewModel.uploadFaceInfo(image, {
+                                (parentFragment?.parentFragment as FaceInformationCameraFragment).navigateToFaceInformationCompleteFragment()
+                            }, { image.close() })
+                        }
+                    })
+                }
             }
         }
+
+        subscribeUi()
+
         return binding.root
+    }
+
+    private fun subscribeUi() {
+        lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

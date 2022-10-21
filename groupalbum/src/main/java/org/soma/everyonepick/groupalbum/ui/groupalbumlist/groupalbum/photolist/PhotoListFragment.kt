@@ -96,8 +96,8 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
             bundle.getStringArrayList(URI_LIST_CHECKED_KEY)?.let { uriList ->
                 val images = uriList.map {
                     val inputStream = requireContext().contentResolver.openInputStream(it.toUri())
-                    val responseBody = inputStream!!.readBytes().toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    MultipartBody.Part.createFormData("images", File(it).name, responseBody)
+                    val requestBody = inputStream!!.readBytes().toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                    MultipartBody.Part.createFormData("images", File(it).name, requestBody)
                 }
                 viewModel.createPhotoList(parentViewModel.groupAlbum.value.id, images)
             }

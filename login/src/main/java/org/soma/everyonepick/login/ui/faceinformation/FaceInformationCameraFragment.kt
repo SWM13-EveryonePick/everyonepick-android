@@ -13,6 +13,7 @@ import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationCameraBinding
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class FaceInformationCameraFragment : Fragment() {
     private var _binding: FragmentFaceInformationCameraBinding? = null
     private val binding get() = _binding!!
