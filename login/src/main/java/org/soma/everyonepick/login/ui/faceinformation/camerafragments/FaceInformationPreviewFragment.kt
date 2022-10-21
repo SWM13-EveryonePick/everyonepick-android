@@ -11,8 +11,11 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.login.databinding.FaceInformationCameraUiContainerBinding
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationPreviewBinding
+import org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment
+import org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragmentDirections
 
 import org.soma.everyonepick.login.util.FROnnxMobileNet
 import java.util.concurrent.ExecutorService
@@ -29,7 +32,7 @@ class FaceInformationPreviewFragment : Fragment() {
 
     private var processCameraProvider: ProcessCameraProvider? = null
     private var preview: Preview? = null
-    private var imageAnalyzer: ImageAnalysis? = null
+    private var imageCapture: ImageCapture? = null
     private var camera: Camera? = null
 
     private lateinit var cameraExecutor: ExecutorService
@@ -40,6 +43,9 @@ class FaceInformationPreviewFragment : Fragment() {
     ): View {
         _binding = FragmentFaceInformationPreviewBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
+            onClickUploadButton = View.OnClickListener {
+                (parentFragment?.parentFragment as FaceInformationCameraFragment).navigateToFaceInformationCompleteFragment()
+            }
         }
         return binding.root
     }
@@ -82,28 +88,20 @@ class FaceInformationPreviewFragment : Fragment() {
             .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
             .build()
 
-        // Preview
         preview = Preview.Builder()
             .setTargetAspectRatio(screenAspectRatio)
             .build()
 
-        // ImageAnalyzer
-        imageAnalyzer = ImageAnalysis.Builder()
-            .setTargetAspectRatio(screenAspectRatio)
+        imageCapture = ImageCapture.Builder()
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+            .setJpegQuality(50)
             .build()
-            .also {
-                it.setAnalyzer(cameraExecutor, FROnnxMobileNet(requireContext()) { floatArray ->
-                    Log.d(TAG, floatArray.contentToString())
-                })
-            }
 
         cameraProvider.unbindAll()
 
         try {
             preview?.setSurfaceProvider(binding.previewview.surfaceProvider)
-            camera = cameraProvider.bindToLifecycle(
-                this as LifecycleOwner, cameraSelector, preview, imageAnalyzer
-            )
+            camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview, imageCapture)
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
         }

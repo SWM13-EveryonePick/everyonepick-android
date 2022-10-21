@@ -23,10 +23,6 @@ class FaceInformationCameraFragment : Fragment() {
     ): View {
         _binding = FragmentFaceInformationCameraBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
-            onClickUploadButton = View.OnClickListener {
-                val directions = FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
-                findNavController().navigate(directions)
-            }
         }
 
         return binding.root
@@ -35,5 +31,10 @@ class FaceInformationCameraFragment : Fragment() {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    fun navigateToFaceInformationCompleteFragment() {
+        val directions = FaceInformationCameraFragmentDirections.toFaceInformationCompleteFragment()
+        findNavController().navigate(directions)
     }
 }
