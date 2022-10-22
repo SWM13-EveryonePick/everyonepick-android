@@ -7,43 +7,43 @@ import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import retrofit2.http.*
 
 interface GroupAlbumService {
-    @GET("api/album")
+    @GET("api/v1/albums")
     suspend fun readGroupAlbumList(@Header("Authorization") token: String): GroupAlbumListResponse
 
-    @POST("api/album")
+    @POST("api/v1/albums")
     suspend fun createGroupAlbum(
         @Header("Authorization") token: String,
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
-    @GET("api/album/{groupAlbumId}")
+    @GET("api/v1/albums/{groupAlbumId}")
     suspend fun readGroupAlbum(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long
     ): GroupAlbumResponse
 
-    @PATCH("api/album/{groupAlbumId}")
+    @PATCH("api/v1/albums/{groupAlbumId}")
     suspend fun updateGroupAlbum(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long,
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
-    @POST ("api/album/{groupAlbumId}/user")
+    @POST ("api/v1/albums/{groupAlbumId}/user")
     suspend fun inviteUsersToGroupAlbum(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long,
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
-    @PATCH("api/album/{groupAlbumId}/user")
+    @PATCH("api/v1/albums/{groupAlbumId}/user")
     suspend fun kickUsersOutOfGroupAlbum(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long,
         @Body groupAlbum: GroupAlbum
     ): GroupAlbumResponse
 
-    @DELETE("api/album/{groupAlbumId}")
+    @DELETE("api/v1/albums/{groupAlbumId}")
     suspend fun leaveGroupAlbum(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long

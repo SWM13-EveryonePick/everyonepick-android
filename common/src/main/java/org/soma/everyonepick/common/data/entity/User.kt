@@ -5,9 +5,10 @@ data class User(
     val nickname: String?,
     val clientId: String?,
     val thumbnailImageUrl: String?,
-    val isPushActive: Boolean?
+    val isPushActive: Boolean?,
+    val isRegistered: Boolean?
 ) {
     companion object {
-        val dummyData = User(-1, "", "", "", false)
+        val dummyData = User(-1, "", "", "", false, true)
     }
 }

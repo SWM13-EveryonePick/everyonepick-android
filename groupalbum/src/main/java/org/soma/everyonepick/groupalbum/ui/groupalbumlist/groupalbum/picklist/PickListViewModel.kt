@@ -75,11 +75,11 @@ class PickListViewModel @Inject constructor(
         }
     }
 
-    fun readPickInfo(groupAlbumId: Long, pickId: Long, onSuccess: (PickInfoModel) -> Unit) {
+    fun readPickInfo(pickId: Long, onSuccess: (PickInfoModel) -> Unit) {
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val pickInfoModel = groupAlbumUseCase.readPickInfo(token, groupAlbumId, pickId)
+                val pickInfoModel = groupAlbumUseCase.readPickInfo(token, pickId)
                 onSuccess.invoke(pickInfoModel)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick_info)
