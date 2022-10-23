@@ -17,7 +17,7 @@ class LoginUtil {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             }
             activity.startActivity(intent)
-            activity.overridePendingTransition(org.soma.everyonepick.common_ui.R.anim.slide_in_bottom, org.soma.everyonepick.common_ui.R.anim.stay_out);
+            activity.overridePendingTransition(org.soma.everyonepick.common_ui.R.anim.slide_in_bottom, org.soma.everyonepick.common_ui.R.anim.stay_out)
         }
 
         fun loginWithKakao(
@@ -25,8 +25,6 @@ class LoginUtil {
             onLoginSuccess: (OAuthToken?, Throwable?) -> Unit,
             onLoginFailure: (OAuthToken?, Throwable?) -> Unit
         ) {
-            KakaoSdk.init(context, NATIVE_APP_KEY)
-
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) onLoginFailure(token, error)
                 else if (token != null) onLoginSuccess(token, error)

@@ -14,12 +14,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import org.soma.everyonepick.common.data.dto.RefreshRequest
 import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.util.LoginUtil
@@ -31,6 +33,7 @@ class SplashActivity : AppCompatActivity() {
     private val viewModel: SplashViewModel by viewModels()
 
     @Inject lateinit var authService: AuthService
+    @Inject lateinit var userUseCase: UserUseCase
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
     @Inject lateinit var homeActivityClass: Class<*>
 
@@ -63,7 +66,7 @@ class SplashActivity : AppCompatActivity() {
         job = lifecycleScope.launch {
             val refreshToken = dataStoreUseCase.refreshToken.first()
             if (refreshToken != null) {
-                refreshAccessTokenAndSaveToDataStore(refreshToken)
+                refreshAccessTokenAndCheckIsRegistered(refreshToken)
                 loginWithKakao()
 
                 lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -71,8 +74,8 @@ class SplashActivity : AppCompatActivity() {
                         // 하나라도 실패했을 경우
                         viewModel.failure.collect {
                             if (it >= 1) {
-                                cancel()
                                 startLoginActivityAndFinish()
+                                cancel()
                             }
                         }
                     }
@@ -90,12 +93,19 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun refreshAccessTokenAndSaveToDataStore(refreshToken: String) {
+    private suspend fun refreshAccessTokenAndCheckIsRegistered(refreshToken: String) {
         try {
             val data = authService.refresh(RefreshRequest(refreshToken)).data
             dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
 
-            viewModel.addSuccess()
+            // 얼굴정보 등록 여부 체크
+            val user = userUseCase.readUser(dataStoreUseCase.bearerAccessToken.first()!!)
+            if (user.isRegistered == true) viewModel.addSuccess()
+            else {
+                dataStoreUseCase.removeAccessToken()
+                dataStoreUseCase.removeRefreshToken()
+                viewModel.addFailure()
+            }
         } catch (e: Exception) {
             Toast.makeText(baseContext, getString(R.string.toast_failed_to_refresh_token), Toast.LENGTH_SHORT).show()
             viewModel.addFailure()
