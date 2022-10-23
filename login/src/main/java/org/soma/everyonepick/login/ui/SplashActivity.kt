@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -14,14 +13,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.first
-import org.soma.everyonepick.common.data.dto.RefreshRequest
-import org.soma.everyonepick.common.data.source.AuthService
-import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
-import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import kotlinx.coroutines.flow.collectLatest
 import org.soma.everyonepick.login.R
 import org.soma.everyonepick.login.databinding.ActivitySplashBinding
 import org.soma.everyonepick.login.util.LoginUtil
@@ -32,12 +26,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModels()
 
-    @Inject lateinit var authService: AuthService
-    @Inject lateinit var userUseCase: UserUseCase
-    @Inject lateinit var dataStoreUseCase: DataStoreUseCase
     @Inject lateinit var homeActivityClass: Class<*>
-
-    private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -52,63 +41,51 @@ class SplashActivity : AppCompatActivity() {
             supportActionBar?.hide()
         }
 
+        subscribeUi()
         tryToAutoLogin()
     }
 
-    /**
-     * 디바이스에 저장된 리프레시 토큰이 있는 경우, refresh token API 호출과 카카오톡 로그인 시도를 동시에 진행합니다.
-     * 이때 각 작업이 모두 성공하면 [LoginUtil.startHomeActivity]를 실행하고, 하나라도 실패할 경우 작업을 취소하고
-     * [LoginActivity]로 이동합니다.
-     */
-    private fun tryToAutoLogin() {
-        val activity = this
-        job?.cancel()
-        job = lifecycleScope.launch {
-            val refreshToken = dataStoreUseCase.refreshToken.first()
-            if (refreshToken != null) {
-                refreshAccessTokenAndCheckIsRegistered(refreshToken)
-                loginWithKakao()
-
-                lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    launch {
-                        // 하나라도 실패했을 경우
-                        viewModel.failure.collect {
-                            if (it >= 1) {
-                                startLoginActivityAndFinish()
-                                cancel()
-                            }
-                        }
-                    }
-
-                    launch {
-                        // 모두 성공했을 경우
-                        viewModel.success.collect {
-                            if (it == 2) LoginUtil.startHomeActivity(activity, homeActivityClass)
-                        }
-                    }
+    private fun subscribeUi() {
+        lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                startLoginActivityAndFinish()
             }
         }
     }
 
-    private suspend fun refreshAccessTokenAndCheckIsRegistered(refreshToken: String) {
-        try {
-            val data = authService.refresh(RefreshRequest(refreshToken)).data
-            dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
+    /**
+     * 디바이스에 저장된 리프레시 토큰이 있는 경우, 'refresh token API 호출'과 '카카오톡 로그인'을 동시에 진행합니다.
+     * 두 작업이 모두 성공한 경우에는 자동 로그인이 성공한 것이고, 둘 중 하나라도 실패하면 실패한 것입니다. 두 작업은 병렬적으로
+     * 수행되므로 이를 체킹하기 위해서 [SplashViewModel.success], [SplashViewModel.failure]를 관찰합니다.
+     */
+    private fun tryToAutoLogin() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    // 하나라도 실패했을 경우
+                    viewModel.failure.collectLatest {
+                        if (it >= 1) startLoginActivityAndFinish()
+                    }
+                }
 
-            // 얼굴정보 등록 여부 체크
-            val user = userUseCase.readUser(dataStoreUseCase.bearerAccessToken.first()!!)
-            if (user.isRegistered == true) viewModel.addSuccess()
-            else {
-                dataStoreUseCase.removeAccessToken()
-                dataStoreUseCase.removeRefreshToken()
-                viewModel.addFailure()
+                launch {
+                    // 모두 성공했을 경우
+                    viewModel.success.collectLatest {
+                        if (it == 2) LoginUtil.startHomeActivity(this@SplashActivity, homeActivityClass)
+                    }
+                }
             }
-        } catch (e: Exception) {
-            Toast.makeText(baseContext, getString(R.string.toast_failed_to_refresh_token), Toast.LENGTH_SHORT).show()
-            viewModel.addFailure()
+        }
+
+        viewModel.withRefreshToken { refreshToken ->
+            if (refreshToken != null) {
+                viewModel.refreshAccessTokenAndCheckIsUserRegistered(refreshToken)
+                loginWithKakao()
+            } else {
+                startLoginActivityAndFinish()
+            }
         }
     }
 
