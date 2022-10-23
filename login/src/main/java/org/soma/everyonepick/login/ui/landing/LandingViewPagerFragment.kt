@@ -149,13 +149,12 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
     }
 
     /**
-     * 얼굴정보가 등록되어 이미 등록되어 있으면 HomeActivity, 등록되어 있지 않다면 FaceInformation으로 이동합니다.
+     * 얼굴정보가 등록되어 이미 등록되어 있으면 [HomeActivity], 등록되어 있지 않다면 [FaceInformationDescriptionFragment]로 이동합니다.
      */
     private fun navigateToNextPageByFaceInformation() {
         viewModel.withReadUser { user ->
             // 얼굴 정보가 등록되어 있는가?
-            // TODO: if (user.faceInformation != null)
-            if (false) {
+            if (user.isRegistered == true) {
                 LoginUtil.startHomeActivity(requireActivity(), homeActivityClass)
             } else {
                 val directions = LandingViewPagerFragmentDirections.toFaceInformationDescriptionFragment()

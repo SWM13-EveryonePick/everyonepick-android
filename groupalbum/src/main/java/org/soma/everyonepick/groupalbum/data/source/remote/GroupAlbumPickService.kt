@@ -4,20 +4,20 @@ import org.soma.everyonepick.groupalbum.data.dto.*
 import retrofit2.http.*
 
 interface GroupAlbumPickService {
-    @GET("api/album/{groupAlbumId}/pick")
+    @GET("api/v1/albums/{groupAlbumId}/picks")
     suspend fun readPickList(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long
     ): PickListResponse
 
-    @GET("api/album/{groupAlbumId}/pick/{pickId}")
+    @GET("api/v1/albums/{groupAlbumId}/picks/{pickId}")
     suspend fun readPick(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long,
         @Path("pickId") pickId: Long
     ): PickDetailResponse
 
-    @POST("api/album/{groupAlbumId}/pick")
+    @POST("api/v1/albums/{groupAlbumId}/picks")
     suspend fun createPick(
         @Header("Authorization") token: String,
         @Path("groupAlbumId") groupAlbumId: Long,
@@ -26,17 +26,15 @@ interface GroupAlbumPickService {
 
 
     /** Pick info */
-    @GET("api/album/{groupAlbumId}/pick/{pickId}/pick-info")
+    @GET("api/v1/picks/{pickId}/pick-info")
     suspend fun readPickInfo(
         @Header("Authorization") token: String,
-        @Path("groupAlbumId") groupAlbumId: Long,
         @Path("pickId") pickId: Long
     ): PickInfoResponse
 
-    @POST("api/album/{groupAlbumId}/pick/{pickId}/pick-info")
+    @POST("api/v1/picks/{pickId}/pick-info")
     suspend fun createPickInfo(
         @Header("Authorization") token: String,
-        @Path("groupAlbumId") groupAlbumId: Long,
         @Path("pickId") pickId: Long,
         @Body photos: PhotoIdListRequest
     ): PickInfoResponse

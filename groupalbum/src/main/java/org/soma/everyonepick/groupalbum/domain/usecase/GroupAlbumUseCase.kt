@@ -110,18 +110,17 @@ class GroupAlbumUseCase @Inject constructor(
         return groupAlbumPickService.createPick(token, groupAlbumId, pickRequest).data
     }
 
-    suspend fun readPickInfo(token: String, groupAlbumId: Long, pickId: Long): PickInfoModel {
-        val pickInfo = groupAlbumPickService.readPickInfo(token, groupAlbumId, pickId).data
+    suspend fun readPickInfo(token: String, pickId: Long): PickInfoModel {
+        val pickInfo = groupAlbumPickService.readPickInfo(token, pickId).data
         return pickInfo.toPickInfoModel()
     }
 
     suspend fun createPickInfo(
         token: String,
-        groupAlbumId: Long,
         pickId: Long,
         photoIdList: PhotoIdListRequest
     ): PickInfoModel {
-        val pickInfo = groupAlbumPickService.createPickInfo(token, groupAlbumId, pickId, photoIdList).data
+        val pickInfo = groupAlbumPickService.createPickInfo(token, pickId, photoIdList).data
         return pickInfo.toPickInfoModel()
     }
 

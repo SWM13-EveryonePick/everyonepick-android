@@ -91,7 +91,6 @@ class TimeoutViewModel @Inject constructor(
                 val selectedPhotos = savedStateHandle.get<LongArray>(SELECTED_PHOTO_ID_LIST)?.map { PhotoId(it) }?: listOf()
                 groupAlbumUseCase.createPickInfo(
                     token,
-                    savedStateHandle[GROUP_ALBUM_ID]?: -1,
                     pickId,
                     PhotoIdListRequest(selectedPhotos)
                 )

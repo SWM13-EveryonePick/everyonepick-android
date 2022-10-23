@@ -7,9 +7,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
-    @POST("api/auth/signup")
+    @POST("api/v1/auth/signup")
     suspend fun signUp(@Body signUpRequest: SignUpRequest): JwtResponse
 
-    @POST("api/auth/refresh")
+    @POST("api/v1/auth/refresh")
     suspend fun refresh(@Body refreshRequest: RefreshRequest): JwtResponse
 }

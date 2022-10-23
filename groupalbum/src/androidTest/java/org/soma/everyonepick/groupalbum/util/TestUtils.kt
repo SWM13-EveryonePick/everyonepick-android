@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.util
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.modellist.GroupAlbumModelList

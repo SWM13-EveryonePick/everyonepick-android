@@ -60,7 +60,7 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
     }
     override fun onClickLeaveButton() {
         DialogWithTwoButton.Builder(requireContext())
-            .setMessage(getString(R.string.leave))
+            .setMessage(getString(R.string.dialog_leave))
             .setPositiveButtonText(getString(R.string.leave))
             .setOnClickPositiveButton {
                 // TODO: 회원탈퇴

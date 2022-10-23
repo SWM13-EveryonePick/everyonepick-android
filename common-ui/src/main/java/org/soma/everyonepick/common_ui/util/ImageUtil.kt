@@ -1,17 +1,23 @@
 package org.soma.everyonepick.common_ui.util
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
+import android.graphics.*
 import android.media.Image
+import androidx.camera.core.ImageProxy
+import java.io.ByteArrayOutputStream
+import java.nio.ByteBuffer
 
 class ImageUtil {
     companion object {
-        fun Image.toBitmap(): Bitmap {
-            val buffer = planes[0].buffer
-            buffer.rewind()
-            val bytes = ByteArray(buffer.capacity())
+        fun Image.toByteArray(): ByteArray {
+            val planeProxy = planes[0]
+            val buffer: ByteBuffer = planeProxy.buffer
+            val bytes = ByteArray(buffer.remaining())
             buffer.get(bytes)
+            return bytes
+        }
+
+        fun Image.toBitmap(): Bitmap {
+            val bytes = toByteArray()
             return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
         }
 

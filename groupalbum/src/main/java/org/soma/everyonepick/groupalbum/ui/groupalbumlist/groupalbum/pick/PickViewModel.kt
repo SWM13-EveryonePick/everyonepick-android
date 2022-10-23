@@ -1,7 +1,6 @@
 package org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -77,7 +76,6 @@ class PickViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.createPickInfo(
                     token,
-                    savedStateHandle[GROUP_ALBUM_ID]?: -1L,
                     savedStateHandle[PICK_ID]?: -1L,
                     PhotoIdListRequest(getSelectedPhotoIdList().map { PhotoId(it) })
                 )
@@ -89,7 +87,6 @@ class PickViewModel @Inject constructor(
     }
 
     companion object {
-        private const val GROUP_ALBUM_ID = "groupAlbumId"
         private const val PICK_ID = "pickId"
     }
 }
