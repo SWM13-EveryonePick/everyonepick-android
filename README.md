@@ -33,15 +33,10 @@
 
 ## 프로젝트 구조
 ### Multi Module
-<img src="https://user-images.githubusercontent.com/58168528/197781520-80a7a294-383f-47fc-9c85-58f04c22ab8c.png" width="500px"/>
-
-
+<img src="https://user-images.githubusercontent.com/58168528/197781520-80a7a294-383f-47fc-9c85-58f04c22ab8c.png" width="700px"/>
 
 ### 각 모듈 내 Clean Architecture
-![모두의 PICK Clean Architecture](https://user-images.githubusercontent.com/58168528/197780144-ad14321f-3031-41d4-b619-14e40f097887.png)
-
-
-
+<img src="https://user-images.githubusercontent.com/58168528/197780144-ad14321f-3031-41d4-b619-14e40f097887.png" width="700px"/>
 
 
 ## 기술 스택
