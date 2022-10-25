@@ -26,6 +26,24 @@
 - 원하는 포즈 틀을 선택하여 앱 내 카메라 위에 포즈를 띄우고, 이를 참고하여 포즈를 잡습니다.
 - 자주 사용하는 포즈 틀을 등록하여 모아볼 수 있습니다.
 
+## 팀 구성
+|Android|Back-end|AI|
+|:-------:|:-------:|:-------:|
+|[강한빛](https://github.com/Hanbit-Kang)|[박영훈](https://github.com/Park-Young-Hun)|[이주연](https://github.com/2JooYeon)|
+
+## 프로젝트 구조
+### Multi Module
+<img src="https://user-images.githubusercontent.com/58168528/197781520-80a7a294-383f-47fc-9c85-58f04c22ab8c.png" width="500px"/>
+
+
+
+### 각 모듈 내 Clean Architecture
+![모두의 PICK Clean Architecture](https://user-images.githubusercontent.com/58168528/197780144-ad14321f-3031-41d4-b619-14e40f097887.png)
+
+
+
+
+
 ## 기술 스택
 
 - Custom UI
