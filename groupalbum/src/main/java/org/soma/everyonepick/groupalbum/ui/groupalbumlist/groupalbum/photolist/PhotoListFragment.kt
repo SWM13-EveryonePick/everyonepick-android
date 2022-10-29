@@ -139,13 +139,21 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                     .setMessage(getString(R.string.dialog_synthetic))
                     .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.confirm))
                     .setOnClickPositiveButton {
-                        navigateToPickFragment()
+                        checkCheckedPhotoCountAndNavigate()
                     }
                     .build().show()
                 dataStoreUseCase.editHasSyntheticDialogShown(true)
             } else {
-                navigateToPickFragment()
+                checkCheckedPhotoCountAndNavigate()
             }
+        }
+    }
+
+    private fun checkCheckedPhotoCountAndNavigate() {
+        if (viewModel.getCheckedPhotoList().count() <= SYNTHESIS_MAX_PHOTO_COUNT) {
+            navigateToPickFragment()
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.toast_exceed_synthesis_max_photo_count, SYNTHESIS_MAX_PHOTO_COUNT), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -170,6 +178,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     companion object {
         const val URI_LIST_CHECKED_REQUEST_KEY = "uri_list_checked_request_key"
         const val URI_LIST_CHECKED_KEY = "uri_list_checked_key"
+        const val SYNTHESIS_MAX_PHOTO_COUNT = 10 // 합성 시 최대 선택 가능한 장수
 
         @JvmStatic
         fun newInstance() = PhotoListFragment()
