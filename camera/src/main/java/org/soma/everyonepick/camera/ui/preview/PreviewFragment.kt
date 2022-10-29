@@ -235,7 +235,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
                     image.image?.toBitmap()?.rotate(image.imageInfo.rotationDegrees)?.let {
-                        saveBitmapInPictureDirectory(it, requireContext(), lifecycleScope)
+                        saveBitmapInPictureDirectory(it, requireContext())
                         viewModel.setLatestImage(it) // 최근 사진을 업데이트합니다.
                     }
                     image.close()
