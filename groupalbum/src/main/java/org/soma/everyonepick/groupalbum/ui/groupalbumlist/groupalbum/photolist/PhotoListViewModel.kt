@@ -54,6 +54,7 @@ class PhotoListViewModel @Inject constructor(
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.createPhotoList(token, groupAlbumId!!, images)
+                _toastMessage.value = context.getString(R.string.toast_try_to_create_photo)
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_photo)

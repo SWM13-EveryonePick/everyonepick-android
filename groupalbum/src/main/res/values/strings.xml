@@ -59,6 +59,7 @@
     <string name="share_photo">사진 공유</string>
 
     <string name="toast_failed_to_read_photo">사진을 불러오는 데 실패했습니다.</string>
+    <string name="toast_try_to_create_photo">사진을 업로드하는 중입니다. 잠시만 기다려주세요.</string>
     <string name="toast_failed_to_create_photo">사진을 업로드하는 데 실패했습니다.</string>
     <string name="toast_failed_to_delete_photo">사진을 삭제하는 데 실패했습니다.</string>
     <string name="toast_exceed_synthesis_max_photo_count">합성 사진 선택은 최대 %d장까지 가능합니다.</string>
