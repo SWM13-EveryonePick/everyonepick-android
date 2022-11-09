@@ -90,8 +90,10 @@ class PhotoListViewModel @Inject constructor(
     fun createPick(groupAlbumId: Long, onSuccess: (Long) -> Unit) {
         viewModelScope.launch {
             try {
+                _isApiLoading.value = true
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val pickId = groupAlbumUseCase.createPick(token, groupAlbumId, createPickRequest()).id
+                _isApiLoading.value = false
 
                 onSuccess.invoke(pickId)
             } catch (e: Exception) {
