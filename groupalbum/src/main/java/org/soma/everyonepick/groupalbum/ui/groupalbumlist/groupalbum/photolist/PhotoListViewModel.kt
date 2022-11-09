@@ -98,6 +98,7 @@ class PhotoListViewModel @Inject constructor(
                 onSuccess.invoke(pickId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick)
+                _isApiLoading.value = false
             }
         }
     }
