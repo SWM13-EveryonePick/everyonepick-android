@@ -88,7 +88,7 @@
     <string name="toast_min_error">0~59분까지만 입력할 수 있어요!</string>
     <string name="toast_create_pick_success">사진선택 작업을 등록하는 데 성공했어요!</string>
 
-    <string name="toast_failed_to_create_pick">사진선택 작업을 등록하는 데 실패했습니다.</string>
+    <string name="toast_failed_to_create_pick">ASD</string>
 
     <!--합성중(사진작업)-->
     <string name="empty_picks">현재 합성중인 사진이 없습니다 :/</string>

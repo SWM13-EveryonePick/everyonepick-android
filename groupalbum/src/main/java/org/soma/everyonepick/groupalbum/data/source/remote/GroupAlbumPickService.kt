@@ -38,4 +38,11 @@ interface GroupAlbumPickService {
         @Path("pickId") pickId: Long,
         @Body photos: PhotoIdListRequest
     ): PickInfoResponse
+
+    @PATCH("api/v1/picks/{pickId}/pick-info")
+    suspend fun patchPickInfo(
+        @Header("Authorization") token: String,
+        @Path("pickId") pickId: Long,
+        @Body pickInfoUserRequest: PickInfoUserRequest
+    )
 }

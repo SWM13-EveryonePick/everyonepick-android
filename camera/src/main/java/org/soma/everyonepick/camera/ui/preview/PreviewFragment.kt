@@ -25,6 +25,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
@@ -244,10 +246,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 }
             })
 
-            // 사진 저장에 시간이 약간 소요되므로 애니메이션 또한 지연하여 시작합니다.
-            Handler(Looper.getMainLooper()).postDelayed({
-                startShutterEffect()
-            }, 500L)
+            startShutterEffect()
         }
     }
 
@@ -255,6 +254,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 0f, 1f).apply {
             interpolator = AccelerateInterpolator()
             duration = SHUTTER_EFFECT_DURATION / 2
+            startDelay = 1500L // 사진 저장에 시간이 약간 소요되므로 애니메이션 또한 지연하여 시작합니다.
             start()
         }.doOnEnd {
             ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 1f, 0f).apply {

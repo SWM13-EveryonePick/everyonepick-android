@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -133,8 +134,9 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
         viewModel.setIsApiLoading(true)
         LoginUtil.loginWithKakao(requireContext(), { token, _ ->
             signUpAndNavigate(token)
-        }, { _, _ ->
+        }, { _, error ->
             viewModel.setIsApiLoading(false)
+            Log.e(TAG, error.toString())
             Toast.makeText(requireContext(), getString(org.soma.everyonepick.login.R.string.toast_failed_to_login_with_kakao), Toast.LENGTH_SHORT).show()
         })
     }

@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -101,12 +103,10 @@ class TimeoutFragment : Fragment(), TimeoutFragmentListener {
         if (viewModel.min1.value >= 6) {
             Toast.makeText(requireContext(), getString(R.string.toast_min_error), Toast.LENGTH_SHORT).show()
         } else {
-            viewModel.createPick { pickId ->
-                viewModel.createPickInfo(pickId) {
-                    val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
-                    findNavController().navigate(directions)
-                    Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
-                }
+            viewModel.patchAndCreatePickInfo {
+                val directions = TimeoutFragmentDirections.toGroupAlbumFragment(args.groupAlbumId)
+                findNavController().navigate(directions)
+                Toast.makeText(requireContext(), getString(R.string.toast_create_pick_success), Toast.LENGTH_SHORT).show()
             }
         }
     }

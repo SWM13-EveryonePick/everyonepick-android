@@ -3,10 +3,7 @@ package org.soma.everyonepick.groupalbum.domain.usecase
 import com.kakao.sdk.talk.model.Friend
 import okhttp3.MultipartBody
 import org.soma.everyonepick.common.data.entity.User
-import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
-import org.soma.everyonepick.groupalbum.data.dto.PickRequest
-import org.soma.everyonepick.groupalbum.data.dto.PickResponse
-import org.soma.everyonepick.groupalbum.data.dto.ResultPhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.dto.*
 import org.soma.everyonepick.groupalbum.data.entity.*
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
@@ -122,6 +119,15 @@ class GroupAlbumUseCase @Inject constructor(
     ): PickInfoModel {
         val pickInfo = groupAlbumPickService.createPickInfo(token, pickId, photoIdList).data
         return pickInfo.toPickInfoModel()
+    }
+
+    suspend fun patchPickInfo(
+        token: String,
+        pickId: Long,
+        timeOut: Long
+    ) {
+        val pickInfoUserRequest = PickInfoUserRequest(timeOut)
+        groupAlbumPickService.patchPickInfo(token, pickId, pickInfoUserRequest)
     }
 
 
