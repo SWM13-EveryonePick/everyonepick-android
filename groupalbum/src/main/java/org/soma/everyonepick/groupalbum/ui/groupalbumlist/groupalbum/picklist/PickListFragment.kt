@@ -52,8 +52,7 @@ class PickListFragment : Fragment(), PickAdapterCallback {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     parentViewModel.groupAlbum.collect {
-                        if (it.id != null && it.id != GroupAlbum.dummyData.id)
-                            viewModel.readPickModelList(it.id)
+                        viewModel.readPickModelList(it.id)
                     }
                 }
 
@@ -66,6 +65,11 @@ class PickListFragment : Fragment(), PickAdapterCallback {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.readPickModelList(parentViewModel.groupAlbum.value.id)
     }
 
     override fun onDestroy() {

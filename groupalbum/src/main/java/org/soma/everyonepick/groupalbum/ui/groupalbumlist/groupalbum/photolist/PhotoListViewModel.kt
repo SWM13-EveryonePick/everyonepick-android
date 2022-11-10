@@ -18,6 +18,7 @@ import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.common.domain.Checkable.Companion.setIsCheckboxVisible
 import org.soma.everyonepick.common.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.groupalbum.data.dto.PickRequest
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.timeout.TimeoutViewModel
@@ -39,6 +40,8 @@ class PhotoListViewModel @Inject constructor(
     val toastMessage: StateFlow<String> = _toastMessage
 
     fun readPhotoModelList(groupAlbumId: Long?) {
+        if (groupAlbumId == null || groupAlbumId == GroupAlbum.dummyData.id) return
+
         viewModelScope.launch {
             try {
                 _isApiLoading.value = true

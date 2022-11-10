@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.PickDetail
 import org.soma.everyonepick.groupalbum.domain.model.PickInfoModel
 import org.soma.everyonepick.groupalbum.domain.model.PickModel
@@ -49,7 +50,9 @@ class PickListViewModel @Inject constructor(
         }
     }
 
-    fun readPickModelList(groupAlbumId: Long) {
+    fun readPickModelList(groupAlbumId: Long?) {
+        if (groupAlbumId == null || groupAlbumId == GroupAlbum.dummyData.id) return
+
         viewModelScope.launch {
             try {
                 _isApiLoading.value = true

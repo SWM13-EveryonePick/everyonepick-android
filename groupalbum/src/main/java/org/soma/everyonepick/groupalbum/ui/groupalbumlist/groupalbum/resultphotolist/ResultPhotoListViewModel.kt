@@ -15,6 +15,7 @@ import org.soma.everyonepick.common.domain.Checkable.Companion.toCheckedItemList
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.groupalbum.R
 import org.soma.everyonepick.groupalbum.data.dto.ResultPhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.domain.model.ResultPhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
@@ -36,6 +37,8 @@ class ResultPhotoListViewModel @Inject constructor(
     val toastMessage: StateFlow<String> = _toastMessage
 
     fun readResultPhotoModelList(groupAlbumId: Long?) {
+        if (groupAlbumId == null || groupAlbumId == GroupAlbum.dummyData.id) return
+
         viewModelScope.launch {
             try {
                 _isApiLoading.value = true

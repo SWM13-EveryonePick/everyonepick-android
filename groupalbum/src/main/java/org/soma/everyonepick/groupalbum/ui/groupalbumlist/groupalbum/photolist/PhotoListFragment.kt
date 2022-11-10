@@ -72,8 +72,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
                 launch {
                     parentViewModel.groupAlbum.collect {
-                        if (it.id != null && it.id != GroupAlbum.dummyData.id)
-                            viewModel.readPhotoModelList(it.id)
+                        viewModel.readPhotoModelList(it.id)
                     }
                 }
 
@@ -107,6 +106,11 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     override fun onStart() {
         super.onStart()
         parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.readPhotoModelList(parentViewModel.groupAlbum.value.id)
     }
 
     override fun onDestroy() {
