@@ -1,7 +1,10 @@
 package org.soma.everyonepick.login.ui.faceinformation.camerafragments
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +19,9 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.rotate
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toBitmap
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toByteArray
 import org.soma.everyonepick.login.databinding.FragmentFaceInformationPreviewBinding
 import org.soma.everyonepick.login.ui.faceinformation.FaceInformationCameraFragment
 
@@ -50,8 +56,12 @@ class FaceInformationPreviewFragment : Fragment() {
             it.onClickUploadButton = View.OnClickListener {
                 imageCapture?.let { imageCapture ->
                     imageCapture.takePicture(cameraExecutor, object: ImageCapture.OnImageCapturedCallback() {
+                        @SuppressLint("UnsafeOptInUsageError")
                         override fun onCaptureSuccess(image: ImageProxy) {
                             super.onCaptureSuccess(image)
+                            Handler(Looper.getMainLooper()).post {
+                                binding.imageFrozenPreview.setImageBitmap(binding.previewview.bitmap)
+                            }
                             viewModel.uploadFaceInfo(image, {
                                 (parentFragment?.parentFragment as FaceInformationCameraFragment).navigateToFaceInformationCompleteFragment()
                             }, { image.close() })
@@ -107,7 +117,7 @@ class FaceInformationPreviewFragment : Fragment() {
 
         imageCapture = ImageCapture.Builder()
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-            .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+            .setTargetAspectRatio(screenAspectRatio)
             .setJpegQuality(50)
             .build()
 
