@@ -46,7 +46,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
     private val viewModel: PreviewViewModel by viewModels()
 
-    private var valueAnimator: ValueAnimator? = null
+    private var bottomMarginValueAnimator: ValueAnimator? = null
+    private var shutterObjectAnimator: ObjectAnimator? = null
 
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
@@ -143,8 +144,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         val params = view.layoutParams as ConstraintLayout.LayoutParams
         if (params.bottomMargin == end) return
 
-        valueAnimator?.cancel()
-        valueAnimator = ValueAnimator.ofInt(start, end).apply {
+        bottomMarginValueAnimator?.cancel()
+        bottomMarginValueAnimator = ValueAnimator.ofInt(start, end).apply {
             addUpdateListener { valueAnimator ->
                 params.bottomMargin = valueAnimator.animatedValue as Int
                 view.layoutParams = params
@@ -210,6 +211,13 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         super.onPause()
         onBackPressedCallback.remove()
         orientationEventListener.disable()
+        viewModel.setIsTakingPicture(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        bottomMarginValueAnimator?.cancel()
+        shutterObjectAnimator?.cancel()
     }
 
     override fun onDestroy() {
@@ -251,16 +259,17 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     }
 
     private fun startShutterEffect() {
-        ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 0f, 1f).apply {
+        shutterObjectAnimator = ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 0f, 1f).apply {
             interpolator = AccelerateInterpolator()
             duration = SHUTTER_EFFECT_DURATION / 2
-            startDelay = 1500L // 사진 저장에 시간이 약간 소요되므로 애니메이션 또한 지연하여 시작합니다.
+            startDelay = 500L // 사진 저장에 시간이 약간 소요되므로 애니메이션 또한 지연하여 시작합니다.
             start()
-        }.doOnEnd {
-            ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 1f, 0f).apply {
-                interpolator = DecelerateInterpolator()
-                duration = SHUTTER_EFFECT_DURATION / 2
-                start()
+            doOnEnd {
+                ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 1f, 0f).apply {
+                    interpolator = DecelerateInterpolator()
+                    duration = SHUTTER_EFFECT_DURATION / 2
+                    start()
+                }
             }
         }
     }
