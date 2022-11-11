@@ -51,7 +51,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private var camera: Camera? = null
     private var cameraExecutor = Executors.newSingleThreadExecutor()
 
-    private lateinit var scaleGestureDetector: ScaleGestureDetector
+    private lateinit var poseImageScaleGestureDetector: ScaleGestureDetector
 
     private val orientationEventListener by lazy {
         object : OrientationEventListener(requireContext()) {
@@ -85,7 +85,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     }
 
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun subscribeUi() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -121,44 +120,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             }
         }
 
-        // Pose image 확대/축소를 위한 ScaleGestureDetector
-        var scaleFactor = 1.0f
-        scaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-            override fun onScale(detector: ScaleGestureDetector?): Boolean {
-                // scaleFactor 범위: [POSE_MIN_SCALE] ~ [POSE_MAX_SCALE]
-                val nextScaleFactor = scaleFactor*(detector?.scaleFactor ?: 1.0f)
-                scaleFactor = Math.max(POSE_MIN_SCALE, Math.min(nextScaleFactor, POSE_MAX_SCALE))
-                binding.imagePose.scaleX = scaleFactor
-                binding.imagePose.scaleY = scaleFactor
-                return true
-            }
-        })
-
-        // Pose image 이동
-        var startTouchX = 0.0f
-        var startTouchY = 0.0f
-        var startPoseImageX = 0.0f
-        var startPoseImageY = 0.0f
-        binding.previewview.setOnTouchListener { _, event ->
-            scaleGestureDetector.onTouchEvent(event)
-
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    startTouchX = event.x
-                    startTouchY = event.y
-                    startPoseImageX = binding.imagePose.x
-                    startPoseImageY = binding.imagePose.y
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val diffX = event.x - startTouchX
-                    val diffY = event.y - startTouchY
-                    binding.imagePose.x = startPoseImageX + diffX
-                    binding.imagePose.y = startPoseImageY + diffY
-                    binding.imagePose.requestLayout()
-                }
-            }
-            false
-        }
+        setPreviewViewOnTouchListenerForPoseImage()
     }
 
     private fun showPosePackLayout() {
@@ -226,6 +188,58 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageCapture)
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setPreviewViewOnTouchListenerForPoseImage() {
+        // 확대, 축소
+        var scaleFactor = 1.0f
+        poseImageScaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector?): Boolean {
+                // scaleFactor 범위: [POSE_MIN_SCALE] ~ [POSE_MAX_SCALE]
+                val nextScaleFactor = scaleFactor*(detector?.scaleFactor ?: 1.0f)
+                scaleFactor = Math.max(POSE_MIN_SCALE, Math.min(nextScaleFactor, POSE_MAX_SCALE))
+                binding.imagePose.scaleX = scaleFactor
+                binding.imagePose.scaleY = scaleFactor
+                return true
+            }
+        })
+
+        // 이동
+        var prevPointerCount = 0
+        var startTouchX = 0.0f
+        var startTouchY = 0.0f
+        var startPoseImageX = 0.0f
+        var startPoseImageY = 0.0f
+
+        binding.previewview.setOnTouchListener { _, event ->
+            // 확대, 축소 이벤트
+            poseImageScaleGestureDetector.onTouchEvent(event)
+
+            // 터치하여 이동
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    startTouchX = event.x
+                    startTouchY = event.y
+                    startPoseImageX = binding.imagePose.x
+                    startPoseImageY = binding.imagePose.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (event.pointerCount != prevPointerCount) {
+                        prevPointerCount = event.pointerCount
+                        startTouchX = event.x
+                        startTouchY = event.y
+                        startPoseImageX = binding.imagePose.x
+                        startPoseImageY = binding.imagePose.y
+                    }
+
+                    binding.imagePose.x = startPoseImageX + (event.x - startTouchX)
+                    binding.imagePose.y = startPoseImageY + (event.y - startTouchY)
+                    binding.imagePose.requestLayout()
+                }
+            }
+            false
         }
     }
 
