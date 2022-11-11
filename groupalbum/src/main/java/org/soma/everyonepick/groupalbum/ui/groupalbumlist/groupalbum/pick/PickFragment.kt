@@ -95,15 +95,11 @@ class PickFragment : Fragment(), PickFragmentListener {
     }
 
     override fun onClickPickCompleteButton() {
-        if (viewModel.checked.value > viewModel.maxPickCount) {
-            Toast.makeText(requireContext(), getString(R.string.toast_exceed_selection, viewModel.maxPickCount), Toast.LENGTH_SHORT).show()
-        } else {
-            when (args.pickFragmentType) {
-                PickFragmentType.TO_CREATE -> navigateToTimeout()
-                else -> {
-                    viewModel.createPickInfo {
-                        findNavController().navigateUp()
-                    }
+        when (args.pickFragmentType) {
+            PickFragmentType.TO_CREATE -> navigateToTimeout()
+            else -> {
+                viewModel.createPickInfo {
+                    findNavController().navigateUp()
                 }
             }
         }
