@@ -57,6 +57,9 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private var camera: Camera? = null
     private var cameraExecutor = Executors.newSingleThreadExecutor()
 
+    private lateinit var scaleGestureDetector: ScaleGestureDetector
+    private var scaleFactor = 1.0f
+
     private val orientationEventListener by lazy {
         object : OrientationEventListener(requireContext()) {
             override fun onOrientationChanged(orientation : Int) {
@@ -122,6 +125,22 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                     }
                 }
             }
+        }
+
+        // Pose image 확대/축소
+        scaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector?): Boolean {
+                // scaleFactor 범위: [POSE_MIN_SCALE] ~ [POSE_MAX_SCALE]
+                val nextScaleFactor = scaleFactor*(detector?.scaleFactor ?: 1.0f)
+                scaleFactor = Math.max(POSE_MIN_SCALE, Math.min(nextScaleFactor, POSE_MAX_SCALE))
+                binding.imagePose.scaleX = scaleFactor
+                binding.imagePose.scaleY = scaleFactor
+                return true
+            }
+        })
+        binding.previewview.setOnTouchListener { _, event ->
+            scaleGestureDetector.onTouchEvent(event)
+            false
         }
     }
 
@@ -290,6 +309,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         private const val TAG = "PreviewFragment"
         private const val ANIMATION_DURATION = 300L
         private const val SHUTTER_EFFECT_DURATION = 400L
+        private const val POSE_MIN_SCALE = 0.3f
+        private const val POSE_MAX_SCALE = 2.0f
     }
 }
 
