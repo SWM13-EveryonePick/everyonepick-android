@@ -5,15 +5,12 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.camera.core.*
-import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
@@ -25,17 +22,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
-import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.rotate
-import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toBitmap
-import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common_ui.binding.bindImageView
-
+import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.rotate
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toBitmap
 import java.util.concurrent.Executors
 
 
@@ -58,7 +52,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private var cameraExecutor = Executors.newSingleThreadExecutor()
 
     private lateinit var scaleGestureDetector: ScaleGestureDetector
-    private var scaleFactor = 1.0f
 
     private val orientationEventListener by lazy {
         object : OrientationEventListener(requireContext()) {
@@ -92,6 +85,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun subscribeUi() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -127,7 +121,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
             }
         }
 
-        // Pose image 확대/축소
+        // Pose image 확대/축소를 위한 ScaleGestureDetector
+        var scaleFactor = 1.0f
         scaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector?): Boolean {
                 // scaleFactor 범위: [POSE_MIN_SCALE] ~ [POSE_MAX_SCALE]
@@ -138,8 +133,30 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 return true
             }
         })
+
+        // Pose image 이동
+        var startTouchX = 0.0f
+        var startTouchY = 0.0f
+        var startPoseImageX = 0.0f
+        var startPoseImageY = 0.0f
         binding.previewview.setOnTouchListener { _, event ->
             scaleGestureDetector.onTouchEvent(event)
+
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    startTouchX = event.x
+                    startTouchY = event.y
+                    startPoseImageX = binding.imagePose.x
+                    startPoseImageY = binding.imagePose.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val diffX = event.x - startTouchX
+                    val diffY = event.y - startTouchY
+                    binding.imagePose.x = startPoseImageX + diffX
+                    binding.imagePose.y = startPoseImageY + diffY
+                    binding.imagePose.requestLayout()
+                }
+            }
             false
         }
     }
