@@ -1,6 +1,7 @@
 # 모두의 PICK
 
 ![0](https://user-images.githubusercontent.com/58168528/191194495-f37d21a1-ca88-4e98-a91e-34dfe8072ce3.png)
+(Android) Google Play: https://play.google.com/store/apps/details?id=org.soma.everyonepick.app
 
 ## 사용자
 
