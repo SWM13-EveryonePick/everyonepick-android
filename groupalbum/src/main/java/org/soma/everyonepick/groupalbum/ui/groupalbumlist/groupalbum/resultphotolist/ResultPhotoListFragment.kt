@@ -59,8 +59,7 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
 
                 launch {
                     parentViewModel.groupAlbum.collect {
-                        if (it.id != null && it.id != GroupAlbum.dummyData.id)
-                            viewModel.readResultPhotoModelList(it.id)
+                        viewModel.readResultPhotoModelList(it.id)
                     }
                 }
 
@@ -78,6 +77,11 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
     override fun onStart() {
         super.onStart()
         parentViewModel.setResultPhotoSelectionMode(SelectionMode.NORMAL_MODE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.readResultPhotoModelList(parentViewModel.groupAlbum.value.id)
     }
 
     override fun onDestroy() {

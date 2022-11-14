@@ -17,8 +17,11 @@ import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.common.domain.Checkable.Companion.setIsCheckboxVisible
 import org.soma.everyonepick.common.domain.Checkable.Companion.toCheckedItemList
+import org.soma.everyonepick.groupalbum.data.dto.PickRequest
+import org.soma.everyonepick.groupalbum.data.entity.GroupAlbum
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.timeout.TimeoutViewModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +40,8 @@ class PhotoListViewModel @Inject constructor(
     val toastMessage: StateFlow<String> = _toastMessage
 
     fun readPhotoModelList(groupAlbumId: Long?) {
+        if (groupAlbumId == null || groupAlbumId == GroupAlbum.dummyData.id) return
+
         viewModelScope.launch {
             try {
                 _isApiLoading.value = true
@@ -54,6 +59,7 @@ class PhotoListViewModel @Inject constructor(
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.createPhotoList(token, groupAlbumId!!, images)
+                _toastMessage.value = context.getString(R.string.toast_try_to_create_photo)
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_photo)
@@ -83,4 +89,27 @@ class PhotoListViewModel @Inject constructor(
     fun getCheckedPhotoList() = photoModelList.value
         .filter { it.isChecked.value }
         .map { it.photo }
+
+    fun createPick(groupAlbumId: Long, onSuccess: (Long) -> Unit) {
+        viewModelScope.launch {
+            try {
+                _isApiLoading.value = true
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                val pickId = groupAlbumUseCase.createPick(token, groupAlbumId, createPickRequest()).id
+                _isApiLoading.value = false
+
+                onSuccess.invoke(pickId)
+            } catch (e: Exception) {
+                _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick)
+                _isApiLoading.value = false
+            }
+        }
+    }
+
+    private fun createPickRequest(): PickRequest {
+        val selectedPhotoIdList = getCheckedPhotoList()
+        return PickRequest(
+            selectedPhotoIdList.map { PhotoId(it.id) }
+        )
+    }
 }

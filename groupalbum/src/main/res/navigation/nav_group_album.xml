@@ -190,8 +190,8 @@
             android:name="groupAlbumId"
             app:argType="long"/>
         <argument
-            android:name="photoIdList"
-            app:argType="long[]"/>
+            android:name="pickId"
+            app:argType="long"/>
         <argument
             android:name="selectedPhotoIdList"
             app:argType="long[]"/>

@@ -17,6 +17,7 @@ import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
 import org.soma.everyonepick.groupalbum.data.dto.PickRequest
 import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
+import org.soma.everyonepick.groupalbum.ui.groupalbumlist.groupalbum.pick.PickViewModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,40 +61,17 @@ class TimeoutViewModel @Inject constructor(
         _filledEditText.value -= 1
     }
 
-    fun createPick(onSuccess: (Long) -> Unit) {
+    fun patchAndCreatePickInfo(onSuccess: () -> Unit) {
         viewModelScope.launch {
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val groupAlbumId = savedStateHandle[GROUP_ALBUM_ID] ?: -1L
-                val pickId = groupAlbumUseCase.createPick(token, groupAlbumId, createPickRequest()).id
+                val pickId = savedStateHandle.get<Long>(PICK_ID)?: -1
+                val timeOut = calculateTimeoutAsMin()
+                groupAlbumUseCase.patchPickInfo(token, pickId, timeOut)
 
-                onSuccess.invoke(pickId)
-            } catch (e: Exception) {
-                _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick)
-            }
-        }
-    }
-
-    private fun createPickRequest(): PickRequest {
-        val selectedPhotoIdList = savedStateHandle[PHOTO_ID_LIST] ?: longArrayOf()
-        return PickRequest(
-            calculateTimeoutAsMin(),
-            selectedPhotoIdList.map { PhotoId(it) }
-        )
-    }
-
-    private fun calculateTimeoutAsMin() = (_hour.value*60*60 + (_min1.value*10 + _min2.value)*60).toLong()
-
-    fun createPickInfo(pickId: Long, onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                val selectedPhotos = savedStateHandle.get<LongArray>(SELECTED_PHOTO_ID_LIST)?.map { PhotoId(it) }?: listOf()
-                groupAlbumUseCase.createPickInfo(
-                    token,
-                    pickId,
-                    PhotoIdListRequest(selectedPhotos)
-                )
+                val photoIdList: LongArray = savedStateHandle[SELECTED_PHOTO_ID_LIST] ?: longArrayOf()
+                val photoIdListRequest = PhotoIdListRequest(photoIdList.map { PhotoId(it) })
+                groupAlbumUseCase.createPickInfo(token, savedStateHandle[PICK_ID]?: -1L, photoIdListRequest)
 
                 onSuccess.invoke()
             } catch (e: Exception) {
@@ -103,9 +81,10 @@ class TimeoutViewModel @Inject constructor(
     }
 
 
+    private fun calculateTimeoutAsMin() = (_hour.value*60*60 + (_min1.value*10 + _min2.value)*60).toLong()
+
     companion object {
         private const val SELECTED_PHOTO_ID_LIST = "selectedPhotoIdList"
-        private const val GROUP_ALBUM_ID = "groupAlbumId"
-        private const val PHOTO_ID_LIST = "photoIdList"
+        private const val PICK_ID = "pickId"
     }
 }

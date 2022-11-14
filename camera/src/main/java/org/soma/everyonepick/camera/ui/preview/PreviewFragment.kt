@@ -5,15 +5,12 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.camera.core.*
-import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
@@ -28,12 +25,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
-import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.rotate
-import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toBitmap
-import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common_ui.binding.bindImageView
-
+import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.rotate
+import org.soma.everyonepick.common_ui.util.ImageUtil.Companion.toBitmap
 import java.util.concurrent.Executors
 
 
@@ -44,7 +40,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
 
     private val viewModel: PreviewViewModel by viewModels()
 
-    private var valueAnimator: ValueAnimator? = null
+    private var bottomMarginValueAnimator: ValueAnimator? = null
+    private var shutterObjectAnimator: ObjectAnimator? = null
 
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
@@ -53,6 +50,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
     private var imageCapture: ImageCapture? = null
     private var camera: Camera? = null
     private var cameraExecutor = Executors.newSingleThreadExecutor()
+
+    private lateinit var poseImageScaleGestureDetector: ScaleGestureDetector
 
     private val orientationEventListener by lazy {
         object : OrientationEventListener(requireContext()) {
@@ -120,6 +119,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 }
             }
         }
+
+        setPreviewViewOnTouchListenerForPoseImage()
     }
 
     private fun showPosePackLayout() {
@@ -141,8 +142,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         val params = view.layoutParams as ConstraintLayout.LayoutParams
         if (params.bottomMargin == end) return
 
-        valueAnimator?.cancel()
-        valueAnimator = ValueAnimator.ofInt(start, end).apply {
+        bottomMarginValueAnimator?.cancel()
+        bottomMarginValueAnimator = ValueAnimator.ofInt(start, end).apply {
             addUpdateListener { valueAnimator ->
                 params.bottomMargin = valueAnimator.animatedValue as Int
                 view.layoutParams = params
@@ -190,6 +191,58 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setPreviewViewOnTouchListenerForPoseImage() {
+        // 확대, 축소
+        var scaleFactor = 1.0f
+        poseImageScaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector?): Boolean {
+                // scaleFactor 범위: [POSE_MIN_SCALE] ~ [POSE_MAX_SCALE]
+                val nextScaleFactor = scaleFactor*(detector?.scaleFactor ?: 1.0f)
+                scaleFactor = Math.max(POSE_MIN_SCALE, Math.min(nextScaleFactor, POSE_MAX_SCALE))
+                binding.imagePose.scaleX = scaleFactor
+                binding.imagePose.scaleY = scaleFactor
+                return true
+            }
+        })
+
+        // 이동
+        var prevPointerCount = 0
+        var startTouchX = 0.0f
+        var startTouchY = 0.0f
+        var startPoseImageX = 0.0f
+        var startPoseImageY = 0.0f
+
+        binding.previewview.setOnTouchListener { _, event ->
+            // 확대, 축소 이벤트
+            poseImageScaleGestureDetector.onTouchEvent(event)
+
+            // 터치하여 이동
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    startTouchX = event.x
+                    startTouchY = event.y
+                    startPoseImageX = binding.imagePose.x
+                    startPoseImageY = binding.imagePose.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (event.pointerCount != prevPointerCount) {
+                        prevPointerCount = event.pointerCount
+                        startTouchX = event.x
+                        startTouchY = event.y
+                        startPoseImageX = binding.imagePose.x
+                        startPoseImageY = binding.imagePose.y
+                    }
+
+                    binding.imagePose.x = startPoseImageX + (event.x - startTouchX)
+                    binding.imagePose.y = startPoseImageY + (event.y - startTouchY)
+                    binding.imagePose.requestLayout()
+                }
+            }
+            false
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -208,6 +261,13 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         super.onPause()
         onBackPressedCallback.remove()
         orientationEventListener.disable()
+        viewModel.setIsTakingPicture(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        bottomMarginValueAnimator?.cancel()
+        shutterObjectAnimator?.cancel()
     }
 
     override fun onDestroy() {
@@ -235,7 +295,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
                     image.image?.toBitmap()?.rotate(image.imageInfo.rotationDegrees)?.let {
-                        saveBitmapInPictureDirectory(it, requireContext(), lifecycleScope)
+                        saveBitmapInPictureDirectory(it, requireContext())
                         viewModel.setLatestImage(it) // 최근 사진을 업데이트합니다.
                     }
                     image.close()
@@ -244,23 +304,22 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
                 }
             })
 
-            // 사진 저장에 시간이 약간 소요되므로 애니메이션 또한 지연하여 시작합니다.
-            Handler(Looper.getMainLooper()).postDelayed({
-                startShutterEffect()
-            }, 500L)
+            startShutterEffect()
         }
     }
 
     private fun startShutterEffect() {
-        ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 0f, 1f).apply {
+        shutterObjectAnimator = ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 0f, 1f).apply {
             interpolator = AccelerateInterpolator()
             duration = SHUTTER_EFFECT_DURATION / 2
+            startDelay = 500L // 사진 저장에 시간이 약간 소요되므로 애니메이션 또한 지연하여 시작합니다.
             start()
-        }.doOnEnd {
-            ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 1f, 0f).apply {
-                interpolator = DecelerateInterpolator()
-                duration = SHUTTER_EFFECT_DURATION / 2
-                start()
+            doOnEnd {
+                ObjectAnimator.ofFloat(binding.viewShuttereffect, "alpha", 1f, 0f).apply {
+                    interpolator = DecelerateInterpolator()
+                    duration = SHUTTER_EFFECT_DURATION / 2
+                    start()
+                }
             }
         }
     }
@@ -281,6 +340,8 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         private const val TAG = "PreviewFragment"
         private const val ANIMATION_DURATION = 300L
         private const val SHUTTER_EFFECT_DURATION = 400L
+        private const val POSE_MIN_SCALE = 0.3f
+        private const val POSE_MAX_SCALE = 2.0f
     }
 }
 

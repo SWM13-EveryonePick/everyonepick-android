@@ -47,7 +47,7 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
     /** PhotoFragmentListener */
     override fun onClickSaveButton() {
         val bitmap = binding.imagePhoto.drawable.toBitmap()
-        saveBitmapInPictureDirectory(bitmap, requireContext(), lifecycleScope, showsToast = true)
+        saveBitmapInPictureDirectory(bitmap, requireContext(), showsToast = true)
     }
 
     override fun onClickDeleteButton() {

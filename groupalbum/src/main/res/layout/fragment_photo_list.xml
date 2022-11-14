@@ -82,12 +82,14 @@
                     android:src="@drawable/ic_btn_floating_delete"
                     android:layout_marginBottom="@dimen/margin_bottom_fab"
                     style="@style/ImageViewFab"
+                    android:clickable="@{!viewModel.isApiLoading}"
                     android:onClick="@{() -> listener.onClickDeleteButton()}"/>
 
                 <ImageView
                     android:src="@drawable/ic_btn_floating_synthetic"
                     android:layout_marginBottom="@dimen/margin_bottom_fab"
                     style="@style/ImageViewFab"
+                    android:clickable="@{!viewModel.isApiLoading}"
                     android:onClick="@{() -> listener.onClickProcessButton()}"/>
 
                 <ImageView
@@ -146,16 +148,16 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                visibleWhen="@{viewModel.isApiLoading}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            visibleWhen="@{viewModel.isApiLoading}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

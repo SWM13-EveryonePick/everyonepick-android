@@ -19,6 +19,7 @@ import org.soma.everyonepick.groupalbum.data.entity.PhotoId
 import org.soma.everyonepick.groupalbum.domain.model.PhotoModel
 import org.soma.everyonepick.groupalbum.domain.usecase.GroupAlbumUseCase
 import java.lang.Integer.max
+import java.lang.Integer.min
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,8 +29,6 @@ class PickViewModel @Inject constructor(
     private val dataStoreUseCase: DataStoreUseCase,
     private val groupAlbumUseCase: GroupAlbumUseCase
 ): ViewModel() {
-    val maxPickCount = 5
-
     private val _photoModelList = MutableStateFlow<List<PhotoModel>>(listOf())
     val photoModelList: StateFlow<List<PhotoModel>> = _photoModelList
 
@@ -88,5 +87,6 @@ class PickViewModel @Inject constructor(
 
     companion object {
         private const val PICK_ID = "pickId"
+        private const val PHOTO_ID_LIST = "photoIdList"
     }
 }

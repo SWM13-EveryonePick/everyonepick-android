@@ -3,10 +3,7 @@ package org.soma.everyonepick.groupalbum.domain.usecase
 import com.kakao.sdk.talk.model.Friend
 import okhttp3.MultipartBody
 import org.soma.everyonepick.common.data.entity.User
-import org.soma.everyonepick.groupalbum.data.dto.PhotoIdListRequest
-import org.soma.everyonepick.groupalbum.data.dto.PickRequest
-import org.soma.everyonepick.groupalbum.data.dto.PickResponse
-import org.soma.everyonepick.groupalbum.data.dto.ResultPhotoIdListRequest
+import org.soma.everyonepick.groupalbum.data.dto.*
 import org.soma.everyonepick.groupalbum.data.entity.*
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
@@ -66,9 +63,7 @@ class GroupAlbumUseCase @Inject constructor(
 
     /** [GroupAlbumPhotoService] */
     suspend fun readPhotoList(token: String, id: Long): MutableList<PhotoModel> {
-        // 가장 최근 사진이 위에 있어야 하므로 데이터를 뒤집어야 합니다.
-        // 단, Pagination이 구현될 경우 데이터가 처음부터 적절한 순서로 배치되므로 reversed()를 삭제해야 합니다.
-        val photoList = groupAlbumPhotoService.readPhotoList(token, id).data.reversed().toMutableList()
+        val photoList = groupAlbumPhotoService.readPhotoList(token, id).data.toMutableList()
         return photoList.toPhotoModelList()
     }
 
@@ -92,9 +87,7 @@ class GroupAlbumUseCase @Inject constructor(
 
     /** [GroupAlbumPickService] */
     suspend fun readPickList(token: String, groupAlbumId: Long): MutableList<PickModel> {
-        // 가장 최근 사진이 위에 있어야 하므로 데이터를 뒤집어야 합니다.
-        // 단, Pagination이 구현될 경우 데이터가 처음부터 적절한 순서로 배치되므로 reversed()를 삭제해야 합니다.
-        val pickList = groupAlbumPickService.readPickList(token, groupAlbumId).data.reversed()
+        val pickList = groupAlbumPickService.readPickList(token, groupAlbumId).data
         return pickList.toPickModelList().toMutableList()
     }
 
@@ -122,6 +115,15 @@ class GroupAlbumUseCase @Inject constructor(
     ): PickInfoModel {
         val pickInfo = groupAlbumPickService.createPickInfo(token, pickId, photoIdList).data
         return pickInfo.toPickInfoModel()
+    }
+
+    suspend fun patchPickInfo(
+        token: String,
+        pickId: Long,
+        timeOut: Long
+    ) {
+        val pickInfoUserRequest = PickInfoUserRequest(timeOut)
+        groupAlbumPickService.patchPickInfo(token, pickId, pickInfoUserRequest)
     }
 
 

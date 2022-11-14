@@ -68,6 +68,9 @@ class SplashViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 _toastMessage.value = context.getString(R.string.toast_failed_to_refresh_token)
+                dataStoreUseCase.removeAccessToken()
+                dataStoreUseCase.removeRefreshToken()
+                addFailure()
             }
         }
     }

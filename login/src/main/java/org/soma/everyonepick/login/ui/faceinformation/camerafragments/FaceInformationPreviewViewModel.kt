@@ -43,7 +43,7 @@ class FaceInformationPreviewViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 val requestBody = imageProxy.image?.toByteArray()?.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 val part = MultipartBody.Part.createFormData("image", "face_${userUseCase.readUser(token).id}", requestBody!!)
-                userUseCase.uploadFaceInfo(token, part).message
+                userUseCase.uploadFaceInfo(token, part)
 
                 onSuccess.invoke()
             } catch (e: Exception) {

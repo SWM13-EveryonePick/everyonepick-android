@@ -1,11 +1,8 @@
 package org.soma.everyonepick.login.ui.landing
 
 import android.content.Context
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -20,7 +17,6 @@ import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.login.R
-import org.soma.everyonepick.login.util.LoginUtil
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,7 +46,7 @@ class LandingViewPagerViewModel @Inject constructor(
     fun signUp(token: OAuthToken?, onSuccess: () -> Unit) {
         viewModelScope.launch {
             try {
-                val data = authService.signUp(SignUpRequest(ProviderName.Kakao.name, token?.accessToken.toString())).data
+                val data = authService.signUp(SignUpRequest(ProviderName.KAKAO.name, token?.accessToken.toString())).data
                 dataStoreUseCase.editAccessToken(data.everyonepickAccessToken)
                 dataStoreUseCase.editRefreshToken(data.everyonepickRefreshToken)
 

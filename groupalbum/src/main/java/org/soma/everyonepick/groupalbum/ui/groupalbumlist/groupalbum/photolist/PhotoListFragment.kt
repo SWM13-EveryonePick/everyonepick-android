@@ -72,8 +72,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
 
                 launch {
                     parentViewModel.groupAlbum.collect {
-                        if (it.id != null && it.id != GroupAlbum.dummyData.id)
-                            viewModel.readPhotoModelList(it.id)
+                        viewModel.readPhotoModelList(it.id)
                     }
                 }
 
@@ -109,6 +108,11 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
         parentViewModel.setPhotoSelectionMode(SelectionMode.NORMAL_MODE)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.readPhotoModelList(parentViewModel.groupAlbum.value.id)
+    }
+
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
@@ -139,24 +143,36 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                     .setMessage(getString(R.string.dialog_synthetic))
                     .setPositiveButtonText(getString(org.soma.everyonepick.common_ui.R.string.confirm))
                     .setOnClickPositiveButton {
-                        navigateToPickFragment()
+                        checkIfSynthesisIsPossibleAndNavigate()
                     }
                     .build().show()
                 dataStoreUseCase.editHasSyntheticDialogShown(true)
             } else {
-                navigateToPickFragment()
+                checkIfSynthesisIsPossibleAndNavigate()
             }
         }
     }
 
-    private fun navigateToPickFragment() {
+    private fun checkIfSynthesisIsPossibleAndNavigate() {
+        // CheckedPhotoCount 체크
+        if (viewModel.getCheckedPhotoList().count() <= SYNTHESIS_MAX_PHOTO_COUNT) {
+            // createPick 생성 시도: 사진들이 합성하기에 부적합한 경우에 실패함
+            viewModel.createPick(parentViewModel.groupAlbum.value.id?:-1) {
+                navigateToPickFragment(it)
+            }
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.toast_exceed_synthesis_max_photo_count, SYNTHESIS_MAX_PHOTO_COUNT), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun navigateToPickFragment(pickId: Long) {
         val checkedPhotoList = viewModel.getCheckedPhotoList()
         val directions = GroupAlbumFragmentDirections.toPickFragment(
             parentViewModel.groupAlbum.value.id?: -1,
             checkedPhotoList.map { it.id }.toLongArray(),
             checkedPhotoList.map { it.photoUrl }.toTypedArray(),
             PickFragmentType.TO_CREATE,
-            -1L
+            pickId
         )
 
         findNavController().navigate(directions)
@@ -170,6 +186,7 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     companion object {
         const val URI_LIST_CHECKED_REQUEST_KEY = "uri_list_checked_request_key"
         const val URI_LIST_CHECKED_KEY = "uri_list_checked_key"
+        const val SYNTHESIS_MAX_PHOTO_COUNT = 10 // 합성 시 최대 선택 가능한 장수
 
         @JvmStatic
         fun newInstance() = PhotoListFragment()

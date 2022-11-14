@@ -27,28 +27,23 @@ class FileUtil {
         fun saveBitmapInPictureDirectory(
             bitmap: Bitmap,
             context: Context,
-            scope: CoroutineScope,
             showsToast: Boolean = false
         ) {
-            scope.launch(Dispatchers.IO) {
-                try {
-                    val imageFile = getImageFile(context)
-                    val outputStream: OutputStream = FileOutputStream(imageFile)
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                    outputStream.flush()
-                    outputStream.close()
+            try {
+                val imageFile = getImageFile(context)
+                val outputStream: OutputStream = FileOutputStream(imageFile)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                outputStream.flush()
+                outputStream.close()
 
-                    Log.e(TAG, "이미지 저장 성공")
-                    if (showsToast) {
-                        Looper.prepare()
-                        Toast.makeText(context, context.getString(R.string.toast_save_image_success), Toast.LENGTH_SHORT).show()
-                    }
-                } catch (e: Exception) {
-                    Log.e(TAG, e.toString())
-                    if (showsToast) {
-                        Looper.prepare()
-                        Toast.makeText(context, context.getString(R.string.toast_failed_to_save_image), Toast.LENGTH_SHORT).show()
-                    }
+                Log.e(TAG, "이미지 저장 성공")
+                if (showsToast) {
+                    Toast.makeText(context, context.getString(R.string.toast_save_image_success), Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, e.toString())
+                if (showsToast) {
+                    Toast.makeText(context, context.getString(R.string.toast_failed_to_save_image), Toast.LENGTH_SHORT).show()
                 }
             }
         }
