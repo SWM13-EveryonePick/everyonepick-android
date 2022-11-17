@@ -75,7 +75,7 @@ class GroupAlbumListViewModel @Inject constructor(
         _groupAlbumModelList.value = _groupAlbumModelList.value.getNewInstance()
     }
 
-    fun readGroupAlbumModelList() {
+    fun readGroupAlbumModelList(doOnEnd: () -> Unit = {}) {
         readJob?.cancel()
 
         readJob = viewModelScope.launch {
@@ -94,6 +94,7 @@ class GroupAlbumListViewModel @Inject constructor(
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_group_album)
             }
 
+            doOnEnd.invoke()
             _isApiLoading.value = false
         }
     }

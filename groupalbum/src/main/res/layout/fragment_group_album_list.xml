@@ -24,32 +24,39 @@
         android:layout_height="match_parent"
         tools:context=".ui.groupalbumlist.GroupAlbumListFragment">
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefreshlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:animateLayoutChanges="true">
+                android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_groupalbum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    visibleWhen="@{viewModel.groupAlbumModelList.getItemCountWithoutDummy() > 0}"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                    app:spanCount="2"
-                    adapter="@{adapter}"
-                    submitList="@{viewModel.groupAlbumModelList.data}"
-                    tools:listitem="@layout/item_group_album"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_groupalbum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        visibleWhen="@{viewModel.groupAlbumModelList.getItemCountWithoutDummy() > 0}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                        app:spanCount="2"
+                        adapter="@{adapter}"
+                        submitList="@{viewModel.groupAlbumModelList.data}"
+                        tools:listitem="@layout/item_group_album"/>
 
-        </androidx.core.widget.NestedScrollView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
