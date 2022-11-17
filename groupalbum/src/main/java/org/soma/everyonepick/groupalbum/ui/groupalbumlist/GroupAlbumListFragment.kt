@@ -87,6 +87,10 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     override fun onStart() {
         super.onStart()
         parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.readGroupAlbumModelList()
     }
 
