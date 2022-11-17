@@ -48,6 +48,12 @@ class PickListFragment : Fragment(), PickAdapterCallback {
     }
 
     private fun subscribeUi() {
+        binding.swiperefreshlayout.setOnRefreshListener {
+            viewModel.readPickModelList(parentViewModel.groupAlbum.value.id) {
+                binding.swiperefreshlayout.isRefreshing = false
+            }
+        }
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
