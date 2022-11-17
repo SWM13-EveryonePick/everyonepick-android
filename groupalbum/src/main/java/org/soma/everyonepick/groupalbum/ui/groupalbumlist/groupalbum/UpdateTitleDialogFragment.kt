@@ -26,6 +26,7 @@ class UpdateTitleDialogFragment: DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DialogFragmentUpdateTitleDialogBinding.inflate(inflater, container, false)
+        binding.edittextTitle.setText(arguments?.getString(PREV_NAME_KEY))
         return binding.root
     }
 
@@ -53,5 +54,18 @@ class UpdateTitleDialogFragment: DialogFragment() {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    companion object {
+        private const val PREV_NAME_KEY = "prev_name_key"
+
+        @JvmStatic
+        fun getInstance(prevName: String): UpdateTitleDialogFragment {
+            return UpdateTitleDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putString(PREV_NAME_KEY, prevName)
+                }
+            }
+        }
     }
 }

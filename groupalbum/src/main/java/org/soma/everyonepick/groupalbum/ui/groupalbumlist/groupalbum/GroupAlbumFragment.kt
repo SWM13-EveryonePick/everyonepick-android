@@ -207,7 +207,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     override fun onClickUpdateTitleButton() {
-        UpdateTitleDialogFragment().show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
+        UpdateTitleDialogFragment.getInstance(viewModel.groupAlbum.value.title ?: "")
+            .show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
     }
 
     override fun onClickExitButton() {
