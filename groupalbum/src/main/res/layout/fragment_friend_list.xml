@@ -117,6 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_bottom_empty_text_in_card_view"
+                        android:onClick="@{onClickKakaoButton}"
                         visibleWhen="@{!viewModel.isApiLoading}"
                         style="@style/EmptyButton"
                         app:layout_constraintTop_toBottomOf="@id/text_emptyfriends"
