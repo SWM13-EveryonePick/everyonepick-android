@@ -50,7 +50,7 @@ class PickListViewModel @Inject constructor(
         }
     }
 
-    fun readPickModelList(groupAlbumId: Long?) {
+    fun readPickModelList(groupAlbumId: Long?, doOnEnd: () -> Unit = {}) {
         if (groupAlbumId == null || groupAlbumId == GroupAlbum.dummyData.id) return
 
         viewModelScope.launch {
@@ -64,6 +64,8 @@ class PickListViewModel @Inject constructor(
                 _isApiLoading.value = false
             }
         }
+
+        doOnEnd.invoke()
     }
 
     fun readPickDetail(groupAlbumId: Long, pickId: Long, onSuccess: (PickDetail) -> Unit) {

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.soma.everyonepick.common_ui.PermissionFragment
+import org.soma.everyonepick.common_ui.PermissionFragment.Companion.PERMISSION_FRAGMENT_REQUEST_KEY
 import org.soma.everyonepick.groupalbum.R
 
 class ParentPermissionFragment : Fragment() {
@@ -15,13 +16,15 @@ class ParentPermissionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val fragment = PermissionFragment.newInstance(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            val directions = ParentPermissionFragmentDirections.toImagePickerFragment()
-            findNavController().navigate(directions)
-        }
+        val fragment = PermissionFragment.newInstance(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
         childFragmentManager.beginTransaction()
             .add(R.id.fragment_permission, fragment)
             .commit()
+
+        activity?.supportFragmentManager?.setFragmentResultListener(PERMISSION_FRAGMENT_REQUEST_KEY, viewLifecycleOwner) { _, _ ->
+            val directions = ParentPermissionFragmentDirections.toImagePickerFragment()
+            findNavController().navigate(directions)
+        }
 
         return inflater.inflate(R.layout.fragment_parent_permission, container, false)
     }

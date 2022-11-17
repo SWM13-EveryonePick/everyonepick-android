@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import org.soma.everyonepick.common_ui.databinding.FragmentPermissionBinding
 
@@ -33,24 +34,17 @@ import org.soma.everyonepick.common_ui.databinding.FragmentPermissionBinding
  * }
  * // Navigate to permissionFragment
  * ```
- *
- * @param requiredPermissions 요구되는 권한들의 리스트입니다. [Manifest.permission]의 상수들을 참조합니다.
- * @param onSuccess 권한을 얻었을 때 수행하게 되는 콜백입니다. 일반적으로 권한이 필요한 페이지에 진입하는 코드를 담게 됩니다.
- *
  */
 
-class PermissionFragment(
-    private val requiredPermissions: Array<String>,
-    private val onSuccess: () -> Unit
-) : Fragment() {
+class PermissionFragment : Fragment() {
     private var _binding: FragmentPermissionBinding? = null
-
     private val binding get() = _binding!!
+
     private val requestPermissionsLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { isGranted ->
         if (isGranted.all{ it.value }) {
-            onSuccess.invoke()
+            setFragmentResult()
         } else {
             binding.button.visibility = View.VISIBLE
             Toast.makeText(requireContext(), getString(R.string.toast_need_to_get_permission), Toast.LENGTH_SHORT).show()
@@ -79,15 +73,20 @@ class PermissionFragment(
     override fun onStart() {
         super.onStart()
 
+        val requiredPermissions = arguments?.getStringArray(REQUIRED_PERMISSIONS_KEY) ?: arrayOf()
         if (!hasAllPermissions(requireContext(), requiredPermissions)) {
             requestPermissionsLauncher.launch(requiredPermissions)
         } else {
-            onSuccess.invoke()
+            setFragmentResult()
         }
     }
 
     private fun hasAllPermissions(context: Context, requiredPermissions: Array<String>) = requiredPermissions.all {
         ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun setFragmentResult() {
+        activity?.supportFragmentManager?.setFragmentResult(PERMISSION_FRAGMENT_REQUEST_KEY, bundleOf())
     }
 
     override fun onDestroy() {
@@ -97,8 +96,19 @@ class PermissionFragment(
 
 
     companion object {
+        private const val REQUIRED_PERMISSIONS_KEY = "required_permissions_key"
+        const val PERMISSION_FRAGMENT_REQUEST_KEY = "permission_fragment_request_key"
+
+        /**
+         * @param requiredPermissions 요구되는 권한들의 리스트입니다. [Manifest.permission]의 상수들을 참조합니다.
+         */
         @JvmStatic
-        fun newInstance(requiredPermissions: Array<String>, onSuccess: () -> Unit) =
-            PermissionFragment(requiredPermissions, onSuccess)
+        fun newInstance(requiredPermissions: Array<String>) : PermissionFragment {
+            val fragment = PermissionFragment()
+            val bundle = Bundle()
+            bundle.putStringArray(REQUIRED_PERMISSIONS_KEY, requiredPermissions)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

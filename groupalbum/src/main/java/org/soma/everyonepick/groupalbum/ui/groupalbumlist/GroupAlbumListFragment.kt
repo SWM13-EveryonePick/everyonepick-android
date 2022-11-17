@@ -55,6 +55,12 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     }
 
     private fun subscribeUi() {
+        binding.swiperefreshlayout.setOnRefreshListener {
+            viewModel.readGroupAlbumModelList {
+                binding.swiperefreshlayout.isRefreshing = false
+            }
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -87,6 +93,10 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
     override fun onStart() {
         super.onStart()
         parentViewModel.setSelectionMode(SelectionMode.NORMAL_MODE)
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.readGroupAlbumModelList()
     }
 

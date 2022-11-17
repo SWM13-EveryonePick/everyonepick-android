@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -113,7 +114,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     /**
-     * [InviteFriendFragment]에서 선택한 Friend 리스트를 받습니다.
+     * [InviteFriendFragment]에서 선택한 Friend 리스트를 받습니다. 또한 [UpdateTitleDialogFragment]에서 입력한
+     * 새 단체공유앨범명을 받습니다.
      */
     private fun setFragmentResultListener() {
         activity?.supportFragmentManager?.setFragmentResultListener(
@@ -122,6 +124,14 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
             bundle.get(FRIEND_LIST_TO_INVITE_KEY)?.let { friendList ->
                 friendList as MutableList<Friend>
                 viewModel.inviteUsersToGroupAlbum(friendList)
+            }
+        }
+
+        activity?.supportFragmentManager?.setFragmentResultListener(
+            UPDATE_TITLE_DIALOG_REQUEST_KEY, viewLifecycleOwner
+        ) { _, bundle ->
+            bundle.getString(UPDATE_TITLE_DIALOG_KEY)?.let { newTitle ->
+                viewModel.updateGroupAlbum(newTitle)
             }
         }
     }
@@ -197,9 +207,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     }
 
     override fun onClickUpdateTitleButton() {
-        UpdateTitleDialogFragment { newTitle ->
-           viewModel.updateGroupAlbum(newTitle)
-        }.show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
+        UpdateTitleDialogFragment.getInstance(viewModel.groupAlbum.value.title ?: "")
+            .show(requireActivity().supportFragmentManager, "UpdateTitleDialogFragment")
     }
 
     override fun onClickExitButton() {
@@ -240,6 +249,8 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
     companion object {
         const val FRIEND_LIST_TO_INVITE_REQUEST_KEY = "friend_list_to_invite_request_key"
         const val FRIEND_LIST_TO_INVITE_KEY = "friend_list_to_invite_key"
+        const val UPDATE_TITLE_DIALOG_REQUEST_KEY = "update_title_dialog_request_key"
+        const val UPDATE_TITLE_DIALOG_KEY = "update_title_dialog_key"
     }
 }
 
