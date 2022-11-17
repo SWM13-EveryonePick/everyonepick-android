@@ -56,7 +56,9 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
 
     private fun subscribeUi() {
         binding.swiperefreshlayout.setOnRefreshListener {
-            viewModel.readGroupAlbumModelList { binding.swiperefreshlayout.isRefreshing = false }
+            viewModel.readGroupAlbumModelList {
+                binding.swiperefreshlayout.isRefreshing = false
+            }
         }
 
         lifecycleScope.launch {

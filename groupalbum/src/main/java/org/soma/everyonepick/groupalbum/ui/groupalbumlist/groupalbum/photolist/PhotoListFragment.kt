@@ -62,6 +62,12 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     }
 
     private fun subscribeUi() {
+        binding.swiperefreshlayout.setOnRefreshListener {
+            viewModel.readPhotoModelList(parentViewModel.groupAlbum.value.id) {
+                binding.swiperefreshlayout.isRefreshing = false
+            }
+        }
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {

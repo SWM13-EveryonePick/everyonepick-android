@@ -39,7 +39,7 @@ class PhotoListViewModel @Inject constructor(
     private val _toastMessage = MutableStateFlow("")
     val toastMessage: StateFlow<String> = _toastMessage
 
-    fun readPhotoModelList(groupAlbumId: Long?) {
+    fun readPhotoModelList(groupAlbumId: Long?, doOnEnd: () -> Unit = {}) {
         if (groupAlbumId == null || groupAlbumId == GroupAlbum.dummyData.id) return
 
         viewModelScope.launch {
@@ -52,6 +52,8 @@ class PhotoListViewModel @Inject constructor(
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_photo)
             }
         }
+
+        doOnEnd.invoke()
     }
 
     fun createPhotoList(groupAlbumId: Long?, images: List<MultipartBody.Part>) {
