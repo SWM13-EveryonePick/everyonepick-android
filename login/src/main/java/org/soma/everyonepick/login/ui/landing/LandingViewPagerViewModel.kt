@@ -54,6 +54,7 @@ class LandingViewPagerViewModel @Inject constructor(
 
                 onSuccess.invoke()
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_sign_up)
                 _isApiLoading.value = false
             }
@@ -67,6 +68,7 @@ class LandingViewPagerViewModel @Inject constructor(
                 val data = userUseCase.readUser(token)
                 onSuccess.invoke(data)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_user)
                 _isApiLoading.value = false
             }

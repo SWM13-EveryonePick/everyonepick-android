@@ -46,6 +46,7 @@ class ResultPhotoListViewModel @Inject constructor(
                 _resultPhotoModelList.value = groupAlbumUseCase.readResultPhotoList(token, groupAlbumId!!)
                 _isApiLoading.value = false
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_result_photo)
             }
         }
@@ -62,6 +63,7 @@ class ResultPhotoListViewModel @Inject constructor(
                 groupAlbumUseCase.deleteResultPhotoList(token, groupAlbumId!!, ResultPhotoIdListRequest(checkedPhotoIdList))
                 _resultPhotoModelList.value = groupAlbumUseCase.readResultPhotoList(token, groupAlbumId)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_delete_result_photo)
             }
         }

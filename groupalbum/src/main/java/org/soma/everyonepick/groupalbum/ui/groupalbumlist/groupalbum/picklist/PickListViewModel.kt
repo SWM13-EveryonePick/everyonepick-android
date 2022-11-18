@@ -59,6 +59,7 @@ class PickListViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 _pickModelList.value = groupAlbumUseCase.readPickList(token, groupAlbumId)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick)
             } finally {
                 _isApiLoading.value = false
@@ -75,6 +76,7 @@ class PickListViewModel @Inject constructor(
                 val pickDetail = groupAlbumUseCase.readPickDetail(token, groupAlbumId, pickId)
                 onSuccess.invoke(pickDetail)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick)
             }
         }
@@ -87,6 +89,7 @@ class PickListViewModel @Inject constructor(
                 val pickInfoModel = groupAlbumUseCase.readPickInfo(token, pickId)
                 onSuccess.invoke(pickInfoModel)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_pick_info)
             }
         }

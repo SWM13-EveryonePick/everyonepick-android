@@ -67,7 +67,9 @@ class SplashViewModel @Inject constructor(
                     addFailure()
                 }
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_refresh_token)
+
                 dataStoreUseCase.removeAccessToken()
                 dataStoreUseCase.removeRefreshToken()
                 addFailure()
