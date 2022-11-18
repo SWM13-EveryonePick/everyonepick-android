@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
@@ -52,6 +53,14 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.hiltVersion"
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:31.0.3')
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
 
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
