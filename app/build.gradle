@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "org.soma.everyonepick.app"
-        minSdk 21
+        minSdk 24
         targetSdk 32
         versionCode 9
         versionName "1.8"
