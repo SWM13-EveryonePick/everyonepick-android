@@ -7,10 +7,9 @@ import dagger.hilt.components.SingletonComponent
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPhotoService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumPickService
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumResultPhotoService
-import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
+import org.soma.everyonepick.common.domain.usecase.FriendUseCase
 import org.soma.everyonepick.groupalbum.data.source.remote.GroupAlbumService
 import retrofit2.Retrofit
-import retrofit2.create
 import javax.inject.Singleton
 
 
