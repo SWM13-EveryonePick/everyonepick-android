@@ -63,8 +63,10 @@ class SettingFragment : Fragment(), SettingFragmentListener {
     }
 
     override fun onClickNotificationSettingButton() {
+        /* TODO: enable it after notification settings implemented
         val directions = SettingFragmentDirections.toNotificationSettingFragment()
         findNavController().navigate(directions)
+        */
     }
 
     override fun onClickTermsButton() {
