@@ -18,12 +18,6 @@ import javax.inject.Singleton
 class NetworkModule {
     @Singleton
     @Provides
-    fun provideFriendUseCase(): FriendUseCase {
-        return FriendUseCase()
-    }
-
-    @Singleton
-    @Provides
     fun provideGroupAlbumService(retrofit: Retrofit): GroupAlbumService {
         return retrofit.create(GroupAlbumService::class.java)
     }

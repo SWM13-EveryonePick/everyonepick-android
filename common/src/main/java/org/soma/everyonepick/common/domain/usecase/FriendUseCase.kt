@@ -10,10 +10,16 @@ import com.kakao.sdk.talk.model.Friends
  * 각 호출 함수의 인자에 콜백이 들어가는 것이 불가피합니다.
  */
 class FriendUseCase {
+    fun readFriends(onAlways: () -> Unit) {
+        readFriends(onAlways, {}, {})
+    }
+
     fun readFriends(
         onAlways: () -> Unit,
         onSuccess: (Friends<Friend>) -> Unit
-    ) { readFriends(onAlways, {}, onSuccess) }
+    ) {
+        readFriends(onAlways, {}, onSuccess)
+    }
 
     fun readFriends(
         onAlways: () -> Unit,

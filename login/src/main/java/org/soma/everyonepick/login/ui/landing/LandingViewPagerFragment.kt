@@ -123,31 +123,30 @@ class LandingViewPagerFragment : Fragment(), LandingViewPagerFragmentListener {
         binding.viewpager2.currentItem += 1
     }
 
-    /**
-     * 1. 카카오톡으로 로그인
-     * 2. 카카오 토큰을 기반으로 [AuthService.signUp] 호출
-     * 3. 얼굴정보 등록 여부에 따라서, HomeActivity 혹은 FaceInformation 페이지로 이동
-     */
     override fun onClickLoginButton() {
         if (viewModel.isApiLoading.value) return
 
         viewModel.setIsApiLoading(true)
+        loginWithKakaoAndSignUp {
+            // 친구 목록 API를 호출함으로써 친구 목록 동의('필수 동의'가 아닌 '이용 중 동의' 항목)를 유도합니다.
+            viewModel.readFriends {
+                navigateToNextPageByFaceInformation()
+            }
+        }
+    }
+
+    private fun loginWithKakaoAndSignUp(onSuccess: () -> Unit) {
+        // 카카오톡 로그인
         LoginUtil.loginWithKakao(requireContext(), { token, _ ->
-            signUpAndNavigate(token)
+            // 카카오 토큰을 기반으로 자체 서버로 signUp
+            viewModel.signUp(token) {
+                onSuccess.invoke()
+            }
         }, { _, error ->
             viewModel.setIsApiLoading(false)
             Log.e(TAG, error.toString())
             Toast.makeText(requireContext(), getString(org.soma.everyonepick.login.R.string.toast_failed_to_login_with_kakao), Toast.LENGTH_SHORT).show()
         })
-    }
-
-    /**
-     * 회원가입을 시도하고, 성공 시 [navigateToNextPageByFaceInformation]를 호출합니다.
-     */
-    private fun signUpAndNavigate(token: OAuthToken?) {
-        viewModel.signUp(token) {
-            navigateToNextPageByFaceInformation()
-        }
     }
 
     /**
