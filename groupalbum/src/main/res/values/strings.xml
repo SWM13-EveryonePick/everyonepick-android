@@ -34,11 +34,11 @@
     <string name="title_fragment_create_group_album">%s\n단체공유앨범이 생성되었어요!</string>
     <string name="description_fragment_create_group_album">이제, 친구와 모두의 PICK으로 사진을 공유해보세요.</string>
 
-    <string name="empty_friends">아직 서비스를 이용하는 친구가 없어요 :/</string>
-    <string name="empty_friends_with_keyword">해당하는 친구가 없어요 :/</string>
+    <string name="empty_friends">아직 서비스를 이용하는 친구가 없어요 :(</string>
+    <string name="empty_friends_with_keyword">해당하는 친구가 없어요 :(</string>
 
     <!--갤러리 내부-->
-    <string name="empty_images_in_gallery">갤러리 내에 사진이 없어요 :/</string>
+    <string name="empty_images_in_gallery">갤러리 내에 사진이 없어요 :(</string>
     <string name="save_in_gallery">갤러리에 저장하기</string>
     <string name="upload_photo">사진 올리기</string>
     <string name="update_group_album_title">단체공유앨범 이름 변경</string>
@@ -52,7 +52,7 @@
     <string name="dialog_kick_checked_member">선택한 멤버를 내보냅니다.</string>
 
     <!--사진-->
-    <string name="empty_photos">사진이 없습니다 :/</string>
+    <string name="empty_photos">사진이 없습니다 :(</string>
     <string name="instagram">Instagram</string>
     <string name="instagram_story">IG story</string>
     <string name="facebook">Facebook</string>
@@ -91,7 +91,7 @@
     <string name="toast_failed_to_create_pick">사진 가이드에 맞춰서 사진을 다시 선택해주세요!</string>
 
     <!--합성중(사진작업)-->
-    <string name="empty_picks">현재 합성중인 사진이 없습니다 :/</string>
+    <string name="empty_picks">현재 합성중인 사진이 없습니다 :(</string>
     <string name="toast_failed_to_read_pick">사진 작업을 불러오는 데 실패했습니다.</string>
     <string name="uncompleted_pick_title">Pick Me!</string>
     <string name="uncompleted_pick_description">마음에 드는 사진을 선택해주세요!</string>
@@ -108,7 +108,7 @@
     <string name="dialog_what_is_timeout">다른 멤버들은 타임아웃 내에 사진 선택을 마쳐야 합니다.\n타임아웃 이후에도 선택을 하지 않은 멤버가 있을 경우, 해당 멤버의 선택을 임의로 처리하고 합성을 진행합니다.</string>
 
     <!--합성완료-->
-    <string name="empty_result_photos">합성완료 사진이 없습니다 :/</string>
+    <string name="empty_result_photos">합성완료 사진이 없습니다 :(</string>
     <string name="toast_failed_to_read_result_photo">합성완료 사진을 불러오는 데 실패했습니다.</string>
     <string name="toast_failed_to_delete_result_photo">합성완료 사진을 삭제하는 데 실패했습니다.</string>
 

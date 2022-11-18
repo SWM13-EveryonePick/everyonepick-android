@@ -63,7 +63,12 @@ class AccountSettingFragment : Fragment(), AccountSettingFragmentListener {
             .setMessage(getString(R.string.dialog_leave))
             .setPositiveButtonText(getString(R.string.leave))
             .setOnClickPositiveButton {
-                // TODO: 회원탈퇴
+                // TODO: 회원탈퇴 API 추가
+                lifecycleScope.launch {
+                    dataStoreUseCase.removeAccessToken()
+                    dataStoreUseCase.removeRefreshToken()
+                }
+                (activity as HomeActivityUtil).startLoginActivity()
             }
             .build().show()
     }
