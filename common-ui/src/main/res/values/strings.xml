@@ -2,6 +2,9 @@
 <resources>
     <string name="app_name">모두의 PICK</string>
 
+    <string name="channel_name">알림</string>
+    <string name="channel_description">통합 알림 채널입니다.</string>
+
     <string name="camera_menu_item">카메라</string>
     <string name="group_album_menu_item">단체공유앨범</string>
     <string name="setting_menu_item">설정</string>

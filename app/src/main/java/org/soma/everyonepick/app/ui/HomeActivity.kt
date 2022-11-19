@@ -3,7 +3,6 @@ package org.soma.everyonepick.app.ui
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -13,12 +12,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
+import org.soma.everyonepick.app.util.NotificationUtil
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
@@ -48,9 +46,9 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
 
         showTutorialAtFirst()
         supportActionBar?.hide()
-
         initializeNavigation()
 
+        // NotificationUtil.sendNotification(baseContext, "ASD", "DDD")
         updateFcmDeviceToken()
     }
 
@@ -84,7 +82,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
     private fun updateFcmDeviceToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             try {
-                CoroutineScope(Dispatchers.IO).launch {
+                lifecycleScope.launch {
                     val accessToken = dataStoreUseCase.bearerAccessToken.first()!!
                     userUseCase.updateDeviceToken(accessToken, it.result)
                 }
