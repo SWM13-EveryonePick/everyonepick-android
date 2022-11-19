@@ -2,7 +2,9 @@ package org.soma.everyonepick.common.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -13,8 +15,12 @@ object NotificationUtil {
     private const val CHANNEL_ID = "channel_id"
     private const val NOTIFICATION_ID = 0
 
+    /**
+     * @param activityToStart 알림 클릭 시 시작할 액티비티입니다
+     */
     fun sendNotification(
         context: Context,
+        activityToStart: Class<*>,
         title: String,
         text: String
     ) {
@@ -22,12 +28,22 @@ object NotificationUtil {
             createNotificationChannel(context)
         }
 
+        val contentIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, activityToStart).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.app_icon_silhouette)
             .setContentTitle(title)
             .setContentText(text)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(contentIntent)
             .build()
 
         with(NotificationManagerCompat.from(context)) {

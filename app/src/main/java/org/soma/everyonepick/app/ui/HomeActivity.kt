@@ -23,6 +23,7 @@ import org.soma.everyonepick.common.util.NotificationUtil
 import org.soma.everyonepick.common_ui.util.setVisibility
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
+import org.soma.everyonepick.login.ui.SplashActivity
 import javax.inject.Inject
 
 

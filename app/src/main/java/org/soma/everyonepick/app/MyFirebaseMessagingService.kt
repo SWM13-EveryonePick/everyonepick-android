@@ -2,7 +2,9 @@ package org.soma.everyonepick.app
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.soma.everyonepick.app.ui.HomeActivity
 import org.soma.everyonepick.common.util.NotificationUtil
+import org.soma.everyonepick.login.ui.SplashActivity
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
@@ -13,7 +15,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         }
 
         message.notification?.let {
-            NotificationUtil.sendNotification(this, it.title ?: "", it.body ?: "")
+            NotificationUtil.sendNotification(this, SplashActivity::class.java, it.title ?: "", it.body ?: "")
         }
     }
 }
