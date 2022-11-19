@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
-import org.soma.everyonepick.app.util.NotificationUtil
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import org.soma.everyonepick.common.util.NotificationUtil
 import org.soma.everyonepick.common_ui.util.setVisibility
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
@@ -48,7 +48,6 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
         supportActionBar?.hide()
         initializeNavigation()
 
-        // NotificationUtil.sendNotification(baseContext, "ASD", "DDD")
         updateFcmDeviceToken()
     }
 

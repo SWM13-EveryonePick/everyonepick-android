@@ -1,4 +1,4 @@
-package org.soma.everyonepick.app.util
+package org.soma.everyonepick.common.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,7 +7,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import org.soma.everyonepick.app.R
+import org.soma.everyonepick.common.R
 
 object NotificationUtil {
     private const val CHANNEL_ID = "channel_id"
@@ -23,7 +23,7 @@ object NotificationUtil {
         }
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.app_icon)
+            .setSmallIcon(R.drawable.app_icon_silhouette)
             .setContentTitle(title)
             .setContentText(text)
             .setAutoCancel(true)
@@ -40,8 +40,8 @@ object NotificationUtil {
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(context: Context) {
-        val name = context.getString(org.soma.everyonepick.common_ui.R.string.channel_name)
-        val descriptionText = context.getString(org.soma.everyonepick.common_ui.R.string.channel_description)
+        val name = context.getString(R.string.channel_name)
+        val descriptionText = context.getString(R.string.channel_description)
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
             description = descriptionText
