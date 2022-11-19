@@ -1,6 +1,7 @@
 package org.soma.everyonepick.common.data.source
 
 import okhttp3.MultipartBody
+import org.soma.everyonepick.common.data.dto.DeviceTokenRequest
 import org.soma.everyonepick.common.data.dto.FaceInfoResponse
 import org.soma.everyonepick.common.data.dto.UserResponse
 import retrofit2.http.*
@@ -15,4 +16,10 @@ interface UserService {
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part
     ): FaceInfoResponse
+
+    @POST("api/v1/users/device-token")
+    suspend fun updateDeviceToken(
+        @Header("Authorization") token: String,
+        @Body deviceTokenRequest: DeviceTokenRequest
+    )
 }
