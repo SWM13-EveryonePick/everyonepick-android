@@ -3,6 +3,7 @@ package org.soma.everyonepick.app.ui
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -10,13 +11,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.common_ui.util.setVisibility
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
@@ -33,6 +38,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
     private var valueAnimator: ValueAnimator? = null
 
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+    @Inject lateinit var userUseCase: UserUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +50,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
         supportActionBar?.hide()
 
         initializeNavigation()
+
+        updateFcmDeviceToken()
     }
 
     private fun showTutorialAtFirst() {
@@ -70,6 +78,17 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
                 if (isCamera) hideBottomNavigationView()
                 else showBottomNavigationView()
             }
+        }
+    }
+
+    private fun updateFcmDeviceToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            try {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val accessToken = dataStoreUseCase.bearerAccessToken.first()!!
+                    userUseCase.updateDeviceToken(accessToken, it.result)
+                }
+            } catch (e: Exception) {}
         }
     }
 
