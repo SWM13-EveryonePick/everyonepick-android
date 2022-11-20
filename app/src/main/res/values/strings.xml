@@ -1,3 +1,4 @@
 <resources>
     <string name="terminate_app">%s을 종료합니다.</string>
+    <string name="allow_notification_permission">알림을 받기 원하실 경우 앱 설정에서 알림 권한을 허용해주세요.</string>
 </resources>
