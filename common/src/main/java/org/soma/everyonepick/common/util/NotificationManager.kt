@@ -34,7 +34,7 @@ object NotificationUtil {
             Intent(context, activityToStart).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             },
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
