@@ -116,7 +116,7 @@
                 android:layout_height="@dimen/size_shutter_button"
                 android:src="@drawable/ic_baseline_brightness_1_24"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="@{!viewModel.isTakingPicture}"
+                android:clickable="true"
                 android:onClick="@{() -> listener.onClickShutterButton()}"
                 app:civ_border_color="@color/primary_blue"
                 app:civ_border_width="5dp"

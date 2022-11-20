@@ -22,6 +22,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.soma.everyonepick.camera.databinding.FragmentPreviewBinding
@@ -261,7 +264,6 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         super.onPause()
         onBackPressedCallback.remove()
         orientationEventListener.disable()
-        viewModel.setIsTakingPicture(false)
     }
 
     override fun onStop() {
@@ -287,20 +289,20 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         startActivity(intent)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onClickShutterButton() {
         imageCapture?.let { imageCapture ->
-            viewModel.setIsTakingPicture(true)
             imageCapture.takePicture(cameraExecutor, object: ImageCapture.OnImageCapturedCallback() {
                 @SuppressLint("UnsafeOptInUsageError")
                 override fun onCaptureSuccess(image: ImageProxy) {
                     super.onCaptureSuccess(image)
-                    image.image?.toBitmap()?.rotate(image.imageInfo.rotationDegrees)?.let {
-                        saveBitmapInPictureDirectory(it, requireContext())
-                        viewModel.setLatestImage(it) // 최근 사진을 업데이트합니다.
+                    GlobalScope.launch {
+                        image.image?.toBitmap()?.rotate(image.imageInfo.rotationDegrees)?.let {
+                            viewModel.setLatestImage(it) // latestImage를 이번에 찍은 사진으로 업데이트합니다.
+                            saveBitmapInPictureDirectory(it, requireContext())
+                        }
+                        image.close()
                     }
-                    image.close()
-
-                    viewModel.setIsTakingPicture(false)
                 }
             })
 
