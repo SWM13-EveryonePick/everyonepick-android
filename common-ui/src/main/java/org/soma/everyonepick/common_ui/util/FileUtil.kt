@@ -1,7 +1,9 @@
 package org.soma.everyonepick.common_ui.util
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Environment
 import android.os.Looper
@@ -27,7 +29,8 @@ class FileUtil {
         fun saveBitmapInPictureDirectory(
             bitmap: Bitmap,
             context: Context,
-            showsToast: Boolean = false
+            onSuccess: () -> Unit = {},
+            onFailure: () -> Unit = {},
         ) {
             try {
                 val imageFile = getImageFile(context)
@@ -36,15 +39,15 @@ class FileUtil {
                 outputStream.flush()
                 outputStream.close()
 
-                Log.e(TAG, "이미지 저장 성공")
-                if (showsToast) {
-                    Toast.makeText(context, context.getString(R.string.toast_save_image_success), Toast.LENGTH_SHORT).show()
-                }
+                // 저장한 파일을 스캔하여 해당 사진이 갤러리에서 보여지게끔 합니다.
+                // 아래 코드가 없을 경우, 사진을 저장하여도 곧바로 갤러리 앱에서 해당 사진을 찾아볼 수 없습니다.
+                MediaScannerConnection.scanFile(
+                    context, arrayOf(imageFile.path), null, null)
+
+                onSuccess.invoke()
             } catch (e: Exception) {
                 Log.e(TAG, e.toString())
-                if (showsToast) {
-                    Toast.makeText(context, context.getString(R.string.toast_failed_to_save_image), Toast.LENGTH_SHORT).show()
-                }
+                onFailure.invoke()
             }
         }
 
