@@ -132,6 +132,7 @@ class GroupAlbumViewModel @Inject constructor(
                     .inviteUsersToGroupAlbum(token, groupAlbum.value.id!!, friendList)
                 _groupAlbum.value = data
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_invite)
             }
         }
@@ -145,6 +146,7 @@ class GroupAlbumViewModel @Inject constructor(
                 val data = groupAlbumUseCase.updateGroupAlbum(token, groupAlbum.id!!, groupAlbum)
                 _groupAlbum.value = data
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_rename_group_album)
             }
         }
@@ -156,6 +158,7 @@ class GroupAlbumViewModel @Inject constructor(
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.leaveGroupAlbum(token, groupAlbum.value.id!!)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_exit_group_album)
             }
         }
@@ -170,6 +173,7 @@ class GroupAlbumViewModel @Inject constructor(
                 val data = groupAlbumUseCase.kickUsersOutOfGroupAlbum(token, groupAlbum.value.id!!, userListToKick)
                 _groupAlbum.value = data
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_kick)
             }
         }

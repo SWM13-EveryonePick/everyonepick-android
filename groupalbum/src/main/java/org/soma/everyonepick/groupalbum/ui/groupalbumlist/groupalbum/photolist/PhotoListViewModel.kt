@@ -49,6 +49,7 @@ class PhotoListViewModel @Inject constructor(
                 _photoModelList.value = groupAlbumUseCase.readPhotoList(token, groupAlbumId!!)
                 _isApiLoading.value = false
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_photo)
             }
         }
@@ -61,9 +62,13 @@ class PhotoListViewModel @Inject constructor(
             try {
                 val token = dataStoreUseCase.bearerAccessToken.first()!!
                 groupAlbumUseCase.createPhotoList(token, groupAlbumId!!, images)
+
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_try_to_create_photo)
+
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_photo)
             }
         }
@@ -78,6 +83,7 @@ class PhotoListViewModel @Inject constructor(
                 groupAlbumUseCase.deletePhotoList(token, groupAlbumId!!, PhotoIdListRequest(checkedPhotoIdList))
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_delete_photo)
             }
         }
@@ -102,6 +108,7 @@ class PhotoListViewModel @Inject constructor(
 
                 onSuccess.invoke(pickId)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick)
                 _isApiLoading.value = false
             }

@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -17,9 +18,12 @@ import org.soma.everyonepick.app.R
 import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.domain.usecase.UserUseCase
+import org.soma.everyonepick.common.util.NotificationUtil
 import org.soma.everyonepick.common_ui.util.setVisibility
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
+import org.soma.everyonepick.login.ui.SplashActivity
 import javax.inject.Inject
 
 
@@ -33,6 +37,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
     private var valueAnimator: ValueAnimator? = null
 
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
+    @Inject lateinit var userUseCase: UserUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +47,9 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
 
         showTutorialAtFirst()
         supportActionBar?.hide()
-
         initializeNavigation()
+
+        updateFcmDeviceToken()
     }
 
     private fun showTutorialAtFirst() {
@@ -70,6 +76,17 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
                 if (isCamera) hideBottomNavigationView()
                 else showBottomNavigationView()
             }
+        }
+    }
+
+    private fun updateFcmDeviceToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            try {
+                lifecycleScope.launch {
+                    val accessToken = dataStoreUseCase.bearerAccessToken.first()!!
+                    userUseCase.updateDeviceToken(accessToken, it.result)
+                }
+            } catch (e: Exception) {}
         }
     }
 

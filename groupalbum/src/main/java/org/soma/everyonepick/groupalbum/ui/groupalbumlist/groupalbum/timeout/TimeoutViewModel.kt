@@ -75,6 +75,7 @@ class TimeoutViewModel @Inject constructor(
 
                 onSuccess.invoke()
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_create_pick_info)
             }
         }

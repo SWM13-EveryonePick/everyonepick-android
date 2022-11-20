@@ -91,6 +91,7 @@ class GroupAlbumListViewModel @Inject constructor(
                     groupAlbumLocalRepository.resetGroupAlbumLocalList(groupAlbumLocalList)
                 }
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_group_album)
             }
 
@@ -110,6 +111,7 @@ class GroupAlbumListViewModel @Inject constructor(
                 readGroupAlbumModelList()
             } catch (e: Exception) {
                 readGroupAlbumModelList()
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_exit_group_album)
             }
         }

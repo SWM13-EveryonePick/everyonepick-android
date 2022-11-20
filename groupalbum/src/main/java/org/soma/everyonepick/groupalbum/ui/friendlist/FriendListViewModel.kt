@@ -1,6 +1,4 @@
 package org.soma.everyonepick.groupalbum.ui.friendlist
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kakao.sdk.talk.model.Friend
 import com.kakao.sdk.talk.model.Friends
@@ -8,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.soma.everyonepick.common.util.KakaoUtil
-import org.soma.everyonepick.groupalbum.domain.usecase.FriendUseCase
+import org.soma.everyonepick.common.domain.usecase.FriendUseCase
 import javax.inject.Inject
 
 @HiltViewModel

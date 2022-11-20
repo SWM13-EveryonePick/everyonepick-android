@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.data.source.UserService
+import org.soma.everyonepick.common.domain.usecase.FriendUseCase
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -22,5 +23,11 @@ class NetworkModule {
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFriendUseCase(): FriendUseCase {
+        return FriendUseCase()
     }
 }

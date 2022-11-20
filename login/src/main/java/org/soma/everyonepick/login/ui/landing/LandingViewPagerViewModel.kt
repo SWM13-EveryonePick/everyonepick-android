@@ -15,6 +15,7 @@ import org.soma.everyonepick.common.data.entity.ProviderName
 import org.soma.everyonepick.common.data.entity.User
 import org.soma.everyonepick.common.data.source.AuthService
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
+import org.soma.everyonepick.common.domain.usecase.FriendUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
 import org.soma.everyonepick.login.R
 import javax.inject.Inject
@@ -24,6 +25,7 @@ class LandingViewPagerViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val authService: AuthService,
     private val userUseCase: UserUseCase,
+    private val friendUseCase: FriendUseCase,
     private val dataStoreUseCase: DataStoreUseCase
 ): ViewModel() {
     private val _toastMessage = MutableStateFlow("")
@@ -52,6 +54,7 @@ class LandingViewPagerViewModel @Inject constructor(
 
                 onSuccess.invoke()
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_sign_up)
                 _isApiLoading.value = false
             }
@@ -65,9 +68,14 @@ class LandingViewPagerViewModel @Inject constructor(
                 val data = userUseCase.readUser(token)
                 onSuccess.invoke(data)
             } catch (e: Exception) {
+                _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_failed_to_read_user)
                 _isApiLoading.value = false
             }
         }
+    }
+
+    fun readFriends(onAlways: () -> Unit) {
+        friendUseCase.readFriends(onAlways)
     }
 }
