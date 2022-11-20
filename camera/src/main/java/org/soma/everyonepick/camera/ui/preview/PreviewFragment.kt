@@ -196,7 +196,7 @@ class PreviewFragment : Fragment(), PreviewFragmentListener {
         // 확대, 축소
         var scaleFactor = 1.0f
         poseImageScaleGestureDetector = ScaleGestureDetector(requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-            override fun onScale(detector: ScaleGestureDetector?): Boolean {
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
                 // scaleFactor 범위: [POSE_MIN_SCALE] ~ [POSE_MAX_SCALE]
                 val nextScaleFactor = scaleFactor*(detector?.scaleFactor ?: 1.0f)
                 scaleFactor = Math.max(POSE_MIN_SCALE, Math.min(nextScaleFactor, POSE_MAX_SCALE))

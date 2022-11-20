@@ -8,12 +8,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "org.soma.everyonepick.app"
         minSdk 24
-        targetSdk 32
+        targetSdk 33
         versionCode 11
         versionName "1.1.0"
 

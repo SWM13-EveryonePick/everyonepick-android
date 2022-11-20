@@ -1,11 +1,17 @@
 package org.soma.everyonepick.app.ui
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.animation.ValueAnimator
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -19,11 +25,9 @@ import org.soma.everyonepick.app.databinding.ActivityHomeBinding
 import org.soma.everyonepick.common.util.HomeActivityUtil
 import org.soma.everyonepick.common.domain.usecase.DataStoreUseCase
 import org.soma.everyonepick.common.domain.usecase.UserUseCase
-import org.soma.everyonepick.common.util.NotificationUtil
 import org.soma.everyonepick.common_ui.util.setVisibility
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
 import org.soma.everyonepick.login.ui.LoginActivity
-import org.soma.everyonepick.login.ui.SplashActivity
 import javax.inject.Inject
 
 
@@ -39,6 +43,16 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
     @Inject lateinit var dataStoreUseCase: DataStoreUseCase
     @Inject lateinit var userUseCase: UserUseCase
 
+    // 알림 권한
+    private val notificationPermission = POST_NOTIFICATIONS
+    private val requestPermissionsLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { isGranted ->
+        if (!isGranted.all{ it.value }) {
+            Toast.makeText(baseContext, getString(R.string.allow_notification_permission), Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<ActivityHomeBinding?>(this, R.layout.activity_home).apply {
@@ -50,6 +64,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
         initializeNavigation()
 
         updateFcmDeviceToken()
+        requestNotificationPermission()
     }
 
     private fun showTutorialAtFirst() {
@@ -87,6 +102,17 @@ class HomeActivity : AppCompatActivity(), HomeActivityUtil, HomeActivityListener
                     userUseCase.updateDeviceToken(accessToken, it.result)
                 }
             } catch (e: Exception) {}
+        }
+    }
+
+    /**
+     * Android 13+에서 알림을 보내려면 권한이 필요하기 때문에, 관련 조건을 체크하여 권한을 요청합니다.
+     */
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(baseContext, notificationPermission) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionsLauncher.launch(arrayOf(notificationPermission))
+            }
         }
     }
 
