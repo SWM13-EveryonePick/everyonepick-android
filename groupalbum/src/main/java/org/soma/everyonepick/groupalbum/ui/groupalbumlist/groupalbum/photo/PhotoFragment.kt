@@ -12,6 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.soma.everyonepick.common_ui.util.FileUtil.Companion.getUriFromBitmap
 import org.soma.everyonepick.common_ui.util.FileUtil.Companion.saveBitmapInPictureDirectory
 import org.soma.everyonepick.common_ui.DialogWithTwoButton
@@ -45,9 +49,23 @@ class PhotoFragment : Fragment(), PhotoFragmentListener {
 
 
     /** PhotoFragmentListener */
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onClickSaveButton() {
-        val bitmap = binding.imagePhoto.drawable.toBitmap()
-        saveBitmapInPictureDirectory(bitmap, requireContext(), showsToast = true)
+        GlobalScope.launch {
+            val bitmap = binding.imagePhoto.drawable.toBitmap()
+            saveBitmapInPictureDirectory(
+                bitmap,
+                requireContext(), {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), requireContext().getString(org.soma.everyonepick.common_ui.R.string.toast_save_image_success), Toast.LENGTH_SHORT).show()
+                    }
+                }, {
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), requireContext().getString(org.soma.everyonepick.common_ui.R.string.toast_failed_to_save_image), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            )
+        }
     }
 
     override fun onClickDeleteButton() {

@@ -24,7 +24,8 @@ class FileUtil {
         private const val TAG = "FileUtil"
 
         /**
-         * [Bitmap]을 [getImageFile]로 얻은 이미지 파일 경로에 png 형태로 저장합니다.
+         * [Bitmap]을 [getImageFile]로 얻은 이미지 파일 경로에 png 형태로 저장합니다. 이 함수는 초단위의 연산 작업을
+         * 할 수 있기 때문에 Main Thread에서 실행하지 않는 것을 권장합니다.
          */
         fun saveBitmapInPictureDirectory(
             bitmap: Bitmap,
