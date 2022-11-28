@@ -60,11 +60,11 @@ class PhotoListViewModel @Inject constructor(
     fun createPhotoList(groupAlbumId: Long?, images: List<MultipartBody.Part>) {
         viewModelScope.launch {
             try {
-                val token = dataStoreUseCase.bearerAccessToken.first()!!
-                groupAlbumUseCase.createPhotoList(token, groupAlbumId!!, images)
-
                 _toastMessage.value = ""
                 _toastMessage.value = context.getString(R.string.toast_try_to_create_photo)
+
+                val token = dataStoreUseCase.bearerAccessToken.first()!!
+                groupAlbumUseCase.createPhotoList(token, groupAlbumId!!, images)
 
                 readPhotoModelList(groupAlbumId)
             } catch (e: Exception) {

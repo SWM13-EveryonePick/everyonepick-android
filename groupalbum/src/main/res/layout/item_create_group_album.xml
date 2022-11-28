@@ -10,16 +10,19 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/width_group_album"
-        android:layout_height="@dimen/height_group_album">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_margin="10dp"
             android:clickable="true"
             android:onClick="@{onClickCardView}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="19:14"
             app:cardCornerRadius="@dimen/radius_large"
             app:strokeColor="@color/primary_blue"
             app:strokeWidth="1dp"

@@ -40,12 +40,14 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_groupalbum"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         visibleWhen="@{viewModel.groupAlbumModelList.getItemCountWithoutDummy() > 0}"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        android:paddingStart="@dimen/margin_side"
+                        android:paddingEnd="@dimen/margin_side"
                         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                         app:spanCount="2"
                         adapter="@{adapter}"

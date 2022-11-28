@@ -79,10 +79,12 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerview_uncompleted_pick"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:clipToPadding="false"
                             android:layout_marginTop="16dp"
+                            android:paddingStart="@dimen/margin_side"
+                            android:paddingEnd="@dimen/margin_side"
                             app:layout_constraintTop_toBottomOf="@id/text_uncompleted_pick_description"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -155,10 +157,12 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerview_completed_pick"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:clipToPadding="false"
                             android:layout_marginTop="16dp"
+                            android:paddingStart="@dimen/margin_side"
+                            android:paddingEnd="@dimen/margin_side"
                             app:layout_constraintTop_toBottomOf="@id/text_completed_pick_description"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

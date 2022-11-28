@@ -39,10 +39,9 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_resultphoto"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
+                        android:padding="@dimen/margin_side"
                         android:clipToPadding="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
