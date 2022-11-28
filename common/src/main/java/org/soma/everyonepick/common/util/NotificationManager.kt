@@ -58,7 +58,7 @@ object NotificationUtil {
     private fun createNotificationChannel(context: Context) {
         val name = context.getString(R.string.channel_name)
         val descriptionText = context.getString(R.string.channel_description)
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
             description = descriptionText
         }
