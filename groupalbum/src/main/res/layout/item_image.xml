@@ -13,14 +13,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/size_image"
-        android:layout_height="@dimen/size_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="@{onClickRoot}">
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             uri="@{imageModel.uri}"
             app:layout_constraintDimensionRatio="1:1"
