@@ -14,19 +14,21 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/size_photo"
-        android:layout_height="@dimen/size_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_photo"
         android:onClick="@{onClickRoot}">
 
         <ImageView
             android:id="@+id/image_photo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             photoUrl="@{pickModel.thumbnailUrl}"
             roundingRadius="@{50}"
             app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@drawable/group_album_background"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
