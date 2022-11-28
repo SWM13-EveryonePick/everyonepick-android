@@ -41,7 +41,7 @@
                         android:id="@+id/recyclerview_resultphoto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="20dp"
+                        android:padding="@dimen/margin_side"
                         android:clipToPadding="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
