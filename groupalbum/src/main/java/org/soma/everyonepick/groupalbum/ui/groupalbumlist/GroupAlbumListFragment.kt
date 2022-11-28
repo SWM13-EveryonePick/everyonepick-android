@@ -62,6 +62,14 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
         }
 
         lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     parentViewModel.selectionMode.collectLatest { selectionMode ->
@@ -76,14 +84,6 @@ class GroupAlbumListFragment : Fragment(), GroupAlbumListFragmentListener {
                 launch {
                     parentViewModel.checkAllTrigger.collectLatest {
                         viewModel.checkAll()
-                    }
-                }
-
-                launch {
-                    viewModel.toastMessage.collectLatest {
-                        if (it.isNotEmpty()) {
-                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                        }
                     }
                 }
             }

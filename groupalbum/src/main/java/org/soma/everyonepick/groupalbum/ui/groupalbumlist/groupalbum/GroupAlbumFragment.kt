@@ -73,6 +73,14 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
 
     private fun subscribeUi() {
         lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.photoSelectionMode.collectLatest { photoSelectionMode ->
@@ -99,14 +107,6 @@ class GroupAlbumFragment: Fragment(), GroupAlbumFragmentListener {
                 launch {
                     viewModel.memberSelectionMode.collectLatest { memberSelectionMode ->
                         viewModel.setIsCheckboxVisibleOfMember(memberSelectionMode == SelectionMode.SELECTION_MODE.ordinal)
-                    }
-                }
-
-                launch {
-                    viewModel.toastMessage.collectLatest {
-                        if (it.isNotEmpty()) {
-                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                        }
                     }
                 }
             }

@@ -55,18 +55,18 @@ class PickListFragment : Fragment(), PickAdapterCallback {
         }
 
         lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     parentViewModel.groupAlbum.collect {
                         viewModel.readPickModelList(it.id)
-                    }
-                }
-
-                launch {
-                    viewModel.toastMessage.collectLatest {
-                        if (it.isNotEmpty()) {
-                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                        }
                     }
                 }
             }

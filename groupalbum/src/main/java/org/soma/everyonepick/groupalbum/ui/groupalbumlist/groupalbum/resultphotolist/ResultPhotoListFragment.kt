@@ -56,6 +56,14 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
         }
 
         lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     parentViewModel.resultPhotoSelectionMode.collectLatest { selectionMode ->
@@ -66,14 +74,6 @@ class ResultPhotoListFragment : Fragment(), ResultPhotoListFragmentListener {
                 launch {
                     parentViewModel.groupAlbum.collect {
                         viewModel.readResultPhotoModelList(it.id)
-                    }
-                }
-
-                launch {
-                    viewModel.toastMessage.collectLatest {
-                        if (it.isNotEmpty()) {
-                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                        }
                     }
                 }
             }

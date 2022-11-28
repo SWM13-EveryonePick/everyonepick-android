@@ -43,6 +43,17 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
     private val viewModel: PhotoListViewModel by viewModels()
     private val parentViewModel: GroupAlbumViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launch {
+            viewModel.toastMessage.collectLatest {
+                if (it.isNotEmpty()) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,14 +90,6 @@ class PhotoListFragment: Fragment(), PhotoListFragmentListener {
                 launch {
                     parentViewModel.groupAlbum.collect {
                         viewModel.readPhotoModelList(it.id)
-                    }
-                }
-
-                launch {
-                    viewModel.toastMessage.collectLatest {
-                        if (it.isNotEmpty()) {
-                            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                        }
                     }
                 }
             }
