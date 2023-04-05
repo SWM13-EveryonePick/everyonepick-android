@@ -23,9 +23,12 @@ class NavBottomNavigationView @JvmOverloads constructor(
     defStyle: Int = 0
 ): IndicatorBottomNavigationView(context, attrs, defStyle) {
 
+    private var listeners: MutableList<(MenuItem) -> Unit> = mutableListOf()
+
     fun addOnItemSelectedListener(navController: NavController, listener: (MenuItem) -> Unit) {
+        listeners.add(listener)
         setOnItemSelectedListener { item ->
-            listener.invoke(item)
+            listeners.forEach { it.invoke(item) }
             return@setOnItemSelectedListener NavigationUI
                 .onNavDestinationSelected(item, navController)
         }
