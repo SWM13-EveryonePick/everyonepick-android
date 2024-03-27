@@ -29,7 +29,7 @@
 ## 팀 구성
 |Android|Back-end|AI|
 |:-------:|:-------:|:-------:|
-|[강한빛](https://github.com/Hanbit-Kang)|[박영훈](https://github.com/Park-Young-Hun)|[이주연](https://github.com/2JooYeon)|
+|[hanbikan](https://github.com/hanbikan)|[박영훈](https://github.com/Park-Young-Hun)|[이주연](https://github.com/2JooYeon)|
 
 ## 프로젝트 구조
 ### Multi Module
